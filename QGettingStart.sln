@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QGettingStart", "QGettingStart\QGettingStart.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QGettingStart_Config", "QGettingStart_Config\QGettingStart_Config.vcxproj", "{C1715E77-BF63-4D63-A725-B199E1C2E165}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QGettingStart_Util", "QGettingStart_Util\QGettingStart_Util.vcxproj", "{2F7B6249-F25C-4418-A369-211158A6D067}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QGettingStart_Network", "QGettingStart_Network\QGettingStart_Network.vcxproj", "{2786DA72-EB80-4F75-B48B-97AE707032B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.Build.0 = Debug|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.Build.0 = Release|Win32
+		{C1715E77-BF63-4D63-A725-B199E1C2E165}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C1715E77-BF63-4D63-A725-B199E1C2E165}.Debug|Win32.Build.0 = Debug|Win32
+		{C1715E77-BF63-4D63-A725-B199E1C2E165}.Release|Win32.ActiveCfg = Release|Win32
+		{C1715E77-BF63-4D63-A725-B199E1C2E165}.Release|Win32.Build.0 = Release|Win32
+		{2F7B6249-F25C-4418-A369-211158A6D067}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2F7B6249-F25C-4418-A369-211158A6D067}.Debug|Win32.Build.0 = Debug|Win32
+		{2F7B6249-F25C-4418-A369-211158A6D067}.Release|Win32.ActiveCfg = Release|Win32
+		{2F7B6249-F25C-4418-A369-211158A6D067}.Release|Win32.Build.0 = Release|Win32
+		{2786DA72-EB80-4F75-B48B-97AE707032B4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2786DA72-EB80-4F75-B48B-97AE707032B4}.Debug|Win32.Build.0 = Debug|Win32
+		{2786DA72-EB80-4F75-B48B-97AE707032B4}.Release|Win32.ActiveCfg = Release|Win32
+		{2786DA72-EB80-4F75-B48B-97AE707032B4}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		Qt5Version = 5.7.1
+	EndGlobalSection
+EndGlobal
