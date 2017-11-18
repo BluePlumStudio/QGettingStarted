@@ -1,2 +1,2 @@
 # QGettingStarted
-A open-source library for launching and downloading 'Minecraft'.
+An open-source library for launching and downloading 'Minecraft'.
