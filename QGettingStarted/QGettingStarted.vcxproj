@@ -68,7 +68,59 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Launcher\IGameDirectory.cpp" />
+    <ClCompile Include="Launcher\QGSGameDirectory.cpp" />
+    <ClCompile Include="Launcher\QGSLauncher.cpp" />
+    <ClCompile Include="LaunchOptions\IAuthenticator.cpp" />
+    <ClCompile Include="LaunchOptions\ILaunchOptions.cpp" />
+    <ClCompile Include="LaunchOptions\ILaunchOptionsBuilder.cpp" />
+    <ClCompile Include="LaunchOptions\QGSLaunchOptions.cpp" />
+    <ClCompile Include="LaunchOptions\QGSLaunchOptionsBuilder.cpp" />
+    <ClCompile Include="LaunchOptions\QGSOfflineAuthenticator.cpp" />
+    <ClCompile Include="Library\Downloads.cpp" />
+    <ClCompile Include="Library\Extract.cpp" />
+    <ClCompile Include="Library\Library.cpp" />
+    <ClCompile Include="Library\Rules.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Util\OperatingSystem.cpp" />
+    <ClCompile Include="Version\Arguments.cpp" />
+    <ClCompile Include="Version\AssetIndex.cpp" />
+    <ClCompile Include="Version\IJsonPraseStrategy.cpp" />
+    <ClCompile Include="Version\IVersion.cpp" />
+    <ClCompile Include="Version\IVersionBuilder.cpp" />
+    <ClCompile Include="Version\IVersionFlyweightFactory.cpp" />
+    <ClCompile Include="Version\Logging.cpp" />
+    <ClCompile Include="Version\QGSVersion.cpp" />
+    <ClCompile Include="Version\QGSVersionFlyweightFactory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Launcher\IGameDirectory.h" />
+    <ClInclude Include="Launcher\QGSGameDirectory.h" />
+    <ClInclude Include="Launcher\QGSLauncher.h" />
+    <ClInclude Include="LaunchOptions\IAuthenticator.h" />
+    <ClInclude Include="LaunchOptions\ILaunchOptions.h" />
+    <ClInclude Include="LaunchOptions\ILaunchOptionsBuilder.h" />
+    <ClInclude Include="LaunchOptions\QGSLaunchOptions.h" />
+    <ClInclude Include="LaunchOptions\QGSLaunchOptionsBuilder.h" />
+    <ClInclude Include="LaunchOptions\QGSOfflineAuthenticator.h" />
+    <ClInclude Include="Library\Downloads.h" />
+    <ClInclude Include="Library\Extract.h" />
+    <ClInclude Include="Library\Library.h" />
+    <ClInclude Include="Library\Rules.h" />
+    <ClInclude Include="Util\OperatingSystem.h" />
+    <ClInclude Include="Version\Arguments.h" />
+    <ClInclude Include="Version\AssetIndex.h" />
+    <ClInclude Include="Version\IJsonPraseStrategy.h" />
+    <ClInclude Include="Version\IVersion.h" />
+    <ClInclude Include="Version\IVersionBuilder.h" />
+    <ClInclude Include="Version\IVersionFlyweightFactory.h" />
+    <ClInclude Include="Version\Logging.h" />
+    <ClInclude Include="Version\QGSVersion.h" />
+    <ClInclude Include="Version\QGSVersionFlyweightFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
