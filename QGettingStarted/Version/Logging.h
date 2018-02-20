@@ -3,13 +3,23 @@
 #include <QString>
 #include <QStringList>
 
-#include "../Library/Downloads.h"
+#include "Downloads.h"
 
 class Logging
 {
 private:
-	struct File :public Downloads::Download
+	class File :public Downloads::Download
 	{
+	public:
+		File(const int size, const QString & SHA1, const QString & path, const QUrl & url, const QString & id) :Downloads::Download(size, SHA1, path, url), mId(id)
+		{
+
+		}
+		~File()
+		{
+
+		}
+	private:
 		QString mId;
 	};
 public:
@@ -17,7 +27,7 @@ public:
 	~Logging();
 
 private:
-	File mFile;
+	//File mFile;
 	QString mArgument;
 	QString mType;
 };

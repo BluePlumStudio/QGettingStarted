@@ -5,7 +5,7 @@
 #include "Arguments.h"
 #include "AssetIndex.h"
 #include "Logging.h"
-#include "../Library/Library.h"
+#include "Library.h"
 
 namespace VersionType
 {
