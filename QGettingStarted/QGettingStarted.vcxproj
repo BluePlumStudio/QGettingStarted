@@ -68,10 +68,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Launcher\IGameDirectory.cpp" />
     <ClCompile Include="Launcher\QGSGameDirectory.cpp" />
     <ClCompile Include="Launcher\QGSLauncher.cpp" />

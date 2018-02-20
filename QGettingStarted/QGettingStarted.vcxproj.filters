@@ -33,10 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Launcher\IGameDirectory.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
@@ -76,13 +72,7 @@
     <ClCompile Include="Version\IVersion.cpp">
       <Filter>Version</Filter>
     </ClCompile>
-    <ClCompile Include="Version\IVersionFlyweightFactory.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
     <ClCompile Include="Version\QGSVersion.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
-    <ClCompile Include="Version\QGSVersionFlyweightFactory.cpp">
       <Filter>Version</Filter>
     </ClCompile>
     <ClCompile Include="Util\OperatingSystem.cpp">
@@ -107,6 +97,12 @@
       <Filter>Version</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Version\IVersionFlyweightFactory.cpp">
+      <Filter>Version</Filter>
+    </ClCompile>
+    <ClCompile Include="Version\QGSVersionFlyweightFactory.cpp">
+      <Filter>Version</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\IGameDirectory.h">
@@ -148,13 +144,7 @@
     <ClInclude Include="Version\IVersion.h">
       <Filter>Version</Filter>
     </ClInclude>
-    <ClInclude Include="Version\IVersionFlyweightFactory.h">
-      <Filter>Version</Filter>
-    </ClInclude>
     <ClInclude Include="Version\QGSVersion.h">
-      <Filter>Version</Filter>
-    </ClInclude>
-    <ClInclude Include="Version\QGSVersionFlyweightFactory.h">
       <Filter>Version</Filter>
     </ClInclude>
     <ClInclude Include="Util\OperatingSystem.h">
@@ -176,6 +166,12 @@
       <Filter>Version</Filter>
     </ClInclude>
     <ClInclude Include="Version\Logging.h">
+      <Filter>Version</Filter>
+    </ClInclude>
+    <ClInclude Include="Version\IVersionFlyweightFactory.h">
+      <Filter>Version</Filter>
+    </ClInclude>
+    <ClInclude Include="Version\QGSVersionFlyweightFactory.h">
       <Filter>Version</Filter>
     </ClInclude>
   </ItemGroup>

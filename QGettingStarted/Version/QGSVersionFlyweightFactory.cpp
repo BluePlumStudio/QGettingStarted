@@ -1,20 +1,21 @@
-/**
- * Project Untitled
- */
-
-
 #include "QGSVersionFlyweightFactory.h"
 
-/**
- * QGSVersionFlyweightFactory implementation
- */
+QGSVersionFlyweightFactory::QGSVersionFlyweightFactory()
+{
 
+}
 
-/**
- * @param gameDir
- * @param versionName
- * @return QGSVersion *
- */
-QGSVersion * QGSVersionFlyweightFactory::createVersion(IGameDirectory & gameDir, const QString versionName) {
+QGSVersionFlyweightFactory::~QGSVersionFlyweightFactory()
+{
+
+}
+
+QGSVersion * QGSVersionFlyweightFactory::createVersion(IGameDirectory & gameDir, const QString versionName) 
+{
     return nullptr;
+}
+
+bool QGSVersionFlyweightFactory::containsVersion(IGameDirectory & gameDir, const QString versionName)
+{
+	return true;
 }

@@ -9,11 +9,14 @@
 class QGSVersionFlyweightFactory: public IVersionFlyweightFactory 
 {
 public: 
-	
-	/**
-	 * @param gameDir
-	 * @param versionName
-	 */
+	QGSVersionFlyweightFactory();
+
+	virtual ~QGSVersionFlyweightFactory();
+
 	QGSVersion * createVersion(IGameDirectory & gameDir, const QString versionName);
+
+	bool containsVersion(IGameDirectory & gameDir, const QString versionName);
+private:
+	QMap<QString, QGSVersion> mMapVersion;
 };
 

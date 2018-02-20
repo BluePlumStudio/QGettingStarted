@@ -8,16 +8,12 @@
 
 class IVersionFlyweightFactory 
 {
-public: 
-	/**
-	 * @param gameDir
-	 * @param versionName
-	 */
-	IVersion * createVersion(IGameDirectory & gameDir, const QString versionName);
+public:
+	IVersionFlyweightFactory();
+
+	virtual ~IVersionFlyweightFactory();
+
+	virtual IVersion * createVersion(IGameDirectory & gameDir, const QString versionName) = 0;
 	
-	/**
-	 * @param gameDir
-	 * @param versionName
-	 */
-	bool containsVersion(IGameDirectory & gameDir, const QString versionName);
+	virtual bool containsVersion(IGameDirectory & gameDir, const QString versionName) = 0;
 };

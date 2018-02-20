@@ -1,9 +1,15 @@
 #pragma once
 
 #include <QDir>
+#include <QMap>
 
-class IGameDirectory 
+class IGameDirectory
 {
-protected: 
+public:
+	IGameDirectory();
+	virtual ~IGameDirectory();
+
+protected:
 	QDir mBaseDir;
 };
+
