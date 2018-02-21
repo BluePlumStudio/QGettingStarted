@@ -75,7 +75,7 @@ QGSAbstractLauncher::LauncherError QGSUtil::getLibrariesStringVector(QGSGame * g
 
 	item = stringVector;
 
-	return 	QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取LibrariesStringVector成功！"), QGSAbstractLauncher::LauncherError::Error::NO_ERROR);
+	return 	QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取LibrariesStringVector成功！"), QGSAbstractLauncher::LauncherError::Error::OK);
 }
 
 QGSAbstractLauncher::LauncherError QGSUtil::getMissingLibrariesStringVector(QGSGame * game, QVector<QString> & item)
@@ -90,7 +90,7 @@ QGSAbstractLauncher::LauncherError QGSUtil::getMissingLibrariesStringVector(QGSG
 	QVector<QString> jarFilePathVector;
 	auto ret(getLibrariesStringVector(game, jarFilePathVector));
 
-	if (ret.mLaunchError != QGSAbstractLauncher::LauncherError::Error::NO_ERROR)
+	if (ret.mLaunchError != QGSAbstractLauncher::LauncherError::Error::OK)
 	{
 		return ret;
 	}
@@ -107,7 +107,7 @@ QGSAbstractLauncher::LauncherError QGSUtil::getMissingLibrariesStringVector(QGSG
 		}
 	}
 
-	return ret = QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取MissingLibrariesStringVector成功！"), QGSAbstractLauncher::LauncherError::Error::NO_ERROR);
+	return ret = QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取MissingLibrariesStringVector成功！"), QGSAbstractLauncher::LauncherError::Error::OK);
 }
 
 QGSAbstractLauncher::LauncherError QGSUtil::getMinecraftArgumentsString(QGSGame * game, QString & item)
@@ -131,7 +131,17 @@ QGSAbstractLauncher::LauncherError QGSUtil::getMinecraftArgumentsString(QGSGame 
 	replaceVariable(minecraftArguments, "gameDir", "\"" + game->getGamePath() + "\"");
 
 	//资源文件夹路径
-	replaceVariable(minecraftArguments, "assetsDir", "\"" + game->getGamePath() + replacement0 + "assets\"");
+	QDir assetsDir(game->getGamePath() + replacement0 + "assets" + replacement0 + "virtual" + replacement0 + "legacy");
+	if (assetsDir.exists())
+	{
+		replaceVariable(minecraftArguments,
+			"assetsDir",
+			"\"" + game->getGamePath() + replacement0 + "assets" + replacement0 + "virtual" + replacement0 + "legacy\"");
+	}
+	else
+	{
+		replaceVariable(minecraftArguments, "assetsDir", "\"" + game->getGamePath() + replacement0 + "assets\"");
+	}
 
 	//找到最顶层的继承版本
 	while (gamePtr->getFatherPtr())
@@ -198,7 +208,7 @@ QGSAbstractLauncher::LauncherError QGSUtil::getMinecraftArgumentsString(QGSGame 
 
 	item = minecraftArguments;
 
-	return QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取MinecraftArgumentsString成功！"), QGSAbstractLauncher::LauncherError::Error::NO_ERROR);
+	return QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取MinecraftArgumentsString成功！"), QGSAbstractLauncher::LauncherError::Error::OK);
 }
 
 QGSAbstractLauncher::LauncherError QGSUtil::getLibrariesVector(QGSGame * game, QVector<Library> & item)
@@ -245,7 +255,7 @@ QGSAbstractLauncher::LauncherError QGSUtil::getLibrariesVector(QGSGame * game, Q
 
 	item = libraryVector;
 
-	return 	QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取LibrariesVector成功！"), QGSAbstractLauncher::LauncherError::Error::NO_ERROR);
+	return 	QGSAbstractLauncher::LauncherError(QString::fromLocal8Bit("获取LibrariesVector成功！"), QGSAbstractLauncher::LauncherError::Error::OK);
 }
 
 bool QGSUtil::replaceVariable(QString & arguments, QString before, QString after)
