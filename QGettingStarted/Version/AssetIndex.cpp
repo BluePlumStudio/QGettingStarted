@@ -1,7 +1,6 @@
 #include "AssetIndex.h"
 
-AssetIndex::AssetIndex(
-	const int size, const QString & SHA1, const QString & path, const QUrl & url, const qint64 totalSize, const QString & id)
+AssetIndex::AssetIndex(const int size, const QString & SHA1, const QString & path, const QUrl & url, const qint64 totalSize, const QString & id)
 	:Downloads::Download(size, SHA1, path, url), mTotalSize(totalSize), mId(id)
 {
 
@@ -32,4 +31,11 @@ qint64 AssetIndex::getTotalSize()const
 QString AssetIndex::getId()const
 {
 	return mId;
+}
+
+void AssetIndex::clear()
+{
+	mTotalSize = 0;
+	mId.clear();
+	Downloads::Download::clear();
 }

@@ -28,6 +28,9 @@
     <Filter Include="Version">
       <UniqueIdentifier>{f01eef72-ece0-47ef-8784-babc5032db48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Launcher\VersionPraseStrategy">
+      <UniqueIdentifier>{6ee3dc64-7c8a-40d1-a591-83de6efc5f41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Launcher\IGameDirectory.cpp">
@@ -57,21 +60,6 @@
     <ClCompile Include="LaunchOptions\QGSOfflineAuthenticator.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
-    <ClCompile Include="Version\IJsonPraseStrategy.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
-    <ClCompile Include="Version\IVersion.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
-    <ClCompile Include="Version\QGSVersion.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\OperatingSystem.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Version\IVersionBuilder.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
     <ClCompile Include="Version\Arguments.cpp">
       <Filter>Version</Filter>
     </ClCompile>
@@ -82,12 +70,6 @@
       <Filter>Version</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Version\IVersionFlyweightFactory.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
-    <ClCompile Include="Version\QGSVersionFlyweightFactory.cpp">
-      <Filter>Version</Filter>
-    </ClCompile>
     <ClCompile Include="Version\Downloads.cpp">
       <Filter>Version</Filter>
     </ClCompile>
@@ -102,6 +84,48 @@
     </ClCompile>
     <ClCompile Include="Version\Asset.cpp">
       <Filter>Version</Filter>
+    </ClCompile>
+    <ClCompile Include="Version\Version.cpp">
+      <Filter>Version</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSOperatingSystem.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionInvalidBaseDirectory.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSException.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionGameDirectory.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionInvalidVersionsDirectory.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionFileOpenFailure.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionJsonDocumentCreateFailure.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\VersionPraseStrategy\IVersionPraseStrategy.cpp">
+      <Filter>Launcher\VersionPraseStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\VersionPraseStrategy\GeneralVersionPraseStrategy.cpp">
+      <Filter>Launcher\VersionPraseStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\VersionPraseStrategy\QGSVersionPraseStrategyFactory.cpp">
+      <Filter>Launcher\VersionPraseStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionJsonObjectCreateFailure.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,21 +156,6 @@
     <ClInclude Include="LaunchOptions\QGSOfflineAuthenticator.h">
       <Filter>LaunchOptions</Filter>
     </ClInclude>
-    <ClInclude Include="Version\IJsonPraseStrategy.h">
-      <Filter>Version</Filter>
-    </ClInclude>
-    <ClInclude Include="Version\IVersion.h">
-      <Filter>Version</Filter>
-    </ClInclude>
-    <ClInclude Include="Version\QGSVersion.h">
-      <Filter>Version</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\OperatingSystem.h">
-      <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Version\IVersionBuilder.h">
-      <Filter>Version</Filter>
-    </ClInclude>
     <ClInclude Include="Version\Arguments.h">
       <Filter>Version</Filter>
     </ClInclude>
@@ -154,12 +163,6 @@
       <Filter>Version</Filter>
     </ClInclude>
     <ClInclude Include="Version\Logging.h">
-      <Filter>Version</Filter>
-    </ClInclude>
-    <ClInclude Include="Version\IVersionFlyweightFactory.h">
-      <Filter>Version</Filter>
-    </ClInclude>
-    <ClInclude Include="Version\QGSVersionFlyweightFactory.h">
       <Filter>Version</Filter>
     </ClInclude>
     <ClInclude Include="Version\Downloads.h">
@@ -176,6 +179,48 @@
     </ClInclude>
     <ClInclude Include="Version\Asset.h">
       <Filter>Version</Filter>
+    </ClInclude>
+    <ClInclude Include="Version\Version.h">
+      <Filter>Version</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSOperatingSystem.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSException.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionGameDirectory.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionInvalidVersionsDirectory.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionInvalidBaseDirectory.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionVersionNotFound.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionFileOpenFailure.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionJsonDocumentCreateFailure.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\VersionPraseStrategy\IVersionPraseStrategy.h">
+      <Filter>Launcher\VersionPraseStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\VersionPraseStrategy\GeneralVersionPraseStrategy.h">
+      <Filter>Launcher\VersionPraseStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\VersionPraseStrategy\QGSVersionPraseStrategyFactory.h">
+      <Filter>Launcher\VersionPraseStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionJsonObjectCreateFailure.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionJsonPraseError.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

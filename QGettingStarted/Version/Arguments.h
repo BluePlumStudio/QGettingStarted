@@ -11,52 +11,87 @@ public:
 	class Argument
 	{
 	public:
-		Argument(const Rules & rules, const QString & value) :mRules(rules), mValue(value)
+		Argument(const QString & value = "", const Rules & rules = Rules()) :mRules(rules), mValue(value)
 		{
 
 		}
+		Argument(const QStringList & value = QStringList(), const Rules & rules = Rules()) :mRules(rules), mValue(value)
+		{
+
+		}
+
+		Argument(const Argument & right) = default;
+
+		Argument(Argument && right) = default;
+
+		Argument & operator=(const Argument & right) = default;
+
+		Argument & operator=(Argument && right) = default;
+
 		~Argument()
 		{
 
 		}
 
-		inline Argument & setRules(const Rules & rules)
+		Argument & setRules(const Rules & rules)
 		{
 			mRules = rules;
 			return *this;
 		}
 
-		inline Argument & setValue(const QString & value)
+		Argument & setValue(const QString & value)
+		{
+			mValue = QStringList(value);
+			return *this;
+		}
+
+		Argument & setValue(const QStringList & value)
 		{
 			mValue = value;
 			return *this;
 		}
 
-		inline Rules getRules()const
+		Rules getRules()const
 		{
 			return mRules;
 		}
 
-		inline QString getValue()const
+		QStringList getValue()const
 		{
 			return mValue;
 		}
+
+		void clear()
+		{
+			mRules.clear();
+			mValue.clear();
+		}
 	private:
 		Rules mRules;
-		QString mValue;
+		QStringList mValue;
 	};
 public:
-	Arguments();
+	Arguments(QList<Argument> & jvm = QList<Argument>(), QList<Argument> & game = QList<Argument>());
+
+	Arguments(const Arguments & right) = default;
+
+	Arguments(Arguments && right) = default;
+
+	Arguments & operator=(const Arguments & right) = default;
+
+	Arguments & operator=(Arguments && right) = default;
 
 	~Arguments();
 
-	inline Arguments & setJvm(QList<Argument> jvm);
+	Arguments & setJvm(QList<Argument> jvm);
 
-	inline Arguments & setGame(QList<Argument> game);
+	Arguments & setGame(QList<Argument> game);
 
-	inline QList<Argument> getGame()const;
+	QList<Argument> getGame()const;
 
-	inline QList<Argument> getJVM()const;
+	QList<Argument> getJVM()const;
+
+	void clear();
 
 private:
 	QList<Argument> mJvm;

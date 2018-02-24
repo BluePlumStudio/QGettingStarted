@@ -2,7 +2,7 @@
 
 #include <QString>
 
-#include "../Version/IVersion.h"
+#include "../Version/Version.h"
 #include "../LaunchOptions/QGSLaunchOptionsBuilder.h"
 
 class QGSLauncher {
@@ -28,5 +28,5 @@ public:
 	 * @param launchOptions
 	 * @param command
 	 */
-	Error generateLaunchCommand(const IVersion & version, const ILaunchOptions & launchOptions, QString & command);
+	Error generateLaunchCommand(const Version & version, const ILaunchOptions & launchOptions, QString & command);
 };

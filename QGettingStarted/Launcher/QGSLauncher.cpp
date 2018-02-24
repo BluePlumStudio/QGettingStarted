@@ -6,7 +6,7 @@
  * @param command
  * @return Error
  */
-QGSLauncher::Error QGSLauncher::generateLaunchCommand(const IVersion & version, const ILaunchOptions & launchOptions, QString & command) 
+QGSLauncher::Error QGSLauncher::generateLaunchCommand(const Version & version, const ILaunchOptions & launchOptions, QString & command) 
 {
     return Error::OK;
 }

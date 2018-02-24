@@ -7,16 +7,27 @@
 class AssetIndex :public Downloads::Download
 {
 public:
-	AssetIndex(const int size, const QString & SHA1, const QString & path, const QUrl & url, const qint64 totalSize, const QString & id);
+	AssetIndex(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const qint64 totalSize = 0, const QString & id = "");
+	
+	AssetIndex(const AssetIndex & right) = default;
+
+	AssetIndex(AssetIndex && right) = default;
+
+	AssetIndex & operator=(const AssetIndex & right) = default;
+
+	AssetIndex & operator=(AssetIndex && right) = default;
+	
 	~AssetIndex();
 
-	inline AssetIndex & setTotalSize(const qint64 totalSize);
+	AssetIndex & setTotalSize(const qint64 totalSize);
 
-	inline AssetIndex & setId(const QString & id);
+	AssetIndex & setId(const QString & id);
 
-	inline qint64 getTotalSize()const;
+	qint64 getTotalSize()const;
 
-	inline QString getId()const;
+	QString getId()const;
+
+	void clear();
 private:
 	/*Download
 	int mSize;
