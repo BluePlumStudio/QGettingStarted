@@ -1,6 +1,6 @@
 #include "ILaunchOptionsBuilder.h"
 
-ILaunchOptions * ILaunchOptionsBuilder::getLaunchOptions() 
+QGSLaunchOptions * ILaunchOptionsBuilder::getLaunchOptions() 
 {
     return nullptr;
 }

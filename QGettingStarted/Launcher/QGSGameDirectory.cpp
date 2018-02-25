@@ -4,18 +4,19 @@
 #include "../Util/QGSExceptionInvalidBaseDirectory.h"
 #include "../Util/QGSExceptionInvalidVersionsDirectory.h"
 #include "../Util/QGSExceptionVersionNotFound.h"
-#include "../Util/QGSExceptionFileOpenFailure.h"
-#include "../Util/QGSExceptionJsonDocumentCreateFailure.h"
-#include "VersionPraseStrategy/QGSVersionPraseStrategyFactory.h"
+#include "../Util/QGSExceptionFileIO.h"
+#include "../Util/QGSExceptionJsonPraseError.h"
+#include "VersionPraser/QGSVersionPraserFactory.h"
+#include "../Version/Library.h"
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
 
-QGSGameDirectory::QGSGameDirectory(const QDir & baseDir) :IGameDirectory(baseDir)
+QGSGameDirectory::QGSGameDirectory(const QDir & baseDir) :mBaseDir(baseDir)
 {
 	init();
 }
 
-QGSGameDirectory::QGSGameDirectory(QDir && baseDir) : IGameDirectory(baseDir)
+QGSGameDirectory::QGSGameDirectory(QDir && baseDir) : mBaseDir(baseDir)
 {
 	init();
 }
@@ -42,6 +43,10 @@ void QGSGameDirectory::init()
 
 const Version & QGSGameDirectory::getVersion(const QString & version)
 {
+	if (version.isEmpty())
+	{
+		throw QGSExceptionVersionNotFound();
+	}
 	if (containsVersion(version))
 	{
 		return mMapVersions[version];
@@ -55,6 +60,52 @@ const Version & QGSGameDirectory::getVersion(const QString & version)
 bool QGSGameDirectory::containsVersion(const QString & version)const
 {
 	return mMapVersions.contains(version);
+}
+
+QFile * QGSGameDirectory::getVersionJarFile(const QString & version)const
+{
+	return new QFile(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".jar");
+}
+
+QFile * QGSGameDirectory::getLibraryFile(const Library & library)const
+{
+	auto && package = library.getPackage().replace(".", SEPARATOR);
+	auto && name = library.getName();
+	auto && version = library.getVersion();
+	auto && mapNatives = library.getNatives();
+	QString nativeString;
+
+	for (auto & i : mapNatives)
+	{
+		if (i.contains(QGSOperatingSystem::getInstance().getProductType()))
+		{
+			nativeString = "-" + mapNatives[i].replace("${arch}", QString::number(QGSOperatingSystem::getInstance().getCurrentCpuArchitectureNumber()));
+			break;
+		}
+	}
+
+	return new QFile(
+		mBaseDir.absolutePath() + package + SEPARATOR + name + SEPARATOR + version + SEPARATOR + name + "-" + version + nativeString + ".jar");
+}
+
+QDir QGSGameDirectory::getNativesDirectory(const QString & version)const
+{
+	return QDir(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + "-natives");
+}
+
+QDir QGSGameDirectory::getBaseDir() const
+{
+	return mBaseDir;
+}
+
+QDir QGSGameDirectory::getAssetDirectory(const QString & version, const AssetIndex & assetIndex)
+{
+	QFile fileAssetJson{ mBaseDir.absolutePath() + SEPARATOR + "assets" + SEPARATOR + "indexes" + SEPARATOR + assetIndex.getId() + ".json" };
+	if (!fileAssetJson.exists())
+	{
+		throw QGSExceptionFileIO(fileAssetJson.fileName());
+	}
+	return QDir();
 }
 
 const Version & QGSGameDirectory::addVersion(const QString & version)
@@ -84,7 +135,7 @@ const Version & QGSGameDirectory::addVersion(const QString & version)
 	//打开文件读取json
 	if (!versionJsonFile.open(QIODevice::ReadOnly))
 	{
-		throw QGSExceptionFileOpenFailure();
+		throw QGSExceptionFileIO();
 	}
 	QJsonParseError jsonPraseError;
 	QJsonDocument jsonDocument{ QJsonDocument::fromJson(versionJsonFile.readAll(),&jsonPraseError) };
@@ -92,11 +143,11 @@ const Version & QGSGameDirectory::addVersion(const QString & version)
 	{
 		versionJsonFile.flush();
 		versionJsonFile.close();
-		throw QGSExceptionJsonDocumentCreateFailure(jsonPraseError);
+		throw QGSExceptionJsonPraseError(jsonPraseError);
 	}
 	//解析json生成version
-	QSharedPointer<QGSVersionPraseStrategyFactory> factory{ new QGSVersionPraseStrategyFactory() };
-	auto & strategy = factory->getVersionPraseStrategy(jsonDocument);
-	strategy.praseVersion(newVersion, jsonDocument);
+	QSharedPointer<QGSVersionPraserFactory> factory{ new QGSVersionPraserFactory() };
+	QSharedPointer<IVersionPraser> praser{ factory->createVersionPraser(jsonDocument) };
+	praser->praseVersion(newVersion, jsonDocument);
 	return *(mMapVersions.insert(version, newVersion));
 }

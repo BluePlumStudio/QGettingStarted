@@ -1,44 +1,20 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "GeneralVersionPraseStrategy.h"
-#include "../../Util/QGSExceptionJsonObjectCreateFailure.h"
+#include "IVersionPraser.h"
 
-GeneralVersionPraseStrategy::GeneralVersionPraseStrategy(const int minimunLaunchVersion):IVersionPraseStrategy(minimunLaunchVersion)
+IVersionPraser::IVersionPraser(const int minimunLaunchVersion) :mMinimunLaunchVersion(minimunLaunchVersion)
 {
 
 }
 
-GeneralVersionPraseStrategy::~GeneralVersionPraseStrategy()
+IVersionPraser::~IVersionPraser()
 {
 
 }
 
-void GeneralVersionPraseStrategy::praseVersion(Version & version, QJsonDocument & jsonDocument)const
-{
-	auto object = jsonDocument.object();
-	version.clear();
 
-	praseId(version, object);
-	praseArguments(version, object);
-	praseMainClass(version, object);
-	praseInheritsFrom(version, object);
-	praseJar(version, object);
-	praseAssetIndex(version, object);
-	praseAssets(version, object);
-	praseLibraries(version, object);
-	praseDownloads(version, object);
-	praseLogging(version, object);
-	praseType(version, object);
-	praseTime(version, object);
-	praseReleaseTime(version, object);
-	praseMinimumLauncherVersion(version, object);
-
-	return;
-}
-
-
-bool GeneralVersionPraseStrategy::praseId(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseId(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("id"))
 	{
@@ -49,7 +25,7 @@ bool GeneralVersionPraseStrategy::praseId(Version & version, QJsonObject & objec
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseArguments(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseArguments(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("minecraftArguments") && !object.contains("arguments"))
 	{
@@ -130,7 +106,7 @@ bool GeneralVersionPraseStrategy::praseArguments(Version & version, QJsonObject 
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseMainClass(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseMainClass(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("mainClass"))
 	{
@@ -141,7 +117,7 @@ bool GeneralVersionPraseStrategy::praseMainClass(Version & version, QJsonObject 
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseInheritsFrom(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseInheritsFrom(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("inheritsFrom"))
 	{
@@ -152,7 +128,7 @@ bool GeneralVersionPraseStrategy::praseInheritsFrom(Version & version, QJsonObje
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseJar(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseJar(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("jar"))
 	{
@@ -163,7 +139,7 @@ bool GeneralVersionPraseStrategy::praseJar(Version & version, QJsonObject & obje
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseAssetIndex(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseAssetIndex(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("assetIndex"))
 	{
@@ -192,7 +168,7 @@ bool GeneralVersionPraseStrategy::praseAssetIndex(Version & version, QJsonObject
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseAssets(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseAssets(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("assets"))
 	{
@@ -203,7 +179,7 @@ bool GeneralVersionPraseStrategy::praseAssets(Version & version, QJsonObject & o
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseLibraries(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseLibraries(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("libraries"))
 	{
@@ -220,7 +196,7 @@ bool GeneralVersionPraseStrategy::praseLibraries(Version & version, QJsonObject 
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseDownloads(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseDownloads(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("downloads"))
 	{
@@ -247,13 +223,13 @@ bool GeneralVersionPraseStrategy::praseDownloads(Version & version, QJsonObject 
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseLogging(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseLogging(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("logging"))
 	{
 		return false;
 	}
-	
+
 	auto objectLogging = object.value("logging").toObject();
 	QMap<QString, Logging> mapLogging;
 
@@ -284,7 +260,7 @@ bool GeneralVersionPraseStrategy::praseLogging(Version & version, QJsonObject & 
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseType(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseType(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("type"))
 	{
@@ -295,7 +271,7 @@ bool GeneralVersionPraseStrategy::praseType(Version & version, QJsonObject & obj
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseTime(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseTime(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("time"))
 	{
@@ -306,7 +282,7 @@ bool GeneralVersionPraseStrategy::praseTime(Version & version, QJsonObject & obj
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseReleaseTime(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseReleaseTime(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("releaseTime"))
 	{
@@ -317,7 +293,7 @@ bool GeneralVersionPraseStrategy::praseReleaseTime(Version & version, QJsonObjec
 	return true;
 }
 
-bool GeneralVersionPraseStrategy::praseMinimumLauncherVersion(Version & version, QJsonObject & object)const
+bool IVersionPraser::praseMinimumLauncherVersion(Version & version, QJsonObject & object)const
 {
 	if (!object.contains("minimumLauncherVersion"))
 	{
@@ -328,7 +304,7 @@ bool GeneralVersionPraseStrategy::praseMinimumLauncherVersion(Version & version,
 	return true;
 }
 /**/
-Rules GeneralVersionPraseStrategy::praseRules(QJsonArray & arrayRules)const
+Rules IVersionPraser::praseRules(QJsonArray & arrayRules)const
 {
 	Rules rules;
 
@@ -339,12 +315,12 @@ Rules GeneralVersionPraseStrategy::praseRules(QJsonArray & arrayRules)const
 		auto action{ objectRule.contains("action") ? objectRule.value("action").toString() : Action::ALLOW };
 		QMap<QString, bool> mapFeatures;
 		QString os{ OS::UNKNOWN };
-		QString version;
+		QString osVersion;
 		if (objectRule.contains("os"))
 		{
 			auto objectOs = objectRule.value("os").toObject();
 			os = objectOs.contains("name") ? objectOs.value("name").toString() : OS::UNKNOWN;
-			version = objectOs.contains("version") ? objectOs.value("version").toString() : "";
+			osVersion = objectOs.contains("version") ? objectOs.value("version").toString() : "";
 		}
 		if (objectRule.contains("features"))
 		{
@@ -356,13 +332,13 @@ Rules GeneralVersionPraseStrategy::praseRules(QJsonArray & arrayRules)const
 				mapFeatures.insert(k, objectFeatures.value(k).toBool());
 			}
 		}
-		rules.addRule(Rules::Rule{ action,mapFeatures,os,version });
+		rules.addRule(Rules::Rule{ action,mapFeatures,os,osVersion });
 	}
 
 	return rules;
 }
 
-QStringList GeneralVersionPraseStrategy::praseValue(QJsonValue & valueValue)const
+QStringList IVersionPraser::praseValue(QJsonValue & valueValue)const
 {
 	QStringList value;
 
@@ -382,7 +358,7 @@ QStringList GeneralVersionPraseStrategy::praseValue(QJsonValue & valueValue)cons
 	return value;
 }
 /**/
-Library GeneralVersionPraseStrategy::praseLibrary(QJsonObject & object)const
+Library IVersionPraser::praseLibrary(QJsonObject & object)const
 {
 	Library library;
 

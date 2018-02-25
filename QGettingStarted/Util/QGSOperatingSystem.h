@@ -36,6 +36,8 @@ public:
 
 	QString getProductVersion()const;
 
+	quint8 getCurrentCpuArchitectureNumber()const;
+
 	QChar getSeparator()const;
 private: 
 	QString mBuildAbi;

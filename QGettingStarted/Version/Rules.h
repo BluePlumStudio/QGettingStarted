@@ -18,8 +18,8 @@ public:
 	class Rule
 	{
 	public:
-		Rule(const QString & action = Action::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = OS::UNKNOWN, const QString & version = "")
-			:mAction(action), mFeatures(features), mOs(os), mVersion(version), mOperatingSystem(QGSOperatingSystem::getInstance())
+		Rule(const QString & action = Action::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = OS::UNKNOWN, const QString & osVersion = "")
+			:mAction(action), mFeatures(features), mOs(os), mOsVersion(osVersion), mOperatingSystem(QGSOperatingSystem::getInstance())
 		{
 
 		}
@@ -54,6 +54,11 @@ public:
 			mOs = os;
 		}
 
+		Rule & setOsVersion(const QString & osVersion)
+		{
+			mOsVersion = osVersion;
+		}
+
 		QString getAction()const
 		{
 			return mAction;
@@ -69,6 +74,11 @@ public:
 			return mOs;
 		}
 
+		QString getOsVersion()const
+		{
+			return mOsVersion;
+		}
+
 		void clear()
 		{
 			mAction = Action::ALLOW;
@@ -79,7 +89,7 @@ public:
 		QString mAction;
 		QMap<QString, bool> mFeatures;
 		QString mOs;
-		QString mVersion;
+		QString mOsVersion;
 		QGSOperatingSystem & mOperatingSystem;
 	};
 public:

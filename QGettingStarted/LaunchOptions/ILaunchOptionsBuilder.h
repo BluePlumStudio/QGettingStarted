@@ -1,14 +1,14 @@
 #pragma once
 
-#include "ILaunchOptions.h"
+#include "QGSLaunchOptions.h"
 
 class ILaunchOptionsBuilder 
 {
 public: 
 	
-	ILaunchOptions * getLaunchOptions();
+	QGSLaunchOptions * getLaunchOptions();
 	
 	ILaunchOptionsBuilder & setConcreteAttribute();
 protected: 
-	ILaunchOptions * mLaunchOptionsPtr;
+	QGSLaunchOptions * mLaunchOptionsPtr;
 };

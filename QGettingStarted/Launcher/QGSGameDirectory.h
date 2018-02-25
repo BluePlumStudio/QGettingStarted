@@ -1,8 +1,11 @@
 #pragma once
 
-#include "IGameDirectory.h"
+#include <QDir>
+#include <QFile>
 
-class QGSGameDirectory: public IGameDirectory 
+#include "../Version/Version.h"
+
+class QGSGameDirectory 
 {
 public:
 	QGSGameDirectory(const QDir & baseDir);
@@ -15,16 +18,27 @@ public:
 
 	QGSGameDirectory & operator=(QGSGameDirectory && right) = delete;
 
-	virtual ~QGSGameDirectory();
+	~QGSGameDirectory();
 
-	virtual const Version & getVersion(const QString & version)override;
+	const Version & getVersion(const QString & version);
 
-	virtual bool containsVersion(const QString & version)const override;
+	bool containsVersion(const QString & version)const;
+
+	QFile * getVersionJarFile(const QString & version)const;
+
+	QFile * getLibraryFile(const Library & library)const;
+
+	QDir getNativesDirectory(const QString & version)const;
+
+	QDir getBaseDir()const;
+
+	QDir getAssetDirectory(const QString & version, const AssetIndex & assetIndex);
 private:
 	void init();
 
 	const Version & addVersion(const QString & version);
 private:
 	QMap<QString, Version> mMapVersions;
+	QDir mBaseDir;
 };
 

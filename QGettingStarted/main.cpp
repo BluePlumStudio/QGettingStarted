@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
 	string directory;
 	getline(cin, directory);
-	IGameDirectory * gameDirectory = new QGSGameDirectory(QDir(QString::fromLocal8Bit(directory.c_str())));
+	QGSGameDirectory * gameDirectory = new QGSGameDirectory(QDir(QString::fromLocal8Bit(directory.c_str())));
 
 	string version;
 	getline(cin, version);

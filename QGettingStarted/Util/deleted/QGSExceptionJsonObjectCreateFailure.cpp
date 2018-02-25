@@ -1,6 +1,6 @@
 #include "QGSExceptionJsonPraseError.h"
 
-QGSExceptionJsonPraseError::QGSExceptionJsonPraseError(const QJsonParseError & jsonPraseError):mJsonPraseError(jsonPraseError)
+QGSExceptionJsonPraseError::QGSExceptionJsonPraseError()
 {
 }
 
@@ -16,9 +16,4 @@ QGSExceptionJsonPraseError * QGSExceptionJsonPraseError::clone()const
 void QGSExceptionJsonPraseError::raise()const
 {
 	throw *this;
-}
-
-QJsonParseError QGSExceptionJsonPraseError::getJsonPraseError()const
-{
-	return mJsonPraseError;
 }
