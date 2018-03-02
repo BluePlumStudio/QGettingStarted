@@ -16,6 +16,7 @@ An open-source library for launching and downloading 'Minecraft'.
 Visual Studio 2015/Qt 5.10.0 下编译通过。
 
 # 开始
+## 启动Minecraft
 ```cpp
 /*启动1.11.2原版为例*/
 
