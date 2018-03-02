@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
 
-  QGSGameDirectory gameDirectory{ QDir(".minecraft") };
+  QGSGameDirectory gameDirectory{ QDir(QCoreApplication::applicationDirPath() + "/" + ".minecraft") };
 
   //启动器工厂
 	QSharedPointer<QGSLauncherFactory> launcherFactory{ new QGSLauncherFactory };
