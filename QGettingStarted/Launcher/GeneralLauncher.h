@@ -17,7 +17,7 @@ public:
 
 	virtual ~GeneralLauncher();
 
-	virtual Error generateLaunchCommand(const QGSLaunchOptions & launchOptions, QString & command)override;
+	virtual Error generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command)override;
 private:
 
 };

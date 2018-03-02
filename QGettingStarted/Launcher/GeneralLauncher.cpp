@@ -11,9 +11,14 @@ GeneralLauncher::~GeneralLauncher()
 {
 }
 
-GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOptions & launchOptions, QString & command)
+GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command)
 {
 	QStringList listLaunchCommand;//launchCommand
+
+	if (!launchOptions)
+	{
+		return Error::POINTER_IS_NULL;
+	}
 
 	auto rootVersionId{ mVersion };
 	//获取根版本
@@ -29,23 +34,23 @@ GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOpt
 		return Error::JAR_FILE_NOT_FOUND;
 	}
 	//前置指令
-	const auto && wrapper{ launchOptions.getWrapper() };
+	const auto && wrapper{ launchOptions->getWrapper() };
 	if (!wrapper.isEmpty())
 	{
 		listLaunchCommand.append(wrapper);
 	}
 	//Java路径
-	const auto && JavaPath{ launchOptions.getJavaPath() };
+	const auto && JavaPath{ launchOptions->getJavaPath() };
 	if (JavaPath.isEmpty())
 	{
 		return Error::JAVA_PATH_NOT_INCLUDED;
 	}
 	listLaunchCommand.append(QString{ "\"%1\"" }.arg(JavaPath));
 	//JVM虚拟机参数
-	if (launchOptions.getGeneratedJVMArguments())
+	if (launchOptions->getGeneratedJVMArguments())
 	{
 		//自定义JVM虚拟机参数
-		const auto && JVMArguments{ launchOptions.getJVMArguments() };
+		const auto && JVMArguments{ launchOptions->getJVMArguments() };
 		if (!JVMArguments.isEmpty())
 		{
 			listLaunchCommand.append(JVMArguments);
@@ -54,13 +59,13 @@ GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOpt
 		listLaunchCommand.append(QString("\"-Dminecraft.client.jar=%1\"").
 			arg(fileRootVersionJar->fileName()));
 		//最大内存（MB）
-		listLaunchCommand.append(QString("-Xmx%1m").arg(launchOptions.getMaxMemory()));
+		listLaunchCommand.append(QString("-Xmx%1m").arg(launchOptions->getMaxMemory()));
 		//最小内存（MB）
-		listLaunchCommand.append(QString("-Xmn%1m").arg(launchOptions.getMinMemory()));
+		listLaunchCommand.append(QString("-Xmn%1m").arg(launchOptions->getMinMemory()));
 		//内存永久保存区域（MB）
-		if (launchOptions.getMetaspaceSize() > 0)
+		if (launchOptions->getMetaspaceSize() > 0)
 		{
-			listLaunchCommand.append(QString("-XX:PermSize=%1m").arg(launchOptions.getMetaspaceSize()));
+			listLaunchCommand.append(QString("-XX:PermSize=%1m").arg(launchOptions->getMetaspaceSize()));
 		}
 		//-Dfml.ignoreInvalidMinecraftCertificates=true -Dfml.ignorePatchDiscrepancies=true
 		listLaunchCommand.append("-Dfml.ignoreInvalidMinecraftCertificates=true");
@@ -142,7 +147,7 @@ GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOpt
 	{
 		minecraftArguments = mGameDirectory.getVersion(mVersion).getMinecraftArguments();
 	}
-	auto && authInfo{ launchOptions.getAuthInfo() };
+	auto && authInfo{ launchOptions->getAuthInfo() };
 	minecraftArguments.replace("${auth_player_name}", authInfo.getSelectedProfile().getName())
 		.replace("${version_name}", mVersion)
 		.replace("${game_directory}", QString{ "\"%1\"" }.arg(mGameDirectory.getBaseDir().absolutePath()))
@@ -161,21 +166,21 @@ GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOpt
 	listLaunchCommand.append(minecraftArguments);
 	//其他参数
 	//窗口大小
-	auto && windowSize{ launchOptions.getWindowSize() };
+	auto && windowSize{ launchOptions->getWindowSize() };
 	if (!windowSize.isEmpty())
 	{
 		listLaunchCommand.append(QString("--height %1").arg(windowSize.height()));
 		listLaunchCommand.append(QString("--width %1").arg(windowSize.width()));
 	}
 	//直连服务器
-	auto && serverInfo{ launchOptions.getServerInfo() };
+	auto && serverInfo{ launchOptions->getServerInfo() };
 	if (!serverInfo.address.isEmpty() && !serverInfo.port.isEmpty())
 	{
 		listLaunchCommand.append(QString("--server %1").arg(serverInfo.address));
 		listLaunchCommand.append(QString("--port %1").arg(serverInfo.port));
 	}
 	//代理
-	auto && proxyInfo{ launchOptions.getProxyInfo() };
+	auto && proxyInfo{ launchOptions->getProxyInfo() };
 	if (!proxyInfo.address.isEmpty() && !proxyInfo.port.isEmpty())
 	{
 		listLaunchCommand.append(QString("--proxyHost %1").arg(proxyInfo.address));
@@ -187,7 +192,7 @@ GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOpt
 		}
 	}
 	//游戏额外参数
-	auto gameArguments{ launchOptions.getGameArguments() };
+	auto gameArguments{ launchOptions->getGameArguments() };
 	if (!gameArguments.isEmpty())
 	{
 		listLaunchCommand.append(gameArguments);

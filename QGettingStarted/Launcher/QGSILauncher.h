@@ -12,7 +12,8 @@ public:
 
 	enum class Error 
 	{ 
-		OK, UNKNOWN_ERROR, 
+		OK, 
+		UNKNOWN_ERROR, 
 		JSON_LIBRARIES_NOT_INCLUDED, 
 		JSON_MINECRAFT_ARGUMENTS_NOT_INCLUDED, 
 		MINECRAFT_ARGUMENTS_VARIABLE_NOT_INCLUDED, 
@@ -38,7 +39,7 @@ public:
 
 	virtual ~QGSILauncher();
 	
-	virtual Error generateLaunchCommand(const QGSLaunchOptions & launchOptions, QString & command) = 0;
+	virtual Error generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command) = 0;
 protected:
 	bool isRulesAllowing(const Rules & rules);
 private:

@@ -133,6 +133,7 @@
     <ClInclude Include="LaunchOptions\QGSLaunchOptionsBuilder.h" />
     <ClInclude Include="LaunchOptions\QGSOfflineAccount.h" />
     <ClInclude Include="LaunchOptions\QGSOfflineAccountFactory.h" />
+    <ClInclude Include="QGettingStarted.h" />
     <ClInclude Include="Util\QGSException.h" />
     <ClInclude Include="Util\QGSExceptionFileIO.h" />
     <ClInclude Include="Util\QGSExceptionGameDirectory.h" />

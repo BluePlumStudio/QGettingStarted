@@ -4,15 +4,13 @@
 #include <iostream>
 #include <string>
 
-#include "Launcher/QGSGameDirectory.h"
-#include "Launcher/QGSILauncher.h"
-#include "Launcher/QGSLauncherFactory.h"
-#include "LaunchOptions/QGSOfflineAccountFactory.h"
+#include "QGettingStarted.h"
 
 int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
 	using namespace std;
+	using namespace qgs;
 
 	string directory;
 	getline(cin, directory);
@@ -41,7 +39,7 @@ int main(int argc, char *argv[])
 	launchOptionsBuilder.setMetaspaceSize(8888);
 	launchOptionsBuilder.setProxyInfo(QGSLaunchOptions::ProxyInfo("proxyaddress", "proxyport", "proxyuser", "proxypassword"));
 	*/
-	launcher->generateLaunchCommand(*launchOptionsBuilder.getLaunchOptions(), launchCommand);
+	launcher->generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
 
 	QFile launchCommandFile;
 	launchCommandFile.setFileName(QCoreApplication::applicationDirPath() + "/" + QString::fromStdString(version) + ".bat");

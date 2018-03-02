@@ -234,5 +234,6 @@
     <ClInclude Include="LaunchOptions\QGSIAccount.h">
       <Filter>LaunchOptions</Filter>
     </ClInclude>
+    <ClInclude Include="QGettingStarted.h" />
   </ItemGroup>
 </Project>
