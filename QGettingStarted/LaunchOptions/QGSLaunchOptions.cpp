@@ -106,9 +106,9 @@ bool QGSLaunchOptions::getGeneratedJVMArguments()const
 	return mGeneratedJVMArguments;
 }
 //
-QGSLaunchOptions & QGSLaunchOptions::setJavaPath(const QString & javaPath)
+QGSLaunchOptions & QGSLaunchOptions::setJavaPath(const QString & JavaPath)
 {
-	mJavaPath = javaPath;
+	mJavaPath = JavaPath;
 	return *this;
 }
 

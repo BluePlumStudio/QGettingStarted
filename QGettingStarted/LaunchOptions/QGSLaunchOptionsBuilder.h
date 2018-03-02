@@ -1,12 +1,38 @@
 #pragma once
 
-#include "ILaunchOptionsBuilder.h"
+#include "QGSILaunchOptionsBuilder.h"
 #include "QGSLaunchOptions.h"
 
-class QGSLaunchOptionsBuilder: public ILaunchOptionsBuilder 
+class QGSLaunchOptionsBuilder: public QGSILaunchOptionsBuilder 
 {
 public: 
+	QGSLaunchOptionsBuilder();
+
+	QGSLaunchOptionsBuilder(const QGSLaunchOptionsBuilder & right) = delete;
+
+	QGSLaunchOptionsBuilder(QGSLaunchOptionsBuilder && right) = delete;
+
+	QGSLaunchOptionsBuilder & operator=(const QGSLaunchOptionsBuilder & right) = delete;
+
+	QGSLaunchOptionsBuilder & operator=(QGSLaunchOptionsBuilder && right) = delete;
+
+	virtual ~QGSLaunchOptionsBuilder();
 	
-	QGSLaunchOptions * getLaunchOptions();
+	virtual QGSLaunchOptions * getLaunchOptions()override;
+
+	virtual QGSLaunchOptionsBuilder & setJavaPath(const QString & JavaPath)override;
+	virtual QGSLaunchOptionsBuilder & setMaxMemory(const int maxMemory)override;
+	virtual QGSLaunchOptionsBuilder & setMinMemory(const int minMemory)override;
+	virtual QGSLaunchOptionsBuilder & setAuthInfo(const AuthInfo & authInfo)override;
+	virtual QGSLaunchOptionsBuilder & setJVMArguments(const QString & JVMArguments)override;
+	virtual QGSLaunchOptionsBuilder & setWrapper(const QString & wrapper)override;
+	virtual QGSLaunchOptionsBuilder & setPreCalledCommands(const QString & preCalledCommands)override;
+	virtual QGSLaunchOptionsBuilder & setServerInfo(const QGSLaunchOptions::ServerInfo & serverInfo)override;
+	virtual QGSLaunchOptionsBuilder & setGameArguments(const QString & gameArguments)override;
+	virtual QGSLaunchOptionsBuilder & setWindowSize(const QSize & windowSize)override;
+	virtual QGSLaunchOptionsBuilder & setFullScreen(const bool fullScreen)override;
+	virtual QGSLaunchOptionsBuilder & setMetaspaceSize(const int metaspaceSize)override;
+	virtual QGSLaunchOptionsBuilder & setProxyInfo(const QGSLaunchOptions::ProxyInfo & proxyInfo)override;
+	virtual QGSLaunchOptionsBuilder & setGeneratedJVMArguments(const bool generatedJVMArguments)override;
 
 };

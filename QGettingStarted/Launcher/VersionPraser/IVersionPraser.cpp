@@ -193,6 +193,7 @@ bool IVersionPraser::praseLibraries(Version & version, QJsonObject & object)cons
 		libraries.push_back(praseLibrary(i.toObject()));
 	}
 
+	version.setLibraries(libraries);
 	return true;
 }
 
@@ -384,6 +385,7 @@ Library IVersionPraser::praseLibrary(QJsonObject & object)const
 		}
 
 		library.setNatives(natives);
+		library.setNative(true);
 	}
 	//extract
 	if (object.contains("extract"))

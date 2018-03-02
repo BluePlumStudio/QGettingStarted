@@ -13,7 +13,7 @@ class AuthInfo
 public:
 	struct Profile
 	{
-		Profile(const QString & id = "", const QString name = "", const bool legacy = false) :mId(id), mName(name), mLegacy(legacy)
+		Profile(const QString & id = "{}", const QString name = "{}", const bool legacy = false) :mId(id), mName(name), mLegacy(legacy)
 		{
 
 		}
@@ -70,7 +70,11 @@ public:
 		bool mLegacy;
 	};
 public:
-	AuthInfo(const QString & accessToken = "", const QString & clientToken = "", const QString & userType = UserType::LEGACY, const Profile & selectedProfile = Profile(), const QString & twitchAccessToken = "");
+	AuthInfo(const QString & accessToken = "{}",
+		const QString & clientToken = "{}",
+		const QString & userType = UserType::LEGACY,
+		const Profile & selectedProfile = Profile(),
+		const QString & twitchAccessToken = "{}");
 	
 	~AuthInfo();
 

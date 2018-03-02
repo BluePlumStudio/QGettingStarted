@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ILauncher.h"
+#include "QGSILauncher.h"
 #include "QGSGameDirectory.h"
 
 class QGSLauncherFactory
@@ -18,7 +18,7 @@ public:
 
 	~QGSLauncherFactory();
 
-	ILauncher * createLauncher(const QString & version, QGSGameDirectory & gameDirectory)const;
+	QGSILauncher * createLauncher(const QString & version, QGSGameDirectory & gameDirectory)const;
 
 private:
 

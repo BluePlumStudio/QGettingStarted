@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IAccount.h"
+#include "QGSIAccount.h"
 
-class QGSOfflineAccount :public IAccount
+class QGSOfflineAccount :public QGSIAccount
 {
 public:
 	QGSOfflineAccount();
@@ -17,7 +17,7 @@ public:
 
 	QGSOfflineAccount & operator=(QGSOfflineAccount && right) = default;
 
-	virtual AuthInfo signIn(const QString & userName, const QString & password, const QString & clientToken = "")const override;
+	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", const QString & clientToken = "")const override;
 
 private:
 

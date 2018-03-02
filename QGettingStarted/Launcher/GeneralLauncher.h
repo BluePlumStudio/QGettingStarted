@@ -1,11 +1,11 @@
 #pragma once
 
-#include "ILauncher.h"
+#include "QGSILauncher.h"
 
-class GeneralLauncher :public ILauncher
+class GeneralLauncher :public QGSILauncher
 {
 public:
-	GeneralLauncher(const QString & version, QGSGameDirectory & gameDirectory);
+	GeneralLauncher(const QString version, QGSGameDirectory & gameDirectory);
 
 	GeneralLauncher(const GeneralLauncher & right) = delete;
 
@@ -17,7 +17,7 @@ public:
 
 	virtual ~GeneralLauncher();
 
-	Error generateLaunchCommand(const QGSLaunchOptions & launchOptions, QString & command);
+	virtual Error generateLaunchCommand(const QGSLaunchOptions & launchOptions, QString & command)override;
 private:
 
 };

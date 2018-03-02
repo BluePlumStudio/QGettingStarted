@@ -1,14 +1,14 @@
 #pragma once
 
-#include "IAccountFactory.h"
+#include "QGSIAccountFactory.h"
 #include "QGSOfflineAccount.h"
 
-class QGSOfflineAccountFactory: public IAccountFactory 
+class QGSOfflineAccountFactory: public QGSIAccountFactory 
 {
 public: 
 	QGSOfflineAccountFactory();
 
-	QGSOfflineAccountFactory(const IAccountFactory & right) = delete;
+	QGSOfflineAccountFactory(const QGSIAccountFactory & right) = delete;
 
 	QGSOfflineAccountFactory(QGSOfflineAccountFactory && right) = delete;
 

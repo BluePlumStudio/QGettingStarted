@@ -24,6 +24,20 @@
     <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">
+    <QtMsBuild>$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets" />
@@ -36,11 +50,11 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
@@ -53,10 +67,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
@@ -70,16 +84,16 @@
   <ItemGroup>
     <ClCompile Include="Launcher\GeneralLauncher.cpp" />
     <ClCompile Include="Launcher\QGSGameDirectory.cpp" />
-    <ClCompile Include="Launcher\ILauncher.cpp" />
+    <ClCompile Include="Launcher\QGSILauncher.cpp" />
     <ClCompile Include="Launcher\QGSLauncherFactory.cpp" />
     <ClCompile Include="Launcher\VersionPraser\GeneralVersionPraser.cpp" />
     <ClCompile Include="Launcher\VersionPraser\IVersionPraser.cpp" />
     <ClCompile Include="Launcher\VersionPraser\QGSVersionPraserFactory.cpp" />
     <ClCompile Include="LaunchOptions\AuthInfo.cpp" />
-    <ClCompile Include="LaunchOptions\IAccount.cpp" />
-    <ClCompile Include="LaunchOptions\IAccountFactory.cpp" />
+    <ClCompile Include="LaunchOptions\QGSIAccount.cpp" />
+    <ClCompile Include="LaunchOptions\QGSIAccountFactory.cpp" />
     <ClCompile Include="LaunchOptions\QGSLaunchOptions.cpp" />
-    <ClCompile Include="LaunchOptions\ILaunchOptionsBuilder.cpp" />
+    <ClCompile Include="LaunchOptions\QGSILaunchOptionsBuilder.cpp" />
     <ClCompile Include="LaunchOptions\QGSLaunchOptionsBuilder.cpp" />
     <ClCompile Include="LaunchOptions\QGSOfflineAccount.cpp" />
     <ClCompile Include="LaunchOptions\QGSOfflineAccountFactory.cpp" />
@@ -106,16 +120,16 @@
   <ItemGroup>
     <ClInclude Include="Launcher\GeneralLauncher.h" />
     <ClInclude Include="Launcher\QGSGameDirectory.h" />
-    <ClInclude Include="Launcher\ILauncher.h" />
+    <ClInclude Include="Launcher\QGSILauncher.h" />
     <ClInclude Include="Launcher\QGSLauncherFactory.h" />
     <ClInclude Include="Launcher\VersionPraser\GeneralVersionPraser.h" />
     <ClInclude Include="Launcher\VersionPraser\IVersionPraser.h" />
     <ClInclude Include="Launcher\VersionPraser\QGSVersionPraserFactory.h" />
     <ClInclude Include="LaunchOptions\AuthInfo.h" />
-    <ClInclude Include="LaunchOptions\IAccount.h" />
-    <ClInclude Include="LaunchOptions\IAccountFactory.h" />
+    <ClInclude Include="LaunchOptions\QGSIAccount.h" />
+    <ClInclude Include="LaunchOptions\QGSIAccountFactory.h" />
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h" />
-    <ClInclude Include="LaunchOptions\ILaunchOptionsBuilder.h" />
+    <ClInclude Include="LaunchOptions\QGSILaunchOptionsBuilder.h" />
     <ClInclude Include="LaunchOptions\QGSLaunchOptionsBuilder.h" />
     <ClInclude Include="LaunchOptions\QGSOfflineAccount.h" />
     <ClInclude Include="LaunchOptions\QGSOfflineAccountFactory.h" />
@@ -139,11 +153,14 @@
     <ClInclude Include="Version\Rules.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="5.10.0-msvc2015" MocOptions="" />
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="Qt5.10.0_msvc2015" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

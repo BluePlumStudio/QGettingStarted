@@ -7,12 +7,13 @@
 class Library 
 {
 public:
-	Library(const QString & package = "", 
+	Library(const QString & package = "",
 		const QString & name = "",
 		const QString & version = "",
 		const Downloads & downloads = Downloads(),
 		const Extract & extract = Extract(),
 		const bool lateload = false,
+		const bool native = false,
 		const QMap<QString, QString> & natives = QMap<QString, QString>(),
 		const Rules & rules = Rules());
 
@@ -32,6 +33,7 @@ public:
 	Library & setDownloads(const Downloads & downloads);
 	Library & setExtract(const Extract & extract);
 	Library & setLateload(const bool lateload);
+	Library & setNative(const bool native);
 	Library & setNatives(const QMap<QString, QString> & natives);
 	Library & setRules(const Rules & rules);
 
@@ -41,6 +43,7 @@ public:
 	Downloads getDownloads()const;
 	Extract getExtract()const;
 	bool getLateload()const;
+	bool getNative()const;
 	QMap<QString, QString> getNatives()const;
 	Rules getRules()const;
 
@@ -51,6 +54,7 @@ private:
 	Downloads mDownloads;
 	Extract mExtract;
 	bool mLateload;
+	bool mNative;
 	QMap<QString, QString> mNatives;
 	Rules mRules;
 };

@@ -36,9 +36,6 @@
     <ClCompile Include="Launcher\QGSGameDirectory.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
-    <ClCompile Include="LaunchOptions\ILaunchOptionsBuilder.cpp">
-      <Filter>LaunchOptions</Filter>
-    </ClCompile>
     <ClCompile Include="LaunchOptions\QGSLaunchOptionsBuilder.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
@@ -100,25 +97,13 @@
     <ClCompile Include="Launcher\QGSLauncherFactory.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
-    <ClCompile Include="Launcher\ILauncher.cpp">
-      <Filter>Launcher</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\GeneralLauncher.cpp">
-      <Filter>Launcher</Filter>
-    </ClCompile>
     <ClCompile Include="Launcher\VersionPraser\QGSVersionPraserFactory.cpp">
       <Filter>Launcher\VersionPraser</Filter>
     </ClCompile>
     <ClCompile Include="LaunchOptions\AuthInfo.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
-    <ClCompile Include="LaunchOptions\IAccountFactory.cpp">
-      <Filter>LaunchOptions</Filter>
-    </ClCompile>
     <ClCompile Include="LaunchOptions\QGSOfflineAccountFactory.cpp">
-      <Filter>LaunchOptions</Filter>
-    </ClCompile>
-    <ClCompile Include="LaunchOptions\IAccount.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
     <ClCompile Include="LaunchOptions\QGSOfflineAccount.cpp">
@@ -133,13 +118,25 @@
     <ClCompile Include="Util\QGSExceptionFileIO.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Launcher\QGSILauncher.cpp">
+      <Filter>Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\GeneralLauncher.cpp">
+      <Filter>Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="LaunchOptions\QGSILaunchOptionsBuilder.cpp">
+      <Filter>LaunchOptions</Filter>
+    </ClCompile>
+    <ClCompile Include="LaunchOptions\QGSIAccountFactory.cpp">
+      <Filter>LaunchOptions</Filter>
+    </ClCompile>
+    <ClCompile Include="LaunchOptions\QGSIAccount.cpp">
+      <Filter>LaunchOptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\QGSGameDirectory.h">
       <Filter>Launcher</Filter>
-    </ClInclude>
-    <ClInclude Include="LaunchOptions\ILaunchOptionsBuilder.h">
-      <Filter>LaunchOptions</Filter>
     </ClInclude>
     <ClInclude Include="LaunchOptions\QGSLaunchOptionsBuilder.h">
       <Filter>LaunchOptions</Filter>
@@ -198,13 +195,7 @@
     <ClInclude Include="Launcher\VersionPraser\IVersionPraser.h">
       <Filter>Launcher\VersionPraser</Filter>
     </ClInclude>
-    <ClInclude Include="Launcher\ILauncher.h">
-      <Filter>Launcher</Filter>
-    </ClInclude>
     <ClInclude Include="Launcher\QGSLauncherFactory.h">
-      <Filter>Launcher</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\GeneralLauncher.h">
       <Filter>Launcher</Filter>
     </ClInclude>
     <ClInclude Include="Launcher\VersionPraser\QGSVersionPraserFactory.h">
@@ -213,13 +204,7 @@
     <ClInclude Include="LaunchOptions\AuthInfo.h">
       <Filter>LaunchOptions</Filter>
     </ClInclude>
-    <ClInclude Include="LaunchOptions\IAccountFactory.h">
-      <Filter>LaunchOptions</Filter>
-    </ClInclude>
     <ClInclude Include="LaunchOptions\QGSOfflineAccountFactory.h">
-      <Filter>LaunchOptions</Filter>
-    </ClInclude>
-    <ClInclude Include="LaunchOptions\IAccount.h">
       <Filter>LaunchOptions</Filter>
     </ClInclude>
     <ClInclude Include="LaunchOptions\QGSOfflineAccount.h">
@@ -233,6 +218,21 @@
     </ClInclude>
     <ClInclude Include="Util\QGSExceptionFileIO.h">
       <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\QGSILauncher.h">
+      <Filter>Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\GeneralLauncher.h">
+      <Filter>Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="LaunchOptions\QGSILaunchOptionsBuilder.h">
+      <Filter>LaunchOptions</Filter>
+    </ClInclude>
+    <ClInclude Include="LaunchOptions\QGSIAccountFactory.h">
+      <Filter>LaunchOptions</Filter>
+    </ClInclude>
+    <ClInclude Include="LaunchOptions\QGSIAccount.h">
+      <Filter>LaunchOptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

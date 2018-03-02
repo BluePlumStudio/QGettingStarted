@@ -6,9 +6,10 @@ Library::Library(const QString & package,
 	const Downloads & downloads,
 	const Extract & extract,
 	const bool lateload,
+	const bool native,
 	const QMap<QString, QString> & natives,
 	const Rules & rules)
-	:mPackage(package), mName(name), mVersion(version), mDownloads(downloads), mExtract(extract), mLateload(lateload), mNatives(natives), mRules(rules)
+	:mPackage(package), mName(name), mVersion(version), mDownloads(downloads), mExtract(extract), mLateload(lateload), mNative(native), mNatives(natives), mRules(rules)
 {
 
 }
@@ -54,6 +55,12 @@ Library & Library::setLateload(const bool lateload)
 	return *this;
 }
 
+Library & Library::setNative(const bool native)
+{
+	mNative = native;
+	return *this;
+}
+
 Library & Library::setNatives(const QMap<QString, QString> & natives)
 {
 	mNatives = natives;
@@ -94,6 +101,11 @@ Extract Library::getExtract()const
 bool Library::getLateload()const
 {
 	return mLateload;
+}
+
+bool Library::getNative() const
+{
+	return mNative;
 }
 
 QMap<QString, QString> Library::getNatives()const

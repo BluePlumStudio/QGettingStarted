@@ -3,7 +3,7 @@
 #include <QString>
 #include <QSize>
 
-#include "IAccountFactory.h"
+#include "QGSIAccountFactory.h"
 #include "../Launcher/QGSGameDirectory.h"
 
 class QGSLaunchOptions 
@@ -11,15 +11,36 @@ class QGSLaunchOptions
 public:
 	class ProxyInfo
 	{
-	private:
-		QString mAddress;
-		QString mPort;
-		QString mUser;
-		QString mPassword;
+	public:
+		ProxyInfo(QString _address = "", QString _port = "", QString _user = "", QString _password = "")
+			:address(_address), port(_port), user(_user), password(_password)
+		{
+
+		}
+		~ProxyInfo()
+		{
+
+		}
+	public:
+		QString address;
+		QString port;
+		QString user;
+		QString password;
 	};
 
 	class ServerInfo
 	{
+	public:
+		ServerInfo(const QString & _address = "", const QString & _port = "25565")
+			:address(_address), port(_port)
+		{
+
+		}
+
+		~ServerInfo()
+		{
+
+		}
 	public:
 		QString address;
 		QString port;
@@ -65,7 +86,7 @@ public:
 	ProxyInfo getProxyInfo()const;
 	bool getGeneratedJVMArguments()const;
 
-	QGSLaunchOptions & setJavaPath(const QString & javaPath);
+	QGSLaunchOptions & setJavaPath(const QString & JavaPath);
 	QGSLaunchOptions & setMaxMemory(const int maxMemory);
 	QGSLaunchOptions & setMinMemory(const int minMemory);
 	QGSLaunchOptions & setAuthInfo(const AuthInfo & authInfo);

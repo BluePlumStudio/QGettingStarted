@@ -9,7 +9,7 @@ QGSLauncherFactory::~QGSLauncherFactory()
 {
 }
 
-ILauncher * QGSLauncherFactory::createLauncher(const QString & version, QGSGameDirectory & gameDirectory)const
+QGSILauncher * QGSLauncherFactory::createLauncher(const QString & version, QGSGameDirectory & gameDirectory)const
 {
 	return new GeneralLauncher(version, gameDirectory);
 }
