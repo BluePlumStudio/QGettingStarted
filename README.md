@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
   //启动器工厂
 	QSharedPointer<QGSLauncherFactory> launcherFactory{ new QGSLauncherFactory };
   //生成合适的启动器
-	QSharedPointer<QGSILauncher>launcher{ launcherFactory ->createLauncher("1.11.2",gameDirectory)};
+	QSharedPointer<QGSILauncher>launcher{ launcherFactory->createLauncher("1.11.2",gameDirectory)};
 	
   QGSLaunchOptionsBuilder launchOptionsBuilder;//启动选项建造者
 	launchOptionsBuilder.setJavaPath("C:/Program Files/Java/jre1.8.0_121/bin/javaw.exe");//Java路径
