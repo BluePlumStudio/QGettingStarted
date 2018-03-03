@@ -5,9 +5,7 @@
 class QGSExceptionFileIO :public QGSException
 {
 public:
-	QGSExceptionFileIO();
-
-	QGSExceptionFileIO(const QString & absolutePath);
+	QGSExceptionFileIO(const QString & absolutePath = "");
 
 	virtual ~QGSExceptionFileIO();
 

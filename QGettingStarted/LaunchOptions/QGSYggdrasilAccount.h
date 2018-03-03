@@ -5,7 +5,7 @@
 #include "QGSIAccount.h"
 #include "Util/QGSNetwork.h"
 
-class QGSYggdrasilAccount
+class QGSYggdrasilAccount :public QGSIAccount
 {
 public:
 	QGSYggdrasilAccount();

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "QGSExceptionGameDirectory.h"
+#include <QException>
 
-class QGSExceptionVersionNotFound :public QGSExceptionGameDirectory
+class QGSExceptionVersionNotFound :public QException
 {
 public:
 	QGSExceptionVersionNotFound();

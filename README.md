@@ -53,5 +53,20 @@ int main(int argc, char *argv[])
   
 	return 0;
 }
+```
+## 正版登录
+```cpp
+	try
+	{
+		AuthInfo authInfo = QGSYggdrasilAccountFactory().createAccount()->authenticate("gouliguojiashengsiyi@ha.com", "+1s+1s+1s");
+	}
+	catch(const QGSExceptionAuthentication & exception)
+	{
+		/*异常处理
+		QString error{ exception.getError() };
+		QString errorMessage{ exception.getErrorMessage() };
+		QString cause{ exception.getCause() };
+		*/
+	}
 
 ```

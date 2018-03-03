@@ -1,8 +1,6 @@
 #include <QJsonDocument>
 
 #include "QGSGameDirectory.h"
-#include "../Util/QGSExceptionInvalidBaseDirectory.h"
-#include "../Util/QGSExceptionInvalidVersionsDirectory.h"
 #include "../Util/QGSExceptionVersionNotFound.h"
 #include "../Util/QGSExceptionFileIO.h"
 #include "../Util/QGSExceptionJsonPraseError.h"
@@ -29,7 +27,7 @@ void QGSGameDirectory::init()
 {
 	if (!mBaseDir.exists())
 	{
-		throw QGSExceptionInvalidBaseDirectory();
+		throw QGSExceptionFileIO(mBaseDir.absolutePath());
 	}
 	
 	/*
@@ -37,7 +35,7 @@ void QGSGameDirectory::init()
 	*/
 	if (!mBaseDir.exists("." + SEPARATOR + "versions" + SEPARATOR))
 	{
-		throw QGSExceptionInvalidVersionsDirectory();
+		throw QGSExceptionFileIO(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR);
 	}
 }
 

@@ -70,16 +70,7 @@
     <ClCompile Include="Util\QGSOperatingSystem.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="Util\QGSExceptionInvalidBaseDirectory.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
     <ClCompile Include="Util\QGSException.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\QGSExceptionGameDirectory.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Util\QGSExceptionInvalidVersionsDirectory.cpp">
       <Filter>Util</Filter>
     </ClCompile>
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp">
@@ -142,6 +133,9 @@
     <ClCompile Include="Util\QGSNetwork.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Util\QGSExceptionAuthentication.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\QGSGameDirectory.h">
@@ -181,15 +175,6 @@
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="Util\QGSException.h">
-      <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\QGSExceptionGameDirectory.h">
-      <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\QGSExceptionInvalidVersionsDirectory.h">
-      <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\QGSExceptionInvalidBaseDirectory.h">
       <Filter>Util</Filter>
     </ClInclude>
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h">
@@ -249,6 +234,9 @@
     </ClInclude>
     <ClInclude Include="LaunchOptions\QGSYggdrasilAccountFactory.h">
       <Filter>LaunchOptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionAuthentication.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

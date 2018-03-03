@@ -1,9 +1,5 @@
 #include "QGSExceptionFileIO.h"
 
-QGSExceptionFileIO::QGSExceptionFileIO()
-{
-}
-
 QGSExceptionFileIO::QGSExceptionFileIO(const QString & absolutePath) :mAbsolutePath(absolutePath)
 {
 }

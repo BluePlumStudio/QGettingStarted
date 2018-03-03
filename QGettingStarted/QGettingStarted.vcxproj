@@ -113,12 +113,10 @@
     <ClCompile Include="LaunchOptions\QGSYggdrasilAccountFactory.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Util\QGSException.cpp" />
+    <ClCompile Include="Util\QGSExceptionAuthentication.cpp" />
     <ClCompile Include="Util\QGSExceptionFileIO.cpp" />
-    <ClCompile Include="Util\QGSExceptionGameDirectory.cpp" />
-    <ClCompile Include="Util\QGSExceptionInvalidBaseDirectory.cpp" />
     <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp" />
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp" />
-    <ClCompile Include="Util\QGSExceptionInvalidVersionsDirectory.cpp" />
     <ClCompile Include="Util\QGSNetwork.cpp" />
     <ClCompile Include="Util\QGSOperatingSystem.cpp" />
     <ClCompile Include="Util\QGSUuidGenerator.cpp" />
@@ -152,12 +150,10 @@
     <ClInclude Include="LaunchOptions\QGSYggdrasilAccountFactory.h" />
     <ClInclude Include="QGettingStarted.h" />
     <ClInclude Include="Util\QGSException.h" />
+    <ClInclude Include="Util\QGSExceptionAuthentication.h" />
     <ClInclude Include="Util\QGSExceptionFileIO.h" />
-    <ClInclude Include="Util\QGSExceptionGameDirectory.h" />
-    <ClInclude Include="Util\QGSExceptionInvalidBaseDirectory.h" />
     <ClInclude Include="Util\QGSExceptionJsonPraseError.h" />
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h" />
-    <ClInclude Include="Util\QGSExceptionInvalidVersionsDirectory.h" />
     <QtMoc Include="Util\QGSNetwork.h" />
     <ClInclude Include="Util\QGSOperatingSystem.h" />
     <ClInclude Include="Util\QGSUuidGenerator.h" />
