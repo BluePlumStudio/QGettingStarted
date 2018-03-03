@@ -17,7 +17,7 @@ public:
 
 	QGSOfflineAccount & operator=(QGSOfflineAccount && right) = default;
 
-	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", const QString & clientToken = "")const override;
+	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "")noexcept override;
 
 private:
 

@@ -64,6 +64,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <QtMoc>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork</IncludePath>
+      <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_NETWORK_LIB</Define>
+    </QtMoc>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -80,6 +86,12 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <QtMoc>
+      <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork</IncludePath>
+      <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB</Define>
+    </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Launcher\GeneralLauncher.cpp" />
@@ -97,6 +109,8 @@
     <ClCompile Include="LaunchOptions\QGSLaunchOptionsBuilder.cpp" />
     <ClCompile Include="LaunchOptions\QGSOfflineAccount.cpp" />
     <ClCompile Include="LaunchOptions\QGSOfflineAccountFactory.cpp" />
+    <ClCompile Include="LaunchOptions\QGSYggdrasilAccount.cpp" />
+    <ClCompile Include="LaunchOptions\QGSYggdrasilAccountFactory.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Util\QGSException.cpp" />
     <ClCompile Include="Util\QGSExceptionFileIO.cpp" />
@@ -105,6 +119,7 @@
     <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp" />
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp" />
     <ClCompile Include="Util\QGSExceptionInvalidVersionsDirectory.cpp" />
+    <ClCompile Include="Util\QGSNetwork.cpp" />
     <ClCompile Include="Util\QGSOperatingSystem.cpp" />
     <ClCompile Include="Util\QGSUuidGenerator.cpp" />
     <ClCompile Include="Version\Arguments.cpp" />
@@ -133,6 +148,8 @@
     <ClInclude Include="LaunchOptions\QGSLaunchOptionsBuilder.h" />
     <ClInclude Include="LaunchOptions\QGSOfflineAccount.h" />
     <ClInclude Include="LaunchOptions\QGSOfflineAccountFactory.h" />
+    <ClInclude Include="LaunchOptions\QGSYggdrasilAccount.h" />
+    <ClInclude Include="LaunchOptions\QGSYggdrasilAccountFactory.h" />
     <ClInclude Include="QGettingStarted.h" />
     <ClInclude Include="Util\QGSException.h" />
     <ClInclude Include="Util\QGSExceptionFileIO.h" />
@@ -141,6 +158,7 @@
     <ClInclude Include="Util\QGSExceptionJsonPraseError.h" />
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h" />
     <ClInclude Include="Util\QGSExceptionInvalidVersionsDirectory.h" />
+    <QtMoc Include="Util\QGSNetwork.h" />
     <ClInclude Include="Util\QGSOperatingSystem.h" />
     <ClInclude Include="Util\QGSUuidGenerator.h" />
     <ClInclude Include="Version\Arguments.h" />

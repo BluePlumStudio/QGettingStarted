@@ -9,7 +9,7 @@ QGSOfflineAccount::~QGSOfflineAccount()
 {
 }
 
-AuthInfo QGSOfflineAccount::authenticate(const QString & userName, const QString & password, const QString & clientToken)const
+AuthInfo QGSOfflineAccount::authenticate(const QString & userName, const QString & password, QString clientToken)noexcept
 {
 	return AuthInfo{ QGSUuidGenerator::getInstance().generateUuid(userName),
 	clientToken.isEmpty() ? QGSUuidGenerator::getInstance().generateUuid(userName) : clientToken,

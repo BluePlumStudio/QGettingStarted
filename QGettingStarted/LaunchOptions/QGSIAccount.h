@@ -19,7 +19,7 @@ public:
 
 	QGSIAccount & operator=(QGSIAccount && right) = default;
 
-	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", const QString & clientToken = "")const = 0;
+	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "") = 0;
 private:
 
 };

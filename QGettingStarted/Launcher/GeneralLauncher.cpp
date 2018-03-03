@@ -2,6 +2,7 @@
 #include <QSharedPointer>
 
 #include "GeneralLauncher.h"
+#include "Util/QGSExceptionVersionNotFound.h"
 
 GeneralLauncher::GeneralLauncher(const QString version, QGSGameDirectory & gameDirectory) :QGSILauncher(version, gameDirectory)
 {
@@ -13,20 +14,28 @@ GeneralLauncher::~GeneralLauncher()
 
 GeneralLauncher::Error GeneralLauncher::generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command)
 {
-	QStringList listLaunchCommand;//launchCommand
-
 	if (!launchOptions)
 	{
 		return Error::POINTER_IS_NULL;
 	}
 
+	QStringList listLaunchCommand;//launchCommand
 	auto rootVersionId{ mVersion };
+	Version rootVersion;
 	//获取根版本
-	while (!mGameDirectory.getVersion(rootVersionId).getInheritsFrom().isEmpty())
+	try
 	{
-		rootVersionId = mGameDirectory.getVersion(rootVersionId).getInheritsFrom();
+		while (!mGameDirectory.getVersion(rootVersionId).getInheritsFrom().isEmpty())
+		{
+			rootVersionId = mGameDirectory.getVersion(rootVersionId).getInheritsFrom();
+		}
+		rootVersion = mGameDirectory.getVersion(rootVersionId);
 	}
-	auto & rootVersion{ mGameDirectory.getVersion(rootVersionId) };
+	catch (const QGSExceptionVersionNotFound & exception)
+	{
+		return Error::JAR_FILE_NOT_FOUND;
+	}
+
 	//根版本Jar文件
 	QSharedPointer<QFile> fileRootVersionJar{ mGameDirectory.getVersionJarFile(rootVersionId) };
 	if (!fileRootVersionJar->exists())

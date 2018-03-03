@@ -133,6 +133,15 @@
     <ClCompile Include="LaunchOptions\QGSIAccount.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
+    <ClCompile Include="LaunchOptions\QGSYggdrasilAccount.cpp">
+      <Filter>LaunchOptions</Filter>
+    </ClCompile>
+    <ClCompile Include="LaunchOptions\QGSYggdrasilAccountFactory.cpp">
+      <Filter>LaunchOptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSNetwork.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\QGSGameDirectory.h">
@@ -235,5 +244,16 @@
       <Filter>LaunchOptions</Filter>
     </ClInclude>
     <ClInclude Include="QGettingStarted.h" />
+    <ClInclude Include="LaunchOptions\QGSYggdrasilAccount.h">
+      <Filter>LaunchOptions</Filter>
+    </ClInclude>
+    <ClInclude Include="LaunchOptions\QGSYggdrasilAccountFactory.h">
+      <Filter>LaunchOptions</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Util\QGSNetwork.h">
+      <Filter>Util</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

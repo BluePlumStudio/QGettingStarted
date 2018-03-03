@@ -31,27 +31,27 @@ using namespace qgs;//核心的名称空间
 
 int main(int argc, char *argv[])
 {
-  QCoreApplication a(argc, argv);
+	QCoreApplication a(argc, argv);
 
-  QGSGameDirectory gameDirectory{ QDir(QCoreApplication::applicationDirPath() + "/" + ".minecraft") };
+	QGSGameDirectory gameDirectory{ QDir(QCoreApplication::applicationDirPath() + "/" + ".minecraft") };
 
-  //启动器工厂
+	//启动器工厂
 	QSharedPointer<QGSLauncherFactory> launcherFactory{ new QGSLauncherFactory };
-  //生成合适的启动器
+	//生成合适的启动器
 	QSharedPointer<QGSILauncher>launcher{ launcherFactory->createLauncher("1.11.2",gameDirectory)};
 	
-  QGSLaunchOptionsBuilder launchOptionsBuilder;//启动选项建造者
+	QGSLaunchOptionsBuilder launchOptionsBuilder;//启动选项建造者
 	launchOptionsBuilder.setJavaPath("C:/Program Files/Java/jre1.8.0_121/bin/javaw.exe");//Java路径
 	launchOptionsBuilder.setMaxMemory(1024);//最大内存（MB）
 	launchOptionsBuilder.setMinMemory(128);//最小内存（MB）
 	launchOptionsBuilder.setAuthInfo(QGSOfflineAccountFactory().createAccount()->authenticate("gou"));//用户，这里是离线用户
 	//launchOptionsBuilder.setJVMArguments("-XX:+UseG1GC -XX:-UseAdaptiveSizePolicy -XX:-OmitStackTraceInFastThrow");//可选的JVM虚拟机参数
   
-  //生成启动命令，生成的命令可以直接用QProcess执行
+	//生成启动命令，生成的命令可以直接用QProcess执行
 	QString launchCommand;//启动命令
-  launcher->generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
+	launcher->generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
   
-  return 0;
+	return 0;
 }
 
 ```
