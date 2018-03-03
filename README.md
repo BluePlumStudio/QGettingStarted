@@ -58,7 +58,8 @@ int main(int argc, char *argv[])
 ```cpp
 	try
 	{
-		AuthInfo authInfo = QGSYggdrasilAccountFactory().createAccount()->authenticate("gouliguojiashengsiyi@ha.com", "+1s+1s+1s");
+		AuthInfo authInfo = QGSYggdrasilAccountFactory().createAccount()->authenticate("gouliguojiashengsiyi@ha.com",
+			"+1s+1s+1s");
 	}
 	catch(const QGSExceptionAuthentication & exception)
 	{
