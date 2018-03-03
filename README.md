@@ -17,6 +17,14 @@ An open-source library for launching and downloading 'Minecraft'.
 Visual Studio 2015/Qt 5.10.0 下编译通过。
 
 # 开始
+## 使用启动核心
+1.下载源码自行编译或下载已编译好的静态库（不保证最新）：
+- Windows：
+[城通网盘1](https://u15016760.pipipan.com/fs/15016760-239566462)
+[城通网盘2](https://u15016760.ctfile.com/fs/15016760-239566462)
+
+2.将静态库如QGettingStarted.lib添加入工程，包含头文件QGettingStarted.h即可。
+
 ## 启动Minecraft
 ```cpp
 /*启动1.11.2原版为例*/
