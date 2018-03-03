@@ -1,15 +1,16 @@
 # QGettingStarted
-(重构中2333)
 An open-source library for launching and downloading 'Minecraft'.
 
  * 启动全版本Minecraft
  * 可拓展登录系统
    * 支持Offline（离线）
-   * 支持Yggdrasil（开发中）
+   * 支持Yggdrasil（正版）
  * 下载Minecraft（开发中）
  * 下载Forge/Liteloader（开发中）
-   * 支持Liteloader的快照版本
-   * 自定义下载源
+   * 支持Liteloader的快照版本
+   * 支持自定义下载源
+   * 支持多线程下载
+   * 支持断点下载
  * Natives解压（开发中）
 
 # 编译
