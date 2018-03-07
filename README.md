@@ -1,5 +1,6 @@
 # QGettingStarted
-An open-source library for launching and downloading 'Minecraft'.
+[![Build Status](https://travis-ci.org/BluePlumStudio/QGettingStarted.svg?branch=renew)](https://travis-ci.org/BluePlumStudio/QGettingStarted)
+## An open-source library for launching and downloading 'Minecraft'.
 
  * 启动全版本Minecraft
  * 可拓展登录系统
