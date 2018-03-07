@@ -3,6 +3,10 @@
 
 #include "QGSGeneralLauncherStrategy.h"
 #include "Util/QGSExceptionVersionNotFound.h"
+#include "Util/QGSExceptionFileIO.h"
+#include "Util/QuaZip/JlCompress.h"
+
+static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
 
 QGSGeneralLauncherStrategy::QGSGeneralLauncherStrategy() 
 {
@@ -118,8 +122,8 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 		launchCommandList.append("${classpath}");
 	}
 	//nativesÄ¿Â¼
-	auto && nativesDirectory{
-		QString{ "\"%1\"" }.arg(gameDirectory.generateNativesDirectory(version.getId()).absolutePath()) };
+	auto nativesDirectory{ gameDirectory.generateNativesDirectory(version.getId()) };
+	nativesDirectory.mkdir(nativesDirectory.absolutePath());
 	//launcherName
 	const QString launcherName{ "\"QGettingStarted\"" };
 	//launcherVersion
@@ -134,12 +138,30 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 
 		for (auto & i : libraryList)
 		{
-			if (!isRulesAllowing(i.getRules()) || i.getNative())
+			if (!isRulesAllowing(i.getRules()))
 			{
 				continue;
 			}
+
 			QSharedPointer<QFile> fileLibrary{ gameDirectory.generateLibraryFile(i) };
-			auto && libraryPath{ fileLibrary->fileName() };
+			auto libraryPath{ fileLibrary->fileName() };
+			if (i.getNative())
+			{
+				//½âÑ¹natives
+				auto extractList{ JlCompress::extractDir(libraryPath, nativesDirectory.absolutePath()) };
+				if (extractList.isEmpty())
+				{
+					throw QGSExceptionFileIO(nativesDirectory.absolutePath());
+				}
+				auto && extract{ i.getExtract() };
+				auto && excludeList{ extract.getExclude() };
+				for (auto & exclude : excludeList)
+				{
+					nativesDirectory.rmdir(nativesDirectory.absolutePath() + SEPARATOR + exclude);
+				}
+				continue;
+			}
+
 			libraryPathList.append(libraryPath);
 		}
 
@@ -218,8 +240,8 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 		launchCommandList.append(gameArguments);
 	}
 
-	command = launchCommandList.join(" ")		
-		.replace("${natives_directory}", nativesDirectory)
+	command = launchCommandList.join(" ")
+		.replace("${natives_directory}", "\"" + nativesDirectory.absolutePath() + "\"")
 		.replace("${launcher_name}", launcherName)
 		.replace("${launcher_version}", launcherVersion)
 		.replace("${classpath}", QString{ "\"%1\"" }.arg(libraryPathList.join(";")));

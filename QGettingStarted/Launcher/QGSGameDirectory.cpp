@@ -66,17 +66,19 @@ QFile * QGSGameDirectory::generateVersionJarFile(const QString & version)const
 
 QFile * QGSGameDirectory::generateLibraryFile(const Library & library)const
 {
-	auto package = library.getPackage().replace(".", SEPARATOR);
-	auto && name = library.getName();
-	auto && version = library.getVersion();
-	auto && nativeMap = library.getNatives();
+	auto package{ library.getPackage().replace(".", SEPARATOR) };
+	auto && name{ library.getName() };
+	auto && version{ library.getVersion() };
+	auto && nativesMap{ library.getNatives() };
 	QString nativeString{ "" };
 
-	for (auto & i : nativeMap)
+	auto && keys{ nativesMap.keys() };
+	for (auto & i : keys)
 	{
 		if (i.contains(QGSOperatingSystem::getInstance().getProductType()))
 		{
-			nativeString = "-" + nativeMap[i].replace("${arch}", QString::number(QGSOperatingSystem::getInstance().getCurrentCpuArchitectureNumber()));
+			nativeString = "-" + nativesMap[i];
+			nativeString.replace("${arch}", QString::number(QGSOperatingSystem::getInstance().getCurrentCpuArchitectureNumber()));
 			break;
 		}
 	}
