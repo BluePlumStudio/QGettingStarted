@@ -1,6 +1,7 @@
 #include <QtCore/QCoreApplication>
 #include <QSharedPointer>
 #include <QTextStream>
+#include <QDebug>
 #include <iostream>
 #include <string>
 
@@ -12,23 +13,28 @@ int main(int argc, char *argv[])
 	using namespace std;
 	using namespace qgs;
 
+	cout << "游戏路径：";
 	string directory;
 	getline(cin, directory);
 	QGSGameDirectory gameDirectory{ QDir(QString::fromLocal8Bit(directory.c_str())) };
 
+	cout << "游戏版本：";
 	string version;
 	getline(cin, version);
-	//gameDirectory->getVersion(QString::fromLocal8Bit(version.c_str()));
-
-	QSharedPointer<QGSLauncherFactory> launcherFactory{ new QGSLauncherFactory };
-	QSharedPointer<QGSILauncher>launcher{ launcherFactory ->createLauncher(QString::fromLocal8Bit(version.c_str()),gameDirectory)};
+	QGSLauncher launcher{ gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())),gameDirectory };
 
 	QGSLaunchOptionsBuilder launchOptionsBuilder;
 	QString launchCommand;
-	launchOptionsBuilder.setJavaPath("C:/Program Files/Java/jre1.8.0_121/bin/javaw.exe");
+	cout << "Java路径：";
+	string JavaPath;
+	getline(cin, JavaPath);
+	launchOptionsBuilder.setJavaPath("C:/Program Files/Java/jre1.8.0_162/bin/javaw.exe");
 	launchOptionsBuilder.setMaxMemory(1024);
 	launchOptionsBuilder.setMinMemory(128);
-	launchOptionsBuilder.setAuthInfo(QGSOfflineAccountFactory().createAccount()->authenticate("23333"));
+	cout << "用户名：";
+	string userName;
+	getline(cin, userName);
+	launchOptionsBuilder.setAuthInfo(QGSOfflineAccountFactory().createAccount()->authenticate(QString::fromLocal8Bit(userName.c_str())));
 	launchOptionsBuilder.setJVMArguments("-XX:+UseG1GC -XX:-UseAdaptiveSizePolicy -XX:-OmitStackTraceInFastThrow");
 	/*
 	launchOptionsBuilder.setWrapper("前置指令");
@@ -39,7 +45,7 @@ int main(int argc, char *argv[])
 	launchOptionsBuilder.setMetaspaceSize(8888);
 	launchOptionsBuilder.setProxyInfo(QGSLaunchOptions::ProxyInfo("proxyaddress", "proxyport", "proxyuser", "proxypassword"));
 	*/
-	launcher->generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
+	launcher.generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
 
 	QFile launchCommandFile;
 	launchCommandFile.setFileName(QCoreApplication::applicationDirPath() + "/" + QString::fromStdString(version) + ".bat");

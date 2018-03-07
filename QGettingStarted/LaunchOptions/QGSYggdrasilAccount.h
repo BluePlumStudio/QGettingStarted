@@ -22,5 +22,4 @@ public:
 
 	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "");
 private:
-	QNetworkRequest * generateNetworkRequest();
 };

@@ -16,9 +16,18 @@ An open-source library for launching and downloading 'Minecraft'.
 # 编译
 Visual Studio 2015/Qt 5.10.0 下编译通过。
 
+# 警告
+## Beta阶段的API可能与最终版本有所出入，请留意最新开发文档。
+
 # 开始
 ## 使用启动核心
-1.下载源码自行编译或下载已编译好的静态库（不保证最新）：
+1.下载源码自行编译或下载已编译好的静态库（已更新到Beta 1.1.0）：
+ * Beta 1.1.0
+- Windows：
+[城通网盘1](https://u15016760.pipipan.com/fs/15016760-239989968)
+[城通网盘2](https://u15016760.ctfile.com/fs/15016760-239989968)
+
+ * Beta 1.0.0
 - Windows：
 [城通网盘1](https://u15016760.pipipan.com/fs/15016760-239566462)
 [城通网盘2](https://u15016760.ctfile.com/fs/15016760-239566462)
@@ -44,10 +53,7 @@ int main(int argc, char *argv[])
 
 	QGSGameDirectory gameDirectory{ QDir(QCoreApplication::applicationDirPath() + "/" + ".minecraft") };
 
-	//启动器工厂
-	QSharedPointer<QGSLauncherFactory> launcherFactory{ new QGSLauncherFactory };
-	//生成合适的启动器
-	QSharedPointer<QGSILauncher>launcher{ launcherFactory->createLauncher("1.11.2",gameDirectory)};
+	QGSLauncher launcher{ gameDirectory.getVersion("1.11.2"),gameDirectory };
 	
 	QGSLaunchOptionsBuilder launchOptionsBuilder;//启动选项建造者
 	launchOptionsBuilder.setJavaPath("C:/Program Files/Java/jre1.8.0_121/bin/javaw.exe");//Java路径
@@ -58,7 +64,7 @@ int main(int argc, char *argv[])
   
 	//生成启动命令，生成的命令可以直接用QProcess执行
 	QString launchCommand;//启动命令
-	launcher->generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
+	launcher.generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
   
 	return 0;
 }

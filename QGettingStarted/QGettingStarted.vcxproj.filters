@@ -31,6 +31,11 @@
     <Filter Include="Launcher\VersionPraser">
       <UniqueIdentifier>{092b7a6a-2a38-4b9b-9766-6b9322faac03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{02637500-6b9b-4c86-8655-f4ee3fd7db4b}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Launcher\QGSGameDirectory.cpp">
@@ -79,18 +84,6 @@
     <ClCompile Include="LaunchOptions\QGSLaunchOptions.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
-    <ClCompile Include="Launcher\VersionPraser\GeneralVersionPraser.cpp">
-      <Filter>Launcher\VersionPraser</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\VersionPraser\IVersionPraser.cpp">
-      <Filter>Launcher\VersionPraser</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\QGSLauncherFactory.cpp">
-      <Filter>Launcher</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\VersionPraser\QGSVersionPraserFactory.cpp">
-      <Filter>Launcher\VersionPraser</Filter>
-    </ClCompile>
     <ClCompile Include="LaunchOptions\AuthInfo.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
@@ -108,12 +101,6 @@
     </ClCompile>
     <ClCompile Include="Util\QGSExceptionFileIO.cpp">
       <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\QGSILauncher.cpp">
-      <Filter>Launcher</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\GeneralLauncher.cpp">
-      <Filter>Launcher</Filter>
     </ClCompile>
     <ClCompile Include="LaunchOptions\QGSILaunchOptionsBuilder.cpp">
       <Filter>LaunchOptions</Filter>
@@ -135,6 +122,27 @@
     </ClCompile>
     <ClCompile Include="Util\QGSExceptionAuthentication.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_QGSNetwork.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\VersionPraser\QGSIVersionPraseStrategy.cpp">
+      <Filter>Launcher\VersionPraser</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\VersionPraser\QGSGeneralVersionPraseStrategy.cpp">
+      <Filter>Launcher\VersionPraser</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\VersionPraser\QGSVersionPraser.cpp">
+      <Filter>Launcher\VersionPraser</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\QGSILauncherStrategy.cpp">
+      <Filter>Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\QGSGeneralLauncherStrategy.cpp">
+      <Filter>Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\QGSLauncher.cpp">
+      <Filter>Launcher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,18 +191,6 @@
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h">
       <Filter>LaunchOptions</Filter>
     </ClInclude>
-    <ClInclude Include="Launcher\VersionPraser\GeneralVersionPraser.h">
-      <Filter>Launcher\VersionPraser</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\VersionPraser\IVersionPraser.h">
-      <Filter>Launcher\VersionPraser</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\QGSLauncherFactory.h">
-      <Filter>Launcher</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\VersionPraser\QGSVersionPraserFactory.h">
-      <Filter>Launcher\VersionPraser</Filter>
-    </ClInclude>
     <ClInclude Include="LaunchOptions\AuthInfo.h">
       <Filter>LaunchOptions</Filter>
     </ClInclude>
@@ -212,12 +208,6 @@
     </ClInclude>
     <ClInclude Include="Util\QGSExceptionFileIO.h">
       <Filter>Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\QGSILauncher.h">
-      <Filter>Launcher</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\GeneralLauncher.h">
-      <Filter>Launcher</Filter>
     </ClInclude>
     <ClInclude Include="LaunchOptions\QGSILaunchOptionsBuilder.h">
       <Filter>LaunchOptions</Filter>
@@ -238,10 +228,28 @@
     <ClInclude Include="Util\QGSExceptionAuthentication.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="Launcher\VersionPraser\QGSIVersionPraseStrategy.h">
+      <Filter>Launcher\VersionPraser</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\VersionPraser\QGSGeneralVersionPraseStrategy.h">
+      <Filter>Launcher\VersionPraser</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\VersionPraser\QGSVersionPraser.h">
+      <Filter>Launcher\VersionPraser</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\QGSILauncherStrategy.h">
+      <Filter>Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\QGSGeneralLauncherStrategy.h">
+      <Filter>Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\QGSLauncher.h">
+      <Filter>Launcher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Util\QGSNetwork.h">
+    <CustomBuild Include="Util\QGSNetwork.h">
       <Filter>Util</Filter>
-    </QtMoc>
+    </CustomBuild>
   </ItemGroup>
 </Project>

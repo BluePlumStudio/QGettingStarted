@@ -95,13 +95,14 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Launcher\GeneralLauncher.cpp" />
+    <ClCompile Include="GeneratedFiles\Debug\moc_QGSNetwork.cpp" />
+    <ClCompile Include="Launcher\QGSGeneralLauncherStrategy.cpp" />
     <ClCompile Include="Launcher\QGSGameDirectory.cpp" />
-    <ClCompile Include="Launcher\QGSILauncher.cpp" />
-    <ClCompile Include="Launcher\QGSLauncherFactory.cpp" />
-    <ClCompile Include="Launcher\VersionPraser\GeneralVersionPraser.cpp" />
-    <ClCompile Include="Launcher\VersionPraser\IVersionPraser.cpp" />
-    <ClCompile Include="Launcher\VersionPraser\QGSVersionPraserFactory.cpp" />
+    <ClCompile Include="Launcher\QGSILauncherStrategy.cpp" />
+    <ClCompile Include="Launcher\QGSLauncher.cpp" />
+    <ClCompile Include="Launcher\VersionPraser\QGSGeneralVersionPraseStrategy.cpp" />
+    <ClCompile Include="Launcher\VersionPraser\QGSIVersionPraseStrategy.cpp" />
+    <ClCompile Include="Launcher\VersionPraser\QGSVersionPraser.cpp" />
     <ClCompile Include="LaunchOptions\AuthInfo.cpp" />
     <ClCompile Include="LaunchOptions\QGSIAccount.cpp" />
     <ClCompile Include="LaunchOptions\QGSIAccountFactory.cpp" />
@@ -132,13 +133,13 @@
     <ClCompile Include="Version\Rules.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Launcher\GeneralLauncher.h" />
+    <ClInclude Include="Launcher\QGSGeneralLauncherStrategy.h" />
     <ClInclude Include="Launcher\QGSGameDirectory.h" />
-    <ClInclude Include="Launcher\QGSILauncher.h" />
-    <ClInclude Include="Launcher\QGSLauncherFactory.h" />
-    <ClInclude Include="Launcher\VersionPraser\GeneralVersionPraser.h" />
-    <ClInclude Include="Launcher\VersionPraser\IVersionPraser.h" />
-    <ClInclude Include="Launcher\VersionPraser\QGSVersionPraserFactory.h" />
+    <ClInclude Include="Launcher\QGSILauncherStrategy.h" />
+    <ClInclude Include="Launcher\QGSLauncher.h" />
+    <ClInclude Include="Launcher\VersionPraser\QGSGeneralVersionPraseStrategy.h" />
+    <ClInclude Include="Launcher\VersionPraser\QGSIVersionPraseStrategy.h" />
+    <ClInclude Include="Launcher\VersionPraser\QGSVersionPraser.h" />
     <ClInclude Include="LaunchOptions\AuthInfo.h" />
     <ClInclude Include="LaunchOptions\QGSIAccount.h" />
     <ClInclude Include="LaunchOptions\QGSIAccountFactory.h" />
@@ -155,7 +156,7 @@
     <ClInclude Include="Util\QGSExceptionFileIO.h" />
     <ClInclude Include="Util\QGSExceptionJsonPraseError.h" />
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h" />
-    <QtMoc Include="Util\QGSNetwork.h" />
+    <CustomBuild Include="Util\QGSNetwork.h" />
     <ClInclude Include="Util\QGSOperatingSystem.h" />
     <ClInclude Include="Util\QGSUuidGenerator.h" />
     <ClInclude Include="Version\Arguments.h" />
@@ -176,7 +177,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="Qt5.10.0_msvc2015" MocOptions="" />
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="5.10.0-msvc2015" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

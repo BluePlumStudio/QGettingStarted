@@ -12,33 +12,36 @@ public:
 
 	QGSGameDirectory(QDir && baseDir);
 
-	QGSGameDirectory(const QGSGameDirectory & right) = delete;
+	QGSGameDirectory(const QGSGameDirectory & right) = default;
 
-	QGSGameDirectory & operator=(const QGSGameDirectory & right) = delete;
+	QGSGameDirectory(QGSGameDirectory && right) = default;
 
-	QGSGameDirectory & operator=(QGSGameDirectory && right) = delete;
+	QGSGameDirectory & operator=(const QGSGameDirectory & right) = default;
+
+	QGSGameDirectory & operator=(QGSGameDirectory && right) = default;
 
 	~QGSGameDirectory();
 
 	const Version & getVersion(const QString & version);
 
+	const Version & addVersion(const QString & version);
+
 	bool containsVersion(const QString & version)const;
 
-	QFile * getVersionJarFile(const QString & version)const;
+	QFile * generateVersionJarFile(const QString & version)const;
 
-	QFile * getLibraryFile(const Library & library)const;
+	QFile * generateLibraryFile(const Library & library)const;
 
-	QDir getNativesDirectory(const QString & version)const;
+	QDir generateNativesDirectory(const QString & version)const;
 
 	QDir getBaseDir()const;
 
-	QDir getAssetDirectory(const QString & version, const AssetIndex & assetIndex);
+	QDir generateAssetDirectory(const QString & version, const AssetIndex & assetIndex);
 private:
 	void init();
 
-	const Version & addVersion(const QString & version);
 private:
-	QMap<QString, Version> mMapVersions;
+	QMap<QString, Version> mVersionMap;
 	QDir mBaseDir;
 };
 

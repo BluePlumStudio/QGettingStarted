@@ -6,8 +6,8 @@ namespace qgs
 }
 
 #include "Launcher/QGSGameDirectory.h"
-#include "Launcher/QGSILauncher.h"
-#include "Launcher/QGSLauncherFactory.h"
+#include "Launcher/QGSILauncherStrategy.h"
+#include "Launcher/QGSLauncher.h"
 #include "LaunchOptions/QGSIAccount.h"
 #include "LaunchOptions/QGSIAccountFactory.h"
 #include "LaunchOptions/QGSILaunchOptionsBuilder.h"

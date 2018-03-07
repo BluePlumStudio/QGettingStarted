@@ -28,6 +28,10 @@ public:
 	QGSNetwork & operator=(QGSNetwork && right) = delete;
 
 	~QGSNetwork();
+
+	static QNetworkRequest * generateNetworkRequest();
+
+	static QNetworkRequest * generateNetworkRequestWithSSL();
 private:
 	QGSNetwork(QObject * parent = nullptr);
 private:

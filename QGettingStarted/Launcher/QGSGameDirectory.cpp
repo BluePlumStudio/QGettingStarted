@@ -4,7 +4,7 @@
 #include "../Util/QGSExceptionVersionNotFound.h"
 #include "../Util/QGSExceptionFileIO.h"
 #include "../Util/QGSExceptionJsonPraseError.h"
-#include "VersionPraser/QGSVersionPraserFactory.h"
+#include "VersionPraser/QGSVersionPraser.h"
 #include "../Version/Library.h"
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
@@ -45,39 +45,38 @@ const Version & QGSGameDirectory::getVersion(const QString & version)
 	{
 		throw QGSExceptionVersionNotFound();
 	}
-	if (containsVersion(version))
+
+	if (!containsVersion(version))
 	{
-		return mMapVersions[version];
+		addVersion(version);
 	}
-	else
-	{
-		return addVersion(version);
-	}
+
+	return mVersionMap[version];
 }
 
 bool QGSGameDirectory::containsVersion(const QString & version)const
 {
-	return mMapVersions.contains(version);
+	return mVersionMap.contains(version);
 }
 
-QFile * QGSGameDirectory::getVersionJarFile(const QString & version)const
+QFile * QGSGameDirectory::generateVersionJarFile(const QString & version)const
 {
 	return new QFile(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".jar");
 }
 
-QFile * QGSGameDirectory::getLibraryFile(const Library & library)const
+QFile * QGSGameDirectory::generateLibraryFile(const Library & library)const
 {
 	auto package = library.getPackage().replace(".", SEPARATOR);
 	auto && name = library.getName();
 	auto && version = library.getVersion();
-	auto && mapNatives = library.getNatives();
+	auto && nativeMap = library.getNatives();
 	QString nativeString{ "" };
 
-	for (auto & i : mapNatives)
+	for (auto & i : nativeMap)
 	{
 		if (i.contains(QGSOperatingSystem::getInstance().getProductType()))
 		{
-			nativeString = "-" + mapNatives[i].replace("${arch}", QString::number(QGSOperatingSystem::getInstance().getCurrentCpuArchitectureNumber()));
+			nativeString = "-" + nativeMap[i].replace("${arch}", QString::number(QGSOperatingSystem::getInstance().getCurrentCpuArchitectureNumber()));
 			break;
 		}
 	}
@@ -86,7 +85,7 @@ QFile * QGSGameDirectory::getLibraryFile(const Library & library)const
 		mBaseDir.absolutePath() + SEPARATOR + "libraries" + SEPARATOR + package + SEPARATOR + name + SEPARATOR + version + SEPARATOR + name + "-" + version + nativeString + ".jar");
 }
 
-QDir QGSGameDirectory::getNativesDirectory(const QString & version)const
+QDir QGSGameDirectory::generateNativesDirectory(const QString & version)const
 {
 	return QDir(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + "-natives");
 }
@@ -96,7 +95,7 @@ QDir QGSGameDirectory::getBaseDir() const
 	return mBaseDir;
 }
 
-QDir QGSGameDirectory::getAssetDirectory(const QString & version, const AssetIndex & assetIndex)
+QDir QGSGameDirectory::generateAssetDirectory(const QString & version, const AssetIndex & assetIndex)
 {
 	/*
 	QFile fileAssetJson{ mBaseDir.absolutePath() + SEPARATOR + "assets" + SEPARATOR + "indexes" + SEPARATOR + assetIndex.getId() + ".json" };
@@ -153,8 +152,9 @@ const Version & QGSGameDirectory::addVersion(const QString & version)
 		throw QGSExceptionJsonPraseError(jsonPraseError);
 	}
 	//½âÎöjsonÉú³Éversion
-	QSharedPointer<QGSVersionPraserFactory> factory{ new QGSVersionPraserFactory() };
-	QSharedPointer<IVersionPraser> praser{ factory->createVersionPraser(jsonDocument) };
-	praser->praseVersion(newVersion, jsonDocument);
-	return *(mMapVersions.insert(version, newVersion));
+	QSharedPointer<QGSVersionPraser> versionPraser{ new QGSVersionPraser() };
+	versionPraser->praseVersion(newVersion, jsonDocument);
+	return !newVersion.getInheritsFrom().isEmpty()
+		? addVersion(newVersion.getInheritsFrom())
+		: *(mVersionMap.insert(version, newVersion));
 }

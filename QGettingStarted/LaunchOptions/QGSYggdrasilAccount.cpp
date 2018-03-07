@@ -46,7 +46,9 @@ AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QStri
 
 	jsonDocument.setObject(jsonObject);
 	auto byteArrayRequestData{ jsonDocument.toJson() };
-	QSharedPointer<QNetworkRequest>request{ generateNetworkRequest() };
+	QSharedPointer<QNetworkRequest>request{ QGSNetwork::generateNetworkRequestWithSSL() };
+	request->setUrl(Network::YggdrasilAuthServerUrl);
+	request->setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	request->setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());
 	
 	QEventLoop eventLoop;
@@ -85,19 +87,4 @@ AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QStri
 	}
 	*/
 	return AuthInfo{ accessToken,clientToken,UserType::MOJANG,selectedProfile,twitchAccessToken };
-}
-
-QNetworkRequest * QGSYggdrasilAccount::generateNetworkRequest()
-{
-	QNetworkRequest * networkRequest{ new QNetworkRequest };
-
-	QSslConfiguration config = QSslConfiguration::defaultConfiguration();
-	config.setPeerVerifyMode(QSslSocket::VerifyNone);
-	config.setProtocol(QSsl::TlsV1_2);
-	networkRequest->setSslConfiguration(config);
-
-	networkRequest->setUrl(Network::YggdrasilAuthServerUrl);
-	networkRequest->setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-	return networkRequest;
 }
