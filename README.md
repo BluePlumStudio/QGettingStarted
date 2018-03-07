@@ -32,7 +32,7 @@ Visual Studio 2015/Qt 5.10.0 下编译通过。
 [城通网盘1](https://u15016760.pipipan.com/fs/15016760-239566462)
 [城通网盘2](https://u15016760.ctfile.com/fs/15016760-239566462)
 
-2.将静态库如QGettingStarted.lib添加入工程，包含头文件QGettingStarted.h即可。
+2.将静态库，如"QGettingStarted.lib"，添加入工程，包含头文件"QGettingStarted.h"即可。
 
 ## 启动Minecraft
 ```cpp
