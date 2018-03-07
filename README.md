@@ -1,4 +1,5 @@
 # QGettingStarted
+[![Build Status](https://travis-ci.org/michaelliao/openweixin.svg?branch=master)](https://travis-ci.org/michaelliao/openweixin)
 An open-source library for launching and downloading 'Minecraft'.
 
  * 启动全版本Minecraft
