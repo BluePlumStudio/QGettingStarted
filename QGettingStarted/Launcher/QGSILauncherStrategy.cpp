@@ -52,7 +52,7 @@ bool QGSILauncherStrategy::isRulesAllowing(const Rules & rules)
 					break;
 				}
 			}
-			else if (i.getOs().isEmpty())
+			else if (i.getOs() == OS::UNKNOWN || i.getOs().isEmpty())
 			{
 				ret = true;
 			}
@@ -72,7 +72,7 @@ bool QGSILauncherStrategy::isRulesAllowing(const Rules & rules)
 					break;
 				}
 			}
-			else if (i.getOs().isEmpty())
+			else if (i.getOs() == OS::UNKNOWN || i.getOs().isEmpty())
 			{
 				ret = false;
 			}

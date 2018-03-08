@@ -24,7 +24,7 @@ public:
 
 	const Version & getVersion(const QString & version);
 
-	const Version & addVersion(const QString & version);
+	const Version & addVersion(const QString version);
 
 	bool containsVersion(const QString & version)const;
 

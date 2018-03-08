@@ -45,7 +45,11 @@ int main(int argc, char *argv[])
 	launchOptionsBuilder.setMetaspaceSize(8888);
 	launchOptionsBuilder.setProxyInfo(QGSLaunchOptions::ProxyInfo("proxyaddress", "proxyport", "proxyuser", "proxypassword"));
 	*/
-	launcher.generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand);
+	if (launcher.generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand) != QGSILauncherStrategy::Error::OK)
+	{
+		qDebug() << "生成启动脚本失败";
+		return 1;
+	}
 
 	QFile launchCommandFile;
 	launchCommandFile.setFileName(QCoreApplication::applicationDirPath() + "/" + QString::fromStdString(version) + ".bat");

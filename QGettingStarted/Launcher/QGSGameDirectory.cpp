@@ -116,7 +116,7 @@ QDir QGSGameDirectory::generateAssetDirectory(const QString & version, const Ass
 	}
 }
 
-const Version & QGSGameDirectory::addVersion(const QString & version)
+const Version & QGSGameDirectory::addVersion(const QString version)
 {
 	Version newVersion;
 	//检查versions目录是否存在
@@ -156,7 +156,7 @@ const Version & QGSGameDirectory::addVersion(const QString & version)
 	//解析json生成version
 	QSharedPointer<QGSVersionPraser> versionPraser{ new QGSVersionPraser() };
 	versionPraser->praseVersion(newVersion, jsonDocument);
-	return !newVersion.getInheritsFrom().isEmpty()
-		? addVersion(newVersion.getInheritsFrom())
-		: *(mVersionMap.insert(version, newVersion));
+	auto ret{ mVersionMap.insert(version, newVersion) };
+
+	return !newVersion.getInheritsFrom().isEmpty() ? addVersion(newVersion.getInheritsFrom()) : *ret;
 }

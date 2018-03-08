@@ -144,6 +144,12 @@
     <ClCompile Include="Launcher\QGSLauncher.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
+    <ClCompile Include="Util\QGSCompress.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionCompress.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\QGSGameDirectory.h">
@@ -245,6 +251,12 @@
     </ClInclude>
     <ClInclude Include="Launcher\QGSLauncher.h">
       <Filter>Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSCompress.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionCompress.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

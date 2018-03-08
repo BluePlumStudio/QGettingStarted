@@ -4,7 +4,7 @@
 #include "QGSGeneralLauncherStrategy.h"
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionFileIO.h"
-#include "Util/QuaZip/JlCompress.h"
+#include "Util/QGSCompress.h"
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
 
@@ -136,29 +136,25 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 		auto & version{ gameDirectory.getVersion(inheritsVersionId) };
 		auto && libraryList{ version.getLibraries() };
 
-		for (auto & i : libraryList)
+		//for (auto & i : libraryList)
+		for (int i = 0; i < libraryList.size(); ++i)
 		{
-			if (!isRulesAllowing(i.getRules()))
+			if (!isRulesAllowing(libraryList[i].getRules()))
 			{
 				continue;
 			}
 
-			QSharedPointer<QFile> fileLibrary{ gameDirectory.generateLibraryFile(i) };
+			QSharedPointer<QFile> fileLibrary{ gameDirectory.generateLibraryFile(libraryList[i]) };
 			auto libraryPath{ fileLibrary->fileName() };
-			if (i.getNative())
+			if (libraryList[i].getNative())
 			{
 				//Ω‚—πnatives
-				auto extractList{ JlCompress::extractDir(libraryPath, nativesDirectory.absolutePath()) };
+				auto extractList{ QGSCompress::extractDirectory(libraryPath, nativesDirectory.absolutePath()) };
 				if (extractList.isEmpty())
 				{
-					throw QGSExceptionFileIO(nativesDirectory.absolutePath());
+					throw QGSExceptionCompress(libraryPath, nativesDirectory.absolutePath());
 				}
-				auto && extract{ i.getExtract() };
-				auto && excludeList{ extract.getExclude() };
-				for (auto & exclude : excludeList)
-				{
-					nativesDirectory.rmdir(nativesDirectory.absolutePath() + SEPARATOR + exclude);
-				}
+
 				continue;
 			}
 

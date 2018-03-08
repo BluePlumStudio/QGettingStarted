@@ -21,7 +21,7 @@
     <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -75,7 +75,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat />
+      <DebugInformationFormat>None</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>GeneratedFiles\$(ConfigurationName);GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName);$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -84,7 +84,7 @@
       <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>qtmain.lib;Qt5Core.lib;Qt5Network.lib;Util/QuaZip/quazip.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <QtMoc>
@@ -114,8 +114,10 @@
     <ClCompile Include="LaunchOptions\QGSYggdrasilAccount.cpp" />
     <ClCompile Include="LaunchOptions\QGSYggdrasilAccountFactory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Util\QGSCompress.cpp" />
     <ClCompile Include="Util\QGSException.cpp" />
     <ClCompile Include="Util\QGSExceptionAuthentication.cpp" />
+    <ClCompile Include="Util\QGSExceptionCompress.cpp" />
     <ClCompile Include="Util\QGSExceptionFileIO.cpp" />
     <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp" />
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp" />
@@ -151,8 +153,10 @@
     <ClInclude Include="LaunchOptions\QGSYggdrasilAccount.h" />
     <ClInclude Include="LaunchOptions\QGSYggdrasilAccountFactory.h" />
     <ClInclude Include="QGettingStarted.h" />
+    <ClInclude Include="Util\QGSCompress.h" />
     <ClInclude Include="Util\QGSException.h" />
     <ClInclude Include="Util\QGSExceptionAuthentication.h" />
+    <ClInclude Include="Util\QGSExceptionCompress.h" />
     <ClInclude Include="Util\QGSExceptionFileIO.h" />
     <ClInclude Include="Util\QGSExceptionJsonPraseError.h" />
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h" />
