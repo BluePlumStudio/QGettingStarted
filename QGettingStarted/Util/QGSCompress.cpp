@@ -32,12 +32,16 @@ bool QGSCompress::compressDirectory(QString & file, QString & directory, bool re
 
 QStringList QGSCompress::extractDirectory(QString & file, QString & directory)
 {
+	QStringList ret;
+
 	try
 	{
-		return JlCompress::extractDir(file, directory);
+		ret = JlCompress::extractDir(file, directory);
 	}
 	catch (...)
 	{
-		throw QGSExceptionCompress(file, directory);
+		ret.clear();
 	}
+
+	return ret;
 }

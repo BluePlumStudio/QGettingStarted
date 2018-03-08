@@ -35,7 +35,8 @@ public:
 	QDir generateNativesDirectory(const QString & version)const;
 
 	QDir getBaseDir()const;
-
+	
+	/*need to be updated*/
 	QDir generateAssetDirectory(const QString & version, const AssetIndex & assetIndex);
 private:
 	void init();

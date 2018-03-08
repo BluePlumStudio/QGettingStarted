@@ -152,7 +152,7 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 				auto extractList{ QGSCompress::extractDirectory(libraryPath, nativesDirectory.absolutePath()) };
 				if (extractList.isEmpty())
 				{
-					throw QGSExceptionCompress(libraryPath, nativesDirectory.absolutePath());
+					//throw QGSExceptionCompress(libraryPath, nativesDirectory.absolutePath());
 				}
 
 				continue;
@@ -191,7 +191,7 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 		.replace("${game_directory}", QString{ "\"%1\"" }.arg(gameDirectory.getBaseDir().absolutePath()))
 		.replace("${assets_root}",
 			QString{ "\"%1\"" }.arg(gameDirectory.generateAssetDirectory(rootVersionId, rootVersion.getAssetIndex()).absolutePath()))
-		.replace("${assets_index_name}", rootVersion.getAssetIndex().getId())
+		.replace("${assets_index_name}", rootVersion.getAssets())
 		.replace("${auth_uuid}", authInfo.getSelectedProfile().getId())
 		.replace("${auth_access_token}", authInfo.getAccessToken())
 		.replace("${user_type}", authInfo.getUserType())
