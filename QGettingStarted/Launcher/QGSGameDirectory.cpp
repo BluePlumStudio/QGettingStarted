@@ -59,12 +59,27 @@ bool QGSGameDirectory::containsVersion(const QString & version)const
 	return mVersionMap.contains(version);
 }
 
-QFile * QGSGameDirectory::generateVersionJarFile(const QString & version)const
+QFile * QGSGameDirectory::generateVersionJarFile(const QString & version, const bool withAbsolutePath)const
 {
-	return new QFile(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".jar");
+	return new QFile(withAbsolutePath?mBaseDir.absolutePath():"" + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".jar");
 }
 
-QFile * QGSGameDirectory::generateLibraryFile(const Library & library)const
+QFile * QGSGameDirectory::generateLibraryFile(const Library & library, const bool withAbsolutePath)const
+{
+	return new QFile(withAbsolutePath ? mBaseDir.absolutePath() : "" + SEPARATOR + "libraries" + SEPARATOR + praseLibraryName(library));
+}
+
+QDir QGSGameDirectory::generateNativesDirectory(const QString & version, const bool withAbsolutePath)const
+{
+	return QDir(withAbsolutePath ? mBaseDir.absolutePath() : "" + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + "-natives");
+}
+
+QDir QGSGameDirectory::getBaseDir() const
+{
+	return mBaseDir;
+}
+
+QString QGSGameDirectory::praseLibraryName(const Library & library)
 {
 	auto package{ library.getPackage().replace(".", SEPARATOR) };
 	auto && name{ library.getName() };
@@ -83,18 +98,7 @@ QFile * QGSGameDirectory::generateLibraryFile(const Library & library)const
 		}
 	}
 
-	return new QFile(
-		mBaseDir.absolutePath() + SEPARATOR + "libraries" + SEPARATOR + package + SEPARATOR + name + SEPARATOR + version + SEPARATOR + name + "-" + version + nativeString + ".jar");
-}
-
-QDir QGSGameDirectory::generateNativesDirectory(const QString & version)const
-{
-	return QDir(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + "-natives");
-}
-
-QDir QGSGameDirectory::getBaseDir() const
-{
-	return mBaseDir;
+	return QString(package + SEPARATOR + name + SEPARATOR + version + SEPARATOR + name + "-" + version + nativeString + ".jar");
 }
 
 QDir QGSGameDirectory::generateAssetDirectory(const QString & version, const AssetIndex & assetIndex)

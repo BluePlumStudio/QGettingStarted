@@ -59,3 +59,8 @@ QString QGSUuidGenerator::generateUuid(const QString & seed)
 	return UUID;
 }
 
+QString QGSUuidGenerator::generateUuid()
+{
+	return QUuid::createUuid().toString();
+}
+

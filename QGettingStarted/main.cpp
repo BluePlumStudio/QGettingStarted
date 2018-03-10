@@ -38,7 +38,7 @@ void generateLaunchCommandTest()
 	getline(cin, userName);
 	launchOptionsBuilder.setAuthInfo(QGSOfflineAccountFactory().createAccount()->authenticate(QString::fromLocal8Bit(userName.c_str())));
 	*/
-	launchOptionsBuilder.setAuthInfo(QGSOfflineAccountFactory().createAccount()->authenticate("uiufqr7386@yeah.net", "f2fdf55555555"));
+	launchOptionsBuilder.setAuthInfo(QGSOfflineAccountFactory().createAccount()->authenticate("uiufqr7386@yeah.net", ""));
 	launchOptionsBuilder.setJVMArguments("-XX:+UseG1GC -XX:-UseAdaptiveSizePolicy -XX:-OmitStackTraceInFastThrow");
 	/*
 	launchOptionsBuilder.setWrapper("«∞÷√÷∏¡Ó");
@@ -68,15 +68,86 @@ int main(int argc, char *argv[])
 	QCoreApplication a(argc, argv);
 	qDebug() << "=QGettingStart Test=";
 
-	QGSDownloader downloader{
-		DownloadInfo{ -1,QString(),QString(),QUrl(
-			"https://www.bangbang93.com/assets/uploads/files/1509025948978-bmclng.exe") }
-	};
-
-	downloader.start();
-	QObject::connect(&downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	
+	//forge download test
+	auto * downloader{ downloadManager.generateForgeDownloader("1.4.7","6.6.1.530","src","zip") };
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
 	{
-		cout << bytesReceived << ";" << bytesTotal << endl;
+		cout << "Forge:" << bytesReceived << ";" << bytesTotal << endl;
 	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		qDebug() << "Forge:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	if (!downloader->start())
+	{
+		return 1;
+	}
+	//liteloader download test
+	downloader = downloadManager.generateLiteLoaderDownloader("1.7.10", "1.7.10");
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		cout << "LiteLoader:" << bytesReceived << ";" << bytesTotal << endl;
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		qDebug() << "LiteLoader:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	if (!downloader->start())
+	{
+		return 1;
+	}
+	//optifine download test
+	downloader = downloadManager.generateOptifineDownloader("1.9.2", "HD_U", "D7");
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		cout << "Optifine:" << bytesReceived << ";" << bytesTotal << endl;
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		qDebug() << "Optifine:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	if (!downloader->start())
+	{
+		return 1;
+	}
+	//version download test
+	downloader = downloadManager.generateVersionDownloader("1.9.2", "client");
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		cout << "version:" << bytesReceived << ";" << bytesTotal << endl;
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		qDebug() << "version:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	if (!downloader->start())
+	{
+		return 1;
+	}
+	//library download test
+	Library library;
+	library.setPackage("com.mojang");
+	library.setName("netty");
+	library.setVersion("1.6");
+	downloader = downloadManager.generateLibraryDownloader(library);
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		cout << "Library:" << bytesReceived << ";" << bytesTotal << endl;
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		qDebug() << "Library:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	if (!downloader->start())
+	{
+		return 1;
+	}
 	return a.exec();
 }

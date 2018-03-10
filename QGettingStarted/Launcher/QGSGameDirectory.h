@@ -28,13 +28,15 @@ public:
 
 	bool containsVersion(const QString & version)const;
 
-	QFile * generateVersionJarFile(const QString & version)const;
+	QFile * generateVersionJarFile(const QString & version, const bool withAbsolutePath = true)const;
 
-	QFile * generateLibraryFile(const Library & library)const;
+	QFile * generateLibraryFile(const Library & library, const bool withAbsolutePath = true)const;
 
-	QDir generateNativesDirectory(const QString & version)const;
+	QDir generateNativesDirectory(const QString & version, const bool withAbsolutePath = true)const;
 
 	QDir getBaseDir()const;
+
+	static QString praseLibraryName(const Library & library);
 	
 	/*need to be updated*/
 	QDir generateAssetDirectory(const QString & version, const AssetIndex & assetIndex);

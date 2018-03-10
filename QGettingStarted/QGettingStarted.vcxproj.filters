@@ -36,6 +36,19 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Download">
+      <UniqueIdentifier>{c14b76b6-1402-438e-8f62-bde76ad8370d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Launcher\QGSGameDirectory.cpp">
@@ -150,8 +163,14 @@
     <ClCompile Include="Util\QGSExceptionCompress.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="Util\QGSDownloader.cpp">
-      <Filter>Util</Filter>
+    <ClCompile Include="Download\QGSDownloader.cpp">
+      <Filter>Download</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSDownloadSourceBMCLAPI.cpp">
+      <Filter>Download</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSIDownloadSource.cpp">
+      <Filter>Download</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -261,13 +280,22 @@
     <ClInclude Include="Util\QGSExceptionCompress.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="Download\QGSDownloadManager.hpp">
+      <Filter>Download</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Util\QGSDownloader.h">
-      <Filter>Util</Filter>
-    </QtMoc>
     <QtMoc Include="Util\QGSNetwork.h">
       <Filter>Util</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSDownloader.h">
+      <Filter>Download</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSDownloadSourceBMCLAPI.h">
+      <Filter>Download</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSIDownloadSource.h">
+      <Filter>Download</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

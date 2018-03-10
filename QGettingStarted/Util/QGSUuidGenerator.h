@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QUuid>
 
 class QGSUuidGenerator
 {
@@ -19,8 +20,9 @@ public:
 
 	static QGSUuidGenerator & getInstance();
 
-	QString generateUuid(const QString & seed);
+	static QString generateUuid(const QString & seed);
 
+	static QString generateUuid();
 private:
 
 };
