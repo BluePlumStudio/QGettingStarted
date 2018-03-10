@@ -7,8 +7,8 @@
  * 可拓展登录系统
    * 支持Offline（离线）
    * 支持Yggdrasil（正版）
- * 下载Minecraft（开发中）
- * 下载Forge/Liteloader（开发中）
+ * 下载Minecraft
+ * 下载Forge/Liteloader/Optifine
    * 支持Liteloader的快照版本
    * 支持自定义下载源
    * 支持多线程下载
@@ -23,7 +23,12 @@ Visual Studio 2015/Qt 5.10.0 下编译通过。
 
 # 开始
 ## 使用启动核心
-1.下载源码自行编译或下载已编译好的静态库（已更新到Beta 1.2.0）：
+1.下载源码自行编译或下载已编译好的静态库（已更新到Beta 1.3.0）：
+ * Beta 1.2.0：
+- Windows：
+[城通网盘1](https://u15016760.pipipan.com/fs/15016760-241091666)
+[城通网盘2](https://u15016760.ctfile.com/fs/15016760-241091666)
+
  * Beta 1.2.0：
 - Windows：
 [城通网盘1](https://u15016760.pipipan.com/fs/15016760-241072639)
