@@ -26,8 +26,8 @@ Visual Studio 2015/Qt 5.10.0 下编译通过。
 1.下载源码自行编译或下载已编译好的静态库（已更新到Beta 1.2.0）：
  * Beta 1.2.0：
 - Windows：
-[城通网盘1](https://u15016760.pipipan.com/fs/15016760-241070666)
-[城通网盘2](https://u15016760.ctfile.com/fs/15016760-241070666)
+[城通网盘1](https://u15016760.pipipan.com/fs/15016760-241072639)
+[城通网盘2](https://u15016760.ctfile.com/fs/15016760-241072639)
 
  * Beta 1.1.0：
 - Windows：
