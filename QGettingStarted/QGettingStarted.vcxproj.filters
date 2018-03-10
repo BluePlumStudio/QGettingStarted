@@ -150,6 +150,9 @@
     <ClCompile Include="Util\QGSExceptionCompress.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Util\QGSDownloader.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\QGSGameDirectory.h">
@@ -260,8 +263,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Util\QGSNetwork.h">
+    <QtMoc Include="Util\QGSDownloader.h">
       <Filter>Util</Filter>
-    </CustomBuild>
+    </QtMoc>
+    <QtMoc Include="Util\QGSNetwork.h">
+      <Filter>Util</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

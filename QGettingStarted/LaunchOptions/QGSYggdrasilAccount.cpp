@@ -46,13 +46,13 @@ AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QStri
 
 	jsonDocument.setObject(jsonObject);
 	auto byteArrayRequestData{ jsonDocument.toJson() };
-	QSharedPointer<QNetworkRequest>request{ QGSNetwork::generateNetworkRequestWithSSL() };
-	request->setUrl(Network::YggdrasilAuthServerUrl);
-	request->setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-	request->setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());
+	auto request{ QGSNetwork::generateNetworkRequestWithSSL() };
+	request.setUrl(Network::YggdrasilAuthServerUrl);
+	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+	request.setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());
 	
 	QEventLoop eventLoop;
-	auto * reply = QGSNetwork::getInstance().getManager()->post(*request, byteArrayRequestData);
+	auto * reply = QGSNetwork::getInstance().getManager()->post(request, byteArrayRequestData);
 	QObject::connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
 	eventLoop.exec();
 

@@ -33,7 +33,7 @@ public:
 
 		Download & operator=(Download && right) = default;
 
-		~Download()
+		virtual ~Download()
 		{
 
 		}

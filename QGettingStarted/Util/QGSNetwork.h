@@ -29,9 +29,11 @@ public:
 
 	~QGSNetwork();
 
-	static QNetworkRequest * generateNetworkRequest();
+	static QNetworkRequest generateNetworkRequest();
 
-	static QNetworkRequest * generateNetworkRequestWithSSL();
+	static QNetworkRequest generateNetworkRequestWithSSL(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_2);
+
+	static QUrl getRedirectURL(const QUrl & url);
 private:
 	QGSNetwork(QObject * parent = nullptr);
 private:
