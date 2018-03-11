@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/BluePlumStudio/QGettingStarted.svg?branch=renew)](https://travis-ci.org/BluePlumStudio/QGettingStarted)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/blueplumstudio?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) 
 ## An open-source library for launching and downloading 'Minecraft'.
+![logo](https://github.com/BluePlumStudio/QGettingStarted/blob/renew/Logo.png)
 
  * 启动全版本Minecraft
  * 可拓展登录系统
