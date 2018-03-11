@@ -11,8 +11,8 @@
  * 下载Minecraft
  * 下载Forge/Liteloader/Optifine
    * 支持Liteloader的快照版本
-   * 支持自定义下载源
-   * 支持多线程下载（已内置BMCLAPI）
+   * 支持自定义下载源（已内置BMCLAPI）
+   * 支持多线程下载
    * 支持断点下载
  * Natives解压
 
