@@ -44,7 +44,7 @@ Visual Studio 2015/Qt 5.10.0 下编译通过。
 [城通网盘1](https://u15016760.pipipan.com/fs/15016760-239566462)
 [城通网盘2](https://u15016760.ctfile.com/fs/15016760-239566462)
 
-2.将静态库，如"QGettingStarted.lib"，添加进工程，包含头文件"QGettingStarted.h"即可。
+2.将静态库，如"QGettingStarted.lib，quazip.lib"，添加进工程，包含头文件"QGettingStarted.h"即可。
 
 ## 启动Minecraft
 ```cpp
@@ -97,4 +97,130 @@ int main(int argc, char *argv[])
 		*/
 	}
 
+```
+## 下载
+* 下载Minecraft本体
+```cpp
+	/*下载1.9.2为例*/
+	
+	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QGSDownloader * downloader{ downloadManager.generateVersionDownloader("1.9.2", "client") };//服务端填"server"
+	/*
+	QGSDownloader * generateVersionDownloader(const QString & mcversion, const QString & category, DownloadInfo & downloadInfo = DownloadInfo());
+	*/
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		/*下载进度*/
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		/*下载错误*/
+	});
+	if (!downloader->start())
+	{
+		/*开始下载失败*/
+	}
+	/*...*/
+```
+* 下载Forge
+```cpp
+	/*下载forge-1.12.2-14.23.2.2624-universal.jar为例*/
+	
+	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QGSDownloader * downloader{ downloadManager.generateForgeDownloader("1.12.2","14.23.2.2624","universal","jar") };
+	/*
+	QGSDownloader * generateForgeDownloader(const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch = "", DownloadInfo & downloadInfo = DownloadInfo());
+	*/
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		/*下载进度*/
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		/*下载错误*/
+	});
+	if (!downloader->start())
+	{
+		/*开始下载失败*/
+	}
+	/*...*/
+```
+
+* 下载LiteLoader
+```cpp
+	/*下载liteloader-1.7.10为例*/
+	
+	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QGSDownloader * downloader{ downloadManager.generateLiteLoaderDownloader("1.7.10", "1.7.10") };
+	/*
+	QGSDownloader * generateLiteLoaderDownloader(const QString & version, const QString & mcversion, DownloadInfo & downloadInfo = DownloadInfo());
+	*/
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		/*下载进度*/
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		/*下载错误*/
+	});
+	if (!downloader->start())
+	{
+		/*开始下载失败*/
+	}
+	/*...*/
+```
+
+* 下载Optifine
+```cpp
+	/*下载optifine-1.9.2-HD_U-D7为例*/
+	
+	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QGSDownloader * downloader{ downloadManager.generateOptifineDownloader("1.9.2", "HD_U", "D7") };
+	/*
+	QGSDownloader * generateOptifineDownloader(const QString & mcversion, const QString & type, const QString & patch, DownloadInfo & downloadInfo = DownloadInfo());
+	*/
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		/*下载进度*/
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		/*下载错误*/
+	});
+	if (!downloader->start())
+	{
+		/*开始下载失败*/
+	}
+	/*...*/
+```
+* 下载Library
+```cpp
+	/*下载Library*/
+	
+	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QGSDownloader * downloader{ downloadManager.generateLibraryDownloader(library,DownloadInfo{-1,"","D:/.minecraft/libraries/....."}) };
+	/*
+	QGSDownloader * generateLibraryDownloader(const Library & library, DownloadInfo & downloadInfo = DownloadInfo());
+
+	library：你的library对象
+	downloadInfo：参数3：保存路径（可以根据QGSGameDirectory的generateLibraryFile()获取
+	*/
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		/*下载进度*/
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		/*下载错误*/
+	});
+	if (!downloader->start())
+	{
+		/*开始下载失败*/
+	}
+	/*...*/
 ```
