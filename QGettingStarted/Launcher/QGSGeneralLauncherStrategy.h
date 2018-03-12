@@ -17,7 +17,7 @@ public:
 
 	virtual ~QGSGeneralLauncherStrategy();
 
-	virtual Error generateLaunchCommand(const Version & version,
+	virtual LauncherError::ErrorFlags generateLaunchCommand(const Version & version,
 		QGSGameDirectory & gameDirectory,
 		const QGSLaunchOptions * launchOptions,
 		QString & command)override;

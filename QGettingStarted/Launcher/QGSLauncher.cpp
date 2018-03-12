@@ -14,7 +14,7 @@ QGSLauncher::~QGSLauncher()
 	}
 }
 
-QGSILauncherStrategy::Error QGSLauncher::generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command)
+LauncherError::ErrorFlags QGSLauncher::generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command)
 {
 	return launcherStrategy->generateLaunchCommand(mVersion, mGameDirectory, launchOptions, command);
 }

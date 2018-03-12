@@ -2,6 +2,7 @@
 
 #include <QDir>
 #include <QFile>
+#include <QVector>
 
 #include "../Version/Version.h"
 
@@ -31,6 +32,8 @@ public:
 	QFile * generateVersionJarFile(const QString & version, const bool withAbsolutePath = true)const;
 
 	QFile * generateLibraryFile(const Library & library, const bool withAbsolutePath = true)const;
+
+	QVector<QFile *> generateLibraryFiles(const QList<Library> & libraryList, const bool withAbsolutePath = true)const;
 
 	QDir generateNativesDirectory(const QString & version, const bool withAbsolutePath = true)const;
 

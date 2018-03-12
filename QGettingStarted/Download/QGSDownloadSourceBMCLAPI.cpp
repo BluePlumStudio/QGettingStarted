@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "QGSDownloadSourceBMCLAPI.h"
 
 QGSDownloadSourceBMCLAPI::QGSDownloadSourceBMCLAPI(QObject *parent)
@@ -14,9 +16,9 @@ QGSDownloadSourceBMCLAPI::~QGSDownloadSourceBMCLAPI()
 
 }
 
-QUrl QGSDownloadSourceBMCLAPI::getLibraryUrlBase()
+QUrl QGSDownloadSourceBMCLAPI::getLibraryUrlBase(QUrl & originUrl)
 {
-	return QUrl{ "https://bmclapi2.bangbang93.com/libraries" };
+	return originUrl = QUrl{ originUrl.toString().replace(originUrl.host(),"bmclapi2.bangbang93.com") };
 }
 
 QUrl QGSDownloadSourceBMCLAPI::getVersionManifestUrl()
@@ -24,19 +26,19 @@ QUrl QGSDownloadSourceBMCLAPI::getVersionManifestUrl()
 	return QUrl{ "https://bmclapi2.bangbang93.com/mc/game/version_manifest.json" };
 }
 
-QUrl QGSDownloadSourceBMCLAPI::getVersionUrlBase()
+QUrl QGSDownloadSourceBMCLAPI::getVersionUrlBase(QUrl & originUrl)
 {
-	return QUrl{ "https://bmclapi2.bangbang93.com/versions" };
+	return originUrl = QUrl{ originUrl.toString().replace(originUrl.host(),"bmclapi2.bangbang93.com") };
 }
 
-QUrl QGSDownloadSourceBMCLAPI::getAssetIndexUrlBase()
+QUrl QGSDownloadSourceBMCLAPI::getAssetIndexUrlBase(QUrl & originUrl)
 {
-	return QUrl{"https://bmclapi2.bangbang93.com/indexes"};
+	return originUrl = QUrl{ originUrl.toString().replace(originUrl.host(),"bmclapi2.bangbang93.com") };
 }
 
-QUrl QGSDownloadSourceBMCLAPI::getAssetUrlBase()
+QUrl QGSDownloadSourceBMCLAPI::getAssetUrlBase(QUrl & originUrl)
 {
-	return QUrl{ "https://bmclapi2.bangbang93.com/assets" };
+	return originUrl = QUrl{ originUrl.toString().replace(originUrl.host(),"bmclapi2.bangbang93.com") };
 }
 
 QUrl QGSDownloadSourceBMCLAPI::getApiUrlBase(const QString & apiName)

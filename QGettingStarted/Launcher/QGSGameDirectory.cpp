@@ -69,6 +69,18 @@ QFile * QGSGameDirectory::generateLibraryFile(const Library & library, const boo
 	return new QFile(withAbsolutePath ? mBaseDir.absolutePath() : "" + SEPARATOR + "libraries" + SEPARATOR + praseLibraryName(library));
 }
 
+QVector<QFile *> QGSGameDirectory::generateLibraryFiles(const QList<Library> & libraryList, const bool withAbsolutePath) const
+{
+	QVector<QFile *> ret;
+
+	for (auto & i : libraryList)
+	{
+		ret.push_back(generateLibraryFile(i, withAbsolutePath));
+	}
+
+	return ret;
+}
+
 QDir QGSGameDirectory::generateNativesDirectory(const QString & version, const bool withAbsolutePath)const
 {
 	return QDir(withAbsolutePath ? mBaseDir.absolutePath() : "" + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + "-natives");

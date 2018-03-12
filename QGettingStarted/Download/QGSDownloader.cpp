@@ -7,7 +7,8 @@
 #include "QGSUuidGenerator.h"
 #include "QGSOperatingSystem.h"
 
-static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
+static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeparator() };
+static const QString DOWNLOADDIRNAME{ "QGSDownload" };
 
 QGSDownloader::QGSDownloader(const DownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject *parent)
 	: QObject(parent), mDownloadInfo(downloadInfo), mFile(nullptr), mReply(nullptr), mProxy(proxy), mState(State::Stop), mDelete(false), mBytesReceived(0)
@@ -40,18 +41,27 @@ bool QGSDownloader::start()
 	mDownloadInfo.setUrl(url);
 
 	//检查下载路径
+	QDir downloadDirectory{ QCoreApplication::applicationDirPath() + SEPARATOR + DOWNLOADDIRNAME };
 	if(mDownloadInfo.getPath().isEmpty())
 	{
 		QFileInfo fileInfo{ url.toString() };
-		mDownloadInfo.setPath(QCoreApplication::applicationDirPath()
-			+ SEPARATOR + fileInfo.fileName());
+
+		if (!downloadDirectory.exists())
+		{
+			if (!downloadDirectory.mkpath(QCoreApplication::applicationDirPath() + SEPARATOR + DOWNLOADDIRNAME))
+			{
+				return false;
+			}
+		}
+
+		mDownloadInfo.setPath(downloadDirectory.absolutePath() + SEPARATOR + fileInfo.fileName());
 		
 	}
 
 	//打开文件
 	if (!mFile.isOpen())
 	{
-		mFile.setFileName(generateRandomFileName());
+		mFile.setFileName(downloadDirectory.absolutePath() + SEPARATOR + generateRandomFileName());
 		if (!mFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
 		{
 			return false;
@@ -122,6 +132,11 @@ QFile * QGSDownloader::generateFile() const
 	return new QFile{ mFile.fileName() };
 }
 
+QFile & QGSDownloader::getFile()
+{
+	return mFile;
+}
+
 QGSDownloader::State QGSDownloader::getState() const
 {
 	return mState;
@@ -170,17 +185,19 @@ void QGSDownloader::slotSslErrors(const QList<QSslError>& errors)
 
 void QGSDownloader::slotTimeout()
 {
+	stop();
 	emit timeout();
 }
 
 void QGSDownloader::slotRedirected(const QUrl & url)
 {
 	QFileInfo fileInfo{ url.toString() };
-	mDownloadInfo.setPath(QCoreApplication::applicationDirPath()
+	QDir downloadDirectory{ QCoreApplication::applicationDirPath() + SEPARATOR + DOWNLOADDIRNAME };
+	mDownloadInfo.setPath(downloadDirectory.absolutePath()
 		+ SEPARATOR + fileInfo.fileName());
 }
 
 QString QGSDownloader::generateRandomFileName()
 {
-	return QString{ QCoreApplication::applicationDirPath() + SEPARATOR + QGSUuidGenerator::generateUuid() + ".tmp" };
+	return QString{ QGSUuidGenerator::generateUuid() + ".tmp" };
 }

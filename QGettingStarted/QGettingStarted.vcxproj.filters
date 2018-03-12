@@ -157,9 +157,6 @@
     <ClCompile Include="Launcher\QGSLauncher.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
-    <ClCompile Include="Util\QGSCompress.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
     <ClCompile Include="Util\QGSExceptionCompress.cpp">
       <Filter>Util</Filter>
     </ClCompile>
@@ -170,6 +167,21 @@
       <Filter>Download</Filter>
     </ClCompile>
     <ClCompile Include="Download\QGSIDownloadSource.cpp">
+      <Filter>Download</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSFileTools.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSExceptionInvalidValue.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Version\VersionInfoList.cpp">
+      <Filter>Version</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSDownloadSourceOfficial.cpp">
+      <Filter>Download</Filter>
+    </ClCompile>
+    <ClCompile Include="QGSDownloadManager.cpp">
       <Filter>Download</Filter>
     </ClCompile>
   </ItemGroup>
@@ -274,14 +286,23 @@
     <ClInclude Include="Launcher\QGSLauncher.h">
       <Filter>Launcher</Filter>
     </ClInclude>
-    <ClInclude Include="Util\QGSCompress.h">
-      <Filter>Util</Filter>
-    </ClInclude>
     <ClInclude Include="Util\QGSExceptionCompress.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="Download\QGSDownloadManager.hpp">
+    <ClInclude Include="resource.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSFileTools.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Download\QGSDownloadManager.h">
       <Filter>Download</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionInvalidValue.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Version\VersionInfoList.h">
+      <Filter>Version</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +316,9 @@
       <Filter>Download</Filter>
     </QtMoc>
     <QtMoc Include="Download\QGSIDownloadSource.h">
+      <Filter>Download</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSDownloadSourceOfficial.h">
       <Filter>Download</Filter>
     </QtMoc>
   </ItemGroup>

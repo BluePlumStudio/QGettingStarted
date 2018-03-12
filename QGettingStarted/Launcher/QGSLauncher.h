@@ -20,7 +20,7 @@ public:
 
 	~QGSLauncher();
 
-	virtual QGSILauncherStrategy::Error generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command);
+	virtual LauncherError::ErrorFlags generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command);
 private:
 	QGSILauncherStrategy * launcherStrategy;
 	const Version & mVersion;

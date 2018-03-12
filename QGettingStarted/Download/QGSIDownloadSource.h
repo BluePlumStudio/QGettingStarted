@@ -29,15 +29,15 @@ public:
 
 	virtual ~QGSIDownloadSource();
 
-	virtual QUrl getLibraryUrlBase() = 0;
+	virtual QUrl getLibraryUrlBase(QUrl & originUrl) = 0;
 
 	virtual QUrl getVersionManifestUrl() = 0;
 
-	virtual QUrl getVersionUrlBase() = 0;
+	virtual QUrl getVersionUrlBase(QUrl & originUrl) = 0;
 
-	virtual QUrl getAssetIndexUrlBase() = 0;
+	virtual QUrl getAssetIndexUrlBase(QUrl & originUrl) = 0;
 
-	virtual QUrl getAssetUrlBase() = 0;
+	virtual QUrl getAssetUrlBase(QUrl & originUrl) = 0;
 
 	virtual QUrl getApiUrlBase(const QString & apiName) = 0;
 

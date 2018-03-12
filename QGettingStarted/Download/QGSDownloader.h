@@ -96,6 +96,8 @@ public:
 
 	QFile * generateFile()const;
 
+	QFile & getFile();
+
 	State getState()const;
 private:
 	void slotFinished();

@@ -4,22 +4,22 @@
 
 #include "QGSIDownloadSource.h"
 
-class QGSDownloadSourceBMCLAPI : public QGSIDownloadSource
+class QGSDownloadSourceOfficial : public QGSIDownloadSource
 {
 	Q_OBJECT
 
 public:
-	QGSDownloadSourceBMCLAPI(QObject *parent = nullptr);
+	QGSDownloadSourceOfficial(QObject *parent = nullptr);
 
-	QGSDownloadSourceBMCLAPI(const QGSDownloadSourceBMCLAPI & right) = delete;
+	QGSDownloadSourceOfficial(const QGSDownloadSourceOfficial & right) = delete;
 
-	QGSDownloadSourceBMCLAPI(QGSDownloadSourceBMCLAPI && right) = delete;
+	QGSDownloadSourceOfficial(QGSDownloadSourceOfficial && right) = delete;
 
-	QGSDownloadSourceBMCLAPI & operator=(const QGSDownloadSourceBMCLAPI & right) = delete;
+	QGSDownloadSourceOfficial & operator=(const QGSDownloadSourceOfficial & right) = delete;
 
-	QGSDownloadSourceBMCLAPI & operator=(QGSDownloadSourceBMCLAPI && right) = delete;
+	QGSDownloadSourceOfficial & operator=(QGSDownloadSourceOfficial && right) = delete;
 
-	virtual ~QGSDownloadSourceBMCLAPI();
+	virtual ~QGSDownloadSourceOfficial();
 
 	virtual QUrl getLibraryUrlBase(QUrl & originUrl)override;
 

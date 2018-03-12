@@ -49,7 +49,7 @@ void generateLaunchCommandTest()
 	launchOptionsBuilder.setMetaspaceSize(8888);
 	launchOptionsBuilder.setProxyInfo(QGSLaunchOptions::ProxyInfo("proxyaddress", "proxyport", "proxyuser", "proxypassword"));
 	*/
-	if (launcher.generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand) != QGSILauncherStrategy::Error::OK)
+	if (launcher.generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand) != LauncherError::OK)
 	{
 		qDebug() << "生成启动脚本失败";
 		return;
@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
 	QCoreApplication a(argc, argv);
 	qDebug() << "=QGettingStart Test=";
 
-	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QSharedPointer<QGSIDownloadSource> downloadSource{ new QGSDownloadSourceOfficial };
+	QGSDownloadManager downloadManager{ downloadSource.data() };
 	
 	//forge download test
 	auto * downloader{ downloadManager.generateForgeDownloader("1.4.7","6.6.1.530","src","zip") };
@@ -80,6 +81,10 @@ int main(int argc, char *argv[])
 	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
 	{
 		qDebug() << "Forge:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	{
+		qDebug() << "Forge:" << "timeout";
 	});
 	if (!downloader->start())
 	{
@@ -96,6 +101,10 @@ int main(int argc, char *argv[])
 	{
 		qDebug() << "LiteLoader:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
+	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	{
+		qDebug() << "LiteLoader:" << "timeout";
+	});
 	if (!downloader->start())
 	{
 		return 1;
@@ -111,12 +120,21 @@ int main(int argc, char *argv[])
 	{
 		qDebug() << "Optifine:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
+	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	{
+		qDebug() << "Optifine:" << "timeout";
+	});
 	if (!downloader->start())
 	{
 		return 1;
 	}
 	//version download test
-	downloader = downloadManager.generateVersionDownloader("1.9.2", "client");
+	Version version;
+	QMap<QString, Downloads::Download> downloads;
+	downloads.insert("client", 
+		Downloads::Download{ 8736083,"4a61c873be90bb1196d68dac7b29870408c56969","",QUrl("https://launcher.mojang.com/mc/game/1.9.4/client/4a61c873be90bb1196d68dac7b29870408c56969/client.jar") });
+	version.setDownloads(downloads);
+	downloader = downloadManager.generateVersionDownloader(version, "client");
 	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
 	{
 		cout << "version:" << bytesReceived << ";" << bytesTotal << endl;
@@ -125,6 +143,10 @@ int main(int argc, char *argv[])
 	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
 	{
 		qDebug() << "version:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	{
+		qDebug() << "version:" << "timeout";
 	});
 	if (!downloader->start())
 	{
@@ -144,6 +166,43 @@ int main(int argc, char *argv[])
 	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
 	{
 		qDebug() << "Library:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	{
+		qDebug() << "Library:" << "timeout";
+	});
+	if (!downloader->start())
+	{
+		return 1;
+	}
+	//version manifest download test
+	downloader = downloadManager.generateVersionManifestDownloader();
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		cout << "version manifest:" << bytesReceived << ";" << bytesTotal << endl;
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, [=]() 
+	{
+		//version manifest prase test
+		qDebug() << "version manifest prase test";
+		VersionInfoList versionInfoList{ downloader->getFile() };
+		for (int i = 0; i < versionInfoList.size(); i++)
+		{
+			qDebug() << "id:" << versionInfoList[i].getId()
+				<< "type:" << versionInfoList[i].getType()
+				<< "time:" << versionInfoList[i].getTime()
+				<< "releasetime:" << versionInfoList[i].getReleaseTime()
+				<< "url:" << versionInfoList[i].getUrl().toString();
+		}
+		downloader->deleteLater();
+	});
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		qDebug() << "version manifest:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+	});
+	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	{
+		qDebug() << "version manifest:" << "timeout";
 	});
 	if (!downloader->start())
 	{

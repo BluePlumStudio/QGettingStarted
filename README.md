@@ -100,11 +100,50 @@ int main(int argc, char *argv[])
 
 ```
 ## 下载
+* 获取Minecraft版本信息
+```cpp
+	/*version_manifest.json download test*/
+	QSharedPointer<QGSDownloadSourceBMCLAPI> downloadSource{ new QGSDownloadSourceBMCLAPI };
+	QGSDownloadManager downloadManager{ downloadSource.data() };
+	downloader = downloadManager.generateVersionManifestDownloader();
+	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	{
+		/*下载进度*/
+	});
+	QObject::connect(downloader, &QGSDownloader::finished, [=]() 
+	{
+		//version_manifest.json prase test
+		VersionInfoList versionInfoList{ downloader->getFile() };//Minecraft版本列表
+		for (int i = 0; i < versionInfoList.size(); i++)
+		{
+			qDebug() << "id:" << versionInfoList[i].getId()
+				<< "type:" << versionInfoList[i].getType()
+				<< "time:" << versionInfoList[i].getTime()
+				<< "releasetime:" << versionInfoList[i].getReleaseTime()
+				<< "url:" << versionInfoList[i].getUrl().toString();
+		}
+		downloader->deleteLater();
+	});
+	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	{
+		/*下载错误*/
+	});
+	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	{
+		/*下载超时*/
+	});
+	if (!downloader->start())
+	{
+		/*开始下载失败*/
+	}
+	/*...*/
+```
 * 下载Minecraft本体
 ```cpp
 	/*下载1.9.2为例*/
 	
-	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QSharedPointer<QGSDownloadSourceBMCLAPI> downloadSource{ new QGSDownloadSourceBMCLAPI };
+	QGSDownloadManager downloadManager{ downloadSource.data() };
 	QGSDownloader * downloader{ downloadManager.generateVersionDownloader("1.9.2", "client") };//服务端填"server"
 	/*
 	QGSDownloader * generateVersionDownloader(const QString & mcversion, const QString & category, DownloadInfo & downloadInfo = DownloadInfo());
@@ -128,7 +167,8 @@ int main(int argc, char *argv[])
 ```cpp
 	/*下载forge-1.12.2-14.23.2.2624-universal.jar为例*/
 	
-	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QSharedPointer<QGSDownloadSourceBMCLAPI> downloadSource{ new QGSDownloadSourceBMCLAPI };
+	QGSDownloadManager downloadManager{ downloadSource.data() };
 	QGSDownloader * downloader{ downloadManager.generateForgeDownloader("1.12.2","14.23.2.2624","universal","jar") };
 	/*
 	QGSDownloader * generateForgeDownloader(const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch = "", DownloadInfo & downloadInfo = DownloadInfo());
@@ -153,7 +193,8 @@ int main(int argc, char *argv[])
 ```cpp
 	/*下载liteloader-1.7.10为例*/
 	
-	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QSharedPointer<QGSDownloadSourceBMCLAPI> downloadSource{ new QGSDownloadSourceBMCLAPI };
+	QGSDownloadManager downloadManager{ downloadSource.data() };
 	QGSDownloader * downloader{ downloadManager.generateLiteLoaderDownloader("1.7.10", "1.7.10") };
 	/*
 	QGSDownloader * generateLiteLoaderDownloader(const QString & version, const QString & mcversion, DownloadInfo & downloadInfo = DownloadInfo());
@@ -178,7 +219,8 @@ int main(int argc, char *argv[])
 ```cpp
 	/*下载optifine-1.9.2-HD_U-D7为例*/
 	
-	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QSharedPointer<QGSDownloadSourceBMCLAPI> downloadSource{ new QGSDownloadSourceBMCLAPI };
+	QGSDownloadManager downloadManager{ downloadSource.data() };
 	QGSDownloader * downloader{ downloadManager.generateOptifineDownloader("1.9.2", "HD_U", "D7") };
 	/*
 	QGSDownloader * generateOptifineDownloader(const QString & mcversion, const QString & type, const QString & patch, DownloadInfo & downloadInfo = DownloadInfo());
@@ -202,7 +244,8 @@ int main(int argc, char *argv[])
 ```cpp
 	/*下载Library*/
 	
-	QGSDownloadManager<QGSDownloadSourceBMCLAPI> downloadManager;
+	QSharedPointer<QGSDownloadSourceBMCLAPI> downloadSource{ new QGSDownloadSourceBMCLAPI };
+	QGSDownloadManager downloadManager{ downloadSource.data() };
 	QGSDownloader * downloader{ downloadManager.generateLibraryDownloader(library,DownloadInfo{-1,"","D:/.minecraft/libraries/....."}) };
 	/*
 	QGSDownloader * generateLibraryDownloader(const Library & library, DownloadInfo & downloadInfo = DownloadInfo());

@@ -4,7 +4,7 @@
 #include "QGSGeneralLauncherStrategy.h"
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionFileIO.h"
-#include "Util/QGSCompress.h"
+#include "Util/QGSFileTools.h"
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
 
@@ -16,14 +16,15 @@ QGSGeneralLauncherStrategy::~QGSGeneralLauncherStrategy()
 {
 }
 
-QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchCommand(const Version & version,
+LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(const Version & version,
 	QGSGameDirectory & gameDirectory,
 	const QGSLaunchOptions * launchOptions,
 	QString & command)
 {
+	LauncherError::ErrorFlags ret{ int(LauncherError::OK) };
 	if (!launchOptions)
 	{
-		return Error::POINTER_IS_NULL;
+		return ret |= int(LauncherError::POINTER_IS_NULL);
 	}
 
 	QStringList launchCommandList;//launchCommand
@@ -40,14 +41,14 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 	}
 	catch (const QGSExceptionVersionNotFound & exception)
 	{
-		return Error::JAR_FILE_NOT_FOUND;
+		return ret |= int(LauncherError::JAR_FILE_NOT_FOUND);
 	}
 
 	//根版本Jar文件
 	QSharedPointer<QFile> rootVersionJarFile{ gameDirectory.generateVersionJarFile(rootVersionId) };
 	if (!rootVersionJarFile->exists())
 	{
-		return Error::JAR_FILE_NOT_FOUND;
+		return ret |= int(LauncherError::JAR_FILE_NOT_FOUND);
 	}
 	//前置指令
 	const auto && wrapper{ launchOptions->getWrapper() };
@@ -59,7 +60,7 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 	const auto && JavaPath{ launchOptions->getJavaPath() };
 	if (JavaPath.isEmpty())
 	{
-		return Error::JAVA_PATH_NOT_INCLUDED;
+		ret |= int(LauncherError::JAVA_PATH_NOT_INCLUDED);
 	}
 	launchCommandList.append(QString{ "\"%1\"" }.arg(JavaPath));
 	//JVM虚拟机参数
@@ -149,7 +150,7 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 			if (libraryList[i].getNative())
 			{
 				//解压natives
-				auto extractList{ QGSCompress::extractDirectory(libraryPath, nativesDirectory.absolutePath()) };
+				auto extractList{ QGSFileTools::extractDirectory(libraryPath, nativesDirectory.absolutePath()) };
 				if (extractList.isEmpty())
 				{
 					//throw QGSExceptionCompress(libraryPath, nativesDirectory.absolutePath());
@@ -241,5 +242,5 @@ QGSGeneralLauncherStrategy::Error QGSGeneralLauncherStrategy::generateLaunchComm
 		.replace("${launcher_name}", launcherName)
 		.replace("${launcher_version}", launcherVersion)
 		.replace("${classpath}", QString{ "\"%1\"" }.arg(libraryPathList.join(";")));
-	return QGSGeneralLauncherStrategy::Error::OK;
+	return ret;
 }
