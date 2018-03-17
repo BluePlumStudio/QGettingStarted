@@ -1,13 +1,17 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QJsonArray>
 #include <QSslConfiguration>
 #include <QSslSocket>
 #include <QEventLoop>
+#include <QTimer>
 
 #include "QGSYggdrasilAccount.h"
 #include "Util/QGSUuidGenerator.h"
 #include "Util/QGSExceptionAuthentication.h"
+
+static const QString AuthServerUrl{ "https://authserver.mojang.com/authenticate" };
 
 QGSYggdrasilAccount::QGSYggdrasilAccount()
 {
@@ -17,7 +21,7 @@ QGSYggdrasilAccount::~QGSYggdrasilAccount()
 {
 }
 
-AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QString & password, QString clientToken)
+AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QString & password, QString clientToken, QNetworkProxy proxy)
 {
 	QJsonObject jsonObject;
 	QJsonObject agent;
@@ -45,23 +49,28 @@ AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QStri
 	jsonObject.insert("requestUser", true);
 
 	jsonDocument.setObject(jsonObject);
-	auto byteArrayRequestData{ jsonDocument.toJson() };
-	auto request{ QGSNetwork::generateNetworkRequestWithSSL() };
-	request.setUrl(Network::YggdrasilAuthServerUrl);
+	auto && byteArrayRequestData{ jsonDocument.toJson() };
+	auto && request{ QGSNetwork::generateNetworkRequestWithSSL() };
+	request.setUrl(AuthServerUrl);
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	request.setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());
 	
-	QEventLoop eventLoop;
-	auto * reply = QGSNetwork::getInstance().getManager()->post(request, byteArrayRequestData);
-	QObject::connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit);
-	eventLoop.exec();
+	QSharedPointer<QEventLoop> eventLoop{ new QEventLoop };
+	auto * reply = QGSNetwork::getInstance().post(request, byteArrayRequestData);
+	QObject::connect(reply, &QNetworkReply::finished, eventLoop.data(), &QEventLoop::quit);
+	QTimer::singleShot(Network::DefaultTimeout, eventLoop.data(), [=]()
+	{
+		eventLoop->quit();
+		throw QGSExceptionAuthentication{ "timeout!", "timeout", "timeout" };
+	});
+	eventLoop->exec();
 
 	if (!reply->isFinished())
 	{
 		reply->deleteLater();
-		throw QGSExceptionAuthentication{};
+		throw QGSExceptionAuthentication();
 	}
-	auto replyData = reply->readAll();
+	auto && replyData = reply->readAll();
 	reply->deleteLater();
 	jsonDocument = QJsonDocument::fromJson(replyData);
 	jsonObject = jsonDocument.object();
@@ -73,18 +82,34 @@ AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QStri
 			jsonObject.contains("cause") ? jsonObject.value("cause").toString() : "Unknown cause!"
 		};
 	}
-	auto accessToken{ jsonObject.value("accessToken").toString() };
+
+	auto && accessToken{ jsonObject.value("accessToken").toString() };
+
 	clientToken = jsonObject.value("clientToken").toString();
-	auto selectedProfileObject{ jsonObject.value("selectedProfile").toObject() };
+
+	auto && selectedProfileObject{ jsonObject.value("selectedProfile").toObject() };
 	AuthInfo::Profile selectedProfile{ selectedProfileObject.value("id").toString(),
 		selectedProfileObject.value("name").toString(),
 		selectedProfileObject.value("legacy").toBool() };
+
 	QString twitchAccessToken{ "{}" };
-	/*twitchAccessToken
 	if (jsonObject.contains("user"))
 	{
-		auto userObject = jsonObject.value("user").toObject();
+		auto && userObject{ jsonObject.value("user").toObject() };
+		if (userObject.contains("properties"))
+		{
+			auto && propertyArray{ userObject.value("properties").toArray() };
+			for (auto & propertyValueRef : propertyArray)
+			{
+				auto && propertyObject{ propertyValueRef.toObject() };
+				twitchAccessToken = propertyObject.value("name").toString();
+				if (twitchAccessToken == "twitch_access_token")
+				{
+					twitchAccessToken = QString{ "{\"twitch_access_token\": [\"%1\"]}" }.arg(twitchAccessToken);
+				}
+			}
+		}
 	}
-	*/
-	return AuthInfo{ accessToken,clientToken,UserType::MOJANG,selectedProfile,twitchAccessToken };
+
+	return AuthInfo{ accessToken,clientToken,UserType::Mojang,selectedProfile,twitchAccessToken };
 }

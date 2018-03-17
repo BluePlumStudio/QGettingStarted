@@ -43,6 +43,12 @@ QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setJVMArguments(const QString
 	return *this;
 }
 
+QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setJVMArguments(const QStringList & JVMArgumentList)
+{
+	mLaunchOptionsPtr->setJVMArguments(JVMArgumentList.join(" "));
+	return *this;
+}
+
 QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setWrapper(const QString & wrapper)
 {
 	mLaunchOptionsPtr->setWrapper(wrapper);
@@ -85,14 +91,20 @@ QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setMetaspaceSize(const int me
 	return *this;
 }
 
-QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setProxyInfo(const QGSLaunchOptions::ProxyInfo & proxyInfo)
+QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setProxy(const QNetworkProxy & proxy)
 {
-	mLaunchOptionsPtr->setProxyInfo(proxyInfo);
+	mLaunchOptionsPtr->setProxy(proxy);
 	return *this;
 }
 
 QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setGeneratedJVMArguments(const bool generatedJVMArguments)
 {
 	mLaunchOptionsPtr->setGeneratedJVMArguments(generatedJVMArguments);
+	return *this;
+}
+
+QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setLoggingPath(const QString & loggingPath)
+{
+	mLaunchOptionsPtr->setLoggingPath(loggingPath);
 	return *this;
 }

@@ -2,27 +2,30 @@
 
 #include <QString>
 
-#include "../Version/Rules.h"
-#include "../Version/Version.h"
+#include "../GameVersion/Rules.h"
+#include "../GameVersion/GameVersion.h"
 #include "../LaunchOptions/QGSLaunchOptionsBuilder.h"
 
 namespace LauncherError
 {
 	typedef int ErrorFlags;
 
-	const static int OK = 0x01;
-	const static int UNKNOWN_ERROR = 0x02;
-	const static int JSON_LIBRARIES_NOT_INCLUDED = 0x04;
-	const static int JSON_MINECRAFT_ARGUMENTS_NOT_INCLUDED = 0x08;
-	const static int MINECRAFT_ARGUMENTS_VARIABLE_NOT_INCLUDED;
-	const static int JAVA_PATH_NOT_INCLUDED;
-	const static int NATIVE_PATH_NOT_INCLUDED;
-	const static int PLAYER_NAME_NOT_INCLUDED;
-	const static int USER_TYPE_NOT_INCLUDED;
-	const static int NATIVES_COMPRESS_ERROR;
-	const static int XMX_AND_XMN;
-	const static int POINTER_IS_NULL;
-	const static int JAR_FILE_NOT_FOUND;
+	static const int Ok = 0x01;
+	static const int UnknownError = 0x02;
+	static const int JsonLibrariesNotIncluded = 0x04;
+	static const int JsonMinecraftArgumentsNot_included = 0x08;
+	static const int MinecraftArgumentsVariableNotIncluded;
+	static const int JavaPathNotIncluded;
+	static const int NativePathNotIncluded;
+	static const int PlayerNameNotIncluded;
+	static const int UserTypeNotIncluded;
+	static const int AuthUuidNotIncluded;
+	static const int AuthAccessTokenNotIncluded;
+	static const int NativesCompressError;
+	static const int InvalidMemorySize;
+	static const int NullPointer;
+	static const int JarFileNotFound;
+	static const int AssetFirectoryGenerateFailure;
 }
 
 class QGSILauncherStrategy 
@@ -40,7 +43,7 @@ public:
 
 	virtual ~QGSILauncherStrategy();
 	
-	virtual LauncherError::ErrorFlags generateLaunchCommand(const Version & version,
+	virtual LauncherError::ErrorFlags generateLaunchCommand(const GameVersion & version,
 		QGSGameDirectory & gameDirectory,
 		const QGSLaunchOptions * launchOptions,
 		QString & command) = 0;

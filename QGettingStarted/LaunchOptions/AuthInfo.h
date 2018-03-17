@@ -4,8 +4,8 @@
 
 namespace UserType
 {
-	const QString MOJANG("Mojang");
-	const QString LEGACY("Legacy");
+	const QString Mojang("Mojang");
+	const QString Legacy("Legacy");
 }
 
 class AuthInfo
@@ -72,7 +72,7 @@ public:
 public:
 	AuthInfo(const QString & accessToken = "{}",
 		const QString & clientToken = "{}",
-		const QString & userType = UserType::LEGACY,
+		const QString & userType = UserType::Legacy,
 		const Profile & selectedProfile = Profile(),
 		const QString & twitchAccessToken = "{}");
 	

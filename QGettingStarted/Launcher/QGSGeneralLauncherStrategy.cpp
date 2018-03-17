@@ -16,20 +16,20 @@ QGSGeneralLauncherStrategy::~QGSGeneralLauncherStrategy()
 {
 }
 
-LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(const Version & version,
+LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(const GameVersion & version,
 	QGSGameDirectory & gameDirectory,
 	const QGSLaunchOptions * launchOptions,
 	QString & command)
 {
-	LauncherError::ErrorFlags ret{ int(LauncherError::OK) };
+	LauncherError::ErrorFlags ret{ LauncherError::Ok };
 	if (!launchOptions)
 	{
-		return ret |= int(LauncherError::POINTER_IS_NULL);
+		return ret |= LauncherError::NullPointer;
 	}
 
 	QStringList launchCommandList;//launchCommand
 	auto rootVersionId{ version.getId() };
-	Version rootVersion;
+	GameVersion rootVersion;
 	//获取根版本
 	try
 	{
@@ -41,14 +41,14 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 	}
 	catch (const QGSExceptionVersionNotFound & exception)
 	{
-		return ret |= int(LauncherError::JAR_FILE_NOT_FOUND);
+		return ret |= LauncherError::JarFileNotFound;
 	}
 
 	//根版本Jar文件
-	QSharedPointer<QFile> rootVersionJarFile{ gameDirectory.generateVersionJarFile(rootVersionId) };
+	QSharedPointer<QFile> rootVersionJarFile{ gameDirectory.generateGameVersionJarFile(rootVersionId) };
 	if (!rootVersionJarFile->exists())
 	{
-		return ret |= int(LauncherError::JAR_FILE_NOT_FOUND);
+		return ret |= LauncherError::JarFileNotFound;
 	}
 	//前置指令
 	const auto && wrapper{ launchOptions->getWrapper() };
@@ -60,7 +60,7 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 	const auto && JavaPath{ launchOptions->getJavaPath() };
 	if (JavaPath.isEmpty())
 	{
-		ret |= int(LauncherError::JAVA_PATH_NOT_INCLUDED);
+		ret |= LauncherError::JavaPathNotIncluded;
 	}
 	launchCommandList.append(QString{ "\"%1\"" }.arg(JavaPath));
 	//JVM虚拟机参数
@@ -87,6 +87,16 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 		//-Dfml.ignoreInvalidMinecraftCertificates=true -Dfml.ignorePatchDiscrepancies=true
 		launchCommandList.append("-Dfml.ignoreInvalidMinecraftCertificates=true");
 		launchCommandList.append("-Dfml.ignorePatchDiscrepancies=true");
+		//logging
+		auto && loggingPath{ launchOptions->getLoggingPath() };
+		if (!loggingPath.isEmpty())
+		{
+			auto && argument{ rootVersion.getLogging().value("client").getArgument() };
+			if (!argument.isEmpty())
+			{
+				launchCommandList.append(argument.replace("${path}", "\"" + loggingPath + "\""));
+			}
+		}
 	}
 	//新版json包含"arguments"属性
 	auto && arguments{ rootVersion.getArguments() };
@@ -124,7 +134,7 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 	}
 	//natives目录
 	auto nativesDirectory{ gameDirectory.generateNativesDirectory(version.getId()) };
-	nativesDirectory.mkdir(nativesDirectory.absolutePath());
+	nativesDirectory.mkpath(nativesDirectory.absolutePath());
 	//launcherName
 	const QString launcherName{ "\"QGettingStarted\"" };
 	//launcherVersion
@@ -154,6 +164,16 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 				if (extractList.isEmpty())
 				{
 					//throw QGSExceptionCompress(libraryPath, nativesDirectory.absolutePath());
+					ret |= LauncherError::NativesCompressError;
+				}
+
+				auto && excludeList{ libraryList[i].getExtract().getExclude() };
+				for (auto & exclude : excludeList)
+				{
+					if (!QGSFileTools::removeDirectory(nativesDirectory.absolutePath() + SEPARATOR + exclude))
+					{
+						ret |= LauncherError::NativesCompressError;
+					}
 				}
 
 				continue;
@@ -162,12 +182,12 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 			libraryPathList.append(libraryPath);
 		}
 
-		QSharedPointer<QFile> fileInheritsVersionJar{ gameDirectory.generateVersionJarFile(inheritsVersionId) };
+		QSharedPointer<QFile> fileInheritsVersionJar{ gameDirectory.generateGameVersionJarFile(inheritsVersionId) };
 		libraryPathList.append(fileInheritsVersionJar->fileName());//版本".jar"文件
 	} while (!(inheritsVersionId = gameDirectory.getVersion(inheritsVersionId).getInheritsFrom()).isEmpty());
 	//mainClass
 	launchCommandList.append(version.getMainClass());
-	//minecraftArguments
+	/*minecraftArguments*/
 	auto && game{ arguments.getGame() };
 	QString minecraftArguments;
 	if (!game.isEmpty())
@@ -187,23 +207,54 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 		minecraftArguments = version.getMinecraftArguments();
 	}
 	auto && authInfo{ launchOptions->getAuthInfo() };
-	minecraftArguments.replace("${auth_player_name}", authInfo.getSelectedProfile().getName())
+
+	QDir assetsDirectory;
+	if (!gameDirectory.generateAssetsDirectory(rootVersionId, rootVersion.getAssetIndex(), assetsDirectory))
+	{
+		ret |= LauncherError::AssetFirectoryGenerateFailure;
+	}
+	auto && assetsDirAbsolutePath{ assetsDirectory.absolutePath() };
+
+	auto && authPlayerName{ authInfo.getSelectedProfile().getName() };
+	if (authPlayerName.isEmpty())
+	{
+		return ret |= LauncherError::PlayerNameNotIncluded;
+	}
+
+	auto && authUuid{ authInfo.getSelectedProfile().getId() };
+	if (authUuid.isEmpty())
+	{
+		return ret |= LauncherError::AuthUuidNotIncluded;
+	}
+
+	auto && authAccessToken{ authInfo.getAccessToken() };
+	if (authAccessToken.isEmpty())
+	{
+		return ret |= LauncherError::AuthAccessTokenNotIncluded;
+	}
+
+	auto && userType{ authInfo.getUserType() };
+	if (userType.isEmpty())
+	{
+		return ret |= LauncherError::UserTypeNotIncluded;
+	}
+
+	minecraftArguments.replace("${auth_player_name}", authPlayerName)
 		.replace("${version_name}", version.getId())
 		.replace("${game_directory}", QString{ "\"%1\"" }.arg(gameDirectory.getBaseDir().absolutePath()))
 		.replace("${assets_root}",
-			QString{ "\"%1\"" }.arg(gameDirectory.generateAssetDirectory(rootVersionId, rootVersion.getAssetIndex()).absolutePath()))
+			QString{ "\"%1\"" }.arg(assetsDirAbsolutePath))
 		.replace("${assets_index_name}", rootVersion.getAssets())
-		.replace("${auth_uuid}", authInfo.getSelectedProfile().getId())
-		.replace("${auth_access_token}", authInfo.getAccessToken())
-		.replace("${user_type}", authInfo.getUserType())
+		.replace("${auth_uuid}", authUuid)
+		.replace("${auth_access_token}", authAccessToken)
+		.replace("${user_type}", userType)
 		.replace("${version_type}", "\"QGettingStarted\"")
-		.replace("${user_properties}", "{}")
+		.replace("${user_properties}", authInfo.getTwitchAccessToken())
 		.replace("${auth_session}", authInfo.getAccessToken())
 		.replace("${game_assets}",
-			QString{ "\"%1\"" }.arg(gameDirectory.generateAssetDirectory(rootVersionId, rootVersion.getAssetIndex()).absolutePath()))
+			QString{ "\"%1\"" }.arg(assetsDirAbsolutePath))
 		.replace("${profile_name}", "Minecraft");
 	launchCommandList.append(minecraftArguments);
-	//其他参数
 	//窗口大小
 	auto && windowSize{ launchOptions->getWindowSize() };
 	if (!windowSize.isEmpty())
@@ -219,15 +270,15 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 		launchCommandList.append(QString("--port %1").arg(serverInfo.port));
 	}
 	//代理
-	auto && proxyInfo{ launchOptions->getProxyInfo() };
-	if (!proxyInfo.address.isEmpty() && !proxyInfo.port.isEmpty())
+	auto && proxy{ launchOptions->getProxy() };
+	if (proxy != QNetworkProxy::NoProxy && !proxy.hostName().isEmpty())
 	{
-		launchCommandList.append(QString("--proxyHost %1").arg(proxyInfo.address));
-		launchCommandList.append(QString("--proxyPort %1").arg(proxyInfo.port));
-		if (!proxyInfo.user.isEmpty() && !proxyInfo.password.isEmpty())
+		launchCommandList.append(QString("--proxyHost %1").arg(proxy.hostName()));
+		launchCommandList.append(QString("--proxyPort %1").arg(proxy.port()));
+		if (!proxy.user().isEmpty() && !proxy.password().isEmpty())
 		{
-			launchCommandList.append(QString("--proxyUser %1").arg(proxyInfo.user));
-			launchCommandList.append(QString("--proxyPass %1").arg(proxyInfo.password));
+			launchCommandList.append(QString("--proxyUser %1").arg(proxy.user()));
+			launchCommandList.append(QString("--proxyPass %1").arg(proxy.password()));
 		}
 	}
 	//游戏额外参数

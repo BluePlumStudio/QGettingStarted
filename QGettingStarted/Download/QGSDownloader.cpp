@@ -2,22 +2,27 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QTimer>
+#include <QMutexLocker>
+#include <QMutex>
 
 #include "QGSDownloader.h"
 #include "QGSUuidGenerator.h"
 #include "QGSOperatingSystem.h"
 
 static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeparator() };
-static const QString DOWNLOADDIRNAME{ "QGSDownload" };
 
-QGSDownloader::QGSDownloader(const DownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject *parent)
-	: QObject(parent), mDownloadInfo(downloadInfo), mFile(nullptr), mReply(nullptr), mProxy(proxy), mState(State::Stop), mDelete(false), mBytesReceived(0)
+QGSDownloader::QGSDownloader(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
+	:mTargetFilePtr(targetFile), mDownloadInfo(downloadInfo), QObject(parent), mProxy(proxy), mBytesReceived(0), mDelete(false), mState(State::Stop)
 {
-
+	setTimeout(Network::DefaultTimeout);
 }
 
 QGSDownloader::~QGSDownloader()
 {
+	if (mReply)
+	{
+		mReply->deleteLater();
+	}
 }
 
 bool QGSDownloader::start()
@@ -40,29 +45,13 @@ bool QGSDownloader::start()
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 	mDownloadInfo.setUrl(url);
 
-	//检查下载路径
-	QDir downloadDirectory{ QCoreApplication::applicationDirPath() + SEPARATOR + DOWNLOADDIRNAME };
-	if(mDownloadInfo.getPath().isEmpty())
-	{
-		QFileInfo fileInfo{ url.toString() };
-
-		if (!downloadDirectory.exists())
-		{
-			if (!downloadDirectory.mkpath(QCoreApplication::applicationDirPath() + SEPARATOR + DOWNLOADDIRNAME))
-			{
-				return false;
-			}
-		}
-
-		mDownloadInfo.setPath(downloadDirectory.absolutePath() + SEPARATOR + fileInfo.fileName());
-		
-	}
-
+	mDownloadInfo.setPath(mTargetFilePtr->fileName());
+	mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".tmp");
 	//打开文件
-	if (!mFile.isOpen())
+	if (!mTargetFilePtr->isOpen())
 	{
-		mFile.setFileName(downloadDirectory.absolutePath() + SEPARATOR + generateRandomFileName());
-		if (!mFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+		QFileInfo{ *mTargetFilePtr }.absoluteDir().mkpath("." + SEPARATOR);
+		if (!mTargetFilePtr->open(QIODevice::WriteOnly | QIODevice::Truncate))
 		{
 			return false;
 		}
@@ -74,7 +63,8 @@ bool QGSDownloader::start()
 		QString strRange = QString("bytes=%1-").arg(mBytesReceived);
 		request.setRawHeader("Range", strRange.toLatin1());
 	}
-	mReply = QGSNetwork::getInstance().getManager()->get(request);
+	mReply = QGSNetwork::getInstance().setProxy(mProxy).get(request);
+	QGSNetwork::getInstance().setProxy(QNetworkProxy::NoProxy);
 
 	connect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloader::slotDownloadProgress);
 	connect(mReply, &QNetworkReply::finished, this, &QGSDownloader::slotFinished);
@@ -82,7 +72,7 @@ bool QGSDownloader::start()
 	connect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloader::slotSslErrors);
 	connect(&mTimer, &QTimer::timeout, this, &QGSDownloader::slotTimeout);
 	connect(mReply, &QNetworkReply::redirected, this, &QGSDownloader::slotRedirected);
-	mTimer.start(12000);
+	mTimer.moveToThread(this->thread());
 
 	mState = State::Start;
 	return true;
@@ -92,17 +82,19 @@ bool QGSDownloader::stop()
 {
 	mState = State::Stop;
 
-	mFile.flush();
-	mBytesReceived = mFile.size();
-	disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloader::slotDownloadProgress);
-	disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloader::slotFinished);
-	disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloader::slotError);
-	disconnect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloader::slotSslErrors);
-	disconnect(&mTimer, &QTimer::timeout, this, &QGSDownloader::slotTimeout);
-	disconnect(mReply, &QNetworkReply::redirected, this, &QGSDownloader::slotRedirected);
-	mReply->deleteLater();
-	mReply = nullptr;
-
+	mTargetFilePtr->flush();
+	mBytesReceived = mTargetFilePtr->size();
+	if (mReply)
+	{
+		disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloader::slotDownloadProgress);
+		disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloader::slotFinished);
+		disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloader::slotError);
+		disconnect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloader::slotSslErrors);
+		disconnect(&mTimer, &QTimer::timeout, this, &QGSDownloader::slotTimeout);
+		disconnect(mReply, &QNetworkReply::redirected, this, &QGSDownloader::slotRedirected);
+		mReply->deleteLater();
+		mReply = nullptr;
+	}
 	return true;
 }
 
@@ -110,31 +102,40 @@ bool QGSDownloader::cancel()
 {
 	mState = State::Stop;
 
-	mFile.flush();
-	mFile.close();
+	mTargetFilePtr->flush();
+	mTargetFilePtr->close();
 	mBytesReceived = 0;
 	mDelete = false;
-	mFile.remove();
-	disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloader::slotDownloadProgress);
-	disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloader::slotFinished);
-	disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloader::slotError);
-	disconnect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloader::slotSslErrors);
-	disconnect(&mTimer, &QTimer::timeout, this, &QGSDownloader::slotTimeout);
-	disconnect(mReply, &QNetworkReply::redirected, this, &QGSDownloader::slotRedirected);
-	mReply->deleteLater();
-	mReply = nullptr;
+	mTargetFilePtr->remove();
+	if (mReply)
+	{
+		disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloader::slotDownloadProgress);
+		disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloader::slotFinished);
+		disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloader::slotError);
+		disconnect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloader::slotSslErrors);
+		disconnect(&mTimer, &QTimer::timeout, this, &QGSDownloader::slotTimeout);
+		disconnect(mReply, &QNetworkReply::redirected, this, &QGSDownloader::slotRedirected);
+		mReply->deleteLater();
+		mReply = nullptr;
+	}
 
 	return true;
 }
 
-QFile * QGSDownloader::generateFile() const
+QGSDownloader & QGSDownloader::setTimeout(const int msec)
 {
-	return new QFile{ mFile.fileName() };
+	mTimer.setInterval(msec);
+	return *this;
 }
 
-QFile & QGSDownloader::getFile()
+int QGSDownloader::getTimeout() const
 {
-	return mFile;
+	return mTimer.interval();
+}
+
+QFile * QGSDownloader::getTargetFile()
+{
+	return mTargetFilePtr;
 }
 
 QGSDownloader::State QGSDownloader::getState() const
@@ -142,59 +143,104 @@ QGSDownloader::State QGSDownloader::getState() const
 	return mState;
 }
 
+void QGSDownloader::stepFinished()
+{
+
+}
+
+void QGSDownloader::stepDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
+{
+
+}
+
+void QGSDownloader::stepError(QNetworkReply::NetworkError code)
+{
+
+}
+
+void QGSDownloader::stepSslErrors(const QList<QSslError>& errors)
+{
+
+}
+
+void QGSDownloader::stepTimeout()
+{
+
+}
+
+void QGSDownloader::stepRedirected(const QUrl & url)
+{
+
+}
+
 void QGSDownloader::slotFinished()
 {
-	mFile.flush();
-	mFile.close();
-	QFile::remove(mDownloadInfo.getPath());
-	mFile.rename(mDownloadInfo.getPath());
+	stepFinished();
+
+	mTargetFilePtr->flush();
+	mTargetFilePtr->close();
+	mTargetFilePtr->remove(mDownloadInfo.getPath());
+	mTargetFilePtr->rename(mDownloadInfo.getPath());
 	if (!mDownloadInfo.getSHA1().isEmpty())
 	{
 		//文件SHA1检查
 	}
 	if (mDelete)
 	{
-		mFile.remove();
+		mTargetFilePtr->remove();
 	}
-	mReply->deleteLater();
-	mReply = nullptr;
+	if (mReply)
+	{
+		mReply->deleteLater();
+		mReply = nullptr;
+	}
 
-	emit finished();
+	emit finished(mDownloadInfo);
 }
 
 void QGSDownloader::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	mTimer.start(12000);
+	mTimer.stop();
+	stepDownloadProgress(bytesReceived, bytesTotal);
 
-	auto receivedData{ mReply->readAll() };
-	mFile.write(receivedData);
-	mFile.flush();
+	if(mReply)
+	{
+		mTargetFilePtr->write(mReply->readAll());
+		mTargetFilePtr->flush();
+	}
 
-	emit downloadProgress(mBytesReceived + bytesReceived, bytesTotal);
+	mTimer.start();
+	emit downloadProgress(mBytesReceived + bytesReceived, bytesTotal, mDownloadInfo);
 }
 
 void QGSDownloader::slotError(QNetworkReply::NetworkError code)
 {
-	emit error(Error{ code,mReply->errorString() });
+	auto && errorString{ mReply ? mReply->errorString() : "" };
+	cancel();
+	stepError(code);
+
+	emit error(Error{ code,errorString }, mDownloadInfo);
 }
 
 void QGSDownloader::slotSslErrors(const QList<QSslError>& errors)
 {
-	emit sslErrors(errors);
+	cancel();
+	stepSslErrors(errors);
+
+	emit sslErrors(errors, mDownloadInfo);
 }
 
 void QGSDownloader::slotTimeout()
 {
 	stop();
-	emit timeout();
+	stepTimeout();
+
+	emit timeout(mDownloadInfo);
 }
 
 void QGSDownloader::slotRedirected(const QUrl & url)
 {
-	QFileInfo fileInfo{ url.toString() };
-	QDir downloadDirectory{ QCoreApplication::applicationDirPath() + SEPARATOR + DOWNLOADDIRNAME };
-	mDownloadInfo.setPath(downloadDirectory.absolutePath()
-		+ SEPARATOR + fileInfo.fileName());
+	stepRedirected(url);
 }
 
 QString QGSDownloader::generateRandomFileName()

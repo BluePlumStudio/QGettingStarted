@@ -4,7 +4,7 @@
 #include <QFile>
 #include <QVector>
 
-#include "../Version/Version.h"
+#include "../GameVersion/GameVersion.h"
 
 class QGSGameDirectory 
 {
@@ -23,13 +23,17 @@ public:
 
 	~QGSGameDirectory();
 
-	const Version & getVersion(const QString & version);
+	const GameVersion & getVersion(const QString & version);
 
-	const Version & addVersion(const QString version);
+	const GameVersion & addVersion(const QString version);
 
 	bool containsVersion(const QString & version)const;
 
-	QFile * generateVersionJarFile(const QString & version, const bool withAbsolutePath = true)const;
+	QFile * generateGameVersionJarFile(const QString & version, const bool withAbsolutePath = true)const;
+
+	QFile * generateGameVersionJsonFile(const QString & version, const bool withAbsolutePath = true)const;
+
+	QFile * generateAssetIndexJsonFile(const AssetIndex & assetIndex, const bool withAbsolutePath = true)const;
 
 	QFile * generateLibraryFile(const Library & library, const bool withAbsolutePath = true)const;
 
@@ -42,12 +46,16 @@ public:
 	static QString praseLibraryName(const Library & library);
 	
 	/*need to be updated*/
-	QDir generateAssetDirectory(const QString & version, const AssetIndex & assetIndex);
+	bool generateAssetsDirectory(QString version, const AssetIndex & assetIndex, QDir & dir);
+
+	QDir generateAssetsDirectory(const bool withAbsolutePath = true);
+
+	QFile * generateAssetObjectFile(const AssetObject & assetObject, const bool withAbsolutePath = true);
 private:
 	void init();
 
 private:
-	QMap<QString, Version> mVersionMap;
+	QMap<QString, GameVersion> mVersionMap;
 	QDir mBaseDir;
 };
 

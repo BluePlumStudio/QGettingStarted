@@ -1,5 +1,7 @@
 #pragma once
 
+#define QUAZIP_STATIC
+
 #include "QuaZip/JlCompress.h"
 
 class QGSFileTools

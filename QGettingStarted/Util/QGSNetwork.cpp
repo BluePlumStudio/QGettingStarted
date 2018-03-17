@@ -6,13 +6,16 @@ QGSNetwork::QGSNetwork(QObject * parent) :QObject(parent), mManager(new QNetwork
 {
 }
 
+/*
 QNetworkAccessManager * QGSNetwork::getManager()
 {
 	return mManager;
 }
+*/
 
 QGSNetwork::~QGSNetwork()
 {
+
 }
 
 QNetworkRequest QGSNetwork::generateNetworkRequest()
@@ -32,23 +35,35 @@ QNetworkRequest QGSNetwork::generateNetworkRequestWithSSL(QSsl::SslProtocol prot
 	return networkRequest;
 }
 
-QUrl QGSNetwork::getRedirectURL(const QUrl & url)
+QGSNetwork & QGSNetwork::setProxy(QNetworkProxy proxy)
 {
-	QEventLoop eventLoop;
-	auto newUrl{ url };
+	mManager->setProxy(proxy);
+	return *this;
+}
 
-	QNetworkReply * reply = getInstance().getManager()->head(QNetworkRequest(newUrl));//获取重定向后的下载链接
-	QObject::connect(reply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit, Qt::DirectConnection);
-	eventLoop.exec();
+QNetworkReply * QGSNetwork::get(const QNetworkRequest & request)
+{
+	return mManager->get(request);
+}
 
-	int statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-	if (statusCode == 302 && reply->hasRawHeader("Location"))
-	{
-		QString location = reply->rawHeader("Location");
-		newUrl.setPath(location);
-	}
+QNetworkReply * QGSNetwork::post(const QNetworkRequest & request, QIODevice * data)
+{
+	return mManager->post(request, data);
+}
 
-	return newUrl;
+QNetworkReply * QGSNetwork::post(const QNetworkRequest & request, const QByteArray & data)
+{
+	return mManager->post(request, data);
+}
+
+QNetworkReply * QGSNetwork::post(const QNetworkRequest & request, QHttpMultiPart * multiPart)
+{
+	return mManager->post(request, multiPart);
+}
+
+QNetworkProxy QGSNetwork::proxy() const
+{
+	return mManager->proxy();
 }
 
 QGSNetwork & QGSNetwork::getInstance()

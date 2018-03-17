@@ -7,16 +7,18 @@
 #include <QNetworkProxy>
 #include <QTimer>
 #include <QEventLoop>
+#include <QRunnable>
 
-#include "Util/QGSNetwork.h"
-#include "Version/Downloads.h"
+#include "../Util/QGSNetwork.h"
+#include "../GameVersion/Downloads.h"
 
 class DownloadInfo:public Downloads::Download
 {
 public:
-	DownloadInfo::DownloadInfo(const int size = -1, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl())
-		:Download(size, SHA1, path, url)
+	DownloadInfo::DownloadInfo(const QUrl & url = QUrl(), const QString & path = "", const QString & SHA1 = "")
+		:Download(-1, SHA1, path, url)
 	{
+		qRegisterMetaType<DownloadInfo>("DownloadInfo");
 	}
 
 	DownloadInfo(const DownloadInfo & right) = default;
@@ -29,6 +31,7 @@ public:
 
 	virtual DownloadInfo::~DownloadInfo()
 	{
+
 	}
 
 private:
@@ -76,7 +79,7 @@ public:
 
 
 public:
-	QGSDownloader(const DownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSDownloader(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSDownloader(const QGSDownloader & right) = delete;
 
@@ -87,42 +90,51 @@ public:
 	QGSDownloader & operator=(QGSDownloader && right) = delete;
 
 	virtual ~QGSDownloader();
-
+	/*²Ù×÷*/
 	bool start();
 
 	bool stop();
 
 	bool cancel();
+	/**/
+	QGSDownloader & setTimeout(const int msec);
 
-	QFile * generateFile()const;
+	int getTimeout()const;
 
-	QFile & getFile();
+	QFile * getTargetFile();
 
 	State getState()const;
-private:
+
+	static QString generateRandomFileName();
+protected:
+	/*Ä£°å²Ù×÷*/
+	virtual void stepFinished();
+	virtual void stepDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+	virtual void stepError(QNetworkReply::NetworkError code);
+	virtual void stepSslErrors(const QList<QSslError> &errors);
+	virtual void stepTimeout();
+	virtual void stepRedirected(const QUrl &url);
+private slots:
 	void slotFinished();
 	void slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 	void slotError(QNetworkReply::NetworkError code);
 	void slotSslErrors(const QList<QSslError> &errors);
 	void slotTimeout();
 	void slotRedirected(const QUrl &url);
-
-	QString generateRandomFileName();
 signals:
-	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	void finished();
-	void error(Error error);
-	void sslErrors(const QList<QSslError> &errors);
-	void timeout();
+	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal, const DownloadInfo downloadInfo);
+	void finished(const DownloadInfo downloadInfo);
+	void error(Error error, const DownloadInfo downloadInfo);
+	void sslErrors(const QList<QSslError> &errors, const DownloadInfo downloadInfo);
+	void timeout(const DownloadInfo downloadInfo);
 
-private:
-	QFile mFile;
+protected:
+	QFile * mTargetFilePtr;
 	DownloadInfo mDownloadInfo;
 	QNetworkReply * mReply;
 	QNetworkProxy mProxy;
 	State mState;
 	bool mDelete;
-	QEventLoop mEventLoop;
 	QTimer mTimer;
 	qint64 mBytesReceived;
 };

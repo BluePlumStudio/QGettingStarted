@@ -25,6 +25,7 @@ public:
 	virtual QGSLaunchOptionsBuilder & setMinMemory(const int minMemory)override;
 	virtual QGSLaunchOptionsBuilder & setAuthInfo(const AuthInfo & authInfo)override;
 	virtual QGSLaunchOptionsBuilder & setJVMArguments(const QString & JVMArguments)override;
+	virtual QGSLaunchOptionsBuilder & setJVMArguments(const QStringList & JVMArgumentList)override;
 	virtual QGSLaunchOptionsBuilder & setWrapper(const QString & wrapper)override;
 	virtual QGSLaunchOptionsBuilder & setPreCalledCommands(const QString & preCalledCommands)override;
 	virtual QGSLaunchOptionsBuilder & setServerInfo(const QGSLaunchOptions::ServerInfo & serverInfo)override;
@@ -32,7 +33,8 @@ public:
 	virtual QGSLaunchOptionsBuilder & setWindowSize(const QSize & windowSize)override;
 	virtual QGSLaunchOptionsBuilder & setFullScreen(const bool fullScreen)override;
 	virtual QGSLaunchOptionsBuilder & setMetaspaceSize(const int metaspaceSize)override;
-	virtual QGSLaunchOptionsBuilder & setProxyInfo(const QGSLaunchOptions::ProxyInfo & proxyInfo)override;
+	virtual QGSLaunchOptionsBuilder & setProxy(const QNetworkProxy & proxy)override;
 	virtual QGSLaunchOptionsBuilder & setGeneratedJVMArguments(const bool generatedJVMArguments)override;
+	virtual QGSLaunchOptionsBuilder & setLoggingPath(const QString & loggingPath)override;
 
 };

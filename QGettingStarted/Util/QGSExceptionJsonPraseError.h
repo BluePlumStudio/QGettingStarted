@@ -6,9 +6,7 @@
 class QGSExceptionJsonPraseError :public QGSException
 {
 public:
-	QGSExceptionJsonPraseError() = default;
-
-	QGSExceptionJsonPraseError(const QJsonParseError & jsonPraseError);
+	QGSExceptionJsonPraseError(const QJsonParseError & jsonPraseError = QJsonParseError(), const QString & errorMessage = "");
 
 	virtual ~QGSExceptionJsonPraseError();
 
@@ -17,7 +15,10 @@ public:
 	virtual void raise()const override;
 
 	QJsonParseError getJsonPraseError()const;
+
+	QString getErrorMessage()const;
 private:
 	QJsonParseError mJsonPraseError;
+	QString mErrorMessage;
 };
 

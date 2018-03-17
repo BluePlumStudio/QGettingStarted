@@ -24,6 +24,7 @@ public:
 	virtual QGSILaunchOptionsBuilder & setMinMemory(const int minMemory) = 0;
 	virtual QGSILaunchOptionsBuilder & setAuthInfo(const AuthInfo & authInfo) = 0;
 	virtual QGSILaunchOptionsBuilder & setJVMArguments(const QString & JVMArguments) = 0;
+	virtual QGSILaunchOptionsBuilder & setJVMArguments(const QStringList & JVMArgumentList) = 0;
 	virtual QGSILaunchOptionsBuilder & setWrapper(const QString & wrapper) = 0;
 	virtual QGSILaunchOptionsBuilder & setPreCalledCommands(const QString & preCalledCommands) = 0;
 	virtual QGSILaunchOptionsBuilder & setServerInfo(const QGSLaunchOptions::ServerInfo & serverInfo) = 0;
@@ -31,8 +32,9 @@ public:
 	virtual QGSILaunchOptionsBuilder & setWindowSize(const QSize & windowSize) = 0;
 	virtual QGSILaunchOptionsBuilder & setFullScreen(const bool fullScreen) = 0;
 	virtual QGSILaunchOptionsBuilder & setMetaspaceSize(const int metaspaceSize) = 0;
-	virtual QGSILaunchOptionsBuilder & setProxyInfo(const QGSLaunchOptions::ProxyInfo & proxyInfo) = 0;
+	virtual QGSILaunchOptionsBuilder & setProxy(const QNetworkProxy & proxy) = 0;
 	virtual QGSILaunchOptionsBuilder & setGeneratedJVMArguments(const bool generatedJVMArguments) = 0;
+	virtual QGSILaunchOptionsBuilder & setLoggingPath(const QString & loggingPath) = 0;
 protected: 
 	QGSLaunchOptions * mLaunchOptionsPtr;
 };

@@ -3,6 +3,7 @@
 #include <QString>
 
 #include "AuthInfo.h"
+#include "Util/QGSNetwork.h"
 
 class QGSIAccount
 {
@@ -19,7 +20,8 @@ public:
 
 	QGSIAccount & operator=(QGSIAccount && right) = default;
 
-	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "") = 0;
+	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy) = 0;
+	//authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy)
 private:
 
 };

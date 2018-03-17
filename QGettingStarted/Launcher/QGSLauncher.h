@@ -8,7 +8,7 @@
 class QGSLauncher
 {
 public:
-	QGSLauncher(const Version & version, QGSGameDirectory & gameDirectory);
+	QGSLauncher(const GameVersion & version, QGSGameDirectory & gameDirectory);
 
 	QGSLauncher(const QGSLauncher & right) = delete;
 
@@ -23,7 +23,7 @@ public:
 	virtual LauncherError::ErrorFlags generateLaunchCommand(const QGSLaunchOptions * launchOptions, QString & command);
 private:
 	QGSILauncherStrategy * launcherStrategy;
-	const Version & mVersion;
+	const GameVersion & mVersion;
 	QGSGameDirectory mGameDirectory;
 };
 

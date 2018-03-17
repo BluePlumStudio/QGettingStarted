@@ -1,11 +1,14 @@
 #include "QGSExceptionJsonPraseError.h"
 
-QGSExceptionJsonPraseError::QGSExceptionJsonPraseError(const QJsonParseError & jsonPraseError):mJsonPraseError(jsonPraseError)
+QGSExceptionJsonPraseError::QGSExceptionJsonPraseError(const QJsonParseError & jsonPraseError, const QString & errorMessage)
+	:mJsonPraseError(jsonPraseError), mErrorMessage(errorMessage)
 {
+
 }
 
 QGSExceptionJsonPraseError::~QGSExceptionJsonPraseError()
 {
+
 }
 
 QGSExceptionJsonPraseError * QGSExceptionJsonPraseError::clone()const
@@ -21,4 +24,9 @@ void QGSExceptionJsonPraseError::raise()const
 QJsonParseError QGSExceptionJsonPraseError::getJsonPraseError()const
 {
 	return mJsonPraseError;
+}
+
+QString QGSExceptionJsonPraseError::getErrorMessage() const
+{
+	return mErrorMessage;
 }

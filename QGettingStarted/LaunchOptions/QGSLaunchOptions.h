@@ -9,6 +9,7 @@
 class QGSLaunchOptions 
 {
 public:
+	/*
 	class ProxyInfo
 	{
 	public:
@@ -27,6 +28,7 @@ public:
 		QString user;
 		QString password;
 	};
+	*/
 
 	class ServerInfo
 	{
@@ -58,7 +60,7 @@ public:
 		QSize windowSize = QSize(854, 480),
 		bool fullScreen = false,
 		int metaspaceSize = 0,
-		ProxyInfo proxyInfo = ProxyInfo(),
+		QNetworkProxy proxy = QNetworkProxy::NoProxy,
 		bool generatedJVMArguments = true);
 
 	QGSLaunchOptions(const QGSLaunchOptions & right) = default;
@@ -83,8 +85,9 @@ public:
 	QSize getWindowSize()const;
 	bool getFullScreen()const;
 	int getMetaspaceSize()const;
-	ProxyInfo getProxyInfo()const;
+	QNetworkProxy getProxy()const;
 	bool getGeneratedJVMArguments()const;
+	QString getLoggingPath()const;
 
 	QGSLaunchOptions & setJavaPath(const QString & JavaPath);
 	QGSLaunchOptions & setMaxMemory(const int maxMemory);
@@ -98,8 +101,9 @@ public:
 	QGSLaunchOptions & setWindowSize(const QSize & windowSize);
 	QGSLaunchOptions & setFullScreen(const bool fullScreen);
 	QGSLaunchOptions & setMetaspaceSize(const int metaspaceSize);
-	QGSLaunchOptions & setProxyInfo(const ProxyInfo & proxyInfo);
+	QGSLaunchOptions & setProxy(const QNetworkProxy & proxy);
 	QGSLaunchOptions & setGeneratedJVMArguments(const bool generatedJVMArguments);
+	QGSLaunchOptions & setLoggingPath(const QString & loggingPath);
 private: 
 	QString mJavaPath;
 	int mMaxMemory;
@@ -113,6 +117,7 @@ private:
 	QSize mWindowSize;
 	bool mFullScreen;
 	int mMetaspaceSize;
-	ProxyInfo mProxyInfo;
+	QNetworkProxy mProxy;
 	bool mGeneratedJVMArguments;
+	QString mLoggingPath;
 };

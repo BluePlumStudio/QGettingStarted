@@ -13,7 +13,7 @@ QGSLaunchOptions::QGSLaunchOptions(
 	QSize windowSize,
 	bool fullScreen,
 	int metaspaceSize,
-	ProxyInfo proxyInfo,
+	QNetworkProxy proxy,
 	bool generatedJVMArguments)
 	:mJavaPath(JavaPath),
 	mMaxMemory(maxMemory),
@@ -26,7 +26,7 @@ QGSLaunchOptions::QGSLaunchOptions(
 	mGameArguments(gameArguments),
 	mWindowSize(windowSize),
 	mMetaspaceSize(metaspaceSize),
-	mProxyInfo(proxyInfo),
+	mProxy(proxy),
 	mGeneratedJVMArguments(generatedJVMArguments)
 {
 
@@ -96,16 +96,22 @@ int QGSLaunchOptions::getMetaspaceSize()const
 	return mMetaspaceSize;
 }
 
-QGSLaunchOptions::ProxyInfo QGSLaunchOptions::getProxyInfo()const
+QNetworkProxy QGSLaunchOptions::getProxy()const
 {
-	return mProxyInfo;
+	return mProxy;
 }
 
 bool QGSLaunchOptions::getGeneratedJVMArguments()const
 {
 	return mGeneratedJVMArguments;
 }
+QString QGSLaunchOptions::getLoggingPath() const
+{
+	return mLoggingPath;
+}
+
 //
+
 QGSLaunchOptions & QGSLaunchOptions::setJavaPath(const QString & JavaPath)
 {
 	mJavaPath = JavaPath;
@@ -178,14 +184,20 @@ QGSLaunchOptions & QGSLaunchOptions::setMetaspaceSize(const int metaspaceSize)
 	return *this;
 }
 
-QGSLaunchOptions & QGSLaunchOptions::setProxyInfo(const QGSLaunchOptions::ProxyInfo & proxyInfo)
+QGSLaunchOptions & QGSLaunchOptions::setProxy(const QNetworkProxy & proxy)
 {
-	mProxyInfo = proxyInfo;
+	mProxy = proxy;
 	return *this;
 }
 
 QGSLaunchOptions & QGSLaunchOptions::setGeneratedJVMArguments(const bool generatedJVMArguments)
 {
 	mGeneratedJVMArguments = generatedJVMArguments;
+	return *this;
+}
+
+QGSLaunchOptions & QGSLaunchOptions::setLoggingPath(const QString & loggingPath)
+{
+	mLoggingPath = loggingPath;
 	return *this;
 }
