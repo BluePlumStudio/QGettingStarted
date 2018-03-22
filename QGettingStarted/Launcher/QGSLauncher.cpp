@@ -1,7 +1,7 @@
 #include "QGSLauncher.h"
 #include "QGSGeneralLauncherStrategy.h"
 
-QGSLauncher::QGSLauncher(const GameVersion & version, QGSGameDirectory & gameDirectory) :mVersion(version), mGameDirectory(gameDirectory)
+QGSLauncher::QGSLauncher(const QGSGameVersion & version, QGSGameDirectory & gameDirectory) :mVersion(version), mGameDirectory(gameDirectory)
 {
 	launcherStrategy = new QGSGeneralLauncherStrategy;
 }

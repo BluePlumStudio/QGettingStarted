@@ -12,7 +12,7 @@ QGSGameVersionPraser::~QGSGameVersionPraser()
 {
 }
 
-bool QGSGameVersionPraser::praseVersion(GameVersion & version, QJsonDocument & jsonDocument) const
+bool QGSGameVersionPraser::praseVersion(QGSGameVersion & version, QJsonDocument & jsonDocument) const
 {
 	QJsonObject object = jsonDocument.object();
 	int minimumLauncherVersion =

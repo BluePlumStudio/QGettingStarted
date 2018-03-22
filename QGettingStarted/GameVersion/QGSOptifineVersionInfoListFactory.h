@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "OptifineVersionInfoList.h"
+#include "QGSOptifineVersionInfoList.h"
 
 class QGSOptifineVersionInfoListFactory
 {
@@ -23,5 +23,5 @@ public:
 
 	~QGSOptifineVersionInfoListFactory();
 
-	OptifineVersionInfoList createOptifineVersionInfoList(const QByteArray & jsonData);
+	QGSOptifineVersionInfoList createOptifineVersionInfoList(const QByteArray & jsonData);
 };

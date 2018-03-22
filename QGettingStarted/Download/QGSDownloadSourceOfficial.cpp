@@ -34,17 +34,17 @@ QUrl QGSDownloadSourceOfficial::generateOptifineVersionInfoJsonUrl()
 	return QUrl{ "https://bmclapi2.bangbang93.com/optifine/versionList" };
 }
 
-QUrl QGSDownloadSourceOfficial::generateLoggingUrl(const Logging & logging)
+QUrl QGSDownloadSourceOfficial::generateLoggingUrl(const QGSLogging & logging)
 {
 	return logging.getFile().getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateGameVersionJsonUrl(const GameVersionInfo & versionInfo)
+QUrl QGSDownloadSourceOfficial::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
 {
 	return versionInfo.getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateLibraryUrl(const Library & library)
+QUrl QGSDownloadSourceOfficial::generateLibraryUrl(const QGSLibrary & library)
 {
 	QString urlStr{ "https://libraries.minecraft.net/" };
 
@@ -57,17 +57,17 @@ QUrl QGSDownloadSourceOfficial::generateLibraryUrl(const Library & library)
 	return QUrl{ QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")) };
 }
 
-QUrl QGSDownloadSourceOfficial::generateGameVersionUrl(const GameVersion & version, const QString & category)
+QUrl QGSDownloadSourceOfficial::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
 {
 	return version.getDownloads().value(category).getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateAssetIndexJsonUrl(const AssetIndex & assetIndex)
+QUrl QGSDownloadSourceOfficial::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)
 {
 	return assetIndex.getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateAssetObjectUrl(const AssetObject & assetObject)
+QUrl QGSDownloadSourceOfficial::generateAssetObjectUrl(const QGSAssetObject & assetObject)
 {
 	//http://resources.download.minecraft.net/<first 2 hex letters of hash>/<whole hash>
 	auto && hash{ assetObject.getHash() };

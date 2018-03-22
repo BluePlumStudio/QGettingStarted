@@ -19,7 +19,7 @@ public:
 
 	~QGSGameVersionPraser();
 
-	bool praseVersion(GameVersion & version, QJsonDocument & jsonDocument)const;
+	bool praseVersion(QGSGameVersion & version, QJsonDocument & jsonDocument)const;
 private:
 };
 

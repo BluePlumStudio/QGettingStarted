@@ -21,7 +21,7 @@ QGSYggdrasilAccount::~QGSYggdrasilAccount()
 {
 }
 
-AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QString & password, QString clientToken, QNetworkProxy proxy)
+QGSAuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QString & password, QString clientToken, QNetworkProxy proxy)
 {
 	QJsonObject jsonObject;
 	QJsonObject agent;
@@ -88,7 +88,7 @@ AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QStri
 	clientToken = jsonObject.value("clientToken").toString();
 
 	auto && selectedProfileObject{ jsonObject.value("selectedProfile").toObject() };
-	AuthInfo::Profile selectedProfile{ selectedProfileObject.value("id").toString(),
+	QGSAuthInfo::Profile selectedProfile{ selectedProfileObject.value("id").toString(),
 		selectedProfileObject.value("name").toString(),
 		selectedProfileObject.value("legacy").toBool() };
 
@@ -111,5 +111,5 @@ AuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QStri
 		}
 	}
 
-	return AuthInfo{ accessToken,clientToken,UserType::Mojang,selectedProfile,twitchAccessToken };
+	return QGSAuthInfo{ accessToken,clientToken,UserType::Mojang,selectedProfile,twitchAccessToken };
 }

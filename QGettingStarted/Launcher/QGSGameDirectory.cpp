@@ -6,7 +6,7 @@
 #include "../Util/QGSExceptionFileIO.h"
 #include "../Util/QGSExceptionJsonPraseError.h"
 #include "VersionPraser/QGSGameVersionPraser.h"
-#include "../GameVersion/Library.h"
+#include "../GameVersion/QGSLibrary.h"
 #include "../GameVersion/QGSAssetIndexInfoFactory.h"
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
@@ -63,7 +63,7 @@ void QGSGameDirectory::init()
 	}
 }
 
-const GameVersion & QGSGameDirectory::getVersion(const QString & version)
+const QGSGameVersion & QGSGameDirectory::getVersion(const QString & version)
 {
 	if (version.isEmpty())
 	{
@@ -93,17 +93,17 @@ QFile * QGSGameDirectory::generateGameVersionJsonFile(const QString & version, c
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".json");
 }
 
-QFile * QGSGameDirectory::generateAssetIndexJsonFile(const AssetIndex & assetIndex, const bool withAbsolutePath) const
+QFile * QGSGameDirectory::generateAssetIndexJsonFile(const QGSAssetIndex & assetIndex, const bool withAbsolutePath) const
 {
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "assets" + SEPARATOR + "indexes" + SEPARATOR + assetIndex.getId() + ".json");
 }
 
-QFile * QGSGameDirectory::generateLibraryFile(const Library & library, const bool withAbsolutePath)const
+QFile * QGSGameDirectory::generateLibraryFile(const QGSLibrary & library, const bool withAbsolutePath)const
 {
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "libraries" + SEPARATOR + praseLibraryName(library));
 }
 
-QVector<QFile *> QGSGameDirectory::generateLibraryFiles(const QList<Library> & libraryList, const bool withAbsolutePath) const
+QVector<QFile *> QGSGameDirectory::generateLibraryFiles(const QList<QGSLibrary> & libraryList, const bool withAbsolutePath) const
 {
 	QVector<QFile *> ret;
 
@@ -125,7 +125,7 @@ QDir QGSGameDirectory::getBaseDir() const
 	return mBaseDir;
 }
 
-QString QGSGameDirectory::praseLibraryName(const Library & library)
+QString QGSGameDirectory::praseLibraryName(const QGSLibrary & library)
 {
 	auto package{ library.getPackage().replace(".", SEPARATOR) };
 	auto && name{ library.getName() };
@@ -147,7 +147,7 @@ QString QGSGameDirectory::praseLibraryName(const Library & library)
 	return QString(package + SEPARATOR + name + SEPARATOR + version + SEPARATOR + name + "-" + version + nativeString + ".jar");
 }
 
-bool QGSGameDirectory::generateAssetsDirectory(QString version, const AssetIndex & assetIndex, QDir & dir)
+bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIndex & assetIndex, QDir & dir)
 {
 	bool ret = true;
 	QString assetsBaseDirStr{ mBaseDir.absolutePath() + SEPARATOR + "assets" };
@@ -228,16 +228,16 @@ QDir QGSGameDirectory::generateAssetsDirectory(const bool withAbsolutePath)
 	return QDir((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "assets");
 }
 
-QFile * QGSGameDirectory::generateAssetObjectFile(const AssetObject & assetObject, const bool withAbsolutePath)
+QFile * QGSGameDirectory::generateAssetObjectFile(const QGSAssetObject & assetObject, const bool withAbsolutePath)
 {
 	auto && hash{ assetObject.getHash() };
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") +
 		SEPARATOR + "assets" + SEPARATOR + "objects" + SEPARATOR + hash.left(2) + SEPARATOR + hash);
 }
 
-const GameVersion & QGSGameDirectory::addVersion(const QString version)
+const QGSGameVersion & QGSGameDirectory::addVersion(const QString version)
 {
-	GameVersion newVersion;
+	QGSGameVersion newVersion;
 	//检查versions目录是否存在
 	QDir versionDir(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version);
 	if (!versionDir.exists())

@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "LiteLoaderVersionInfoList.h"
+#include "QGSLiteLoaderVersionInfoList.h"
 
 class QGSLiteLoaderVersionInfoListFactory
 {
@@ -23,8 +23,8 @@ public:
 
 	~QGSLiteLoaderVersionInfoListFactory();
 
-	LiteLoaderVersionInfoList createLiteLoaderVersionInfoList(const QByteArray & jsonData);
+	QGSLiteLoaderVersionInfoList createLiteLoaderVersionInfoList(const QByteArray & jsonData);
 private:
-	inline Library praseLiteLoaderVersionMetaLibrary(QJsonObject & object)const;
-	inline LiteLoaderVersionMeta praseLiteLoaderVersionMeta(QJsonObject & object);
+	inline QGSLibrary praseLiteLoaderVersionMetaLibrary(QJsonObject & object)const;
+	inline QGSLiteLoaderVersionMeta praseLiteLoaderVersionMeta(QJsonObject & object);
 };

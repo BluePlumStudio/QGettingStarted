@@ -12,9 +12,9 @@ QGSGameVersionInfoListFactory::~QGSGameVersionInfoListFactory()
 {
 }
 
-GameVersionInfoList QGSGameVersionInfoListFactory::createGameVersionInfoList(const QByteArray & jsonData)
+QGSGameVersionInfoList QGSGameVersionInfoListFactory::createGameVersionInfoList(const QByteArray & jsonData)
 {
-	GameVersionInfoList ret;
+	QGSGameVersionInfoList ret;
 
 	QJsonParseError jsonPraseError;
 	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
@@ -40,7 +40,7 @@ GameVersionInfoList QGSGameVersionInfoListFactory::createGameVersionInfoList(con
 	for (auto & i : versionsArray)
 	{
 		auto && versionObject{ i.toObject() };
-		ret.addVersionInfo(GameVersionInfo{ versionObject.value("id").toString(),
+		ret.addVersionInfo(QGSGameVersionInfo{ versionObject.value("id").toString(),
 			versionObject.value("type").toString() ,
 			versionObject.value("time").toString() ,
 			versionObject.value("releaseTime").toString() ,

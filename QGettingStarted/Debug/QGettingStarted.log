@@ -1,0 +1,5 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(936,5): warning MSB8027: Two or more files with the name of moc_QGSNetwork.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are GeneratedFiles\Debug\moc_QGSNetwork.cpp, .\GeneratedFiles\Debug\moc_QGSNetwork.cpp.
+  moc_QGSNetwork.cpp
+  moc_QGSNetwork.cpp
+  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.exe
+  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.pdb (Full PDB)

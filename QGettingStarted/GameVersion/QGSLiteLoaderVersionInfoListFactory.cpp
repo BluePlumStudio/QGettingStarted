@@ -12,9 +12,9 @@ QGSLiteLoaderVersionInfoListFactory::~QGSLiteLoaderVersionInfoListFactory()
 {
 }
 
-LiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoaderVersionInfoList(const QByteArray & jsonData)
+QGSLiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoaderVersionInfoList(const QByteArray & jsonData)
 {
-	LiteLoaderVersionInfoList ret;
+	QGSLiteLoaderVersionInfoList ret;
 
 	QJsonParseError jsonPraseError;
 	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
@@ -34,9 +34,9 @@ LiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoaderV
 	for (auto & i : keys)
 	{
 		auto && versionInfoObject{ versionsObject.value(i).toObject() };
-		LiteLoaderVersionInfo newVersionInfo;
+		QGSLiteLoaderVersionInfo newVersionInfo;
 
-		LiteLoaderVersionReposity reposity;
+		QGSLiteLoaderVersionReposity reposity;
 		auto && reposityObject{ versionInfoObject.value("repo").toObject() };
 		reposity.setStream(reposityObject.value("stream").toString());
 		reposity.setType(reposityObject.value("type").toString());
@@ -44,7 +44,7 @@ LiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoaderV
 		reposity.setClassifier(reposityObject.value("classifier").toString());
 		newVersionInfo.setLiteLoaderVersionReposity(reposity);
 
-		QMap<QString, LiteLoaderVersionMeta> snapshotMetaMap;
+		QMap<QString, QGSLiteLoaderVersionMeta> snapshotMetaMap;
 		auto && snapshotMetaObject{
 			versionInfoObject.value("snapshots").toObject().value("com.mumfrey:liteloader").toObject() };
 		auto && snapshotMetaKeys{ snapshotMetaObject.keys() };
@@ -55,7 +55,7 @@ LiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoaderV
 		}
 		newVersionInfo.setLiteLoaderVersionSnapshotMetaMap(snapshotMetaMap);
 
-		QMap<QString, LiteLoaderVersionMeta> artefactMetaMap;
+		QMap<QString, QGSLiteLoaderVersionMeta> artefactMetaMap;
 		auto && artefactMetaObject{
 			versionInfoObject.value("artefacts").toObject().value("com.mumfrey:liteloader").toObject() };
 		auto && artefactMetaKeys{ artefactMetaObject.keys() };
@@ -72,9 +72,9 @@ LiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoaderV
 	return ret;
 }
 
-inline Library QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMetaLibrary(QJsonObject & object) const
+inline QGSLibrary QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMetaLibrary(QJsonObject & object) const
 {
-	Library library;
+	QGSLibrary library;
 
 	//name
 	if (object.contains("name"))
@@ -94,9 +94,9 @@ inline Library QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMetaLi
 	return library;
 }
 
-inline LiteLoaderVersionMeta QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMeta(QJsonObject & object)
+inline QGSLiteLoaderVersionMeta QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMeta(QJsonObject & object)
 {
-	LiteLoaderVersionMeta ret;
+	QGSLiteLoaderVersionMeta ret;
 
 	ret.setTweakClass(object.value("tweakClass").toString());
 	ret.setSrcJar(object.value("srcJar").toString());
@@ -108,7 +108,7 @@ inline LiteLoaderVersionMeta QGSLiteLoaderVersionInfoListFactory::praseLiteLoade
 	ret.setMd5(object.value("md5").toString());
 	ret.setTimestamp(object.value("timestamp").toString());
 	ret.setLastSuccessfulBuild(object.value("lastSuccessfulBuild").toInt());
-	QList<Library> libraryList;
+	QList<QGSLibrary> libraryList;
 	auto libraryArray = object.value("libraries").toArray();
 	for (auto & i : libraryArray)
 	{

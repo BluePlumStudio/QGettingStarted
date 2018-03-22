@@ -22,7 +22,7 @@ public:
 	virtual QGSILaunchOptionsBuilder & setJavaPath(const QString & JavaPath) = 0;
 	virtual QGSILaunchOptionsBuilder & setMaxMemory(const int maxMemory) = 0;
 	virtual QGSILaunchOptionsBuilder & setMinMemory(const int minMemory) = 0;
-	virtual QGSILaunchOptionsBuilder & setAuthInfo(const AuthInfo & authInfo) = 0;
+	virtual QGSILaunchOptionsBuilder & setAuthInfo(const QGSAuthInfo & authInfo) = 0;
 	virtual QGSILaunchOptionsBuilder & setJVMArguments(const QString & JVMArguments) = 0;
 	virtual QGSILaunchOptionsBuilder & setJVMArguments(const QStringList & JVMArgumentList) = 0;
 	virtual QGSILaunchOptionsBuilder & setWrapper(const QString & wrapper) = 0;

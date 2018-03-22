@@ -2,8 +2,8 @@
 
 #include <QString>
 
-#include "../GameVersion/Rules.h"
-#include "../GameVersion/GameVersion.h"
+#include "../GameVersion/QGSRules.h"
+#include "../GameVersion/QGSGameVersion.h"
 #include "../LaunchOptions/QGSLaunchOptionsBuilder.h"
 
 namespace LauncherError
@@ -43,12 +43,12 @@ public:
 
 	virtual ~QGSILauncherStrategy();
 	
-	virtual LauncherError::ErrorFlags generateLaunchCommand(const GameVersion & version,
+	virtual LauncherError::ErrorFlags generateLaunchCommand(const QGSGameVersion & version,
 		QGSGameDirectory & gameDirectory,
 		const QGSLaunchOptions * launchOptions,
 		QString & command) = 0;
 protected:
-	bool isRulesAllowing(const Rules & rules);
+	bool isRulesAllowing(const QGSRules & rules);
 private:
 	inline QString praseOsVersion(QString & osVersion);
 };

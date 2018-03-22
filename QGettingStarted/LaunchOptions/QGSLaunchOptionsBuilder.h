@@ -23,7 +23,7 @@ public:
 	virtual QGSLaunchOptionsBuilder & setJavaPath(const QString & JavaPath)override;
 	virtual QGSLaunchOptionsBuilder & setMaxMemory(const int maxMemory)override;
 	virtual QGSLaunchOptionsBuilder & setMinMemory(const int minMemory)override;
-	virtual QGSLaunchOptionsBuilder & setAuthInfo(const AuthInfo & authInfo)override;
+	virtual QGSLaunchOptionsBuilder & setAuthInfo(const QGSAuthInfo & authInfo)override;
 	virtual QGSLaunchOptionsBuilder & setJVMArguments(const QString & JVMArguments)override;
 	virtual QGSLaunchOptionsBuilder & setJVMArguments(const QStringList & JVMArgumentList)override;
 	virtual QGSLaunchOptionsBuilder & setWrapper(const QString & wrapper)override;

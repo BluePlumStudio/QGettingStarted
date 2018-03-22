@@ -70,133 +70,113 @@ void generateLaunchCommandTest()
 int downloadTest()
 {
 	QSharedPointer<QGSIDownloadSource> downloadSource{ new QGSDownloadSourceBMCLAPI };
-	QGSDownloaderFactory downloadManager{ downloadSource.data() };
-	QGSDownloader * downloader;
+	QGSDownloadTaskFactory downloadManager{ downloadSource.data() };
+	QGSDownloadTask * downloadTask;
 	QGSGameDirectory gameDirectory{ QDir{QCoreApplication::applicationDirPath() + "/.minecraft"} };
 
 	//forge download test
-	downloader = downloadManager.generateForgeDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/forge.zip" } }, "1.4.7", "6.6.1.530", "src", "zip");
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateForgeDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/forge.zip" } }, "1.4.7", "6.6.1.530", "src", "zip");
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "Forge:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "Forge:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
 	{
 		qDebug() << "Forge:" << "timeout";
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "Forge:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//liteloader download test
-	downloader = downloadManager.generateLiteLoaderDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/liteloader.jar" } }, "1.11.2", "1.11.2-SNAPSHOT", "installer");
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateLiteLoaderDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/liteloader.jar" } }, "1.11.2", "1.11.2-SNAPSHOT", "installer");
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "LiteLoader:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "LiteLoader:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
 	{
 		qDebug() << "LiteLoader:" << "timeout";
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "LiteLoader:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//optifine download test
-	downloader = downloadManager.generateOptifineDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/optifine.zip" } }, "1.9.2", "HD_U", "D7");
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateOptifineDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/optifine.zip" } }, "1.9.2", "HD_U", "D7");
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "Optifine:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "Optifine:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
 	{
 		qDebug() << "Optifine:" << "timeout";
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "Optifine:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//version download test
-	GameVersion version;
-	QMap<QString, Downloads::Download> downloads;
+	QGSGameVersion version;
+	QMap<QString, QGSDownloads::QGSIDownload> downloads;
 	downloads.insert("client",
-		Downloads::Download{ 8736083,"4a61c873be90bb1196d68dac7b29870408c56969","",QUrl("https://launcher.mojang.com/mc/game/1.9.4/client/4a61c873be90bb1196d68dac7b29870408c56969/client.jar") });
+		QGSDownloads::QGSIDownload{ 8736083,"4a61c873be90bb1196d68dac7b29870408c56969","",QUrl("https://launcher.mojang.com/mc/game/1.9.4/client/4a61c873be90bb1196d68dac7b29870408c56969/client.jar") });
 	version.setDownloads(downloads);
 	version.setId("1.9.4");
-	downloader = downloadManager.generateGameVersionDownloader(version, gameDirectory, "client");
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateGameVersionDownloadTask(version, gameDirectory, "client");
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "version:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "version:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
 	{
 		qDebug() << "version:" << "timeout";
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "version:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//library download test
-	Library library;
+	QGSLibrary library;
 	library.setPackage("com.mojang");
 	library.setName("netty");
 	library.setVersion("1.6");
-	downloader = downloadManager.generateLibraryDownloader(library, gameDirectory);
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateLibraryDownloadTask(library, gameDirectory);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
-		cout << "Library:" << bytesReceived << ";" << bytesTotal << endl;
+		cout << "QGSLibrary:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, downloader, &QObject::deleteLater);
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
-		qDebug() << "Library:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
+		qDebug() << "QGSLibrary:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
 	{
-		qDebug() << "Library:" << "timeout";
+		qDebug() << "QGSLibrary:" << "timeout";
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "Library:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//version manifest download test
-	downloader = downloadManager.generateGameVersionInfoJsonDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/version_manifest.json" } });
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateGameVersionInfoJsonDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/version_manifest.json" } });
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "version manifest:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
 	{
 		//version manifest prase test
 		qDebug() << "version manifest prase test";
 		QGSGameVersionInfoListFactory versionInfoFactory;
-		downloader->getTargetFile()->open(QIODevice::ReadOnly);
-		GameVersionInfoList versionInfoList{ versionInfoFactory.createGameVersionInfoList(downloader->getTargetFile()->readAll()) };
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		QGSGameVersionInfoList versionInfoList{ versionInfoFactory.createGameVersionInfoList(downloadTask->getTargetFile()->readAll()) };
 		for (int i = 0; i < versionInfoList.size(); i++)
 		{
 			qDebug() << "id:" << versionInfoList[i].getId()
@@ -205,30 +185,26 @@ int downloadTest()
 				<< "releasetime:" << versionInfoList[i].getReleaseTime()
 				<< "url:" << versionInfoList[i].getUrl().toString();
 		}
-		downloader->deleteLater();
+		downloadTask->deleteLater();
 	});
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "version manifest:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "version manifest:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//forge version download test
-	downloader = downloadManager.generateForgeVersionInfoJsonDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/forge_manifest.json" } }, 100, 50);
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateForgeVersionInfoJsonDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/forge_manifest.json" } }, 100, 50);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "forge version:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
 	{
 		//forge version prase test
 		qDebug() << "forge version prase test";
 		QGSForgeVersionInfoListFactory versionInfoFactory;
-		downloader->getTargetFile()->open(QIODevice::ReadOnly);
-		ForgeVersionInfoList versionInfoList{ versionInfoFactory.createForgeVersionInfoList(downloader->getTargetFile()->readAll(),1,1000) };
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		QGSForgeVersionInfoList versionInfoList{ versionInfoFactory.createForgeVersionInfoList(downloadTask->getTargetFile()->readAll(),1,1000) };
 		versionInfoList.merge(versionInfoList);
 		for (int i = 0; i < versionInfoList.size(); i++)
 		{
@@ -240,120 +216,104 @@ int downloadTest()
 				<< "_id" << versionInfoList[i].getId();
 
 		}
-		downloader->deleteLater();
+		downloadTask->deleteLater();
 	});
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "forge version:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "forge version:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//liteloader version download test
-	downloader = downloadManager.generateLiteLoaderVersionInfoJsonDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/liteloader_manifest.json" } });
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateLiteLoaderVersionInfoJsonDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/liteloader_manifest.json" } });
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "liteloader manifest:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
 	{
 		//liteloader manifest prase test
 		qDebug() << "liteloader manifest prase test";
 		QGSLiteLoaderVersionInfoListFactory versionInfoFactory;
-		downloader->getTargetFile()->open(QIODevice::ReadOnly);
-		LiteLoaderVersionInfoList versionInfoList{ versionInfoFactory.createLiteLoaderVersionInfoList(downloader->getTargetFile()->readAll()) };
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		QGSLiteLoaderVersionInfoList versionInfoList{ versionInfoFactory.createLiteLoaderVersionInfoList(downloadTask->getTargetFile()->readAll()) };
 		for (int i = 0; i < versionInfoList.size(); i++)
 		{
 			qDebug() << versionInfoList[i].getLiteLoaderVersionReposity().getUrl();
 		}
-		downloader->deleteLater();
+		downloadTask->deleteLater();
 	});
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "liteloader manifest:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "liteloader manifest:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	//optifine version download test
-	downloader = downloadManager.generateOptifineVersionInfoJsonDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/optifine_manifest.json" } });
-	QObject::connect(downloader, &QGSDownloader::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal)
+	downloadTask = downloadManager.generateOptifineVersionInfoJsonDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/optifine_manifest.json" } });
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 	{
 		cout << "optifine manifest:" << bytesReceived << ";" << bytesTotal << endl;
 	});
-	QObject::connect(downloader, &QGSDownloader::finished, [=]()
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
 	{
 		//optifine manifest prase test
 		qDebug() << "optifine manifest prase test";
 		QGSOptifineVersionInfoListFactory versionInfoFactory;
-		downloader->getTargetFile()->open(QIODevice::ReadOnly);
-		OptifineVersionInfoList versionInfoList{ versionInfoFactory.createOptifineVersionInfoList(downloader->getTargetFile()->readAll()) };
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		QGSOptifineVersionInfoList versionInfoList{ versionInfoFactory.createOptifineVersionInfoList(downloadTask->getTargetFile()->readAll()) };
 		for (int i = 0; i < versionInfoList.size(); i++)
 		{
 			qDebug() << versionInfoList[i].getFileName();
 		}
-		downloader->deleteLater();
+		downloadTask->deleteLater();
 	});
-	QObject::connect(downloader, &QGSDownloader::error, [=](QGSDownloader::Error error)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
 	{
 		qDebug() << "optifine manifest:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
-	if (!downloader->start())
-	{
-		qDebug() << "optifine manifest:" << "start failed";
-		return 1;
-	}
+	downloadTask->start();
 	return 0;
 }
 
 void gameBuildTest()
 {
 	QSharedPointer<QGSIDownloadSource> downloadSource{ new QGSDownloadSourceOfficial };
-	QGSDownloaderFactory downloadManager{ downloadSource.data() };
-	QGSDownloader * downloader;
+	QGSDownloadTaskFactory downloadManager{ downloadSource.data() };
+	QGSDownloadTask * downloadTask;
 	QGSGameDirectory gameDirectory{ QDir{ QCoreApplication::applicationDirPath() + "/.minecraft" } };
 
-	static GameVersionInfo versionInfo;
+	static QGSGameVersionInfo versionInfo;
 
-	downloader = downloadManager.generateGameVersionInfoJsonDownloader(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/version_manifest.json" } });
-	if (!downloader->start())
-	{
-		qDebug() << "version manifest:" << "start failed";
-		return;
-	}
+	downloadTask = downloadManager.generateGameVersionInfoJsonDownloadTask(new QFile{ QString{ QCoreApplication::applicationDirPath() + "/version_manifest.json" } });
+	downloadTask->start();
 	QEventLoop eventLoop;
-	QObject::connect(downloader, &QGSDownloader::finished, [&]()
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [&](QGSTask * task)
 	{
 		QGSGameVersionInfoListFactory versionInfoFactory;
-		downloader->getTargetFile()->open(QIODevice::ReadOnly);
-		GameVersionInfoList versionInfoList{ versionInfoFactory.createGameVersionInfoList(downloader->getTargetFile()->readAll()) };
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		QGSGameVersionInfoList versionInfoList{ versionInfoFactory.createGameVersionInfoList(downloadTask->getTargetFile()->readAll()) };
 		versionInfo = versionInfoList.getVersionInfo("1.11.2");
-		downloader->deleteLater();
+		downloadTask->deleteLater();
 		eventLoop.quit();
 		qDebug() << "version manifest:" << "finished!";
 	});
 	eventLoop.exec();
 
-	downloader = downloadManager.generateGameVersionJsonDownloader(versionInfo, gameDirectory);
-	downloader->start();
-	QObject::connect(downloader, &QGSDownloader::finished, [&]()
+	downloadTask = downloadManager.generateGameVersionJsonDownloadTask(versionInfo, gameDirectory);
+	downloadTask->start();
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [&](QGSTask * task)
 	{
-		downloader->deleteLater();
+		downloadTask->deleteLater();
 		eventLoop.quit();
 		qDebug() << "version json:" << "finished!";
 	});
 	eventLoop.exec();
 
 	auto & version{ gameDirectory.getVersion("1.11.2") };
-	downloader = downloadManager.generateGameVersionDownloader(version, gameDirectory, "client");
-	downloader->start();
-	QObject::connect(downloader, &QGSDownloader::finished, [&]()
+	downloadTask = downloadManager.generateGameVersionDownloadTask(version, gameDirectory, "client");
+	downloadTask->start();
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [&](QGSTask * task)
 	{
-		downloader->deleteLater();
+		downloadTask->deleteLater();
 		eventLoop.quit();
 		qDebug() << "version:" << "finished!";
 	});
@@ -363,33 +323,33 @@ void gameBuildTest()
 	qDebug() << "library count:" << libraryList.size();
 	for (auto & i : libraryList)
 	{
-		downloader = downloadManager.generateLibraryDownloader(i, gameDirectory);
-		downloader->start();
-		QObject::connect(downloader, &QGSDownloader::finished, [=]()
+		downloadTask = downloadManager.generateLibraryDownloadTask(i, gameDirectory);
+		downloadTask->start();
+		QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
 		{
 			qDebug() << "library:" << "finished!";
-			downloader->deleteLater();
+			downloadTask->deleteLater();
 		});
-		QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+		QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=](QGSTask * task)
 		{
 			qDebug() << "library:" << "timeout!";
 		});
-		QObject::connect(downloader, &QGSDownloader::error, [=]()
+		QObject::connect(downloadTask, &QGSDownloadTask::error, [=](QGSTask * task)
 		{
 			qDebug() << "library:" << "error!";
 		});
 	}
 
-	static AssetIndexInfo assetIndexInfo;
-	downloader = downloadManager.generateAssetIndexJsonDownloader(version.getAssetIndex(), gameDirectory);
-	downloader->start();
-	QObject::connect(downloader, &QGSDownloader::finished, [&]()
+	static QGSAssetIndexInfo assetIndexInfo;
+	downloadTask = downloadManager.generateAssetIndexJsonDownloadTask(version.getAssetIndex(), gameDirectory);
+	downloadTask->start();
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [&](QGSTask * task)
 	{
 		
 		QGSAssetIndexInfoFactory versionInfoFactory;
-		downloader->getTargetFile()->open(QIODevice::ReadOnly);
-		assetIndexInfo = versionInfoFactory.createAssetIndexInfo(downloader->getTargetFile()->readAll());
-		downloader->deleteLater();
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		assetIndexInfo = versionInfoFactory.createAssetIndexInfo(downloadTask->getTargetFile()->readAll());
+		downloadTask->deleteLater();
 		eventLoop.quit();
 		qDebug() << "asset index json:" << "finished!";
 	});
@@ -398,18 +358,18 @@ void gameBuildTest()
 	auto && assetObjectMap{ assetIndexInfo.getAssetObjectMap() };
 	for (auto & i : assetObjectMap)
 	{
-		downloader = downloadManager.generateAssetObjectDownloader(i, gameDirectory);
-		downloader->start();
-		QObject::connect(downloader, &QGSDownloader::finished, [=]()
+		downloadTask = downloadManager.generateAssetObjectDownloadTask(i, gameDirectory);
+		downloadTask->start();
+		QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
 		{
 			qDebug() << "asset object:" << "finished!";
-			downloader->deleteLater();
+			downloadTask->deleteLater();
 		});
-		QObject::connect(downloader, &QGSDownloader::timeout, [=]()
+		QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=](QGSTask * task)
 		{
 			qDebug() << "asset object:" << "timeout!";
 		});
-		QObject::connect(downloader, &QGSDownloader::error, [=]()
+		QObject::connect(downloadTask, &QGSDownloadTask::error, [=](QGSTask * task)
 		{
 			qDebug() << "asset object:" << "error!";
 		});
@@ -418,16 +378,7 @@ void gameBuildTest()
 
 void threadPoolTest()
 {
-	QGSDownloaderFactory downloaderFactory{ new QGSDownloadSourceOfficial };
-	QGSGameDirectory gameDirectory{ QDir{ QCoreApplication::applicationDirPath() + "/.minecraft" } };
-	static QGSGameBuilder gameBuilder{ new QGSDownloadSourceOfficial, &gameDirectory };
-	QFile manifestFile{ QCoreApplication::applicationDirPath() + "/version_manifest.json" };
-	manifestFile.open(QIODevice::ReadOnly);
-	QGSGameVersionInfoListFactory infoListFactory;
-	auto && infoList{ infoListFactory.createGameVersionInfoList(manifestFile.readAll()) };
-	gameBuilder.start(infoList.getVersionInfo("1.11.2"));
-	auto * downloader = downloaderFactory.generateGameVersionJsonDownloader(infoList.getVersionInfo("1.11.2"), gameDirectory);
-	//downloader->start();
+
 }
 
 int main(int argc, char *argv[])
@@ -435,8 +386,8 @@ int main(int argc, char *argv[])
 	QCoreApplication a(argc, argv);
 	qDebug() << "=QGettingStart Test=";
 
-	threadPoolTest();
-	//downloadTest();
+	//threadPoolTest();
+	downloadTest();
 	//gameBuildTest();
 	//generateLaunchCommandTest();
 

@@ -4,7 +4,7 @@
 #include <QFile>
 #include <QVector>
 
-#include "../GameVersion/GameVersion.h"
+#include "../GameVersion/QGSGameVersion.h"
 
 class QGSGameDirectory 
 {
@@ -23,9 +23,9 @@ public:
 
 	~QGSGameDirectory();
 
-	const GameVersion & getVersion(const QString & version);
+	const QGSGameVersion & getVersion(const QString & version);
 
-	const GameVersion & addVersion(const QString version);
+	const QGSGameVersion & addVersion(const QString version);
 
 	bool containsVersion(const QString & version)const;
 
@@ -33,29 +33,29 @@ public:
 
 	QFile * generateGameVersionJsonFile(const QString & version, const bool withAbsolutePath = true)const;
 
-	QFile * generateAssetIndexJsonFile(const AssetIndex & assetIndex, const bool withAbsolutePath = true)const;
+	QFile * generateAssetIndexJsonFile(const QGSAssetIndex & assetIndex, const bool withAbsolutePath = true)const;
 
-	QFile * generateLibraryFile(const Library & library, const bool withAbsolutePath = true)const;
+	QFile * generateLibraryFile(const QGSLibrary & library, const bool withAbsolutePath = true)const;
 
-	QVector<QFile *> generateLibraryFiles(const QList<Library> & libraryList, const bool withAbsolutePath = true)const;
+	QVector<QFile *> generateLibraryFiles(const QList<QGSLibrary> & libraryList, const bool withAbsolutePath = true)const;
 
 	QDir generateNativesDirectory(const QString & version, const bool withAbsolutePath = true)const;
 
 	QDir getBaseDir()const;
 
-	static QString praseLibraryName(const Library & library);
+	static QString praseLibraryName(const QGSLibrary & library);
 	
 	/*need to be updated*/
-	bool generateAssetsDirectory(QString version, const AssetIndex & assetIndex, QDir & dir);
+	bool generateAssetsDirectory(QString version, const QGSAssetIndex & assetIndex, QDir & dir);
 
 	QDir generateAssetsDirectory(const bool withAbsolutePath = true);
 
-	QFile * generateAssetObjectFile(const AssetObject & assetObject, const bool withAbsolutePath = true);
+	QFile * generateAssetObjectFile(const QGSAssetObject & assetObject, const bool withAbsolutePath = true);
 private:
 	void init();
 
 private:
-	QMap<QString, GameVersion> mVersionMap;
+	QMap<QString, QGSGameVersion> mVersionMap;
 	QDir mBaseDir;
 };
 

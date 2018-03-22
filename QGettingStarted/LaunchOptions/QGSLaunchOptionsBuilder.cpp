@@ -31,7 +31,7 @@ QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setMinMemory(const int minMem
 	return *this;
 }
 
-QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setAuthInfo(const AuthInfo & authInfo)
+QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setAuthInfo(const QGSAuthInfo & authInfo)
 {
 	mLaunchOptionsPtr->setAuthInfo(authInfo);
 	return *this;

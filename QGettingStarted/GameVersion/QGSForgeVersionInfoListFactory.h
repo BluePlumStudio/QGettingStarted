@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "ForgeVersionInfoList.h"
+#include "QGSForgeVersionInfoList.h"
 
 class QGSForgeVersionInfoListFactory
 {
@@ -23,9 +23,9 @@ public:
 
 	~QGSForgeVersionInfoListFactory();
 
-	ForgeVersionInfoList createForgeVersionInfoList(const QByteArray & jsonData, int offset = 1, int limit = 0);
+	QGSForgeVersionInfoList createForgeVersionInfoList(const QByteArray & jsonData, int offset = 1, int limit = 0);
 private:
-	inline void praseForgeVersionInfoListStd(QJsonObject & jsonObject, int offset, int limit, ForgeVersionInfoList & forgeVersionInfoList);
-	inline void praseForgeVersionInfoListBMCLAPI(QJsonArray & jsonArray, int offset, int limit, ForgeVersionInfoList & forgeVersionInfoList);
+	inline void praseForgeVersionInfoListStd(QJsonObject & jsonObject, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList);
+	inline void praseForgeVersionInfoListBMCLAPI(QJsonArray & jsonArray, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList);
 
 };

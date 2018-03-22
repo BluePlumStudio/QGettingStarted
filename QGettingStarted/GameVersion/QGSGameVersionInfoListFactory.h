@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "GameVersionInfoList.h"
+#include "QGSGameVersionInfoList.h"
 
 class QGSGameVersionInfoListFactory
 {
@@ -23,5 +23,5 @@ public:
 
 	~QGSGameVersionInfoListFactory();
 
-	GameVersionInfoList createGameVersionInfoList(const QByteArray & jsonData);
+	QGSGameVersionInfoList createGameVersionInfoList(const QByteArray & jsonData);
 };

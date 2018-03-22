@@ -36,18 +36,18 @@ QUrl QGSDownloadSourceBMCLAPI::generateOptifineVersionInfoJsonUrl()
 	return QUrl{ "https://bmclapi2.bangbang93.com/optifine/versionList" };
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateLoggingUrl(const Logging & logging)
+QUrl QGSDownloadSourceBMCLAPI::generateLoggingUrl(const QGSLogging & logging)
 {
 	return logging.getFile().getUrl();
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateGameVersionJsonUrl(const GameVersionInfo & versionInfo)
+QUrl QGSDownloadSourceBMCLAPI::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
 {
 	QUrl ret{ versionInfo.getUrl() };
 	return QUrl{ ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com") };
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateLibraryUrl(const Library & library)
+QUrl QGSDownloadSourceBMCLAPI::generateLibraryUrl(const QGSLibrary & library)
 {
 	QString urlStr{ "https://bmclapi2.bangbang93.com/libraries/" };
 
@@ -59,7 +59,7 @@ QUrl QGSDownloadSourceBMCLAPI::generateLibraryUrl(const Library & library)
 	return QUrl{ QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")) };
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateGameVersionUrl(const GameVersion & version, const QString & category)
+QUrl QGSDownloadSourceBMCLAPI::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
 {
 	QUrl url{ version.getDownloads().value(category).getUrl() };
 	if (url.isValid())
@@ -72,13 +72,13 @@ QUrl QGSDownloadSourceBMCLAPI::generateGameVersionUrl(const GameVersion & versio
 	}
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateAssetIndexJsonUrl(const AssetIndex & assetIndex)
+QUrl QGSDownloadSourceBMCLAPI::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)
 {
 	QUrl ret{ assetIndex.getUrl() };
 	return QUrl{ ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com") };
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateAssetObjectUrl(const AssetObject & assetObject)
+QUrl QGSDownloadSourceBMCLAPI::generateAssetObjectUrl(const QGSAssetObject & assetObject)
 {
 	auto && hash{ assetObject.getHash() };
 	return QUrl{

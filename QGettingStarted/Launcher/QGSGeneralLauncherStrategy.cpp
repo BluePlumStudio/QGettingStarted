@@ -16,7 +16,7 @@ QGSGeneralLauncherStrategy::~QGSGeneralLauncherStrategy()
 {
 }
 
-LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(const GameVersion & version,
+LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(const QGSGameVersion & version,
 	QGSGameDirectory & gameDirectory,
 	const QGSLaunchOptions * launchOptions,
 	QString & command)
@@ -29,7 +29,7 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 
 	QStringList launchCommandList;//launchCommand
 	auto rootVersionId{ version.getId() };
-	GameVersion rootVersion;
+	QGSGameVersion rootVersion;
 	//获取根版本
 	try
 	{

@@ -14,7 +14,7 @@ QGSILauncherStrategy::~QGSILauncherStrategy()
 
 }
 
-bool QGSILauncherStrategy::isRulesAllowing(const Rules & rules)
+bool QGSILauncherStrategy::isRulesAllowing(const QGSRules & rules)
 {
 	bool ret = false;
 	auto & instance = QGSOperatingSystem::getInstance();

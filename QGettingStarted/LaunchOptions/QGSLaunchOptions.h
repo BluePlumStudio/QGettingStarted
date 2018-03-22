@@ -51,7 +51,7 @@ public:
 	QGSLaunchOptions(QString JavaPath = "",
 		int maxMemory = 512,
 		int minMemory = 128,
-		AuthInfo authInfo = AuthInfo(),
+		QGSAuthInfo authInfo = QGSAuthInfo(),
 		QString JVMArguments = "",
 		QString wrapper = "",
 		QString preCalledCommands = "",
@@ -76,7 +76,7 @@ public:
 	QString getJavaPath()const;
 	int getMaxMemory()const;
 	int getMinMemory()const;
-	AuthInfo getAuthInfo()const;
+	QGSAuthInfo getAuthInfo()const;
 	QString getJVMArguments()const;
 	QString getWrapper()const;
 	QString getPreCalledCommands()const;
@@ -92,7 +92,7 @@ public:
 	QGSLaunchOptions & setJavaPath(const QString & JavaPath);
 	QGSLaunchOptions & setMaxMemory(const int maxMemory);
 	QGSLaunchOptions & setMinMemory(const int minMemory);
-	QGSLaunchOptions & setAuthInfo(const AuthInfo & authInfo);
+	QGSLaunchOptions & setAuthInfo(const QGSAuthInfo & authInfo);
 	QGSLaunchOptions & setJVMArguments(const QString & JVMArguments);
 	QGSLaunchOptions & setWrapper(const QString & wrapper);
 	QGSLaunchOptions & setPreCalledCommands(const QString & preCalledCommands);
@@ -108,7 +108,7 @@ private:
 	QString mJavaPath;
 	int mMaxMemory;
 	int mMinMemory;
-	AuthInfo mAuthInfo;
+	QGSAuthInfo mAuthInfo;
 	QString mJVMArguments;
 	QString mWrapper;
 	QString mPreCalledCommands;

@@ -6,7 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-#include "AssetIndexInfo.h"
+#include "QGSAssetIndexInfo.h"
 
 class QGSAssetIndexInfoFactory
 {
@@ -23,5 +23,5 @@ public:
 
 	~QGSAssetIndexInfoFactory();
 
-	AssetIndexInfo createAssetIndexInfo(const QByteArray & jsonData);
+	QGSAssetIndexInfo createAssetIndexInfo(const QByteArray & jsonData);
 };

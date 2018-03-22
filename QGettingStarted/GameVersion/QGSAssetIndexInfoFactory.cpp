@@ -12,9 +12,9 @@ QGSAssetIndexInfoFactory::~QGSAssetIndexInfoFactory()
 {
 }
 
-AssetIndexInfo QGSAssetIndexInfoFactory::createAssetIndexInfo(const QByteArray & jsonData)
+QGSAssetIndexInfo QGSAssetIndexInfoFactory::createAssetIndexInfo(const QByteArray & jsonData)
 {
-	AssetIndexInfo ret;
+	QGSAssetIndexInfo ret;
 
 	QJsonParseError jsonPraseError;
 	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
@@ -34,7 +34,7 @@ AssetIndexInfo QGSAssetIndexInfoFactory::createAssetIndexInfo(const QByteArray &
 	for (auto & key : keys)
 	{
 		auto && assetInfoObject{ assetInfoListObject.value(key).toObject() };
-		ret.addAssetObject(key, AssetObject{ assetInfoObject.value("hash").toString(),assetInfoObject.value("size").toInt() });
+		ret.addAssetObject(key, QGSAssetObject{ assetInfoObject.value("hash").toString(),assetInfoObject.value("size").toInt() });
 	}
 
 	ret.setVirtual(jsonObject.value("virtual").toBool());

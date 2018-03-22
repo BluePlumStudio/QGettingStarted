@@ -4,7 +4,7 @@ QGSLaunchOptions::QGSLaunchOptions(
 	QString JavaPath,
 	int maxMemory,
 	int minMemory,
-	AuthInfo authInfo,
+	QGSAuthInfo authInfo,
 	QString JVMArguments,
 	QString wrapper,
 	QString preCalledCommands,
@@ -51,7 +51,7 @@ int QGSLaunchOptions::getMinMemory()const
 	return mMinMemory;
 }
 
-AuthInfo QGSLaunchOptions::getAuthInfo()const
+QGSAuthInfo QGSLaunchOptions::getAuthInfo()const
 {
 	return mAuthInfo;
 }
@@ -130,7 +130,7 @@ QGSLaunchOptions & QGSLaunchOptions::setMinMemory(const int minMemory)
 	return *this;
 }
 
-QGSLaunchOptions & QGSLaunchOptions::setAuthInfo(const AuthInfo & authInfo)
+QGSLaunchOptions & QGSLaunchOptions::setAuthInfo(const QGSAuthInfo & authInfo)
 {
 	mAuthInfo = authInfo;
 	return *this;

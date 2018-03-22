@@ -1,20 +1,16 @@
 #pragma once
 
-#include <QObject>
-#include <QVector>
-#include <QThread>
-#include <QMutexLocker>
-#include <QMutex>
+#include <QQueue>
 
-#include "../Download/QGSDownloader.h"
+#include "QGSThread.h"
 
-/*A fake thread pool*/
-class QGSThreadPool : public QObject
+class QGSThreadPool : public QThread
 {
 	Q_OBJECT
-
 public:
-	QGSThreadPool(QObject *parent = nullptr);
+	friend class QGSThread;
+
+	QGSThreadPool(const int minThreadCount, const int maxThreadCount, QObject *parent = nullptr);
 
 	QGSThreadPool(const QGSThreadPool & right) = delete;
 
@@ -26,26 +22,45 @@ public:
 
 	virtual ~QGSThreadPool();
 
-	int getFreeThreadSize()const;
+	static QGSThreadPool & getGlobalInstance();
 
-	int getRunningThreadSize()const;
+	bool addTask(QGSTask * task);
 
-	int getMaxFreeThreadSize()const;
+	QGSThreadPool & setMaxThreadCount(const quint32 maxThreadCount);
 
-	QGSThreadPool & setMaxFreeThreadSize(const int maxFreeThreadSize);
+	QGSThreadPool & setMinThreadCount(const quint32 minThreadCount);
 
-	bool run(QGSDownloader * object);
+	QGSThreadPool & setSleepTime(const quint32 msecs);
 
-	void clear();
+	quint32 getMaxThreadCount();
+
+	quint32 getMinThreadCount();
+
+	quint32 getActiveThreadCount();
+
+	quint32 getCurrentThreadCount();
+
+	void releaseThreads();
 private:
-	QThread * getFreeThread();
-
-	void addThreads(int size);
-
-	QThread * addThread();
+	bool addThread();
+	virtual void run();
+signals:
+	void threadPoolFull();
 private:
-	QVector<QThread *> mThreadVector;
-	int mMaxFreeThreadSize;
-	QThread * mManagerThread;
+	QWaitCondition mTaskQueueNotEmptyCondition;
+	//QWaitCondition mTaskQueueNotFullCondition;
+
+	QQueue<QGSTask *> mTaskQueue;
 	QMutex mMutex;
+	bool mTaskQueueBlock;
+	bool mReleaseThreads;
+	quint32 mWaitReleasedThreadCount;
+
+	QMutex mAttribMutex;
+	quint32 mMinThreadCount;
+	quint32 mMaxThreadCount;
+	quint32 mActiveThreadCount;
+	quint32 mCurrentThreadCount;
+
+	int mSleepTime;
 };

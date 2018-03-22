@@ -20,6 +20,6 @@ public:
 
 	QGSYggdrasilAccount & operator=(QGSYggdrasilAccount && right) = delete;
 
-	virtual AuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy);
+	virtual QGSAuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy);
 private:
 };

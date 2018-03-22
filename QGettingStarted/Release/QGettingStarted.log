@@ -1,0 +1,19 @@
+﻿  main.cpp
+  moc_QGSDownloadSourceOfficial.cpp
+  moc_QGSAssetIndexJsonDownloadTask.cpp
+  moc_QGSAssetObjectDownloadTask.cpp
+  moc_QGSDownloadTask.cpp
+  moc_QGSForgeDownloadTask.cpp
+  moc_QGSGameVersionDownloadTask.cpp
+  moc_QGSGameVersionJsonDownloadTask.cpp
+  moc_QGSLibraryDownloadTask.cpp
+  moc_QGSLiteLoaderDownloadTask.cpp
+  moc_QGSOptifineDownloadTask.cpp
+  moc_QGSIDownloadSource.cpp
+  moc_QGSDownloadSourceBMCLAPI.cpp
+  moc_QGSNetwork.cpp
+  moc_QGSThreadPool.cpp
+  moc_QGSTask.cpp
+  moc_QGSThread.cpp
+    正在创建库 F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.lib 和对象 F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.exp
+  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.exe

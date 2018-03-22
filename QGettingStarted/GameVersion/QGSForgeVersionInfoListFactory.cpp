@@ -12,9 +12,9 @@ QGSForgeVersionInfoListFactory::~QGSForgeVersionInfoListFactory()
 {
 }
 
-ForgeVersionInfoList QGSForgeVersionInfoListFactory::createForgeVersionInfoList(const QByteArray & jsonData, int offset, int limit)
+QGSForgeVersionInfoList QGSForgeVersionInfoListFactory::createForgeVersionInfoList(const QByteArray & jsonData, int offset, int limit)
 {
-	ForgeVersionInfoList ret;
+	QGSForgeVersionInfoList ret;
 
 	QJsonParseError jsonPraseError;
 	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
@@ -35,7 +35,7 @@ ForgeVersionInfoList QGSForgeVersionInfoListFactory::createForgeVersionInfoList(
 	return ret;
 }
 
-inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonObject & jsonObject, int offset, int limit, ForgeVersionInfoList & forgeVersionInfoList)
+inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonObject & jsonObject, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList)
 {
 	if (!jsonObject.contains("number"))
 	{
@@ -48,7 +48,7 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonOb
 	for (int i = 0; i < limit; i += offset)
 	{
 		auto && infoObject{ numberObject.value(keys[i]).toObject() };
-		ForgeVersionInfo newForgeVersionInfo;
+		QGSForgeVersionInfo newForgeVersionInfo;
 		if (!infoObject.contains("build"))
 		{
 			throw QGSExceptionJsonPraseError(QJsonParseError(), "\"build\" does not exeist!");
@@ -61,12 +61,12 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonOb
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
 		auto && fileArray{ infoObject.value("files").toArray() };
-		QList<ForgeVersionInfo::File> fileList;
+		QList<QGSForgeVersionInfo::File> fileList;
 		for (auto & j : fileArray)
 		{
 			auto && fileInfoArray{ j.toArray() };
 
-			fileList.push_back(ForgeVersionInfo::File{ fileInfoArray.at(0).toString(),
+			fileList.push_back(QGSForgeVersionInfo::File{ fileInfoArray.at(0).toString(),
 				fileInfoArray.at(1).toString() ,
 				fileInfoArray.at(2).toString() });
 		}
@@ -76,13 +76,13 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonOb
 	}
 }
 
-inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(QJsonArray & jsonArray, int offset, int limit, ForgeVersionInfoList & forgeVersionInfoList)
+inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(QJsonArray & jsonArray, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList)
 {
 	limit = qMin(limit, jsonArray.size());
 	for (int i = 0; i < limit; i += offset)
 	{
 		auto && infoObject{ jsonArray.at(i).toObject() };
-		ForgeVersionInfo newForgeVersionInfo;
+		QGSForgeVersionInfo newForgeVersionInfo;
 		if (!infoObject.contains("build"))
 		{
 			throw QGSExceptionJsonPraseError(QJsonParseError(), "\"build\" does not exeist!");
@@ -95,12 +95,12 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(QJs
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
 		auto && fileArray{ infoObject.value("files").toArray() };
-		QList<ForgeVersionInfo::File> fileList;
+		QList<QGSForgeVersionInfo::File> fileList;
 		for (auto & j : fileArray)
 		{
 			auto && fileObject{ j.toObject() };
 
-			fileList.push_back(ForgeVersionInfo::File{ fileObject.value("format").toString(),
+			fileList.push_back(QGSForgeVersionInfo::File{ fileObject.value("format").toString(),
 				fileObject.value("category").toString() ,
 				fileObject.value("hash").toString() ,
 				fileObject.value("_id").toString() });

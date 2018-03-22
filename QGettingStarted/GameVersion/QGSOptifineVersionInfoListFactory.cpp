@@ -12,9 +12,9 @@ QGSOptifineVersionInfoListFactory::~QGSOptifineVersionInfoListFactory()
 {
 }
 
-OptifineVersionInfoList QGSOptifineVersionInfoListFactory::createOptifineVersionInfoList(const QByteArray & jsonData)
+QGSOptifineVersionInfoList QGSOptifineVersionInfoListFactory::createOptifineVersionInfoList(const QByteArray & jsonData)
 {
-	OptifineVersionInfoList ret;
+	QGSOptifineVersionInfoList ret;
 
 	QJsonParseError jsonPraseError;
 	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
@@ -27,7 +27,7 @@ OptifineVersionInfoList QGSOptifineVersionInfoListFactory::createOptifineVersion
 	for (auto & jsonObject : jsonArray)
 	{
 		auto && versionInfoObject{ jsonObject.toObject() };
-		ret.addVersionInfo(OptifineVersionInfo{ versionInfoObject.value("_id").toString(),
+		ret.addVersionInfo(QGSOptifineVersionInfo{ versionInfoObject.value("_id").toString(),
 			versionInfoObject.value("mcversion").toString(),
 			versionInfoObject.value("type").toString(),
 			versionInfoObject.value("patch").toString(),

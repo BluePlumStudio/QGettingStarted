@@ -36,9 +36,6 @@
     <Filter Include="GameVersion">
       <UniqueIdentifier>{46057e14-0edb-4b47-b895-e488d424b21f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Download\Downloader">
-      <UniqueIdentifier>{8bdde1b8-d087-4348-a8a4-0622328b96c3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Download\DownloadSource">
       <UniqueIdentifier>{666451e4-6ca4-4954-91b0-ce1b3cf792e6}</UniqueIdentifier>
     </Filter>
@@ -69,6 +66,9 @@
     </Filter>
     <Filter Include="Util\ThreadPool">
       <UniqueIdentifier>{772bd40e-a123-45c5-a7a3-f63190d58f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Download\DownloadTask">
+      <UniqueIdentifier>{816110b4-0e34-4db9-bbea-9a6a4bf3f81b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,39 +109,6 @@
     <ClCompile Include="Util\QGSFileTools.cpp">
       <Filter>Util</Filter>
     </ClCompile>
-    <ClCompile Include="QGSDownloaderFactory.cpp">
-      <Filter>Download</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\Arguments.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\AssetIndex.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\Downloads.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\Extract.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\GameVersion.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\Library.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\Logging.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\Rules.cpp">
-      <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloader.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderLibrary.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
     <ClCompile Include="Download\QGSIDownloadSource.cpp">
       <Filter>Download\DownloadSource</Filter>
     </ClCompile>
@@ -150,27 +117,6 @@
     </ClCompile>
     <ClCompile Include="Download\QGSDownloadSourceBMCLAPI.cpp">
       <Filter>Download\DownloadSource</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderForge.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderGameVersion.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderLiteLoader.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderOptifine.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\GameVersionInfoList.cpp">
-      <Filter>GameVersion\InfoList</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\ForgeVersionInfoList.cpp">
-      <Filter>GameVersion\InfoList</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\LiteLoaderVersionInfoList.cpp">
-      <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
     <ClCompile Include="Launcher\VersionPraser\QGSIGameVersionPraseStrategy.cpp">
       <Filter>Launcher\GameVersionPraser</Filter>
@@ -187,9 +133,6 @@
     <ClCompile Include="LaunchOptions\QGSYggdrasilAccount.cpp">
       <Filter>LaunchOptions\Account</Filter>
     </ClCompile>
-    <ClCompile Include="GameVersion\OptifineVersionInfoList.cpp">
-      <Filter>GameVersion\InfoList</Filter>
-    </ClCompile>
     <ClCompile Include="GameVersion\QGSOptifineVersionInfoListFactory.cpp">
       <Filter>GameVersion</Filter>
     </ClCompile>
@@ -201,18 +144,6 @@
     </ClCompile>
     <ClCompile Include="GameVersion\QGSForgeVersionInfoListFactory.cpp">
       <Filter>GameVersion</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderGameVersionJson.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderAssetIndexJson.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloaderAssetObject.cpp">
-      <Filter>Download\Downloader</Filter>
-    </ClCompile>
-    <ClCompile Include="GameVersion\AssetIndexInfo.cpp">
-      <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
     <ClCompile Include="GameVersion\QGSAssetIndexInfoFactory.cpp">
       <Filter>GameVersion</Filter>
@@ -238,9 +169,6 @@
     <ClCompile Include="Launcher\VersionPraser\QGSGameVersionPraser.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
-    <ClCompile Include="LaunchOptions\AuthInfo.cpp">
-      <Filter>LaunchOptions</Filter>
-    </ClCompile>
     <ClCompile Include="LaunchOptions\QGSYggdrasilAccountFactory.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
@@ -261,6 +189,84 @@
     </ClCompile>
     <ClCompile Include="Util\QGSThreadPool.cpp">
       <Filter>Util\ThreadPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSAssetIndexJsonDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSAssetObjectDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSForgeDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSGameVersionDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSGameVersionJsonDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSLibraryDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSLiteLoaderDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSOptifineDownloadTask.cpp">
+      <Filter>Download\DownloadTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSDownloadTaskFactory.cpp">
+      <Filter>Download</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSTask.cpp">
+      <Filter>Util\ThreadPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSThread.cpp">
+      <Filter>Util\ThreadPool</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSGameVersion.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSRules.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSLogging.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSLibrary.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSExtract.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSDownloads.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSAssetIndex.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSArguments.cpp">
+      <Filter>GameVersion</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSLiteLoaderVersionInfoList.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSGameVersionInfoList.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSForgeVersionInfoList.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSAssetIndexInfo.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="LaunchOptions\QGSAuthInfo.cpp">
+      <Filter>LaunchOptions</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSOptifineVersionInfoList.cpp">
+      <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,42 +304,6 @@
     <ClInclude Include="Util\QGSFileTools.h">
       <Filter>Util</Filter>
     </ClInclude>
-    <ClInclude Include="Download\QGSDownloaderFactory.h">
-      <Filter>Download</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\Arguments.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\AssetIndex.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\Downloads.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\Extract.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\GameVersion.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\Library.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\Logging.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\Rules.h">
-      <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\GameVersionInfoList.h">
-      <Filter>GameVersion\InfoList</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\ForgeVersionInfoList.h">
-      <Filter>GameVersion\InfoList</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\LiteLoaderVersionInfoList.h">
-      <Filter>GameVersion\InfoList</Filter>
-    </ClInclude>
     <ClInclude Include="Launcher\VersionPraser\QGSGeneralGameVersionPraseStrategy.h">
       <Filter>Launcher\GameVersionPraser</Filter>
     </ClInclude>
@@ -346,9 +316,6 @@
     <ClInclude Include="LaunchOptions\QGSYggdrasilAccount.h">
       <Filter>LaunchOptions\Account</Filter>
     </ClInclude>
-    <ClInclude Include="GameVersion\OptifineVersionInfoList.h">
-      <Filter>GameVersion\InfoList</Filter>
-    </ClInclude>
     <ClInclude Include="GameVersion\QGSOptifineVersionInfoListFactory.h">
       <Filter>GameVersion</Filter>
     </ClInclude>
@@ -360,9 +327,6 @@
     </ClInclude>
     <ClInclude Include="GameVersion\QGSForgeVersionInfoListFactory.h">
       <Filter>GameVersion</Filter>
-    </ClInclude>
-    <ClInclude Include="GameVersion\AssetIndexInfo.h">
-      <Filter>GameVersion\InfoList</Filter>
     </ClInclude>
     <ClInclude Include="GameVersion\QGSAssetIndexInfoFactory.h">
       <Filter>GameVersion</Filter>
@@ -388,9 +352,6 @@
     <ClInclude Include="Launcher\VersionPraser\QGSGameVersionPraser.h">
       <Filter>Launcher</Filter>
     </ClInclude>
-    <ClInclude Include="LaunchOptions\AuthInfo.h">
-      <Filter>LaunchOptions</Filter>
-    </ClInclude>
     <ClInclude Include="LaunchOptions\QGSYggdrasilAccountFactory.h">
       <Filter>LaunchOptions</Filter>
     </ClInclude>
@@ -406,16 +367,61 @@
     <ClInclude Include="Util\QGSExceptionFileIO.h">
       <Filter>Util\Exception</Filter>
     </ClInclude>
+    <ClInclude Include="Download\QGSDownloadTaskFactory.h">
+      <Filter>Download</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBuilder\QGSIGameBuilder.h">
+      <Filter>GameBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBuilder\QGSGameBuilder.h">
+      <Filter>GameBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSGameVersion.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSRules.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSLogging.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSLibrary.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSExtract.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSDownloads.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSAssetIndex.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSArguments.h">
+      <Filter>GameVersion</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfoList.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSGameVersionInfoList.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSForgeVersionInfoList.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSAssetIndexInfo.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="LaunchOptions\QGSAuthInfo.h">
+      <Filter>LaunchOptions</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSOptifineVersionInfoList.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Util\QGSNetwork.h">
       <Filter>Util</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloader.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderLibrary.h">
-      <Filter>Download\Downloader</Filter>
     </QtMoc>
     <QtMoc Include="Download\QGSIDownloadSource.h">
       <Filter>Download\DownloadSource</Filter>
@@ -426,35 +432,41 @@
     <QtMoc Include="Download\QGSDownloadSourceBMCLAPI.h">
       <Filter>Download\DownloadSource</Filter>
     </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderForge.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderGameVersion.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderLiteLoader.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderOptifine.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderGameVersionJson.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderAssetIndexJson.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloaderAssetObject.h">
-      <Filter>Download\Downloader</Filter>
-    </QtMoc>
-    <QtMoc Include="GameBuilder\QGSIGameBuilder.h">
-      <Filter>GameBuilder</Filter>
-    </QtMoc>
-    <QtMoc Include="GameBuilder\QGSGameBuilder.h">
-      <Filter>GameBuilder</Filter>
-    </QtMoc>
     <QtMoc Include="Util\QGSThreadPool.h">
       <Filter>Util\ThreadPool</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSAssetIndexJsonDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSAssetObjectDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSForgeDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSGameVersionDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSGameVersionJsonDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSLibraryDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSLiteLoaderDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSOptifineDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Util\QGSTask.h">
+      <Filter>Util\ThreadPool</Filter>
+    </QtMoc>
+    <QtMoc Include="Util\QGSThread.h">
+      <Filter>Util\ThreadPool</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSDownloadTask.h">
+      <Filter>Download\DownloadTask</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>
