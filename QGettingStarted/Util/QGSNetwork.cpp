@@ -2,6 +2,29 @@
 
 #include "QGSNetwork.h"
 
+QGSNetworkError::QGSNetworkError(const QNetworkReply::NetworkError code, const QString & message)
+	:mCode(code), mMessage(message)
+{
+
+}
+
+QGSNetworkError::~QGSNetworkError()
+{
+
+}
+
+QNetworkReply::NetworkError QGSNetworkError::getCode()const
+{
+	return mCode;
+}
+
+QString QGSNetworkError::getMessage()const
+{
+	return mMessage;
+}
+
+/**/
+
 QGSNetwork::QGSNetwork(QObject * parent) :QObject(parent), mManager(new QNetworkAccessManager)
 {
 }
@@ -66,7 +89,7 @@ QNetworkProxy QGSNetwork::proxy() const
 	return mManager->proxy();
 }
 
-QGSNetwork & QGSNetwork::getInstance()
+QGSNetwork & QGSNetwork::getGlobalInstance()
 {
 	static QGSNetwork instance;
 	return instance;

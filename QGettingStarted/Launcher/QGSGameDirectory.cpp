@@ -78,6 +78,11 @@ const QGSGameVersion & QGSGameDirectory::getVersion(const QString & version)
 	return mVersionMap[version];
 }
 
+const QGSGameVersion & QGSGameDirectory::getVersion(const QGSGameVersionInfo & gameVersionInfo)
+{
+	return getVersion(gameVersionInfo.getId());
+}
+
 bool QGSGameDirectory::containsVersion(const QString & version)const
 {
 	return mVersionMap.contains(version);

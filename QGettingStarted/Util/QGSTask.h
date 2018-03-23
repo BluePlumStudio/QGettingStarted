@@ -38,6 +38,6 @@ protected:
 	virtual void templateStop(QGSTask * task);
 	virtual void templateCancel(QGSTask * task);
 
-private:
+protected:
 	bool mTaskQueueBlock;
 };

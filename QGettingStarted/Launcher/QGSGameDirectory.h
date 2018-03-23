@@ -5,6 +5,7 @@
 #include <QVector>
 
 #include "../GameVersion/QGSGameVersion.h"
+#include "../GameVersion/QGSGameVersionInfoList.h"
 
 class QGSGameDirectory 
 {
@@ -24,6 +25,8 @@ public:
 	~QGSGameDirectory();
 
 	const QGSGameVersion & getVersion(const QString & version);
+
+	const QGSGameVersion & getVersion(const QGSGameVersionInfo & gameVersionInfo);
 
 	const QGSGameVersion & addVersion(const QString version);
 

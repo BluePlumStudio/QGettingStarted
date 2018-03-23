@@ -166,8 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Download\QGSDownloadSourceOfficial.h" />
-    <ClInclude Include="GameBuilder\QGSIGameBuilder.h" />
-    <ClInclude Include="GameBuilder\QGSGameBuilder.h" />
+    <QtMoc Include="GameBuilder\QGSIGameBuilder.h" />
+    <QtMoc Include="GameBuilder\QGSGameBuilder.h" />
     <QtMoc Include="Download\QGSAssetIndexJsonDownloadTask.h" />
     <QtMoc Include="Download\QGSAssetObjectDownloadTask.h" />
     <ClInclude Include="Download\QGSDownloadTaskFactory.h" />

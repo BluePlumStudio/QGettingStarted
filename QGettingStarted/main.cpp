@@ -81,13 +81,9 @@ int downloadTest()
 		cout << "Forge:" << bytesReceived << ";" << bytesTotal << endl;
 	});
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "Forge:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
-	});
-	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
-	{
-		qDebug() << "Forge:" << "timeout";
 	});
 	downloadTask->start();
 	//liteloader download test
@@ -97,13 +93,9 @@ int downloadTest()
 		cout << "LiteLoader:" << bytesReceived << ";" << bytesTotal << endl;
 	});
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "LiteLoader:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
-	});
-	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
-	{
-		qDebug() << "LiteLoader:" << "timeout";
 	});
 	downloadTask->start();
 	//optifine download test
@@ -113,13 +105,9 @@ int downloadTest()
 		cout << "Optifine:" << bytesReceived << ";" << bytesTotal << endl;
 	});
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "Optifine:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
-	});
-	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
-	{
-		qDebug() << "Optifine:" << "timeout";
 	});
 	downloadTask->start();
 	//version download test
@@ -135,13 +123,9 @@ int downloadTest()
 		cout << "version:" << bytesReceived << ";" << bytesTotal << endl;
 	});
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "version:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
-	});
-	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
-	{
-		qDebug() << "version:" << "timeout";
 	});
 	downloadTask->start();
 	//library download test
@@ -155,13 +139,9 @@ int downloadTest()
 		cout << "QGSLibrary:" << bytesReceived << ";" << bytesTotal << endl;
 	});
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, downloadTask, &QObject::deleteLater);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "QGSLibrary:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
-	});
-	QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=]()
-	{
-		qDebug() << "QGSLibrary:" << "timeout";
 	});
 	downloadTask->start();
 	//version manifest download test
@@ -187,7 +167,7 @@ int downloadTest()
 		}
 		downloadTask->deleteLater();
 	});
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "version manifest:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
@@ -218,7 +198,7 @@ int downloadTest()
 		}
 		downloadTask->deleteLater();
 	});
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "forge version:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
@@ -242,7 +222,7 @@ int downloadTest()
 		}
 		downloadTask->deleteLater();
 	});
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "liteloader manifest:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
@@ -266,7 +246,7 @@ int downloadTest()
 		}
 		downloadTask->deleteLater();
 	});
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSDownloadTask::QGSDownloadError error, QGSTask * task)
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
 	{
 		qDebug() << "optifine manifest:" << "Code:" << error.getCode() << "Message:" << error.getMessage();
 	});
@@ -330,10 +310,6 @@ void gameBuildTest()
 			qDebug() << "library:" << "finished!";
 			downloadTask->deleteLater();
 		});
-		QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=](QGSTask * task)
-		{
-			qDebug() << "library:" << "timeout!";
-		});
 		QObject::connect(downloadTask, &QGSDownloadTask::error, [=](QGSTask * task)
 		{
 			qDebug() << "library:" << "error!";
@@ -365,10 +341,6 @@ void gameBuildTest()
 			qDebug() << "asset object:" << "finished!";
 			downloadTask->deleteLater();
 		});
-		QObject::connect(downloadTask, &QGSDownloadTask::timeout, [=](QGSTask * task)
-		{
-			qDebug() << "asset object:" << "timeout!";
-		});
 		QObject::connect(downloadTask, &QGSDownloadTask::error, [=](QGSTask * task)
 		{
 			qDebug() << "asset object:" << "error!";
@@ -387,9 +359,61 @@ int main(int argc, char *argv[])
 	qDebug() << "=QGettingStart Test=";
 
 	//threadPoolTest();
-	downloadTest();
+	//downloadTest();
 	//gameBuildTest();
 	//generateLaunchCommandTest();
+
+	QFile manifestFile{ QCoreApplication::applicationDirPath() + "./version_manifest.json" };
+	manifestFile.open(QIODevice::ReadOnly);
+	QGSGameVersionInfoListFactory versionInfoFactory;
+	QGSGameVersionInfoList versionInfoList{ versionInfoFactory.createGameVersionInfoList(manifestFile.readAll()) };
+	auto && versionInfo = versionInfoList.getVersionInfo("1.11.2");
+	QSharedPointer<QGSIDownloadSource> downloadSource{ new QGSDownloadSourceOfficial };
+	QGSDownloadTaskFactory downloadTaskFactory{ downloadSource.data() };
+	QGSGameDirectory gameDirectory{ QDir{ QCoreApplication::applicationDirPath() + "/.minecraft" } };
+
+	QGSGameBuilder gameBuilder{ versionInfo,&gameDirectory,&downloadTaskFactory };
+	QObject::connect(&gameBuilder, &QGSGameBuilder::started, [=]()
+	{
+		qDebug() << "gameBuilder started!";
+	});
+	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskStarted, [=](QGSTask * task)
+	{
+		auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+		qDebug() << "gameBuilder:download task:" << downloadTask->getDownloadInfo().getUrl() << " started!";
+	});
+	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskFinished, [=](QGSTask * task)
+	{
+		auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+		qDebug() << "gameBuilder:download task:" << downloadTask->getDownloadInfo().getUrl() << " finished!";
+	});
+	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskStoped, [=](QGSTask * task)
+	{
+		auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+		qDebug() << "gameBuilder:download task:" << downloadTask->getDownloadInfo().getUrl() << " stoped!";
+	});
+	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskCanceled, [=](QGSTask * task)
+	{
+		auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+		qDebug() << "gameBuilder:download task:" << downloadTask->getDownloadInfo().getUrl() << " canceled!";
+	});
+	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSTask * task)
+	{
+		auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+		qDebug() << "gameBuilder:download task:" << downloadTask->getDownloadInfo().getUrl() << " download error!";
+		qDebug() << "Error code:" << error.getCode() << " Error string:" << error.getMessage();
+	});
+	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskError, [=](QGSTask * task)
+	{
+		auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+		qDebug() << "gameBuilder:download task:" << downloadTask->getDownloadInfo().getUrl() << " error!";
+	});
+	QObject::connect(&gameBuilder, &QGSGameBuilder::finished, [=]()
+	{
+		qDebug() << "gameBuilder finished!";
+	});
+	gameBuilder.start();
+
 
 	return a.exec();
 }

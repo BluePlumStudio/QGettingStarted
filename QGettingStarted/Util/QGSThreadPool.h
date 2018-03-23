@@ -38,29 +38,29 @@ public:
 
 	quint32 getActiveThreadCount();
 
-	quint32 getCurrentThreadCount();
+	int getThreadListSize();
 
-	void releaseThreads();
+	//void releaseThreads();
 private:
-	bool addThread();
 	virtual void run();
+	void init();
 signals:
 	void threadPoolFull();
 private:
-	QWaitCondition mTaskQueueNotEmptyCondition;
+	//QWaitCondition mTaskQueueStartCondition;
 	//QWaitCondition mTaskQueueNotFullCondition;
 
 	QQueue<QGSTask *> mTaskQueue;
+	QList<QGSThread *> mThreadList;
 	QMutex mMutex;
 	bool mTaskQueueBlock;
 	bool mReleaseThreads;
-	quint32 mWaitReleasedThreadCount;
+	//quint32 mWaitReleasedThreadCount;
 
 	QMutex mAttribMutex;
 	quint32 mMinThreadCount;
 	quint32 mMaxThreadCount;
 	quint32 mActiveThreadCount;
-	quint32 mCurrentThreadCount;
 
 	int mSleepTime;
 };

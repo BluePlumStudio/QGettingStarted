@@ -27,10 +27,13 @@ public:
 	QGSThread & operator=(QGSThread && right) = delete;
 
 	virtual ~QGSThread();
+
+	QGSThread & setTask(QGSTask * task);
 private:
 	virtual void run();
 signals:
 	void taskStart(QGSTask * task);
 private:
 	QGSThreadPool * mThreadPoolPtr;
+	QGSTask * mTask;
 };

@@ -3,7 +3,7 @@
 #include "QGSThreadPool.h"
 
 //msecs
-static const unsigned long DEFAULT_SLEEP_TIME{ 400 };
+static const unsigned long DEFAULT_SLEEP_TIME{ 1 };
 
 QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount, QObject *parent)
 	: QThread(parent), 
@@ -12,8 +12,6 @@ QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount,
 	mMaxThreadCount(maxThreadCount),
 	mMinThreadCount(minThreadCount),
 	mActiveThreadCount(0),
-	mCurrentThreadCount(0),
-	mWaitReleasedThreadCount(0),
 	mSleepTime(DEFAULT_SLEEP_TIME)
 {
 	if (minThreadCount >= maxThreadCount)
@@ -29,11 +27,15 @@ QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount,
 
 QGSThreadPool::~QGSThreadPool()
 {
+	for (auto & thread : mThreadList)
+	{
+		thread->deleteLater();
+	}
 }
 
 QGSThreadPool & QGSThreadPool::getGlobalInstance()
 {
-	static QGSThreadPool instance{ 1,QGSThread::idealThreadCount() };
+	static QGSThreadPool instance{ QGSThread::idealThreadCount(), QGSThread::idealThreadCount() };
 	if (!instance.isRunning())
 	{
 		instance.start();
@@ -54,6 +56,7 @@ bool QGSThreadPool::addTask(QGSTask * task)
 		mMutex.unlock();
 		return false;
 	}
+	task->moveToThread(this);
 	mTaskQueue.push_back(task);
 	mMutex.unlock();
 
@@ -127,24 +130,122 @@ quint32 QGSThreadPool::getActiveThreadCount()
 	return ret;
 }
 
-quint32 QGSThreadPool::getCurrentThreadCount()
+int QGSThreadPool::getThreadListSize()
 {
-	quint32 ret = 0;
+	int ret = 0;
 
 	mAttribMutex.lock();
-	ret = mCurrentThreadCount;
+	ret = mThreadList.size();
 	mAttribMutex.unlock();
 
 	return ret;
 }
 
+void QGSThreadPool::run()
+{
+	init();
+
+	while (true)
+	{
+		//QGSThread::msleep(mSleepTime);
+
+		//任务分配
+		mMutex.lock();
+		if (mTaskQueue.size() && !mTaskQueueBlock)
+		{
+			for (auto & thread : mThreadList)
+			{
+				if (!thread->isRunning() || thread->isFinished())
+				{
+					auto * newTask{ mTaskQueue.front() };
+
+					mTaskQueue.pop_front();
+					newTask->moveToThread(thread);
+					thread->setTask(newTask);
+					thread->start();
+					//qDebug() << "Thread:" << thread << " new task:" << newTask << " added!";
+					break;
+				}
+			}
+		}
+		mMutex.unlock();
+
+		//获取成员变量
+		mMutex.lock();
+		const bool taskQueueBlock{ mTaskQueueBlock };
+		const bool releaseThreads{ mReleaseThreads };
+		const int taskQueueSize{ mTaskQueue.size() };
+		mMutex.unlock();
+		mAttribMutex.lock();
+		const quint32 minThreadCount{ mMinThreadCount };
+		const quint32 maxThreadCount{ mMaxThreadCount };
+		const quint32 activeThreadCount{ mActiveThreadCount };
+		const int threadListSize{ mThreadList.size() };
+		mAttribMutex.unlock();
+
+		//增加线程
+		if (taskQueueSize > minThreadCount&&threadListSize < maxThreadCount)
+		{
+			mMutex.lock();
+			quint32 threadAddedCount{ qMin(static_cast<quint32>(QGSThread::idealThreadCount()),maxThreadCount - threadListSize) };
+
+			for (int i = 0; i < threadAddedCount; i++)
+			{
+				auto * newThread{ new QGSThread{ this } };
+				if (newThread)
+				{
+					mAttribMutex.lock();
+					mAttribMutex.unlock();
+					//qDebug() << "Thread:" << newThread << " added!";
+					mThreadList.push_back(newThread);
+				}
+			}
+			mMutex.unlock();
+
+		}
+		else if (activeThreadCount * 4 < threadListSize&&threadListSize > minThreadCount)
+		{
+			mMutex.lock();
+			for (auto it = mThreadList.begin(); it != mThreadList.end(); it++)
+			{
+				if (!(*it)->isRunning() || (*it)->isFinished())
+				{
+					(*it)->exit(0);
+					mThreadList.erase(it);
+					//qDebug() << "Thread:" << (*it) << " released!";
+					break;
+				}
+			}
+			mMutex.unlock();
+
+		}
+	}
+}
+
+void QGSThreadPool::init()
+{
+	const auto gendThreadCount{ qMin(static_cast<quint32>(QGSThread::idealThreadCount()),mMaxThreadCount) };
+	for (quint32 i = 0; i < gendThreadCount; i++)
+	{
+		auto * newThread{ new QGSThread{ this } };
+		if (!newThread)
+		{
+			//exception
+		}
+		mThreadList.push_back(newThread);
+	}
+}
+
+/*
 void QGSThreadPool::releaseThreads()
 {
 	mMutex.lock();
 	mReleaseThreads = true;
 	mMutex.unlock();
 }
+*/
 
+/*
 void QGSThreadPool::run()
 {
 	const auto PregeneratedThreadCount{ qMin(static_cast<quint32>(QGSThread::idealThreadCount()),mMaxThreadCount) };
@@ -193,7 +294,7 @@ void QGSThreadPool::run()
 
 					newThread->start();
 
-					qDebug() << "Thread:" << newThread << " added!";
+					//qDebug() << "Thread:" << newThread << " added!";
 				}
 			}
 			mMutex.unlock();
@@ -205,9 +306,10 @@ void QGSThreadPool::run()
 			quint32 threadReleasedCount{ qMin(static_cast<quint32>(QGSThread::idealThreadCount()),activeThreadCount) };
 
 			mWaitReleasedThreadCount++;
-			mTaskQueueNotEmptyCondition.wakeOne();
+			mTaskQueueStartCondition.wakeOne();
 			mMutex.unlock();
 
 		}
 	}
 }
+*/

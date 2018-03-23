@@ -370,12 +370,6 @@
     <ClInclude Include="Download\QGSDownloadTaskFactory.h">
       <Filter>Download</Filter>
     </ClInclude>
-    <ClInclude Include="GameBuilder\QGSIGameBuilder.h">
-      <Filter>GameBuilder</Filter>
-    </ClInclude>
-    <ClInclude Include="GameBuilder\QGSGameBuilder.h">
-      <Filter>GameBuilder</Filter>
-    </ClInclude>
     <ClInclude Include="GameVersion\QGSGameVersion.h">
       <Filter>GameVersion</Filter>
     </ClInclude>
@@ -467,6 +461,12 @@
     </QtMoc>
     <QtMoc Include="Download\QGSDownloadTask.h">
       <Filter>Download\DownloadTask</Filter>
+    </QtMoc>
+    <QtMoc Include="GameBuilder\QGSGameBuilder.h">
+      <Filter>GameBuilder</Filter>
+    </QtMoc>
+    <QtMoc Include="GameBuilder\QGSIGameBuilder.h">
+      <Filter>GameBuilder</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

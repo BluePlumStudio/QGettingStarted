@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QGSGameBuilder_t {
-    QByteArrayData data[16];
-    char stringdata0[227];
+    QByteArrayData data[11];
+    char stringdata0[171];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,30 +32,23 @@ struct qt_meta_stringdata_QGSGameBuilder_t {
 static const qt_meta_stringdata_QGSGameBuilder_t qt_meta_stringdata_QGSGameBuilder = {
     {
 QT_MOC_LITERAL(0, 0, 14), // "QGSGameBuilder"
-QT_MOC_LITERAL(1, 15, 17), // "slotDownloadStart"
-QT_MOC_LITERAL(2, 33, 0), // ""
-QT_MOC_LITERAL(3, 34, 12), // "DownloadInfo"
-QT_MOC_LITERAL(4, 47, 12), // "downloadInfo"
-QT_MOC_LITERAL(5, 60, 20), // "slotDownloadProgress"
-QT_MOC_LITERAL(6, 81, 13), // "bytesReceived"
-QT_MOC_LITERAL(7, 95, 10), // "bytesTotal"
-QT_MOC_LITERAL(8, 106, 20), // "slotDownloadFinished"
-QT_MOC_LITERAL(9, 127, 19), // "slotDownloadTimeout"
-QT_MOC_LITERAL(10, 147, 17), // "slotDownloadError"
-QT_MOC_LITERAL(11, 165, 20), // "QGSDownloader::Error"
-QT_MOC_LITERAL(12, 186, 5), // "error"
-QT_MOC_LITERAL(13, 192, 12), // "slotFinished"
-QT_MOC_LITERAL(14, 205, 9), // "slotError"
-QT_MOC_LITERAL(15, 215, 11) // "errorString"
+QT_MOC_LITERAL(1, 15, 23), // "slotDownloadTaskStarted"
+QT_MOC_LITERAL(2, 39, 0), // ""
+QT_MOC_LITERAL(3, 40, 8), // "QGSTask*"
+QT_MOC_LITERAL(4, 49, 4), // "task"
+QT_MOC_LITERAL(5, 54, 24), // "slotDownloadTaskFinished"
+QT_MOC_LITERAL(6, 79, 22), // "slotDownloadTaskStoped"
+QT_MOC_LITERAL(7, 102, 24), // "slotDownloadTaskCanceled"
+QT_MOC_LITERAL(8, 127, 21), // "slotDownloadTaskError"
+QT_MOC_LITERAL(9, 149, 15), // "QGSNetworkError"
+QT_MOC_LITERAL(10, 165, 5) // "error"
 
     },
-    "QGSGameBuilder\0slotDownloadStart\0\0"
-    "DownloadInfo\0downloadInfo\0"
-    "slotDownloadProgress\0bytesReceived\0"
-    "bytesTotal\0slotDownloadFinished\0"
-    "slotDownloadTimeout\0slotDownloadError\0"
-    "QGSDownloader::Error\0error\0slotFinished\0"
-    "slotError\0errorString"
+    "QGSGameBuilder\0slotDownloadTaskStarted\0"
+    "\0QGSTask*\0task\0slotDownloadTaskFinished\0"
+    "slotDownloadTaskStoped\0slotDownloadTaskCanceled\0"
+    "slotDownloadTaskError\0QGSNetworkError\0"
+    "error"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,7 +58,7 @@ static const uint qt_meta_data_QGSGameBuilder[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -73,22 +66,18 @@ static const uint qt_meta_data_QGSGameBuilder[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x08 /* Private */,
-       5,    3,   52,    2, 0x08 /* Private */,
-       8,    1,   59,    2, 0x08 /* Private */,
-       9,    1,   62,    2, 0x08 /* Private */,
-      10,    2,   65,    2, 0x08 /* Private */,
-      13,    0,   70,    2, 0x08 /* Private */,
-      14,    1,   71,    2, 0x08 /* Private */,
+       1,    1,   39,    2, 0x08 /* Private */,
+       5,    1,   42,    2, 0x08 /* Private */,
+       6,    1,   45,    2, 0x08 /* Private */,
+       7,    1,   48,    2, 0x08 /* Private */,
+       8,    2,   51,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, 0x80000000 | 3,    6,    7,    4,
     QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 3,   12,    4,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   15,
+    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 9, 0x80000000 | 3,   10,    4,
 
        0        // eod
 };
@@ -99,14 +88,51 @@ void QGSGameBuilder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         QGSGameBuilder *_t = static_cast<QGSGameBuilder *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->slotDownloadStart((*reinterpret_cast< const DownloadInfo(*)>(_a[1]))); break;
-        case 1: _t->slotDownloadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< const DownloadInfo(*)>(_a[3]))); break;
-        case 2: _t->slotDownloadFinished((*reinterpret_cast< const DownloadInfo(*)>(_a[1]))); break;
-        case 3: _t->slotDownloadTimeout((*reinterpret_cast< const DownloadInfo(*)>(_a[1]))); break;
-        case 4: _t->slotDownloadError((*reinterpret_cast< QGSDownloader::Error(*)>(_a[1])),(*reinterpret_cast< const DownloadInfo(*)>(_a[2]))); break;
-        case 5: _t->slotFinished(); break;
-        case 6: _t->slotError((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 0: _t->slotDownloadTaskStarted((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
+        case 1: _t->slotDownloadTaskFinished((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
+        case 2: _t->slotDownloadTaskStoped((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
+        case 3: _t->slotDownloadTaskCanceled((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
+        case 4: _t->slotDownloadTaskError((*reinterpret_cast< QGSNetworkError(*)>(_a[1])),(*reinterpret_cast< QGSTask*(*)>(_a[2]))); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
+            }
+            break;
+        case 1:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
+            }
+            break;
+        case 2:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
+            }
+            break;
+        case 3:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
+            }
+            break;
+        case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 1:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
+            }
+            break;
         }
     }
 }
@@ -136,13 +162,13 @@ int QGSGameBuilder::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
-            *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        if (_id < 5)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 5;
     }
     return _id;
 }

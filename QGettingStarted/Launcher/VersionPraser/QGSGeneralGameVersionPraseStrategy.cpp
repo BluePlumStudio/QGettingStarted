@@ -4,7 +4,7 @@
 #include "QGSGeneralGameVersionPraseStrategy.h"
 #include "../../Util/QGSExceptionJsonPraseError.h"
 
-QGSGeneralGameVersionPraseStrategy::QGSGeneralGameVersionPraseStrategy(const int minimunLaunchVersion):QGSGeneralGameVersionPraseStrategy(minimunLaunchVersion)
+QGSGeneralGameVersionPraseStrategy::QGSGeneralGameVersionPraseStrategy(const int minimunLaunchVersion):QGSIGameVersionPraseStrategy(minimunLaunchVersion)
 {
 
 }

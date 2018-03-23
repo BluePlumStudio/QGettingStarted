@@ -5,7 +5,6 @@
 #include <QSslConfiguration>
 #include <QSslSocket>
 #include <QEventLoop>
-#include <QTimer>
 
 #include "QGSYggdrasilAccount.h"
 #include "Util/QGSUuidGenerator.h"
@@ -26,6 +25,7 @@ QGSAuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QS
 	QJsonObject jsonObject;
 	QJsonObject agent;
 	QJsonDocument jsonDocument;
+	QGSNetwork network;
 
 	agent.insert("name", "Minecraft");
 	agent.insert("version", 1);
@@ -56,12 +56,13 @@ QGSAuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QS
 	request.setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());
 	
 	QSharedPointer<QEventLoop> eventLoop{ new QEventLoop };
-	auto * reply = QGSNetwork::getInstance().post(request, byteArrayRequestData);
+	auto * reply = network.setProxy(proxy).post(request, byteArrayRequestData);
 	QObject::connect(reply, &QNetworkReply::finished, eventLoop.data(), &QEventLoop::quit);
-	QTimer::singleShot(Network::DefaultTimeout, eventLoop.data(), [=]()
+	QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=](QNetworkReply::NetworkError code)
 	{
 		eventLoop->quit();
-		throw QGSExceptionAuthentication{ "timeout!", "timeout", "timeout" };
+		reply->deleteLater();
+		throw QGSExceptionAuthentication{ "Network error!",reply->errorString(),"Network error!" };
 	});
 	eventLoop->exec();
 

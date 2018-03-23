@@ -14,6 +14,77 @@ QGSThread::~QGSThread()
 
 }
 
+QGSThread & QGSThread::setTask(QGSTask * task)
+{
+	mTask = task;
+	return *this;
+}
+
+void QGSThread::run()
+{
+	if (!mThreadPoolPtr)
+	{
+		//exception
+	}
+
+	QEventLoop eventLoop;
+
+	do
+	{
+		if (!mTask)
+		{
+			break;
+		}
+
+		mThreadPoolPtr->mMutex.lock();
+		if (mTask->isTaskQueueBlock())
+		{
+			mThreadPoolPtr->mTaskQueueBlock = mTask->isTaskQueueBlock();
+		}
+		mThreadPoolPtr->mMutex.unlock();
+		/*
+		signals:
+		void started(QGSTask * task);
+		void finished(QGSTask * task);
+		void stoped(QGSTask * task);
+		void canceled(QGSTask * task);
+		void error(QGSTask * task);
+		*/
+		//计数
+		mThreadPoolPtr->mAttribMutex.lock();
+		mThreadPoolPtr->mActiveThreadCount++;
+		mThreadPoolPtr->mAttribMutex.unlock();
+		//任务开始
+		QObject::connect(this, &QGSThread::taskStart, mTask, &QGSTask::start);
+		QObject::connect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
+		QObject::connect(mTask, &QGSTask::stoped, &eventLoop, &QEventLoop::quit);
+		QObject::connect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
+		QObject::connect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit);
+		emit taskStart(mTask);
+		eventLoop.exec();
+		QObject::disconnect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
+		QObject::disconnect(mTask, &QGSTask::stoped, &eventLoop, &QEventLoop::quit);
+		QObject::disconnect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
+		QObject::disconnect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit);
+		QObject::disconnect(this, &QGSThread::taskStart, mTask, &QGSTask::start);
+
+		//qDebug() << "Current task finished:" << task;
+
+		//计数
+		mThreadPoolPtr->mAttribMutex.lock();
+		mThreadPoolPtr->mActiveThreadCount--;
+		mThreadPoolPtr->mAttribMutex.unlock();
+
+		mThreadPoolPtr->mMutex.lock();
+		if (mTask->isTaskQueueBlock())
+		{
+			mThreadPoolPtr->mTaskQueueBlock = false;
+		}
+		mThreadPoolPtr->mMutex.unlock();
+	} while (0);
+}
+
+/*
 void QGSThread::run()
 {
 	if (!mThreadPoolPtr)
@@ -29,7 +100,7 @@ void QGSThread::run()
 		//检查队列是否有任务
 		if (!mThreadPoolPtr->mTaskQueue.size() && !mThreadPoolPtr->mReleaseThreads)
 		{
-			mThreadPoolPtr->mTaskQueueNotEmptyCondition.wait(&mThreadPoolPtr->mMutex);
+			mThreadPoolPtr->mTaskQueueStartCondition.wait(&mThreadPoolPtr->mMutex);
 		}
 		//线程池退出或线程释放
 		if (mThreadPoolPtr->mReleaseThreads || mThreadPoolPtr->mWaitReleasedThreadCount)
@@ -38,7 +109,7 @@ void QGSThread::run()
 			mThreadPoolPtr->mWaitReleasedThreadCount--;
 			mThreadPoolPtr->mMutex.unlock();
 			exit(0);
-			qDebug() << "Thread:" << this << "released!";
+			//qDebug() << "Thread:" << this << "released!";
 			break;
 		}
 		//检查是否遇到阻塞队列的任务
@@ -52,15 +123,8 @@ void QGSThread::run()
 		//qDebug() << "Current task queue size:" << mThreadPoolPtr->mTaskQueue.size();
 		mThreadPoolPtr->mTaskQueue.pop_front();
 		mThreadPoolPtr->mTaskQueueBlock = task->isTaskQueueBlock();
+		task->moveToThread(this->thread());
 		//条件：队列未满
-		/*
-		signals:
-		void started(QGSTask * task);
-		void finished(QGSTask * task);
-		void stoped(QGSTask * task);
-		void canceled(QGSTask * task);
-		void error(QGSTask * task);
-		*/
 		QObject::connect(task, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
 		QObject::connect(task, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
 		QObject::connect(task, &QGSTask::error, &eventLoop, &QEventLoop::quit);
@@ -89,3 +153,4 @@ void QGSThread::run()
 		mThreadPoolPtr->mAttribMutex.unlock();
 	}
 }
+*/

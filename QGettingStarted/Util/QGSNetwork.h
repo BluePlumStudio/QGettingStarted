@@ -12,13 +12,29 @@ namespace Network
 	static const int DefaultTimeout = 300000;
 }
 
+class QGSNetworkError
+{
+public:
+	QGSNetworkError(const QNetworkReply::NetworkError code, const QString & message);
+
+	~QGSNetworkError();
+
+	QNetworkReply::NetworkError getCode()const;
+
+	QString getMessage()const;
+
+private:
+	QNetworkReply::NetworkError mCode;
+	QString mMessage;
+};
+
 class QGSNetwork :public QObject
 {
 	Q_OBJECT
 public:
-	static QGSNetwork & getInstance();
+	static QGSNetwork & getGlobalInstance();
 
-	//QNetworkAccessManager * getManager();
+	QGSNetwork(QObject * parent = nullptr);
 
 	QGSNetwork(const QGSNetwork & right) = delete;
 
@@ -44,9 +60,7 @@ public:
 
 	QNetworkReply * post(const QNetworkRequest &request, QHttpMultiPart *multiPart);
 
-	QNetworkProxy proxy()const;
-private:
-	QGSNetwork(QObject * parent = nullptr);
+	QNetworkProxy proxy()const;	
 private:
 	QNetworkAccessManager * mManager;
 };
