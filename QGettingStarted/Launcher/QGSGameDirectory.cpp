@@ -88,9 +88,19 @@ bool QGSGameDirectory::containsVersion(const QString & version)const
 	return mVersionMap.contains(version);
 }
 
+bool QGSGameDirectory::containsVersion(const QGSGameVersionInfo & gameVersionInfo) const
+{
+	return containsVersion(gameVersionInfo.getId());
+}
+
 QFile * QGSGameDirectory::generateGameVersionJarFile(const QString & version, const bool withAbsolutePath)const
 {
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".jar");
+}
+
+QFile * QGSGameDirectory::generateGameVersionJarFile(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath) const
+{
+	return generateGameVersionJarFile(gameVersionInfo.getId(), withAbsolutePath);
 }
 
 QFile * QGSGameDirectory::generateGameVersionJsonFile(const QString & version, const bool withAbsolutePath) const
@@ -98,9 +108,31 @@ QFile * QGSGameDirectory::generateGameVersionJsonFile(const QString & version, c
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".json");
 }
 
+QFile * QGSGameDirectory::generateGameVersionJsonFile(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath) const
+{
+	return generateGameVersionJsonFile(gameVersionInfo.getId(), withAbsolutePath);
+}
+
 QFile * QGSGameDirectory::generateAssetIndexJsonFile(const QGSAssetIndex & assetIndex, const bool withAbsolutePath) const
 {
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "assets" + SEPARATOR + "indexes" + SEPARATOR + assetIndex.getId() + ".json");
+}
+
+QFile * QGSGameDirectory::generateAssetIndexJsonFile(const QString & version, const bool withAbsolutePath)
+{
+	return generateAssetIndexJsonFile(getVersion(version).getAssetIndex(), withAbsolutePath);
+}
+
+QFile * QGSGameDirectory::generateAssetIndexJsonFile(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath)
+{
+	auto rootVersionId{ gameVersionInfo.getId() };
+
+	while (!getVersion(rootVersionId).getInheritsFrom().isEmpty())
+	{
+		rootVersionId = getVersion(rootVersionId).getInheritsFrom();
+	}
+
+	return generateAssetIndexJsonFile(rootVersionId, withAbsolutePath);
 }
 
 QFile * QGSGameDirectory::generateLibraryFile(const QGSLibrary & library, const bool withAbsolutePath)const
@@ -123,6 +155,11 @@ QVector<QFile *> QGSGameDirectory::generateLibraryFiles(const QList<QGSLibrary> 
 QDir QGSGameDirectory::generateNativesDirectory(const QString & version, const bool withAbsolutePath)const
 {
 	return QDir((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + "-natives");
+}
+
+QDir QGSGameDirectory::generateNativesDirectory(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath) const
+{
+	return generateNativesDirectory(gameVersionInfo.getId(), withAbsolutePath);
 }
 
 QDir QGSGameDirectory::getBaseDir() const
@@ -187,28 +224,27 @@ bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIn
 
 			auto && assetIndex{ rootVersion.getAssetIndex() };
 			QFile assetJsonFile{ assetsBaseDirStr + SEPARATOR + "indexes" + SEPARATOR + assetIndex.getId() + ".json" };
-			if (!assetJsonFile.exists())
+			if (!assetJsonFile.exists()|| !assetJsonFile.open(QIODevice::ReadOnly))
 			{
 				dir = QDir{ assetsBaseDirStr };
 				ret = false;
-			}
-			if (!assetJsonFile.open(QIODevice::ReadOnly))
-			{
-				dir = QDir{ assetsBaseDirStr };
-				ret = false;
-			}
-			QGSAssetIndexInfoFactory infoListFactory;
-			auto && assetInfoList{ infoListFactory.createAssetIndexInfo(assetJsonFile.readAll()) };
-			if (assetInfoList.getVirtual())
-			{
-				dir = QDir{ assetsBaseDirStr + SEPARATOR + "virtual" };
-				ret = true;
 			}
 			else
 			{
-				dir = QDir{ assetsBaseDirStr };
-				ret = true;
+				QGSAssetIndexInfoFactory infoListFactory;
+				auto && assetInfoList{ infoListFactory.createAssetIndexInfo(assetJsonFile.readAll()) };
+				if (assetInfoList.getVirtual())
+				{
+					dir = QDir{ assetsBaseDirStr + SEPARATOR + "virtual" };
+					ret = true;
+				}
+				else
+				{
+					dir = QDir{ assetsBaseDirStr };
+					ret = true;
+				}
 			}
+
 		}
 		catch (...)
 		{
@@ -283,4 +319,9 @@ const QGSGameVersion & QGSGameDirectory::addVersion(const QString version)
 	auto ret{ mVersionMap.insert(version, newVersion) };
 
 	return !newVersion.getInheritsFrom().isEmpty() ? addVersion(newVersion.getInheritsFrom()) : *ret;
+}
+
+const QGSGameVersion & QGSGameDirectory::addVersion(const QGSGameVersionInfo & gameVersionInfo)
+{
+	return addVersion(gameVersionInfo.getId());
 }

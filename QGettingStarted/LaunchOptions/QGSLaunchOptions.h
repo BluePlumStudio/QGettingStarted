@@ -6,47 +6,27 @@
 #include "QGSIAccountFactory.h"
 #include "../Launcher/QGSGameDirectory.h"
 
-class QGSLaunchOptions 
+class QGSServerInfo
 {
 public:
-	/*
-	class ProxyInfo
-	{
-	public:
-		ProxyInfo(QString _address = "", QString _port = "", QString _user = "", QString _password = "")
-			:address(_address), port(_port), user(_user), password(_password)
-		{
+	QGSServerInfo(const QString & address = "", const QString & port = "25565");
 
-		}
-		~ProxyInfo()
-		{
+	~QGSServerInfo();
 
-		}
-	public:
-		QString address;
-		QString port;
-		QString user;
-		QString password;
-	};
-	*/
+	QString getAddress()const;
 
-	class ServerInfo
-	{
-	public:
-		ServerInfo(const QString & _address = "", const QString & _port = "25565")
-			:address(_address), port(_port)
-		{
+	QString getPort()const;
 
-		}
+	QGSServerInfo & setAddress(const QString & address);
 
-		~ServerInfo()
-		{
+	QGSServerInfo & setPort(const QString & port);
+private:
+	QString mAddress;
+	QString mPort;
+};
 
-		}
-	public:
-		QString address;
-		QString port;
-	};
+class QGSLaunchOptions 
+{
 public:
 	QGSLaunchOptions(QString JavaPath = "",
 		int maxMemory = 512,
@@ -55,7 +35,7 @@ public:
 		QString JVMArguments = "",
 		QString wrapper = "",
 		QString preCalledCommands = "",
-		ServerInfo serverInfo = ServerInfo(),
+		QGSServerInfo serverInfo = QGSServerInfo(),
 		QString gameArguments = "",
 		QSize windowSize = QSize(854, 480),
 		bool fullScreen = false,
@@ -80,7 +60,7 @@ public:
 	QString getJVMArguments()const;
 	QString getWrapper()const;
 	QString getPreCalledCommands()const;
-	ServerInfo getServerInfo()const;
+	QGSServerInfo getServerInfo()const;
 	QString getGameArguments()const;
 	QSize getWindowSize()const;
 	bool getFullScreen()const;
@@ -88,6 +68,7 @@ public:
 	QNetworkProxy getProxy()const;
 	bool getGeneratedJVMArguments()const;
 	QString getLoggingPath()const;
+	QMap<QString, QString> getCustomMinecraftArguments()const;
 
 	QGSLaunchOptions & setJavaPath(const QString & JavaPath);
 	QGSLaunchOptions & setMaxMemory(const int maxMemory);
@@ -96,7 +77,7 @@ public:
 	QGSLaunchOptions & setJVMArguments(const QString & JVMArguments);
 	QGSLaunchOptions & setWrapper(const QString & wrapper);
 	QGSLaunchOptions & setPreCalledCommands(const QString & preCalledCommands);
-	QGSLaunchOptions & setServerInfo(const ServerInfo & serverInfo);
+	QGSLaunchOptions & setServerInfo(const QGSServerInfo & serverInfo);
 	QGSLaunchOptions & setGameArguments(const QString & gameArguments);
 	QGSLaunchOptions & setWindowSize(const QSize & windowSize);
 	QGSLaunchOptions & setFullScreen(const bool fullScreen);
@@ -104,7 +85,8 @@ public:
 	QGSLaunchOptions & setProxy(const QNetworkProxy & proxy);
 	QGSLaunchOptions & setGeneratedJVMArguments(const bool generatedJVMArguments);
 	QGSLaunchOptions & setLoggingPath(const QString & loggingPath);
-private: 
+	QGSLaunchOptions & setCustomMinecraftArguments(const QMap<QString, QString> & customMinecraftArguments);
+private:
 	QString mJavaPath;
 	int mMaxMemory;
 	int mMinMemory;
@@ -112,7 +94,7 @@ private:
 	QString mJVMArguments;
 	QString mWrapper;
 	QString mPreCalledCommands;
-	ServerInfo mServerInfo;
+	QGSServerInfo mServerInfo;
 	QString mGameArguments;
 	QSize mWindowSize;
 	bool mFullScreen;
@@ -120,4 +102,5 @@ private:
 	QNetworkProxy mProxy;
 	bool mGeneratedJVMArguments;
 	QString mLoggingPath;
+	QMap<QString, QString> mCustomMinecraftArguments;
 };

@@ -7,7 +7,6 @@ static const unsigned long DEFAULT_SLEEP_TIME{ 1 };
 
 QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount, QObject *parent)
 	: QThread(parent), 
-	mTaskQueueBlock(false), 
 	mReleaseThreads(false), 
 	mMaxThreadCount(maxThreadCount),
 	mMinThreadCount(minThreadCount),
@@ -27,8 +26,6 @@ QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount,
 
 QGSThreadPool::~QGSThreadPool()
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	for (auto & thread : mThreadList)
 	{
 		thread->deleteLater();
@@ -45,25 +42,6 @@ QGSThreadPool & QGSThreadPool::getGlobalInstance()
 	return instance;
 }
 
-bool QGSThreadPool::addTaskBack(QGSTask * task)
-{
-	if (!task)
-	{
-		return false;
-	}
-
-	QMutexLocker mutexLocker{ &mMutex };
-
-	if (mReleaseThreads)
-	{
-		return false;
-	}
-	task->moveToThread(this);
-	mTaskQueue.push_back(task);
-
-	return true;
-}
-
 bool QGSThreadPool::addTaskFront(QGSTask * task)
 {
 	if (!task)
@@ -71,21 +49,34 @@ bool QGSThreadPool::addTaskFront(QGSTask * task)
 		return false;
 	}
 
-	QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mAttribMutex };
 
-	if (mReleaseThreads)
+	task->moveToThread(this);
+
+	mTaskQueue.push_front(task);
+
+	return true;
+}
+
+bool QGSThreadPool::addTaskBack(QGSTask * task)
+{
+	if (!task)
 	{
 		return false;
 	}
+
+	QMutexLocker mutexLocker{ &mAttribMutex };
+
 	task->moveToThread(this);
-	mTaskQueue.push_front(task);
+
+	mTaskQueue.push_back(task);
 
 	return true;
 }
 
 QGSThreadPool & QGSThreadPool::setMaxThreadCount(const quint32 maxThreadCount)
 {
-	QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mAttribMutex };
 
 	if (maxThreadCount >= 1)
 	{
@@ -97,7 +88,7 @@ QGSThreadPool & QGSThreadPool::setMaxThreadCount(const quint32 maxThreadCount)
 
 QGSThreadPool & QGSThreadPool::setMinThreadCount(const quint32 minThreadCount)
 {
-	QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mAttribMutex };
 
 	if (minThreadCount < mMaxThreadCount)
 	{
@@ -115,28 +106,28 @@ QGSThreadPool & QGSThreadPool::setSleepTime(const quint32 msecs)
 
 quint32 QGSThreadPool::getMaxThreadCount()
 {
-	QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mAttribMutex };
 
 	return mMaxThreadCount;
 }
 
 quint32 QGSThreadPool::getMinThreadCount()
 {
-	QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mAttribMutex };
 
 	return mMinThreadCount;
 }
 
 quint32 QGSThreadPool::getActiveThreadCount()
 {
-	QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mAttribMutex };
 
 	return mActiveThreadCount;
 }
 
 int QGSThreadPool::getThreadListSize()
 {
-	QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mAttribMutex };
 
 	return mThreadList.size();
 }
@@ -151,18 +142,17 @@ void QGSThreadPool::run()
 
 		//任务分配
 		mMutex.lock();
-		if (mTaskQueue.size() && !mTaskQueueBlock)
+		if (mTaskQueue.size())
 		{
 			for (auto & thread : mThreadList)
 			{
-				if (!thread->isRunning() || thread->isFinished())
+				if (!thread->isActive())
 				{
 					auto * newTask{ mTaskQueue.front() };
 
 					mTaskQueue.pop_front();
 					newTask->moveToThread(thread);
 					thread->setTask(newTask);
-					thread->start();
 					//qDebug() << "Thread:" << thread << " new task:" << newTask << " added!";
 					break;
 				}
@@ -172,7 +162,6 @@ void QGSThreadPool::run()
 
 		//获取成员变量
 		mMutex.lock();
-		const bool taskQueueBlock{ mTaskQueueBlock };
 		const bool releaseThreads{ mReleaseThreads };
 		const int taskQueueSize{ mTaskQueue.size() };
 		mMutex.unlock();
@@ -194,24 +183,26 @@ void QGSThreadPool::run()
 				auto * newThread{ new QGSThread{ this } };
 				if (newThread)
 				{
-					mAttribMutex.lock();
-					mAttribMutex.unlock();
 					//qDebug() << "Thread:" << newThread << " added!";
 					mThreadList.push_back(newThread);
+					newThread->setStackSize(0);
+					newThread->start();
 				}
 			}
 			mMutex.unlock();
 
 		}
-		else if (activeThreadCount * 4 < threadListSize&&threadListSize > minThreadCount)
+		
+		if (activeThreadCount * 4 < threadListSize&&threadListSize > minThreadCount)
 		{
 			mMutex.lock();
 			for (auto it = mThreadList.begin(); it != mThreadList.end(); it++)
 			{
-				if (!(*it)->isRunning() || (*it)->isFinished())
+				if (!(*it)->isActive())
 				{
 					(*it)->exit(0);
 					mThreadList.erase(it);
+					(*it)->deleteLater();
 					//qDebug() << "Thread:" << (*it) << " released!";
 					break;
 				}
@@ -233,6 +224,8 @@ void QGSThreadPool::init()
 			//exception
 		}
 		mThreadList.push_back(newThread);
+		newThread->setStackSize(0);
+		newThread->start();
 	}
 }
 

@@ -31,6 +31,7 @@ private:
 class QGSNetwork :public QObject
 {
 	Q_OBJECT
+
 public:
 	static QGSNetwork & getGlobalInstance();
 

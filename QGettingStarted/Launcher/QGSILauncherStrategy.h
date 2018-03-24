@@ -14,18 +14,18 @@ namespace LauncherError
 	static const int UnknownError = 0x02;
 	static const int JsonLibrariesNotIncluded = 0x04;
 	static const int JsonMinecraftArgumentsNot_included = 0x08;
-	static const int MinecraftArgumentsVariableNotIncluded;
-	static const int JavaPathNotIncluded;
-	static const int NativePathNotIncluded;
-	static const int PlayerNameNotIncluded;
-	static const int UserTypeNotIncluded;
-	static const int AuthUuidNotIncluded;
-	static const int AuthAccessTokenNotIncluded;
-	static const int NativesCompressError;
-	static const int InvalidMemorySize;
-	static const int NullPointer;
-	static const int JarFileNotFound;
-	static const int AssetFirectoryGenerateFailure;
+	static const int MinecraftArgumentsVariableNotIncluded = 0x10;
+	static const int JavaPathNotIncluded = 0x20;
+	static const int NativePathNotIncluded = 0x40;
+	static const int PlayerNameNotIncluded = 0x80;
+	static const int UserTypeNotIncluded = 0x100;
+	static const int AuthUuidNotIncluded = 0x200;
+	static const int AuthAccessTokenNotIncluded = 0x400;
+	static const int NativesCompressError = 0x800;
+	static const int InvalidMemorySize = 0x1000;
+	static const int NullPointer = 0x2000;
+	static const int JarFileNotFound = 0x4000;
+	static const int AssetFirectoryGenerateFailure = 0x8000;
 }
 
 class QGSILauncherStrategy 

@@ -11,11 +11,6 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Generated Files">
-      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
-      <Extensions>moc;h;cpp</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
-    </Filter>
     <Filter Include="Launcher">
       <UniqueIdentifier>{3bc6377f-d456-4559-93e2-a85630b9a093}</UniqueIdentifier>
     </Filter>
@@ -24,11 +19,6 @@
     </Filter>
     <Filter Include="Util">
       <UniqueIdentifier>{7129a7a9-beb6-4674-b132-aa7af1370f23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Generated Files\Debug">
-      <UniqueIdentifier>{02637500-6b9b-4c86-8655-f4ee3fd7db4b}</UniqueIdentifier>
-      <Extensions>cpp;moc</Extensions>
-      <SourceControlFiles>False</SourceControlFiles>
     </Filter>
     <Filter Include="Download">
       <UniqueIdentifier>{c14b76b6-1402-438e-8f62-bde76ad8370d}</UniqueIdentifier>
@@ -93,9 +83,6 @@
     </ClCompile>
     <ClCompile Include="Util\QGSNetwork.cpp">
       <Filter>Util</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_QGSNetwork.cpp">
-      <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Launcher\QGSILauncherStrategy.cpp">
       <Filter>Launcher</Filter>
@@ -184,9 +171,6 @@
     <ClCompile Include="Util\QGSExceptionFileIO.cpp">
       <Filter>Util\Exception</Filter>
     </ClCompile>
-    <ClCompile Include="GameBuilder\QGSGameBuilder.cpp">
-      <Filter>GameBuilder</Filter>
-    </ClCompile>
     <ClCompile Include="Util\QGSThreadPool.cpp">
       <Filter>Util\ThreadPool</Filter>
     </ClCompile>
@@ -268,6 +252,12 @@
     <ClCompile Include="GameVersion\QGSOptifineVersionInfoList.cpp">
       <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
+    <ClCompile Include="GameBuilder\QGSDownloadTaskGenerationTask.cpp">
+      <Filter>GameBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="GameBuilder\QGSGameBuilder.cpp">
+      <Filter>GameBuilder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\QGSGameDirectory.h">
@@ -297,9 +287,6 @@
     </ClInclude>
     <ClInclude Include="Launcher\QGSLauncher.h">
       <Filter>Launcher</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="Util\QGSFileTools.h">
       <Filter>Util</Filter>
@@ -466,6 +453,9 @@
       <Filter>GameBuilder</Filter>
     </QtMoc>
     <QtMoc Include="GameBuilder\QGSIGameBuilder.h">
+      <Filter>GameBuilder</Filter>
+    </QtMoc>
+    <QtMoc Include="GameBuilder\QGSDownloadTaskGenerationTask.h">
       <Filter>GameBuilder</Filter>
     </QtMoc>
   </ItemGroup>

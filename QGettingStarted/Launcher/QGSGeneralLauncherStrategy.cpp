@@ -132,13 +132,14 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 		launchCommandList.append("-cp");
 		launchCommandList.append("${classpath}");
 	}
+	auto && customMinecraftArguments{ launchOptions->getCustomMinecraftArguments() };
 	//natives目录
 	auto nativesDirectory{ gameDirectory.generateNativesDirectory(version.getId()) };
 	nativesDirectory.mkpath(nativesDirectory.absolutePath());
 	//launcherName
-	const QString launcherName{ "\"QGettingStarted\"" };
+	const QString launcherName{ customMinecraftArguments.contains("${launcher_name}") ? customMinecraftArguments.value("${launcher_name}") : "\"QGettingStarted\"" };
 	//launcherVersion
-	const QString launcherVersion{ "\"Beta 1.0.0\"" };
+	const QString launcherVersion{ customMinecraftArguments.contains("${launcher_version}") ? customMinecraftArguments.value("${launcher_version}") : "\"Pre 1.0.0\"" };
 	//libraries
 	auto inheritsVersionId{ version.getId() };
 	QStringList libraryPathList;
@@ -239,21 +240,19 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 		return ret |= LauncherError::UserTypeNotIncluded;
 	}
 
-	minecraftArguments.replace("${auth_player_name}", authPlayerName)
-		.replace("${version_name}", version.getId())
-		.replace("${game_directory}", QString{ "\"%1\"" }.arg(gameDirectory.getBaseDir().absolutePath()))
-		.replace("${assets_root}",
-			QString{ "\"%1\"" }.arg(assetsDirAbsolutePath))
-		.replace("${assets_index_name}", rootVersion.getAssets())
-		.replace("${auth_uuid}", authUuid)
-		.replace("${auth_access_token}", authAccessToken)
-		.replace("${user_type}", userType)
-		.replace("${version_type}", "\"QGettingStarted\"")
-		.replace("${user_properties}", authInfo.getTwitchAccessToken())
-		.replace("${auth_session}", authInfo.getAccessToken())
-		.replace("${game_assets}",
-			QString{ "\"%1\"" }.arg(assetsDirAbsolutePath))
-		.replace("${profile_name}", "Minecraft");
+	minecraftArguments.replace("${auth_player_name}", customMinecraftArguments.contains("${auth_player_name}") ? customMinecraftArguments.value("${auth_player_name}") : authPlayerName)
+		.replace("${version_name}", customMinecraftArguments.contains("${version_name}") ? customMinecraftArguments.value("${version_name}") : version.getId())
+		.replace("${game_directory}", customMinecraftArguments.contains("${game_directory}") ? customMinecraftArguments.value("${game_directory}") : QString{ "\"%1\"" }.arg(gameDirectory.getBaseDir().absolutePath()))
+		.replace("${assets_root}", customMinecraftArguments.contains("${assets_root}") ? customMinecraftArguments.value("${assets_root}") : QString{ "\"%1\"" }.arg(assetsDirAbsolutePath))
+		.replace("${assets_index_name}", customMinecraftArguments.contains("${assets_index_name}") ? customMinecraftArguments.value("${assets_index_name}") : rootVersion.getAssets())
+		.replace("${auth_uuid}", customMinecraftArguments.contains("${auth_uuid}") ? customMinecraftArguments.value("${auth_uuid}") : authUuid)
+		.replace("${auth_access_token}", customMinecraftArguments.contains("${auth_access_token}") ? customMinecraftArguments.value("${auth_access_token}") : authAccessToken)
+		.replace("${user_type}", customMinecraftArguments.contains("${user_type}") ? customMinecraftArguments.value("${user_type}") : userType)
+		.replace("${version_type}", customMinecraftArguments.contains("${version_type}") ? customMinecraftArguments.value("${version_type}") : "\"QGettingStarted\"")
+		.replace("${user_properties}", customMinecraftArguments.contains("${user_properties}") ? customMinecraftArguments.value("${user_properties}") : authInfo.getTwitchAccessToken())
+		.replace("${auth_session}", customMinecraftArguments.contains("${auth_session}") ? customMinecraftArguments.value("${auth_session}") : authInfo.getAccessToken())
+		.replace("${game_assets}", customMinecraftArguments.contains("${game_assets}") ? customMinecraftArguments.value("${game_assets}") : QString{ "\"%1\"" }.arg(assetsDirAbsolutePath))
+		.replace("${profile_name}", customMinecraftArguments.contains("${profile_name}") ? customMinecraftArguments.value("${profile_name}") : "QGettingStarted");
 	launchCommandList.append(minecraftArguments);
 	//窗口大小
 	auto && windowSize{ launchOptions->getWindowSize() };
@@ -264,10 +263,10 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 	}
 	//直连服务器
 	auto && serverInfo{ launchOptions->getServerInfo() };
-	if (!serverInfo.address.isEmpty() && !serverInfo.port.isEmpty())
+	if (!serverInfo.getAddress().isEmpty() && !serverInfo.getPort().isEmpty())
 	{
-		launchCommandList.append(QString("--server %1").arg(serverInfo.address));
-		launchCommandList.append(QString("--port %1").arg(serverInfo.port));
+		launchCommandList.append(QString("--server %1").arg(serverInfo.getAddress()));
+		launchCommandList.append(QString("--port %1").arg(serverInfo.getPort()));
 	}
 	//代理
 	auto && proxy{ launchOptions->getProxy() };

@@ -24,9 +24,9 @@ public:
 
 	static QGSThreadPool & getGlobalInstance();
 
-	bool addTaskBack(QGSTask * task);
-
 	bool addTaskFront(QGSTask * task);
+
+	bool addTaskBack(QGSTask * task);
 
 	QGSThreadPool & setMaxThreadCount(const quint32 maxThreadCount);
 
@@ -42,22 +42,21 @@ public:
 
 	int getThreadListSize();
 
-	//void releaseThreads();
+	void releaseThreads();
 private:
 	virtual void run();
 	void init();
 signals:
 	void threadPoolFull();
 private:
-	//QWaitCondition mTaskQueueStartCondition;
+	QWaitCondition mTaskQueueNotEmptyCondition;
 	//QWaitCondition mTaskQueueNotFullCondition;
 
 	QQueue<QGSTask *> mTaskQueue;
 	QList<QGSThread *> mThreadList;
 	QMutex mMutex;
-	bool mTaskQueueBlock;
 	bool mReleaseThreads;
-	//quint32 mWaitReleasedThreadCount;
+	quint32 mWaitReleasedThreadCount;
 
 	QMutex mAttribMutex;
 	quint32 mMinThreadCount;

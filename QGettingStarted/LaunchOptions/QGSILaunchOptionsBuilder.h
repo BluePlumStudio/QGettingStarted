@@ -27,7 +27,7 @@ public:
 	virtual QGSILaunchOptionsBuilder & setJVMArguments(const QStringList & JVMArgumentList) = 0;
 	virtual QGSILaunchOptionsBuilder & setWrapper(const QString & wrapper) = 0;
 	virtual QGSILaunchOptionsBuilder & setPreCalledCommands(const QString & preCalledCommands) = 0;
-	virtual QGSILaunchOptionsBuilder & setServerInfo(const QGSLaunchOptions::ServerInfo & serverInfo) = 0;
+	virtual QGSILaunchOptionsBuilder & setServerInfo(const QGSServerInfo & serverInfo) = 0;
 	virtual QGSILaunchOptionsBuilder & setGameArguments(const QString & gameArguments) = 0;
 	virtual QGSILaunchOptionsBuilder & setWindowSize(const QSize & windowSize) = 0;
 	virtual QGSILaunchOptionsBuilder & setFullScreen(const bool fullScreen) = 0;
@@ -35,6 +35,8 @@ public:
 	virtual QGSILaunchOptionsBuilder & setProxy(const QNetworkProxy & proxy) = 0;
 	virtual QGSILaunchOptionsBuilder & setGeneratedJVMArguments(const bool generatedJVMArguments) = 0;
 	virtual QGSILaunchOptionsBuilder & setLoggingPath(const QString & loggingPath) = 0;
+	virtual QGSILaunchOptionsBuilder & setCustomMinecraftArguments(const QMap<QString, QString> & customMinecraftArguments) = 0;
+
 protected: 
 	QGSLaunchOptions * mLaunchOptionsPtr;
 };

@@ -19,7 +19,7 @@ public:
 	DownloadInfo::DownloadInfo(const QUrl & url = QUrl(), const QString & path = "", const QString & SHA1 = "")
 		:QGSIDownload(-1, SHA1, path, url)
 	{
-		qRegisterMetaType<DownloadInfo>("DownloadInfo");
+
 	}
 
 	DownloadInfo(const DownloadInfo & right) = default;

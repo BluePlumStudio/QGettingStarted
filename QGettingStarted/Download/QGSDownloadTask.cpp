@@ -112,6 +112,9 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 	connect(mReply, &QNetworkReply::redirected, this, &QGSDownloadTask::slotRedirected);
 
 	mState = State::Start;
+
+	mutexLocker.unlock();
+
 	emit started(this);
 }
 
@@ -181,7 +184,7 @@ void QGSDownloadTask::downloadTemplateRedirected(const QUrl & url)
 void QGSDownloadTask::slotFinished()
 {
 	QMutexLocker mutexLocker{ &mMutex };
-
+	
 	downloadTemplateFinished();
 
 	mTargetFilePtr->flush();
@@ -202,6 +205,8 @@ void QGSDownloadTask::slotFinished()
 		mReply = nullptr;
 	}
 
+	mutexLocker.unlock();
+
 	emit finished(this);
 }
 
@@ -217,6 +222,8 @@ void QGSDownloadTask::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTot
 		mTargetFilePtr->flush();
 	}
 
+	mutexLocker.unlock();
+
 	emit downloadProgress(mBytesReceived + bytesReceived, bytesTotal, this);
 }
 
@@ -228,6 +235,8 @@ void QGSDownloadTask::slotError(QNetworkReply::NetworkError code)
 	cancel();
 	downloadTemplateError(code);
 
+	mutexLocker.unlock();
+
 	emit downloadError(QGSNetworkError{ code,errorString }, this);
 }
 
@@ -237,6 +246,8 @@ void QGSDownloadTask::slotSslErrors(const QList<QSslError>& errors)
 
 	cancel();
 	downloadTemplateSslErrors(errors);
+
+	mutexLocker.unlock();
 
 	emit sslErrors(errors, this);
 }

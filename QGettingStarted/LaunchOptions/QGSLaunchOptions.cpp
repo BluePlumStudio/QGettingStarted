@@ -1,5 +1,40 @@
 #include "QGSLaunchOptions.h"
 
+QGSServerInfo::QGSServerInfo(const QString & address, const QString & port)
+	:mAddress(address), mPort(port)
+{
+
+}
+
+QGSServerInfo::~QGSServerInfo()
+{
+
+}
+
+QString QGSServerInfo::getAddress() const
+{
+	return mAddress;
+}
+
+QString QGSServerInfo::getPort() const
+{
+	return mPort;
+}
+
+QGSServerInfo & QGSServerInfo::setAddress(const QString & address)
+{
+	mAddress = address;
+	return *this;
+}
+
+QGSServerInfo & QGSServerInfo::setPort(const QString & port)
+{
+	mPort = port;
+	return *this;
+}
+
+/**/
+
 QGSLaunchOptions::QGSLaunchOptions(
 	QString JavaPath,
 	int maxMemory,
@@ -8,13 +43,14 @@ QGSLaunchOptions::QGSLaunchOptions(
 	QString JVMArguments,
 	QString wrapper,
 	QString preCalledCommands,
-	ServerInfo serverInfo,
+	QGSServerInfo serverInfo,
 	QString gameArguments,
 	QSize windowSize,
 	bool fullScreen,
 	int metaspaceSize,
 	QNetworkProxy proxy,
 	bool generatedJVMArguments)
+
 	:mJavaPath(JavaPath),
 	mMaxMemory(maxMemory),
 	mMinMemory(minMemory),
@@ -71,7 +107,7 @@ QString QGSLaunchOptions::getPreCalledCommands()const
 	return mPreCalledCommands;
 }
 
-QGSLaunchOptions::ServerInfo QGSLaunchOptions::getServerInfo()const
+QGSServerInfo QGSLaunchOptions::getServerInfo()const
 {
 	return mServerInfo;
 }
@@ -108,6 +144,11 @@ bool QGSLaunchOptions::getGeneratedJVMArguments()const
 QString QGSLaunchOptions::getLoggingPath() const
 {
 	return mLoggingPath;
+}
+
+QMap<QString, QString> QGSLaunchOptions::getCustomMinecraftArguments() const
+{
+	return mCustomMinecraftArguments;
 }
 
 //
@@ -154,7 +195,7 @@ QGSLaunchOptions & QGSLaunchOptions::setPreCalledCommands(const QString & preCal
 	return *this;
 }
 
-QGSLaunchOptions & QGSLaunchOptions::setServerInfo(const QGSLaunchOptions::ServerInfo & serverInfo)
+QGSLaunchOptions & QGSLaunchOptions::setServerInfo(const QGSServerInfo & serverInfo)
 {
 	mServerInfo = serverInfo;
 	return *this;
@@ -199,5 +240,11 @@ QGSLaunchOptions & QGSLaunchOptions::setGeneratedJVMArguments(const bool generat
 QGSLaunchOptions & QGSLaunchOptions::setLoggingPath(const QString & loggingPath)
 {
 	mLoggingPath = loggingPath;
+	return *this;
+}
+
+QGSLaunchOptions & QGSLaunchOptions::setCustomMinecraftArguments(const QMap<QString, QString>& customMinecraftArguments)
+{
+	mCustomMinecraftArguments = customMinecraftArguments;
 	return *this;
 }

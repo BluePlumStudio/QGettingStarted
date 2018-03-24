@@ -61,7 +61,7 @@ QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setPreCalledCommands(const QS
 	return *this;
 }
 
-QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setServerInfo(const QGSLaunchOptions::ServerInfo & serverInfo)
+QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setServerInfo(const QGSServerInfo & serverInfo)
 {
 	mLaunchOptionsPtr->setServerInfo(serverInfo);
 	return *this;
@@ -106,5 +106,11 @@ QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setGeneratedJVMArguments(cons
 QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setLoggingPath(const QString & loggingPath)
 {
 	mLaunchOptionsPtr->setLoggingPath(loggingPath);
+	return *this;
+}
+
+QGSLaunchOptionsBuilder & QGSLaunchOptionsBuilder::setCustomMinecraftArguments(const QMap<QString, QString>& customMinecraftArguments)
+{
+	mLaunchOptionsPtr->setCustomMinecraftArguments(customMinecraftArguments);
 	return *this;
 }

@@ -82,7 +82,7 @@ QUrl QGSDownloadSourceBMCLAPI::generateAssetObjectUrl(const QGSAssetObject & ass
 {
 	auto && hash{ assetObject.getHash() };
 	return QUrl{
-		QString{ "https://bmclapi2.bangbang93.com/%1/%2" }.arg(hash.left(2)).arg(hash)
+		QString{ "https://bmclapi2.bangbang93.com/assets/%1/%2" }.arg(hash.left(2)).arg(hash)
 	};
 }
 

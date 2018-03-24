@@ -23,7 +23,7 @@ void generateLaunchCommandTest()
 		cout << "游戏版本：";
 		string version;
 		getline(cin, version);
-		QGSLauncher launcher{ gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())),gameDirectory };
+		QGSLauncher launcher;
 
 		QGSLaunchOptionsBuilder launchOptionsBuilder;
 		QString launchCommand;
@@ -45,14 +45,14 @@ void generateLaunchCommandTest()
 		launchOptionsBuilder.setJVMArguments("-XX:+UseG1GC -XX:-UseAdaptiveSizePolicy -XX:-OmitStackTraceInFastThrow");
 		/*
 		launchOptionsBuilder.setWrapper("前置指令");
-		launchOptionsBuilder.setServerInfo(QGSLaunchOptions::ServerInfo("serveraddress.com"));
+		launchOptionsBuilder.setServerInfo(QGSServerInfo("serveraddress.com"));
 		launchOptionsBuilder.setGameArguments("游戏参数");
 		launchOptionsBuilder.setWindowSize({ 480,854 });
 		launchOptionsBuilder.setFullScreen(true);
 		launchOptionsBuilder.setMetaspaceSize(8888);
 		launchOptionsBuilder.setProxy(QNetworkProxy("proxyaddress", "proxyport", "proxyuser", "proxypassword"));
 		*/
-		if (launcher.generateLaunchCommand(launchOptionsBuilder.getLaunchOptions(), launchCommand) != LauncherError::Ok)
+		if (launcher.generateLaunchCommand(gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())), gameDirectory, launchOptionsBuilder.getLaunchOptions(), launchCommand) != LauncherError::Ok)
 		{
 			qDebug() << "生成启动脚本失败";
 			return;
@@ -411,9 +411,12 @@ int main(int argc, char *argv[])
 	QObject::connect(&gameBuilder, &QGSGameBuilder::finished, [=]()
 	{
 		qDebug() << "gameBuilder finished!";
+		qDebug() << "gameBuilder finished!";
+		qDebug() << "gameBuilder finished!";
 	});
 	gameBuilder.start();
 
+	QGSThreadPool::getGlobalInstance();
 
 	return a.exec();
 }

@@ -12,4 +12,5 @@ QGSAssetObjectDownloadTask::~QGSAssetObjectDownloadTask()
 	{
 		mTargetFilePtr->deleteLater();
 	}
+	
 }
