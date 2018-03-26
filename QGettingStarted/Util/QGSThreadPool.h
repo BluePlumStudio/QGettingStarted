@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QQueue>
+#include <QTimer>
 
 #include "QGSThread.h"
 
@@ -46,6 +47,7 @@ public:
 private:
 	virtual void run();
 	void init();
+	void adjust();
 signals:
 	void threadPoolFull();
 private:
@@ -55,14 +57,15 @@ private:
 	QQueue<QGSTask *> mTaskQueue;
 	QList<QGSThread *> mThreadList;
 	QMutex mMutex;
-	bool mTaskQueueBlock;
+	//bool mTaskQueueBlock;
 	bool mReleaseThreads;
 	//quint32 mWaitReleasedThreadCount;
 
 	QMutex mAttribMutex;
 	quint32 mMinThreadCount;
 	quint32 mMaxThreadCount;
-	quint32 mActiveThreadCount;
+	//quint32 mActiveThreadCount;
 
 	int mSleepTime;
+	QTimer mTimer;
 };

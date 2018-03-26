@@ -537,6 +537,8 @@ void QGSGameBuilder::initDownloadTasks()
 			});
 		});
 	}
+
+	slotDownloadTaskFinished(nullptr);
 }
 
 QGSDownloadTask * QGSGameBuilder::initGameVersionJsonDownloadTask()

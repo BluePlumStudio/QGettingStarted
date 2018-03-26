@@ -28,7 +28,9 @@ public:
 
 	virtual ~QGSThread();
 
-	QGSThread & setTask(QGSTask * task);
+	//QGSThread & setTask(QGSTask * task);
+
+	void exit(int returnCode = 0);
 private:
 	virtual void run();
 signals:
@@ -36,4 +38,7 @@ signals:
 private:
 	QGSThreadPool * mThreadPoolPtr;
 	QGSTask * mTask;
+	//QMutex mMutex;
+	bool mActive;
+	bool mExit;
 };

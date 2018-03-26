@@ -102,4 +102,5 @@
   moc_QGSThreadPool.cpp
   moc_QGSTask.cpp
   moc_QGSThread.cpp
-  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.lib
+    正在创建库 F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.lib 和对象 F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.exp
+  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.exe
