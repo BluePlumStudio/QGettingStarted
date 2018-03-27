@@ -37,7 +37,7 @@ QGSGameVersionInfoList QGSGameVersionInfoListFactory::createGameVersionInfoList(
 		throw QGSExceptionJsonPraseError(jsonPraseError, "\"versions\" does not exeist!");
 	}
 	auto && versionsArray{ jsonObject.value("versions").toArray() };
-	for (auto & i : versionsArray)
+    for (const auto & i : versionsArray)
 	{
 		auto && versionObject{ i.toObject() };
 		ret.addVersionInfo(QGSGameVersionInfo{ versionObject.value("id").toString(),

@@ -1,9 +1,15 @@
 #include <QEventLoop>
+#include <QMetaType> 
 
 #include "QGSNetwork.h"
 
 QGSNetworkError::QGSNetworkError(const QNetworkReply::NetworkError code, const QString & message)
 	:mCode(code), mMessage(message)
+{
+	qRegisterMetaType<QGSNetworkError>("QGSNetworkError");
+}
+
+QGSNetworkError::QGSNetworkError(const QGSNetworkError & right)
 {
 
 }

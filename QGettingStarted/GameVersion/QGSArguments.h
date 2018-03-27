@@ -71,7 +71,7 @@ public:
 		QStringList mValue;
 	};
 public:
-	QGSArguments(QList<QGSArgument> & jvm = QList<QGSArgument>(), QList<QGSArgument> & game = QList<QGSArgument>());
+	QGSArguments(const QList<QGSArgument> & jvm = QList<QGSArgument>(), const QList<QGSArgument> & game = QList<QGSArgument>());
 
 	QGSArguments(const QGSArguments & right) = default;
 

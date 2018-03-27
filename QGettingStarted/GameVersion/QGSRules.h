@@ -12,86 +12,86 @@ namespace Action
 	const QString DISALLOW{ "disallow" };
 }
 
-class QGSRules 
+class Rule
 {
 public:
-	class Rule
-	{
-	public:
-		Rule(const QString & action = Action::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = OS::UNKNOWN, const QString & osVersion = "")
-			:mAction(action), mFeatures(features), mOs(os), mOsVersion(osVersion), mOperatingSystem(QGSOperatingSystem::getInstance())
-		{
+    Rule(const QString & action = Action::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = OS::UNKNOWN, const QString & osVersion = "")
+        :mAction(action), mFeatures(features), mOs(os), mOsVersion(osVersion), mOperatingSystemPtr(&QGSOperatingSystem::getInstance())
+    {
 
-		}
+    }
 
-		Rule(const Rule & right) = default;
+    Rule(const Rule & right) = default;
 
-		Rule(Rule && right) = default;
+    Rule(Rule && right) = default;
 
-		Rule & operator=(const Rule & right) = default;
+    Rule & operator=(const Rule & right) = default;
 
-		Rule & operator=(Rule && right) = default;
+    Rule & operator=(Rule && right) = default;
 
-		~Rule()
-		{
+    ~Rule()
+    {
 
-		}
+    }
 
-		Rule & setAction(const QString & action)
-		{
-			mAction = action;
-			return *this;
-		}
+    Rule & setAction(const QString & action)
+    {
+        mAction = action;
+        return *this;
+    }
 
-		Rule & setFeatures(const QMap<QString, bool> & features)
-		{
-			mFeatures = features;
-			return *this;
-		}
+    Rule & setFeatures(const QMap<QString, bool> & features)
+    {
+        mFeatures = features;
+        return *this;
+    }
 
-		Rule & setOs(const QString & os)
-		{
-			mOs = os;
-		}
+    Rule & setOs(const QString & os)
+    {
+        mOs = os;
+    }
 
-		Rule & setOsVersion(const QString & osVersion)
-		{
-			mOsVersion = osVersion;
-		}
+    Rule & setOsVersion(const QString & osVersion)
+    {
+        mOsVersion = osVersion;
+    }
 
-		QString getAction()const
-		{
-			return mAction;
-		}
+    QString getAction()const
+    {
+        return mAction;
+    }
 
-		QMap<QString, bool> getFeatures()const
-		{
-			return mFeatures;
-		}
+    QMap<QString, bool> getFeatures()const
+    {
+        return mFeatures;
+    }
 
-		QString getOs()const
-		{
-			return mOs;
-		}
+    QString getOs()const
+    {
+        return mOs;
+    }
 
-		QString getOsVersion()const
-		{
-			return mOsVersion;
-		}
+    QString getOsVersion()const
+    {
+        return mOsVersion;
+    }
 
-		void clear()
-		{
-			mAction = Action::ALLOW;
-			mFeatures.clear();
-			mOs.clear();
-		}
-	private:
-		QString mAction;
-		QMap<QString, bool> mFeatures;
-		QString mOs;
-		QString mOsVersion;
-		QGSOperatingSystem & mOperatingSystem;
-	};
+    void clear()
+    {
+        mAction = Action::ALLOW;
+        mFeatures.clear();
+        mOs.clear();
+    }
+private:
+    QString mAction;
+    QMap<QString, bool> mFeatures;
+    QString mOs;
+    QString mOsVersion;
+    QGSOperatingSystem * mOperatingSystemPtr;
+};
+
+class QGSRules 
+{
 public:
 	QGSRules();
 

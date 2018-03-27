@@ -72,7 +72,7 @@ QGSLiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoad
 	return ret;
 }
 
-inline QGSLibrary QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMetaLibrary(QJsonObject & object) const
+inline QGSLibrary QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMetaLibrary(const QJsonObject & object) const
 {
 	QGSLibrary library;
 
@@ -94,7 +94,7 @@ inline QGSLibrary QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMet
 	return library;
 }
 
-inline QGSLiteLoaderVersionMeta QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMeta(QJsonObject & object)
+inline QGSLiteLoaderVersionMeta QGSLiteLoaderVersionInfoListFactory::praseLiteLoaderVersionMeta(const QJsonObject & object)
 {
 	QGSLiteLoaderVersionMeta ret;
 
@@ -109,8 +109,8 @@ inline QGSLiteLoaderVersionMeta QGSLiteLoaderVersionInfoListFactory::praseLiteLo
 	ret.setTimestamp(object.value("timestamp").toString());
 	ret.setLastSuccessfulBuild(object.value("lastSuccessfulBuild").toInt());
 	QList<QGSLibrary> libraryList;
-	auto libraryArray = object.value("libraries").toArray();
-	for (auto & i : libraryArray)
+    const auto libraryArray = object.value("libraries").toArray();
+    for (const auto & i : libraryArray)
 	{
 		libraryList.push_back(praseLiteLoaderVersionMetaLibrary(i.toObject()));
 	}

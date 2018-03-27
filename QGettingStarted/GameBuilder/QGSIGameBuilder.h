@@ -32,10 +32,10 @@ public:
 
 	virtual ~QGSIGameBuilder();
 signals:
-	void downloadTaskStarted(QGSTask * task);
-	void downloadTaskFinished(QGSTask * task);
-	void downloadTaskStoped(QGSTask * task);
-	void downloadTaskCanceled(QGSTask * task);
-	void downloadTaskDownloadError(QGSNetworkError error, QGSTask * task);
-	void downloadTaskError(QGSTask * task);
+	void downloadTaskStarted(QGSDownloadInfo downloadInfo);
+	void downloadTaskFinished(QGSDownloadInfo downloadInfo);
+	void downloadTaskStoped(QGSDownloadInfo downloadInfo);
+	void downloadTaskCanceled(QGSDownloadInfo downloadInfo);
+	void downloadTaskDownloadError(QGSNetworkError error, QGSDownloadInfo downloadInfo);
+	void downloadTaskError(QGSDownloadInfo downloadInfo);
 };

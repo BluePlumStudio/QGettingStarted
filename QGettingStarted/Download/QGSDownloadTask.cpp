@@ -5,13 +5,13 @@
 #include <QMutex>
 
 #include "QGSDownloadTask.h"
-#include "QGSUuidGenerator.h"
-#include "QGSOperatingSystem.h"
+#include "../Util/QGSUuidGenerator.h"
+#include "../Util/QGSOperatingSystem.h"
 
 static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeparator() };
 
-QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
-	:mTargetFilePtr(targetFile), mDownloadInfo(downloadInfo), mProxy(proxy), mBytesReceived(0), mDelete(false), mState(State::Stop)
+QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
+	:mTargetFilePtr(targetFile), mDownloadInfo(downloadInfo), mProxy(proxy), mBytesReceived(0), mDelete(false), mState(State::Stop), mReply(nullptr)
 {
 	if (!mTargetFilePtr)
 	{
@@ -23,8 +23,6 @@ QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const DownloadInfo & downlo
 
 QGSDownloadTask::~QGSDownloadTask()
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	if (mReply)
 	{
 		mReply->deleteLater();
@@ -33,22 +31,16 @@ QGSDownloadTask::~QGSDownloadTask()
 
 QFile * QGSDownloadTask::getTargetFile()
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	return mTargetFilePtr;
 }
 
 QGSDownloadTask::State QGSDownloadTask::getState()
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	return mState;
 }
 
-DownloadInfo QGSDownloadTask::getDownloadInfo()
+QGSDownloadInfo QGSDownloadTask::getDownloadInfo()
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	return mDownloadInfo;
 }
 
@@ -59,7 +51,6 @@ QString QGSDownloadTask::generateRandomFileName()
 
 void QGSDownloadTask::templateStart(QGSTask * task)
 {
-	QMutexLocker mutexLocker{ &mMutex };
 	QGSNetwork network;
 
 	if (mState == State::Start)
@@ -67,7 +58,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		emit error(this);
 		return;
 	}
-	auto request{ QGSNetwork::generateNetworkRequestWithSSL() };
+    QNetworkRequest request{ QGSNetwork::generateNetworkRequestWithSSL() };
 
 	auto && url{ mDownloadInfo.getUrl() };
 	if (!url.isValid()
@@ -113,21 +104,18 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 
 	mState = State::Start;
 
-	mutexLocker.unlock();
-
 	emit started(this);
 }
 
 void QGSDownloadTask::templateStop(QGSTask * task)
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	mState = State::Stop;
 
 	mTargetFilePtr->flush();
 	mBytesReceived = mTargetFilePtr->size();
 	if (mReply)
 	{
+		mReply->disconnect();
 		disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
 		disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloadTask::slotFinished);
 		disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloadTask::slotError);
@@ -140,8 +128,6 @@ void QGSDownloadTask::templateStop(QGSTask * task)
 
 void QGSDownloadTask::templateCancel(QGSTask * task)
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	mState = State::Stop;
 
 	mTargetFilePtr->flush();
@@ -151,6 +137,7 @@ void QGSDownloadTask::templateCancel(QGSTask * task)
 	mTargetFilePtr->remove();
 	if (mReply)
 	{
+		mReply->disconnect();
 		disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
 		disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloadTask::slotFinished);
 		disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloadTask::slotError);
@@ -169,7 +156,7 @@ void QGSDownloadTask::downloadTemplateDownloadProgress(qint64 bytesReceived, qin
 {
 }
 
-void QGSDownloadTask::downloadTemplateError(QNetworkReply::NetworkError code)
+void QGSDownloadTask::downloadTemplateError(QNetworkReply::NetworkError error)
 {
 }
 
@@ -182,9 +169,7 @@ void QGSDownloadTask::downloadTemplateRedirected(const QUrl & url)
 }
 
 void QGSDownloadTask::slotFinished()
-{
-	QMutexLocker mutexLocker{ &mMutex };
-	
+{	
 	downloadTemplateFinished();
 
 	mTargetFilePtr->flush();
@@ -205,15 +190,11 @@ void QGSDownloadTask::slotFinished()
 		mReply = nullptr;
 	}
 
-	mutexLocker.unlock();
-
 	emit finished(this);
 }
 
 void QGSDownloadTask::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	downloadTemplateDownloadProgress(bytesReceived, bytesTotal);
 
 	if (mReply)
@@ -222,39 +203,38 @@ void QGSDownloadTask::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTot
 		mTargetFilePtr->flush();
 	}
 
-	mutexLocker.unlock();
-
 	emit downloadProgress(mBytesReceived + bytesReceived, bytesTotal, this);
 }
 
-void QGSDownloadTask::slotError(QNetworkReply::NetworkError code)
+void QGSDownloadTask::slotError(QNetworkReply::NetworkError _error)
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	auto && errorString{ mReply ? mReply->errorString() : "" };
 	cancel();
-	downloadTemplateError(code);
+	downloadTemplateError(_error);
 
-	mutexLocker.unlock();
-
-	emit downloadError(QGSNetworkError{ code,errorString }, this);
+	emit error(this);
+	emit downloadError(QGSNetworkError{ _error,errorString }, this);
 }
 
 void QGSDownloadTask::slotSslErrors(const QList<QSslError>& errors)
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	cancel();
 	downloadTemplateSslErrors(errors);
-
-	mutexLocker.unlock();
 
 	emit sslErrors(errors, this);
 }
 
 void QGSDownloadTask::slotRedirected(const QUrl & url)
 {
-	QMutexLocker mutexLocker{ &mMutex };
-
 	downloadTemplateRedirected(url);
+}
+
+QGSDownloadInfo::QGSDownloadInfo(const QUrl & url, const QString & path, const QString & SHA1)
+	:QGSIDownload(-1, SHA1, path, url)
+{
+
+}
+
+QGSDownloadInfo::~QGSDownloadInfo()
+{
 }

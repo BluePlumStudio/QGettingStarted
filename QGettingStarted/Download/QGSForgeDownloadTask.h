@@ -7,7 +7,7 @@ class QGSForgeDownloadTask : public QGSDownloadTask
 	Q_OBJECT
 
 public:
-	QGSForgeDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSForgeDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 	
 	QGSForgeDownloadTask(const QGSForgeDownloadTask & right) = delete;
 

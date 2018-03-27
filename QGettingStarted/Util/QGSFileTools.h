@@ -19,9 +19,9 @@ public:
 
 	~QGSFileTools();
 
-	static bool compressDirectory(QString & file, QString & directory, bool recursive = true);
+    static bool compressDirectory(const QString & file, const QString & directory, bool recursive = true);
 
-	static QStringList extractDirectory(QString & file, QString & directory);
+    static QStringList extractDirectory(const QString & file, const QString & directory);
 
 	static bool removeDirectory(const QString & absolutPath);
 private:

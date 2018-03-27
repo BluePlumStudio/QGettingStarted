@@ -8,10 +8,10 @@
 class QGSLogging
 {
 public:
-	class File :public QGSDownloads::QGSIDownload
+	class File :public QGSIDownload
 	{
 	public:
-		File(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "") :QGSDownloads::QGSIDownload(size, SHA1, path, url), mId(id)
+		File(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "") :QGSIDownload(size, SHA1, path, url), mId(id)
 		{
 
 		}

@@ -14,7 +14,7 @@ QGSFileTools::~QGSFileTools()
 {
 }
 
-bool QGSFileTools::compressDirectory(QString & file, QString & directory, bool recursive)
+bool QGSFileTools::compressDirectory(const QString & file, const QString & directory, bool recursive)
 {
 	bool ret = true;
 
@@ -30,7 +30,7 @@ bool QGSFileTools::compressDirectory(QString & file, QString & directory, bool r
 	return ret;
 }
 
-QStringList QGSFileTools::extractDirectory(QString & file, QString & directory)
+QStringList QGSFileTools::extractDirectory(const QString & file, const QString & directory)
 {
 	QStringList ret;
 

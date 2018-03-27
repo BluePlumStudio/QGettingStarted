@@ -1,6 +1,6 @@
 #include "QGSAssetIndexJsonDownloadTask.h"
 
-QGSAssetIndexJsonDownloadTask::QGSAssetIndexJsonDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
+QGSAssetIndexJsonDownloadTask::QGSAssetIndexJsonDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
 	:QGSDownloadTask(targetFile, downloadInfo, proxy, parent)
 {
 

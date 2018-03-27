@@ -82,7 +82,7 @@ bool QGSILauncherStrategy::isRulesAllowing(const QGSRules & rules)
 	return ret;
 }
 
-inline QString QGSILauncherStrategy::praseOsVersion(QString & osVersion)
+inline QString QGSILauncherStrategy::praseOsVersion(QString osVersion)
 {
 	if (osVersion.isEmpty())
 	{

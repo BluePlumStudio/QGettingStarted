@@ -23,8 +23,8 @@ QGSOptifineVersionInfoList QGSOptifineVersionInfoListFactory::createOptifineVers
 		throw QGSExceptionJsonPraseError(jsonPraseError);
 	}
 
-	auto && jsonArray{ jsonDocument.array() };
-	for (auto & jsonObject : jsonArray)
+    const auto && jsonArray{ jsonDocument.array() };
+    for (const auto & jsonObject : jsonArray)
 	{
 		auto && versionInfoObject{ jsonObject.toObject() };
 		ret.addVersionInfo(QGSOptifineVersionInfo{ versionInfoObject.value("_id").toString(),

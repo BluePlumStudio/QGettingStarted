@@ -1,7 +1,7 @@
 #include "QGSAssetIndex.h"
 
 QGSAssetIndex::QGSAssetIndex(const int size, const QString & SHA1, const QString & path, const QUrl & url, const qint64 totalSize, const QString & id)
-	:QGSDownloads::QGSIDownload(size, SHA1, path, url), mTotalSize(totalSize), mId(id)
+	:QGSIDownload(size, SHA1, path, url), mTotalSize(totalSize), mId(id)
 {
 
 }
@@ -37,5 +37,5 @@ void QGSAssetIndex::clear()
 {
 	mTotalSize = 0;
 	mId.clear();
-	QGSDownloads::QGSIDownload::clear();
+	QGSIDownload::clear();
 }

@@ -1,6 +1,6 @@
 #include "QGSForgeDownloadTask.h"
 
-QGSForgeDownloadTask::QGSForgeDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
+QGSForgeDownloadTask::QGSForgeDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
 	:QGSDownloadTask(targetFile, downloadInfo, proxy, parent)
 {
 

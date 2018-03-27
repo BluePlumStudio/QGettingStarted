@@ -50,5 +50,5 @@ public:
 protected:
 	bool isRulesAllowing(const QGSRules & rules);
 private:
-	inline QString praseOsVersion(QString & osVersion);
+    inline QString praseOsVersion(QString osVersion);
 };

@@ -25,6 +25,6 @@ public:
 
 	QGSLiteLoaderVersionInfoList createLiteLoaderVersionInfoList(const QByteArray & jsonData);
 private:
-	inline QGSLibrary praseLiteLoaderVersionMetaLibrary(QJsonObject & object)const;
-	inline QGSLiteLoaderVersionMeta praseLiteLoaderVersionMeta(QJsonObject & object);
+    inline QGSLibrary praseLiteLoaderVersionMetaLibrary(const QJsonObject & object)const;
+    inline QGSLiteLoaderVersionMeta praseLiteLoaderVersionMeta(const QJsonObject & object);
 };

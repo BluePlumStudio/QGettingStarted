@@ -3,7 +3,7 @@
 #include <QString>
 #include <QJsonDocument>
 
-#include "../GameVersion/QGSGameVersion.h"
+#include "../../GameVersion/QGSGameVersion.h"
 
 class QGSIGameVersionPraseStrategy 
 {

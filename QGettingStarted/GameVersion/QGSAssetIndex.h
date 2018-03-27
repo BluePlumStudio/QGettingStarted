@@ -4,7 +4,7 @@
 
 #include "QGSDownloads.h"
 
-class QGSAssetIndex :public QGSDownloads::QGSIDownload
+class QGSAssetIndex :public QGSIDownload
 {
 public:
 	QGSAssetIndex(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const qint64 totalSize = 0, const QString & id = "");

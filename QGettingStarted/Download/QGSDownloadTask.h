@@ -4,7 +4,6 @@
 #include <QFile>
 #include <QSharedPointer>
 #include <QThread>
-#include <QNetworkProxy>
 #include <QEventLoop>
 #include <QRunnable>
 #include <QMutex>
@@ -13,27 +12,20 @@
 #include "../GameVersion/QGSDownloads.h"
 #include "../Util/QGSTask.h"
 
-class DownloadInfo :public QGSDownloads::QGSIDownload
+class QGSDownloadInfo :public QGSIDownload
 {
 public:
-	DownloadInfo::DownloadInfo(const QUrl & url = QUrl(), const QString & path = "", const QString & SHA1 = "")
-		:QGSIDownload(-1, SHA1, path, url)
-	{
+	QGSDownloadInfo(const QUrl & url = QUrl(), const QString & path = "", const QString & SHA1 = "");
 
-	}
+	QGSDownloadInfo(const QGSDownloadInfo & right) = default;
 
-	DownloadInfo(const DownloadInfo & right) = default;
+	QGSDownloadInfo(QGSDownloadInfo && right) = default;
 
-	DownloadInfo(DownloadInfo && right) = default;
+	QGSDownloadInfo & operator=(const QGSDownloadInfo & right) = default;
 
-	DownloadInfo & operator=(const DownloadInfo & right) = default;
+	QGSDownloadInfo & operator=(QGSDownloadInfo && right) = default;
 
-	DownloadInfo & operator=(DownloadInfo && right) = default;
-
-	virtual DownloadInfo::~DownloadInfo()
-	{
-
-	}
+	virtual ~QGSDownloadInfo();
 
 private:
 
@@ -50,7 +42,7 @@ public:
 	};
 
 public:
-	QGSDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSDownloadTask(const QGSDownloadTask & right) = delete;
 
@@ -66,7 +58,7 @@ public:
 
 	State getState();
 
-	DownloadInfo getDownloadInfo();
+	QGSDownloadInfo getDownloadInfo();
 
 	static QString generateRandomFileName();
 protected:
@@ -76,13 +68,13 @@ protected:
 
 	virtual void downloadTemplateFinished();
 	virtual void downloadTemplateDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	virtual void downloadTemplateError(QNetworkReply::NetworkError code);
+	virtual void downloadTemplateError(QNetworkReply::NetworkError error);
 	virtual void downloadTemplateSslErrors(const QList<QSslError> &errors);
 	virtual void downloadTemplateRedirected(const QUrl &url);
 private slots:
 	void slotFinished();
 	void slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	void slotError(QNetworkReply::NetworkError code);
+	void slotError(QNetworkReply::NetworkError error);
 	void slotSslErrors(const QList<QSslError> &errors);
 	void slotRedirected(const QUrl &url);
 signals:
@@ -90,10 +82,8 @@ signals:
 	void downloadError(QGSNetworkError error, QGSTask * task);
 	void sslErrors(const QList<QSslError> &errors, QGSTask * task);
 protected:
-	QMutex mMutex;
-
 	QFile * mTargetFilePtr;
-	DownloadInfo mDownloadInfo;
+	QGSDownloadInfo mDownloadInfo;
 	QNetworkReply * mReply;
 	QNetworkProxy mProxy;
 	State mState;

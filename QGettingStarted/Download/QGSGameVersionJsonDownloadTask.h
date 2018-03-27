@@ -7,7 +7,7 @@ class QGSGameVersionJsonDownloadTask : public QGSDownloadTask
 	Q_OBJECT
 
 public:
-	QGSGameVersionJsonDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSGameVersionJsonDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSGameVersionJsonDownloadTask(const QGSGameVersionJsonDownloadTask & right) = delete;
 

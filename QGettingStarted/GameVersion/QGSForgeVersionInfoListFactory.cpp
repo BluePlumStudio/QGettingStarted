@@ -35,7 +35,7 @@ QGSForgeVersionInfoList QGSForgeVersionInfoListFactory::createForgeVersionInfoLi
 	return ret;
 }
 
-inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonObject & jsonObject, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList)
+inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(const QJsonObject & jsonObject, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList)
 {
 	if (!jsonObject.contains("number"))
 	{
@@ -60,9 +60,9 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonOb
 		newForgeVersionInfo.setVersion(infoObject.value("version").toString());
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
-		auto && fileArray{ infoObject.value("files").toArray() };
+        const auto && fileArray{ infoObject.value("files").toArray() };
 		QList<QGSForgeVersionInfo::File> fileList;
-		for (auto & j : fileArray)
+        for (const auto & j : fileArray)
 		{
 			auto && fileInfoArray{ j.toArray() };
 
@@ -76,7 +76,7 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(QJsonOb
 	}
 }
 
-inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(QJsonArray & jsonArray, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList)
+inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(const QJsonArray & jsonArray, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList)
 {
 	limit = qMin(limit, jsonArray.size());
 	for (int i = 0; i < limit; i += offset)
@@ -94,9 +94,9 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(QJs
 		newForgeVersionInfo.setVersion(infoObject.value("version").toString());
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
-		auto && fileArray{ infoObject.value("files").toArray() };
+        const auto && fileArray{ infoObject.value("files").toArray() };
 		QList<QGSForgeVersionInfo::File> fileList;
-		for (auto & j : fileArray)
+        for (const auto & j : fileArray)
 		{
 			auto && fileObject{ j.toObject() };
 

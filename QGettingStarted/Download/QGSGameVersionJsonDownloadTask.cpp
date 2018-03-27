@@ -1,6 +1,6 @@
 #include "QGSGameVersionJsonDownloadTask.h"
 
-QGSGameVersionJsonDownloadTask::QGSGameVersionJsonDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
+QGSGameVersionJsonDownloadTask::QGSGameVersionJsonDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
 	:QGSDownloadTask(targetFile, downloadInfo, proxy, parent)
 {
 

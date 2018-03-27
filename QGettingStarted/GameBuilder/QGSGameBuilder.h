@@ -27,6 +27,8 @@ public:
 	QGSGameBuilder & setFileOverride(const bool fileOverride);
 
 	QString getLastErrorString();
+
+	bool isFinished()const;
 protected:
 	virtual void templateStart(QGSTask * task);
 	virtual void templateStop(QGSTask * task);
@@ -36,7 +38,10 @@ private slots:
 	void slotDownloadTaskFinished(QGSTask * task);
 	void slotDownloadTaskStoped(QGSTask * task);
 	void slotDownloadTaskCanceled(QGSTask * task);
-	void slotDownloadTaskError(QGSNetworkError error, QGSTask * task);
+	void slotDownloadTaskError(QGSTask * task);
+	void slotDownloadTaskDownloadError(QGSNetworkError error, QGSTask * task);
+	void slotEraseDownloadTask(QGSTask * downloadTask);
+	void slotFinished();
 private:
 	friend class GameVersionJsonDownloadTaskGenerationTask;
 	friend class GameVersionDownloadTaskGenerationTask;
@@ -51,15 +56,18 @@ private:
 	QGSDownloadTask *  initAssetIndexJsonDownloadTask();
 	bool initAssetObjectDownloadTasks();
 
-	void eraseDownloadTask(QGSTask * downloadTask);
+	void deleteTasksFinished();
 private:
+	static QGSThreadPool mThreadPool;
 	QMutex mMutex;
+	QTimer mTimer;
 
 	QGSAssetIndexInfo mAssetIndexInfo;
 	QGSGameVersionInfo mVersionInfo;
 	QGSGameDirectory * mGameDirectoryPtr;
 	QGSDownloadTaskFactory * mDownloadTaskFactoryPtr;
 	QList<QGSTask *> mTaskList;
+	QList<QGSTask *> mTaskWillBeDeletedList;
 	bool mFileOverride;
 	QString mLastErrorString;
 };

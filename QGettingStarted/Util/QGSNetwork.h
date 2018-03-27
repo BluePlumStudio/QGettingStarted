@@ -2,20 +2,40 @@
 
 #include <QObject>
 #include <QString>
+#ifdef Q_CC_MSVC
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QNetworkProxy>
+#include <QSslConfiguration>
+#include <QSslSocket>
+#else
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkReply>
+#include <QtNetwork/QNetworkProxy>
+#include <QtNetwork/QSslConfiguration>
+#include <QtNetwork/QSslSocket>
+#endif
 
 namespace Network
 {
 	static const int DefaultTimeout = 300000;
 }
 
-class QGSNetworkError
+class QGSNetworkError //:public QObject
 {
+	//Q_OBJECT
 public:
-	QGSNetworkError(const QNetworkReply::NetworkError code, const QString & message);
+	QGSNetworkError(const QNetworkReply::NetworkError code = QNetworkReply::NetworkError::NoError, const QString & message = "");
+
+	QGSNetworkError(const QGSNetworkError & right);
+
+	QGSNetworkError(QGSNetworkError && right) = default;
+
+	QGSNetworkError & operator=(const QGSNetworkError & right) = default;
+
+	QGSNetworkError & operator=(QGSNetworkError && right) = default;
 
 	~QGSNetworkError();
 

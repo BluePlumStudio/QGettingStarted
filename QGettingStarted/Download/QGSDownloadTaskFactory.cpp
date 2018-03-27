@@ -14,7 +14,7 @@ QGSDownloadTaskFactory::~QGSDownloadTaskFactory()
 {
 }
 
-QGSDownloadTask * QGSDownloadTaskFactory::generateDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo)
+QGSDownloadTask * QGSDownloadTaskFactory::generateDownloadTask(QFile * targetFile, QGSDownloadInfo downloadInfo)
 {
 	if (!targetFile)
 	{
@@ -25,7 +25,7 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateDownloadTask(QFile * targetFil
 }
 
 
-QGSDownloadTask * QGSDownloadTaskFactory::generateGameVersionInfoJsonDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo)
+QGSDownloadTask * QGSDownloadTaskFactory::generateGameVersionInfoJsonDownloadTask(QFile * targetFile)
 {
 	if (!targetFile)
 	{
@@ -33,11 +33,13 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateGameVersionInfoJsonDownloadTas
 	}
 
 	auto && url{ mDownloadSourcePtr->generateGameVersionInfoJsonUrl() };
+
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
 	return generateDownloadTask(targetFile, downloadInfo);
 }
 
-QGSDownloadTask * QGSDownloadTaskFactory::generateForgeVersionInfoJsonDownloadTask(QFile * targetFile, int offset, int limit, DownloadInfo & downloadInfo)
+QGSDownloadTask * QGSDownloadTaskFactory::generateForgeVersionInfoJsonDownloadTask(QFile * targetFile, int offset, int limit)
 {
 	if (!targetFile)
 	{
@@ -45,11 +47,13 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateForgeVersionInfoJsonDownloadTa
 	}
 
 	auto && url{ mDownloadSourcePtr->generateForgeVersionInfoJsonUrl(offset,limit) };
+
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
 	return generateDownloadTask(targetFile, downloadInfo);
 }
 
-QGSDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderVersionInfoJsonDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo)
+QGSDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderVersionInfoJsonDownloadTask(QFile * targetFile)
 {
 	if (!targetFile)
 	{
@@ -57,11 +61,13 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderVersionInfoJsonDownl
 	}
 
 	auto && url{ mDownloadSourcePtr->generateLiteLoaderVersionInfoJsonUrl() };
+
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
 	return generateDownloadTask(targetFile, downloadInfo);
 }
 
-QGSDownloadTask * QGSDownloadTaskFactory::generateOptifineVersionInfoJsonDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo)
+QGSDownloadTask * QGSDownloadTaskFactory::generateOptifineVersionInfoJsonDownloadTask(QFile * targetFile)
 {
 	if (!targetFile)
 	{
@@ -69,11 +75,13 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateOptifineVersionInfoJsonDownloa
 	}
 
 	auto && url{ mDownloadSourcePtr->generateOptifineVersionInfoJsonUrl() };
+
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
 	return generateDownloadTask(targetFile, downloadInfo);
 }
 
-QGSDownloadTask * QGSDownloadTaskFactory::generateLoggingDownloadTask(QFile * targetFile, const QGSLogging & logging, DownloadInfo & downloadInfo)
+QGSDownloadTask * QGSDownloadTaskFactory::generateLoggingDownloadTask(QFile * targetFile, const QGSLogging & logging)
 {
 	if (!targetFile)
 	{
@@ -81,35 +89,39 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateLoggingDownloadTask(QFile * ta
 	}
 
 	auto && url{ mDownloadSourcePtr->generateLoggingUrl(logging) };
+
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
 	return generateDownloadTask(targetFile, downloadInfo);
 }
 
-QGSGameVersionJsonDownloadTask * QGSDownloadTaskFactory::generateGameVersionJsonDownloadTask(const QGSGameVersionInfo & versionInfo, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo)
+QGSGameVersionJsonDownloadTask * QGSDownloadTaskFactory::generateGameVersionJsonDownloadTask(const QGSGameVersionInfo & versionInfo, QGSGameDirectory & gameDirectory)
 {
 	if (versionInfo.getUrl().isEmpty() || versionInfo.getId().isEmpty())
 	{
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateGameVersionJsonUrl(versionInfo));
 	return new QGSGameVersionJsonDownloadTask{ gameDirectory.generateGameVersionJsonFile(versionInfo.getId()), downloadInfo,mProxy };
 }
 
 
-QGSLibraryDownloadTask * QGSDownloadTaskFactory::generateLibraryDownloadTask(const QGSLibrary & library, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo)
+QGSLibraryDownloadTask * QGSDownloadTaskFactory::generateLibraryDownloadTask(const QGSLibrary & library, QGSGameDirectory & gameDirectory)
 {
 	if (library.getName().isEmpty() || library.getVersion().isEmpty() || library.getPackage().isEmpty())
 	{
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateLibraryUrl(library));
 	return new QGSLibraryDownloadTask{ gameDirectory.generateLibraryFile(library),downloadInfo,mProxy };
 }
 
 
-QGSGameVersionDownloadTask * QGSDownloadTaskFactory::generateGameVersionDownloadTask(const QGSGameVersion & version, QGSGameDirectory & gameDirectory, const QString & category, DownloadInfo & downloadInfo)
+QGSGameVersionDownloadTask * QGSDownloadTaskFactory::generateGameVersionDownloadTask(const QGSGameVersion & version, QGSGameDirectory & gameDirectory, const QString & category)
 {
 	auto && versionDownloads{ version.getDownloads() };
 
@@ -121,28 +133,31 @@ QGSGameVersionDownloadTask * QGSDownloadTaskFactory::generateGameVersionDownload
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateGameVersionUrl(version, category));
 	return new QGSGameVersionDownloadTask{ gameDirectory.generateGameVersionJarFile(version.getId()),downloadInfo,mProxy };
 }
 
-QGSAssetIndexJsonDownloadTask * QGSDownloadTaskFactory::generateAssetIndexJsonDownloadTask(const QGSAssetIndex & assetIndex, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo)
+QGSAssetIndexJsonDownloadTask * QGSDownloadTaskFactory::generateAssetIndexJsonDownloadTask(const QGSAssetIndex & assetIndex, QGSGameDirectory & gameDirectory)
 {
 	if (assetIndex.getUrl().isEmpty())
 	{
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateAssetIndexJsonUrl(assetIndex));
 	return new QGSAssetIndexJsonDownloadTask{ gameDirectory.generateAssetIndexJsonFile(assetIndex),downloadInfo,mProxy };
 }
 
-QGSAssetObjectDownloadTask * QGSDownloadTaskFactory::generateAssetObjectDownloadTask(const QGSAssetObject & assetObject, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo)
+QGSAssetObjectDownloadTask * QGSDownloadTaskFactory::generateAssetObjectDownloadTask(const QGSAssetObject & assetObject, QGSGameDirectory & gameDirectory)
 {
 	if (assetObject.getHash().isEmpty())
 	{
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateAssetObjectUrl(assetObject));
 	return new QGSAssetObjectDownloadTask{ gameDirectory.generateAssetObjectFile(assetObject),downloadInfo,mProxy };
 }
@@ -153,20 +168,20 @@ QGSForgeDownloadTask * QGSDownloadTaskFactory::generateForgeDownloadTask(QFile *
 	const QString & version, 
 	const QString & category, 
 	const QString & format, 
-	const QString & branch, 
-	DownloadInfo & downloadInfo)
+	const QString & branch)
 {
 	if (!targetFile || mcversion.isEmpty() || version.isEmpty() || category.isEmpty() || format.isEmpty())
 	{
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateForgeUrl(mcversion, version, category, format, branch));
 	return new QGSForgeDownloadTask{ targetFile,downloadInfo,mProxy };
 }
 
 
-QGSLiteLoaderDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category, DownloadInfo & downloadInfo)
+QGSLiteLoaderDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category)
 {
 	/* universial
 	手工拼接`/maven/com/mumfrey/liteloader/${mcversion}/liteloader-${version}.jar`进行下载
@@ -177,18 +192,20 @@ QGSLiteLoaderDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderDownloadTa
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateLiteLoaderUrl(mcversion, version, category));
 	return new QGSLiteLoaderDownloadTask{ targetFile,downloadInfo,mProxy };
 }
 
 
-QGSOptifineDownloadTask * QGSDownloadTaskFactory::generateOptifineDownloadTask(QFile * targetFile, const QString & mcversion, const QString & type, const QString & patch, DownloadInfo & downloadInfo)
+QGSOptifineDownloadTask * QGSDownloadTaskFactory::generateOptifineDownloadTask(QFile * targetFile, const QString & mcversion, const QString & type, const QString & patch)
 {
 	if (!targetFile || mcversion.isEmpty() || type.isEmpty() || patch.isEmpty())
 	{
 		return nullptr;
 	}
 
+	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateOptifineUrl(mcversion, type, patch));
 	return new QGSOptifineDownloadTask{ targetFile,downloadInfo,mProxy };
 }

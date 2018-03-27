@@ -7,7 +7,7 @@ class QGSLibraryDownloadTask : public QGSDownloadTask
 	Q_OBJECT
 
 public:
-	QGSLibraryDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSLibraryDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSLibraryDownloadTask(const QGSLibraryDownloadTask & right) = delete;
 

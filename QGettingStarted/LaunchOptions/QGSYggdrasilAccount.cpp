@@ -2,8 +2,6 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-#include <QSslConfiguration>
-#include <QSslSocket>
 #include <QEventLoop>
 
 #include "QGSYggdrasilAccount.h"
@@ -100,7 +98,7 @@ QGSAuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QS
 		if (userObject.contains("properties"))
 		{
 			auto && propertyArray{ userObject.value("properties").toArray() };
-			for (auto & propertyValueRef : propertyArray)
+            for (const auto & propertyValueRef : propertyArray)
 			{
 				auto && propertyObject{ propertyValueRef.toObject() };
 				twitchAccessToken = propertyObject.value("name").toString();

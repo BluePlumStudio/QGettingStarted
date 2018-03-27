@@ -17,25 +17,25 @@ public:
 
 	virtual ~QGSGeneralGameVersionPraseStrategy();
 
-	virtual void praseVersion(QGSGameVersion & version, QJsonDocument & jsonDocument)const override;
+    virtual void praseVersion(QGSGameVersion & version, QJsonDocument & jsonDocument)const override;
 protected:
-	bool praseId(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseArguments(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseMainClass(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseInheritsFrom(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseJar(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseAssetIndex(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseAssets(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseLibraries(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseDownloads(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseLogging(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseType(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseTime(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseReleaseTime(QGSGameVersion & version, QJsonObject & object)const;
-	bool praseMinimumLauncherVersion(QGSGameVersion & version, QJsonObject & object)const;
+    bool praseId(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseArguments(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseMainClass(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseInheritsFrom(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseJar(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseAssetIndex(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseAssets(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseLibraries(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseDownloads(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseLogging(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseType(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseTime(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseReleaseTime(QGSGameVersion & version, const QJsonObject & object)const;
+    bool praseMinimumLauncherVersion(QGSGameVersion & version, const QJsonObject & object)const;
 private:
-	inline QGSRules praseRules(QJsonArray & arrayRules)const;
-	inline QStringList praseValue(QJsonValue & valueValue)const;
+    inline QGSRules praseRules(const QJsonArray & arrayRules)const;
+    inline QStringList praseValue(const QJsonValue & valueValue)const;
 	/**/
-	inline QGSLibrary praseLibrary(QJsonObject & object)const;
+    inline QGSLibrary praseLibrary(const QJsonObject & object)const;
 };

@@ -34,33 +34,33 @@ public:
 
 	virtual ~QGSDownloadTaskFactory();
 
-	QGSDownloadTask * generateDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSDownloadTask * generateDownloadTask(QFile * targetFile, QGSDownloadInfo downloadInfo = QGSDownloadInfo());
 	/**/
-	QGSDownloadTask * generateGameVersionInfoJsonDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSDownloadTask * generateGameVersionInfoJsonDownloadTask(QFile * targetFile);
 
-	QGSDownloadTask * generateForgeVersionInfoJsonDownloadTask(QFile * targetFile, int offset = 1, int limit = 0, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSDownloadTask * generateForgeVersionInfoJsonDownloadTask(QFile * targetFile, int offset = 1, int limit = 0);
 
-	QGSDownloadTask * generateLiteLoaderVersionInfoJsonDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSDownloadTask * generateLiteLoaderVersionInfoJsonDownloadTask(QFile * targetFile);
 
-	QGSDownloadTask * generateOptifineVersionInfoJsonDownloadTask(QFile * targetFile, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSDownloadTask * generateOptifineVersionInfoJsonDownloadTask(QFile * targetFile);
 	/**/
-	QGSDownloadTask * generateLoggingDownloadTask(QFile * targetFile, const QGSLogging & logging, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSDownloadTask * generateLoggingDownloadTask(QFile * targetFile, const QGSLogging & logging);
 
-	QGSGameVersionJsonDownloadTask * generateGameVersionJsonDownloadTask(const QGSGameVersionInfo & versionInfo, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSGameVersionJsonDownloadTask * generateGameVersionJsonDownloadTask(const QGSGameVersionInfo & versionInfo, QGSGameDirectory & gameDirectory);
 
-	QGSLibraryDownloadTask * generateLibraryDownloadTask(const QGSLibrary & library, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSLibraryDownloadTask * generateLibraryDownloadTask(const QGSLibrary & library, QGSGameDirectory & gameDirectory);
 
-	QGSGameVersionDownloadTask * generateGameVersionDownloadTask(const QGSGameVersion & version, QGSGameDirectory & gameDirectory, const QString & category = "client", DownloadInfo & downloadInfo = DownloadInfo());
+	QGSGameVersionDownloadTask * generateGameVersionDownloadTask(const QGSGameVersion & version, QGSGameDirectory & gameDirectory, const QString & category = "client");
 
-	QGSAssetIndexJsonDownloadTask * generateAssetIndexJsonDownloadTask(const QGSAssetIndex & assetIndex, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSAssetIndexJsonDownloadTask * generateAssetIndexJsonDownloadTask(const QGSAssetIndex & assetIndex, QGSGameDirectory & gameDirectory);
 
-	QGSAssetObjectDownloadTask * generateAssetObjectDownloadTask(const QGSAssetObject & assetObject, QGSGameDirectory & gameDirectory, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSAssetObjectDownloadTask * generateAssetObjectDownloadTask(const QGSAssetObject & assetObject, QGSGameDirectory & gameDirectory);
 	/**/
-	QGSForgeDownloadTask * generateForgeDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch = "", DownloadInfo & downloadInfo = DownloadInfo());
+	QGSForgeDownloadTask * generateForgeDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch = "");
 
-	QGSLiteLoaderDownloadTask * generateLiteLoaderDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category = "universial", DownloadInfo & downloadInfo = DownloadInfo());
+	QGSLiteLoaderDownloadTask * generateLiteLoaderDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category = "universial");
 
-	QGSOptifineDownloadTask * generateOptifineDownloadTask(QFile * targetFile, const QString & mcversion, const QString & type, const QString & patch, DownloadInfo & downloadInfo = DownloadInfo());
+	QGSOptifineDownloadTask * generateOptifineDownloadTask(QFile * targetFile, const QString & mcversion, const QString & type, const QString & patch);
 private:
 	QGSIDownloadSource * mDownloadSourcePtr;
 	QNetworkProxy mProxy;

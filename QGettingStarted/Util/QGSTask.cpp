@@ -1,8 +1,8 @@
 #include "QGSTask.h"
 
-QGSTask::QGSTask() :mTaskQueueBlock(false)
+QGSTask::QGSTask()
 {
-
+	mOriginalThread = thread();
 }
 
 QGSTask::~QGSTask()
@@ -10,15 +10,9 @@ QGSTask::~QGSTask()
 
 }
 
-bool QGSTask::isTaskQueueBlock() const
+void QGSTask::moveToOriginalThread()
 {
-	return mTaskQueueBlock;
-}
-
-QGSTask & QGSTask::setTaskQueueBlock(const bool taskQueueBlock)
-{
-	mTaskQueueBlock = taskQueueBlock;
-	return *this;
+	moveToThread(mOriginalThread);
 }
 
 void QGSTask::start()

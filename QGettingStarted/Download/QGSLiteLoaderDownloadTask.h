@@ -7,7 +7,7 @@ class QGSLiteLoaderDownloadTask : public QGSDownloadTask
 	Q_OBJECT
 
 public:
-	QGSLiteLoaderDownloadTask(QFile * targetFile, const DownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSLiteLoaderDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 	
 	QGSLiteLoaderDownloadTask(const QGSLiteLoaderDownloadTask & right) = delete;
 

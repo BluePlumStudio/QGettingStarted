@@ -38,7 +38,7 @@ void QGSGeneralGameVersionPraseStrategy::praseVersion(QGSGameVersion & version, 
 }
 
 
-bool QGSGeneralGameVersionPraseStrategy::praseId(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseId(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("id"))
 	{
@@ -49,7 +49,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseId(QGSGameVersion & version, QJson
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("minecraftArguments") && !object.contains("arguments"))
 	{
@@ -62,7 +62,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 	}
 	else if (object.contains("arguments"))
 	{
-		auto & argumentObject = object.value("arguments").toObject();
+        const auto & argumentObject = object.value("arguments").toObject();
 		if (!argumentObject.contains("game") || !argumentObject.contains("jvm"))
 		{
 			return false;
@@ -76,7 +76,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 		{
 			return false;
 		}
-		for (auto & i : gameArray)
+        for (const auto & i : gameArray)
 		{
 			if (i.isString())
 			{
@@ -100,7 +100,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 				gameList.push_back(QGSArguments::QGSArgument{ value,rules });
 			}
 		}
-		for (auto & i : JvmArray)
+        for (const auto & i : JvmArray)
 		{
 			if (i.isString())
 			{
@@ -131,7 +131,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseMainClass(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseMainClass(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("mainClass"))
 	{
@@ -142,7 +142,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseMainClass(QGSGameVersion & version
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseInheritsFrom(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseInheritsFrom(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("inheritsFrom"))
 	{
@@ -153,7 +153,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseInheritsFrom(QGSGameVersion & vers
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseJar(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseJar(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("jar"))
 	{
@@ -164,7 +164,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseJar(QGSGameVersion & version, QJso
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseAssetIndex(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseAssetIndex(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("assetIndex"))
 	{
@@ -193,7 +193,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseAssetIndex(QGSGameVersion & versio
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseAssets(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseAssets(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("assets"))
 	{
@@ -204,7 +204,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseAssets(QGSGameVersion & version, Q
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseLibraries(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseLibraries(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("libraries"))
 	{
@@ -212,8 +212,8 @@ bool QGSGeneralGameVersionPraseStrategy::praseLibraries(QGSGameVersion & version
 	}
 
 	QList<QGSLibrary> libraryList;
-	auto libraryArray = object.value("libraries").toArray();
-	for (auto & i : libraryArray)
+    const auto & libraryArray = object.value("libraries").toArray();
+    for (const auto & i : libraryArray)
 	{
 		libraryList.push_back(praseLibrary(i.toObject()));
 	}
@@ -222,14 +222,14 @@ bool QGSGeneralGameVersionPraseStrategy::praseLibraries(QGSGameVersion & version
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseDownloads(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseDownloads(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("downloads"))
 	{
 		return false;
 	}
 
-	QMap<QString, QGSDownloads::QGSIDownload> downloadMap;
+	QMap<QString, QGSIDownload> downloadMap;
 	auto downloadsObject = object.value("downloads").toObject();
 	auto keys = downloadsObject.keys();
 	for (auto & i : keys)
@@ -238,7 +238,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseDownloads(QGSGameVersion & version
 
 		downloadMap.insert(
 			i,
-			QGSDownloads::QGSIDownload{
+			QGSIDownload{
 			downloadObject.contains("size") ? downloadObject.value("size").toInt() : 0,
 			downloadObject.contains("sha1") ? downloadObject.value("sha1").toString() : "",
 			downloadObject.contains("path") ? downloadObject.value("path").toString() : "",
@@ -250,7 +250,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseDownloads(QGSGameVersion & version
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseLogging(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseLogging(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("logging"))
 	{
@@ -287,7 +287,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseLogging(QGSGameVersion & version, 
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseType(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseType(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("type"))
 	{
@@ -298,7 +298,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseType(QGSGameVersion & version, QJs
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseTime(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseTime(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("time"))
 	{
@@ -309,7 +309,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseTime(QGSGameVersion & version, QJs
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseReleaseTime(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseReleaseTime(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("releaseTime"))
 	{
@@ -320,7 +320,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseReleaseTime(QGSGameVersion & versi
 	return true;
 }
 
-bool QGSGeneralGameVersionPraseStrategy::praseMinimumLauncherVersion(QGSGameVersion & version, QJsonObject & object)const
+bool QGSGeneralGameVersionPraseStrategy::praseMinimumLauncherVersion(QGSGameVersion & version, const QJsonObject & object)const
 {
 	if (!object.contains("minimumLauncherVersion"))
 	{
@@ -331,11 +331,11 @@ bool QGSGeneralGameVersionPraseStrategy::praseMinimumLauncherVersion(QGSGameVers
 	return true;
 }
 /**/
-QGSRules QGSGeneralGameVersionPraseStrategy::praseRules(QJsonArray & arrayRules)const
+QGSRules QGSGeneralGameVersionPraseStrategy::praseRules(const QJsonArray & arrayRules)const
 {
 	QGSRules rules;
 
-	for (auto & i : arrayRules)
+    for (const auto & i : arrayRules)
 	{
 		auto ruleObject = i.toObject();
 
@@ -359,13 +359,13 @@ QGSRules QGSGeneralGameVersionPraseStrategy::praseRules(QJsonArray & arrayRules)
 				featureMap.insert(k, objectFeatures.value(k).toBool());
 			}
 		}
-		rules.addRule(QGSRules::Rule{ action,featureMap,os,osVersion });
+        rules.addRule(Rule{ action,featureMap,os,osVersion });
 	}
 
 	return rules;
 }
 
-QStringList QGSGeneralGameVersionPraseStrategy::praseValue(QJsonValue & valueValue)const
+QStringList QGSGeneralGameVersionPraseStrategy::praseValue(const QJsonValue & valueValue)const
 {
 	QStringList value;
 
@@ -375,8 +375,8 @@ QStringList QGSGeneralGameVersionPraseStrategy::praseValue(QJsonValue & valueVal
 	}
 	else if (valueValue.isArray())
 	{
-		auto valueArray = valueValue.toArray();
-		for (auto & j : valueArray)
+        const auto & valueArray = valueValue.toArray();
+        for (const auto & j : valueArray)
 		{
 			value.push_back(j.toString());
 		}
@@ -385,7 +385,7 @@ QStringList QGSGeneralGameVersionPraseStrategy::praseValue(QJsonValue & valueVal
 	return value;
 }
 /**/
-QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(QJsonObject & object)const
+QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(const QJsonObject & object)const
 {
 	QGSLibrary library;
 
@@ -421,10 +421,10 @@ QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(QJsonObject & object
 
 		if (extractObject.contains("exclude"))
 		{
-			auto arrayExclude = extractObject.value("exclude").toArray();
+            const auto & arrayExclude = extractObject.value("exclude").toArray();
 			QStringList exclude;
 
-			for (auto & i : arrayExclude)
+            for (const auto & i : arrayExclude)
 			{
 				exclude.push_back(i.toString());
 			}
@@ -447,7 +447,7 @@ QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(QJsonObject & object
 		//classifiers
 		if (downloadsObject.contains("classifiers"))
 		{
-			QMap<QString, QGSDownloads::QGSIDownload> classifiers;
+			QMap<QString, QGSIDownload> classifiers;
 			auto classifiersObject = downloadsObject.value("classifiers").toObject();
 
 			auto keys = classifiersObject.keys();
@@ -455,7 +455,7 @@ QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(QJsonObject & object
 			{
 				auto objectClassifier = classifiersObject.value(i).toObject();
 
-				classifiers.insert(i, QGSDownloads::QGSIDownload{
+				classifiers.insert(i, QGSIDownload{
 					objectClassifier.contains("size") ? objectClassifier.value("size").toInt() : 0,
 					objectClassifier.contains("sha1") ? objectClassifier.value("sha1").toString() : "",
 					objectClassifier.contains("path") ? objectClassifier.value("path").toString() : "",
@@ -469,7 +469,7 @@ QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(QJsonObject & object
 		if (downloadsObject.contains("artifact"))
 		{
 			auto artifactObject = downloadsObject.value("artifact").toObject();
-			downloads.setArtifact(QGSDownloads::QGSIDownload{
+			downloads.setArtifact(QGSIDownload{
 				artifactObject.contains("size") ? artifactObject.value("size").toInt() : 0,
 				artifactObject.contains("sha1") ? artifactObject.value("sha1").toString() : "",
 				artifactObject.contains("path") ? artifactObject.value("path").toString() : "",

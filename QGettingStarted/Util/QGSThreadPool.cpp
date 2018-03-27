@@ -172,7 +172,6 @@ void QGSThreadPool::run()
 					mTaskQueue.pop_front();
 					newTask->moveToThread(thread);
 					thread->mTask = newTask;
-					//thread->start();
 					//qDebug() << "Thread:" << thread << " new task:" << newTask << " added!";
 					break;
 				}
@@ -193,12 +192,15 @@ void QGSThreadPool::init()
 		{
 			//exception
 		}
+		QObject::connect(newThread, &QGSThread::taskStarted, this, &QGSThreadPool::taskStarted);
+		QObject::connect(newThread, &QGSThread::taskFinished, this, &QGSThreadPool::taskFinished);
 		newThread->start();
+
 		mThreadList.push_back(newThread);
 	}
 
 	mTimer.moveToThread(this);
-	//mTimer.singleShot(DEFAULT_SLEEP_TIME, this, &QGSThreadPool::adjust);
+	mTimer.singleShot(DEFAULT_SLEEP_TIME, this, &QGSThreadPool::adjust);
 
 }
 
@@ -227,7 +229,10 @@ void QGSThreadPool::adjust()
 			if (newThread)
 			{
 				//qDebug() << "Thread:" << newThread << " added!";
+				QObject::connect(newThread, &QGSThread::taskStarted, this, &QGSThreadPool::taskStarted);
+				QObject::connect(newThread, &QGSThread::taskFinished, this, &QGSThreadPool::taskFinished);
 				newThread->start();
+
 				mMutex.lock();
 				mThreadList.push_back(newThread);
 				mMutex.unlock();

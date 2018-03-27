@@ -1,6 +1,6 @@
 #include "QGSArguments.h"
 
-QGSArguments::QGSArguments(QList<QGSArgument> & jvm, QList<QGSArgument> & game)
+QGSArguments::QGSArguments(const QList<QGSArgument> & jvm, const QList<QGSArgument> & game)
 {
 	mJvm = jvm;
 	mGame = game;

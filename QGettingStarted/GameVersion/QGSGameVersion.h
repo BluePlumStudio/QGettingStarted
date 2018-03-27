@@ -43,7 +43,7 @@ public:
 	QGSAssetIndex getAssetIndex()const;
 	QString getAssets()const;
 	QList<QGSLibrary> getLibraries()const;
-	QMap<QString, QGSDownloads::QGSIDownload> getDownloads()const;
+	QMap<QString, QGSIDownload> getDownloads()const;
 	QMap<QString, QGSLogging> getLogging()const;
 	QString getType()const;
 	QString getTime()const;
@@ -60,7 +60,7 @@ public:
 	QGSGameVersion & setAssetIndex(const QGSAssetIndex & assetIndex);
 	QGSGameVersion & setAssets(const QString & assets);
 	QGSGameVersion & setLibraries(const QList<QGSLibrary> & libraries);
-	QGSGameVersion & setDownloads(const QMap<QString, QGSDownloads::QGSIDownload> & downloads);
+	QGSGameVersion & setDownloads(const QMap<QString, QGSIDownload> & downloads);
 	QGSGameVersion & setLogging(const QMap<QString, QGSLogging> & logging);
 	QGSGameVersion & setType(const QString & type);
 	QGSGameVersion & setTime(const QString & time);
@@ -79,7 +79,7 @@ private:
 	QGSAssetIndex mAssetIndex;
 	QString mAssets;
 	QList<QGSLibrary> mLibraries;
-	QMap<QString, QGSDownloads::QGSIDownload> mDownloads;
+	QMap<QString, QGSIDownload> mDownloads;
 	QMap<QString, QGSLogging> mLogging;
 	QString mType;
 	QString mTime;

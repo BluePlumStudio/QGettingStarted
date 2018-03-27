@@ -49,7 +49,8 @@ private:
 	void init();
 	void adjust();
 signals:
-	void threadPoolFull();
+	void taskStarted(QGSTask * task);
+	void taskFinished(QGSTask * task);
 private:
 	//QWaitCondition mTaskQueueStartCondition;
 	//QWaitCondition mTaskQueueNotFullCondition;

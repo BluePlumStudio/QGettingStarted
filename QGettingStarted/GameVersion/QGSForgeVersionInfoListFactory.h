@@ -25,7 +25,7 @@ public:
 
 	QGSForgeVersionInfoList createForgeVersionInfoList(const QByteArray & jsonData, int offset = 1, int limit = 0);
 private:
-	inline void praseForgeVersionInfoListStd(QJsonObject & jsonObject, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList);
-	inline void praseForgeVersionInfoListBMCLAPI(QJsonArray & jsonArray, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList);
+    inline void praseForgeVersionInfoListStd(const QJsonObject & jsonObject, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList);
+    inline void praseForgeVersionInfoListBMCLAPI(const QJsonArray & jsonArray, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList);
 
 };
