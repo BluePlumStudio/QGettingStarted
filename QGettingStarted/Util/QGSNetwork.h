@@ -69,7 +69,7 @@ public:
 
 	static QNetworkRequest generateNetworkRequest();
 
-	static QNetworkRequest generateNetworkRequestWithSSL(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_2);
+	static QNetworkRequest generateNetworkRequestWithSsl(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_0);
 
 	QGSNetwork & setProxy(QNetworkProxy proxy = QNetworkProxy::NoProxy);
 
@@ -82,6 +82,10 @@ public:
 	QNetworkReply * post(const QNetworkRequest &request, QHttpMultiPart *multiPart);
 
 	QNetworkProxy proxy()const;	
+
+	void connectToHost(const QString &hostName, quint16 port = 80);
+
+	void connectToHostEncrypted(const QString &hostName, quint16 port = 443, const QSslConfiguration &sslConfiguration = QSslConfiguration::defaultConfiguration());
 private:
 	QNetworkAccessManager * mManager;
 };

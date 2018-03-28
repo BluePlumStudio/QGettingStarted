@@ -100,7 +100,7 @@ QGSThreadPool & QGSThreadPool::setMinThreadCount(const quint32 minThreadCount)
 {
 	QMutexLocker mutexLocker{ &mMutex };
 
-	if (minThreadCount < mMaxThreadCount)
+	if (minThreadCount <= mMaxThreadCount)
 	{
 		mMinThreadCount = minThreadCount;
 	}
@@ -163,9 +163,14 @@ void QGSThreadPool::run()
 		mMutex.lock();
 		if (mTaskQueue.size())
 		{
+			if (mTaskQueue.size() == 150)
+			{
+				qDebug() << "";
+			}
+			bool allBusy{ true };
 			for (auto & thread : mThreadList)
 			{
-				if (!thread->mActive && !thread->mTask)
+				if (!thread->mActive && !thread->mTask && mTaskQueue.size())
 				{
 					auto * newTask{ mTaskQueue.front() };
 
@@ -173,9 +178,28 @@ void QGSThreadPool::run()
 					newTask->moveToThread(thread);
 					thread->mTask = newTask;
 					//qDebug() << "Thread:" << thread << " new task:" << newTask << " added!";
-					break;
+					allBusy = false;
 				}
 			}
+
+			if (allBusy)
+			{
+				//增加线程
+				if (mThreadList.size() < mMaxThreadCount)
+				{
+					auto * newThread{ new QGSThread{ this } };
+					if (newThread)
+					{
+						//qDebug() << "Thread:" << newThread << " added!";
+						QObject::connect(newThread, &QGSThread::taskStarted, this, &QGSThreadPool::taskStarted);
+						QObject::connect(newThread, &QGSThread::taskFinished, this, &QGSThreadPool::taskFinished);
+						newThread->start();
+
+						mThreadList.push_back(newThread);
+					}
+				}
+			}
+
 		}
 		mMutex.unlock();
 
@@ -184,7 +208,7 @@ void QGSThreadPool::run()
 
 void QGSThreadPool::init()
 {
-	const auto gendThreadCount{ qMin(static_cast<quint32>(QGSThread::idealThreadCount()),mMaxThreadCount) };
+	const auto gendThreadCount{ mMinThreadCount };
 	for (quint32 i = 0; i < gendThreadCount; i++)
 	{
 		auto * newThread{ new QGSThread{ this } };
@@ -218,8 +242,9 @@ void QGSThreadPool::adjust()
 	const int threadListSize{ mThreadList.size() };
 	mAttribMutex.unlock();
 
+	/*
 	//增加线程
-	if (taskQueueSize > minThreadCount&&threadListSize < maxThreadCount)
+	if ((taskQueueSize > minThreadCount&&threadListSize < maxThreadCount) || threadListSize < maxThreadCount)
 	{
 		quint32 threadAddedCount{ qMin(static_cast<quint32>(QGSThread::idealThreadCount()),maxThreadCount - threadListSize) };
 
@@ -239,9 +264,9 @@ void QGSThreadPool::adjust()
 
 			}
 		}
-
 	}
-	else if (mTaskQueue.size() < threadListSize&&threadListSize > minThreadCount)
+	*/
+	if (mTaskQueue.size() < threadListSize&&threadListSize > minThreadCount)
 	{
 		mMutex.lock();
 		for (auto it = mThreadList.begin(); it != mThreadList.end(); it++)

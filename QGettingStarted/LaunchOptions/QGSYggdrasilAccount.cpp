@@ -48,7 +48,7 @@ QGSAuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QS
 
 	jsonDocument.setObject(jsonObject);
 	auto && byteArrayRequestData{ jsonDocument.toJson() };
-	auto && request{ QGSNetwork::generateNetworkRequestWithSSL() };
+	auto && request{ QGSNetwork::generateNetworkRequestWithSsl() };
 	request.setUrl(AuthServerUrl);
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	request.setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());

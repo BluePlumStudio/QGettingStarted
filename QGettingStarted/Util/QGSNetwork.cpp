@@ -44,7 +44,10 @@ QNetworkAccessManager * QGSNetwork::getManager()
 
 QGSNetwork::~QGSNetwork()
 {
-
+	if (mManager)
+	{
+		mManager->deleteLater();
+	}
 }
 
 QNetworkRequest QGSNetwork::generateNetworkRequest()
@@ -52,7 +55,7 @@ QNetworkRequest QGSNetwork::generateNetworkRequest()
 	return QNetworkRequest();
 }
 
-QNetworkRequest QGSNetwork::generateNetworkRequestWithSSL(QSsl::SslProtocol protocol)
+QNetworkRequest QGSNetwork::generateNetworkRequestWithSsl(QSsl::SslProtocol protocol)
 {
 	QNetworkRequest networkRequest;
 
@@ -93,6 +96,16 @@ QNetworkReply * QGSNetwork::post(const QNetworkRequest & request, QHttpMultiPart
 QNetworkProxy QGSNetwork::proxy() const
 {
 	return mManager->proxy();
+}
+
+void QGSNetwork::connectToHost(const QString & hostName, quint16 port)
+{
+	mManager->connectToHost(hostName, port);
+}
+
+void QGSNetwork::connectToHostEncrypted(const QString & hostName, quint16 port, const QSslConfiguration & sslConfiguration)
+{
+	mManager->connectToHostEncrypted(hostName, port, sslConfiguration);
 }
 
 QGSNetwork & QGSNetwork::getGlobalInstance()

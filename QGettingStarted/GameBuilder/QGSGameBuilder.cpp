@@ -351,7 +351,7 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 
 static const unsigned long DEFAULT_SLEEP_TIME{ 1000 };
 
-QGSThreadPool QGSGameBuilder::mThreadPool{ 0,6 };
+QGSThreadPool QGSGameBuilder::mThreadPool{ 16,32 };
 
 QGSGameBuilder::QGSGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
 	:mVersionInfo(versionInfo), mGameDirectoryPtr(gameDirectory), mDownloadTaskFactoryPtr(downloadTaskFactory), mFileOverride(false)
@@ -608,6 +608,7 @@ QGSDownloadTask * QGSGameBuilder::initGameVersionJsonDownloadTask()
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
 	mThreadPool.addTaskBack(downloadTask);
 
@@ -647,6 +648,8 @@ bool QGSGameBuilder::initGameVersionDownloadTask()
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotFinished);
+	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotFinished);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotFinished);
 	mThreadPool.addTaskBack(downloadTask);
@@ -701,6 +704,8 @@ bool QGSGameBuilder::initLibraryDownloadTasks()
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotFinished);
+		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
+		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotFinished);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotFinished);
 		mThreadPool.addTaskBack(downloadTask);
@@ -743,6 +748,7 @@ QGSDownloadTask *  QGSGameBuilder::initAssetIndexJsonDownloadTask()
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
 	mThreadPool.addTaskBack(downloadTask);
 
@@ -784,6 +790,8 @@ bool QGSGameBuilder::initAssetObjectDownloadTasks()
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotFinished);
+		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
+		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotFinished);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotFinished);
 		mThreadPool.addTaskBack(downloadTask);

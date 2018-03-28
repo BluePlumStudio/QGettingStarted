@@ -11,7 +11,7 @@
 static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeparator() };
 
 QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
-	:mTargetFilePtr(targetFile), mDownloadInfo(downloadInfo), mProxy(proxy), mBytesReceived(0), mDelete(false), mState(State::Stop), mReply(nullptr)
+	:mTargetFilePtr(targetFile), mDownloadInfo(downloadInfo), mProxy(proxy), mBytesReceived(0), mDelete(false), mState(State::Stop), mReply(nullptr), mNetworkPtr(nullptr)
 {
 	if (!mTargetFilePtr)
 	{
@@ -26,6 +26,11 @@ QGSDownloadTask::~QGSDownloadTask()
 	if (mReply)
 	{
 		mReply->deleteLater();
+	}
+
+	if (mNetworkPtr)
+	{
+		mNetworkPtr->deleteLater();
 	}
 }
 
@@ -51,14 +56,12 @@ QString QGSDownloadTask::generateRandomFileName()
 
 void QGSDownloadTask::templateStart(QGSTask * task)
 {
-	QGSNetwork network;
-
 	if (mState == State::Start)
 	{
 		emit error(this);
 		return;
 	}
-    QNetworkRequest request{ QGSNetwork::generateNetworkRequestWithSSL() };
+    QNetworkRequest request{ QGSNetwork::generateNetworkRequestWithSsl() };
 
 	auto && url{ mDownloadInfo.getUrl() };
 	if (!url.isValid()
@@ -89,12 +92,19 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		QString strRange = QString("bytes=%1-").arg(mBytesReceived);
 		request.setRawHeader("Range", strRange.toLatin1());
 	}
-	mReply = network.setProxy(mProxy).get(request);
+	if (!mNetworkPtr)
+	{
+		mNetworkPtr = new QGSNetwork;
+	}
+	//mNetworkPtr->connectToHostEncrypted(url.host(), url.port(), request.sslConfiguration());
+	mReply = mNetworkPtr->setProxy(mProxy).get(request);
 	if (!mReply)
 	{
 		emit error(this);
 		return;
 	}
+
+	mReply->setParent(nullptr);
 
 	connect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
 	connect(mReply, &QNetworkReply::finished, this, &QGSDownloadTask::slotFinished);
@@ -180,6 +190,7 @@ void QGSDownloadTask::slotFinished()
 	{
 
 	}
+
 	if (mDelete)
 	{
 		mTargetFilePtr->remove();
@@ -208,12 +219,13 @@ void QGSDownloadTask::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTot
 
 void QGSDownloadTask::slotError(QNetworkReply::NetworkError _error)
 {
-	auto && errorString{ mReply ? mReply->errorString() : "" };
-	cancel();
 	downloadTemplateError(_error);
+	auto && errorString{ mReply ? mReply->errorString() : "" };
+	auto && errorCode{ mReply ? mReply->error() : QNetworkReply::NetworkError::UnknownNetworkError };
+	cancel();
 
 	emit error(this);
-	emit downloadError(QGSNetworkError{ _error,errorString }, this);
+	emit downloadError(QGSNetworkError{ errorCode,errorString }, this);
 }
 
 void QGSDownloadTask::slotSslErrors(const QList<QSslError>& errors)
@@ -221,6 +233,7 @@ void QGSDownloadTask::slotSslErrors(const QList<QSslError>& errors)
 	cancel();
 	downloadTemplateSslErrors(errors);
 
+	emit error(this);
 	emit sslErrors(errors, this);
 }
 

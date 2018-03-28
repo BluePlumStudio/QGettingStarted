@@ -368,7 +368,7 @@ int main(int argc, char *argv[])
 	QGSGameVersionInfoListFactory versionInfoFactory;
 	QGSGameVersionInfoList versionInfoList{ versionInfoFactory.createGameVersionInfoList(manifestFile.readAll()) };
 	auto && versionInfo = versionInfoList.getVersionInfo("1.11.2");
-	QSharedPointer<QGSIDownloadSource> downloadSource{ new QGSDownloadSourceOfficial };
+	QSharedPointer<QGSIDownloadSource> downloadSource{ new QGSDownloadSourceBMCLAPI };
 	QGSDownloadTaskFactory downloadTaskFactory{ downloadSource.data() };
 	QGSGameDirectory gameDirectory{ QDir{ QCoreApplication::applicationDirPath() + "/.minecraft" } };
 
@@ -383,24 +383,24 @@ int main(int argc, char *argv[])
 	});
 	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskFinished, [=](QGSDownloadInfo downloadInfo)
 	{
-		qDebug() << "gameBuilder:download task:" << downloadInfo.getUrl() << " finished!";
+		qDebug() << "download task:" << downloadInfo.getUrl() << " finished!";
 	});
 	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskStoped, [=](QGSDownloadInfo downloadInfo)
 	{
-		qDebug() << "gameBuilder:download task:" << downloadInfo.getUrl() << " stoped!";
+		qDebug() << "download task:" << downloadInfo.getUrl() << " stoped!";
 	});
 	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskCanceled, [=](QGSDownloadInfo downloadInfo)
 	{
-		qDebug() << "gameBuilder:download task:" << downloadInfo.getUrl() << " canceled!";
+		qDebug() << "download task:" << downloadInfo.getUrl() << " canceled!";
 	});
 	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadInfo downloadInfo)
 	{
-		qDebug() << "gameBuilder:download task:" << downloadInfo.getUrl() << " download error!";
+		qDebug() << "download task:" << downloadInfo.getUrl() << " download error!";
 		qDebug() << "Error code:" << error.getCode();
 	});
 	QObject::connect(&gameBuilder, &QGSGameBuilder::downloadTaskError, [=](QGSDownloadInfo downloadInfo)
 	{
-		qDebug() << "gameBuilder:download task:" << downloadInfo.getUrl() << " error!";
+		qDebug() << "download task:" << downloadInfo.getUrl() << " error!";
 	});
 	QObject::connect(&gameBuilder, &QGSGameBuilder::finished, [=]()
 	{
@@ -409,6 +409,9 @@ int main(int argc, char *argv[])
 		qDebug() << "gameBuilder finished!";
 	});
 	gameBuilder.start();
+
+	//QGSThreadPool::getGlobalInstance().setMaxThreadCount(512);
+	//QGSThreadPool::getGlobalInstance().setMinThreadCount(512);
 
 	return a.exec();
 }

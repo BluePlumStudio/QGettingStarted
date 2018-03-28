@@ -41,6 +41,8 @@ void QGSThread::run()
 	{
 		mThreadPoolPtr->mMutex.lock();
 
+		//qDebug() << "Thread:" << this;
+
 		if (mExit)
 		{
 			mThreadPoolPtr->mMutex.unlock();
@@ -69,21 +71,23 @@ void QGSThread::run()
 		QObject::connect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
-		mThreadPoolPtr->mMutex.unlock();
 		emit taskStarted(mTask);
+		mThreadPoolPtr->mMutex.unlock();
 		eventLoop.exec();
+		mThreadPoolPtr->mMutex.lock();
 		mTask->moveToOriginalThread();
 		emit taskFinished(mTask);
-		mThreadPoolPtr->mMutex.lock();
 		QObject::disconnect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
-		QObject::disconnect(mTask, &QGSTask::stoped, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(this, &QGSThread::taskStarted, mTask, &QGSTask::start);
+		eventLoop.disconnect();
 		mActive = false;
 		mTask = nullptr;
 		mThreadPoolPtr->mMutex.unlock();
 	} while (true);
+
+	exit(0);
 }
 
 /*

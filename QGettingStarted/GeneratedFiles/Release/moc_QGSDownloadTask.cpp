@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QGSDownloadTask_t {
-    QByteArrayData data[21];
-    char stringdata0[253];
+    QByteArrayData data[20];
+    char stringdata0[248];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,10 +49,9 @@ QT_MOC_LITERAL(13, 143, 12), // "slotFinished"
 QT_MOC_LITERAL(14, 156, 20), // "slotDownloadProgress"
 QT_MOC_LITERAL(15, 177, 9), // "slotError"
 QT_MOC_LITERAL(16, 187, 27), // "QNetworkReply::NetworkError"
-QT_MOC_LITERAL(17, 215, 4), // "code"
-QT_MOC_LITERAL(18, 220, 13), // "slotSslErrors"
-QT_MOC_LITERAL(19, 234, 14), // "slotRedirected"
-QT_MOC_LITERAL(20, 249, 3) // "url"
+QT_MOC_LITERAL(17, 215, 13), // "slotSslErrors"
+QT_MOC_LITERAL(18, 229, 14), // "slotRedirected"
+QT_MOC_LITERAL(19, 244, 3) // "url"
 
     },
     "QGSDownloadTask\0downloadProgress\0\0"
@@ -61,7 +60,7 @@ QT_MOC_LITERAL(20, 249, 3) // "url"
     "error\0sslErrors\0QList<QSslError>\0"
     "errors\0slotFinished\0slotDownloadProgress\0"
     "slotError\0QNetworkReply::NetworkError\0"
-    "code\0slotSslErrors\0slotRedirected\0url"
+    "slotSslErrors\0slotRedirected\0url"
 };
 #undef QT_MOC_LITERAL
 
@@ -87,8 +86,8 @@ static const uint qt_meta_data_QGSDownloadTask[] = {
       13,    0,   71,    2, 0x08 /* Private */,
       14,    2,   72,    2, 0x08 /* Private */,
       15,    1,   77,    2, 0x08 /* Private */,
-      18,    1,   80,    2, 0x08 /* Private */,
-      19,    1,   83,    2, 0x08 /* Private */,
+      17,    1,   80,    2, 0x08 /* Private */,
+      18,    1,   83,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, 0x80000000 | 5,    3,    4,    6,
@@ -98,9 +97,9 @@ static const uint qt_meta_data_QGSDownloadTask[] = {
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong,    3,    4,
-    QMetaType::Void, 0x80000000 | 16,   17,
+    QMetaType::Void, 0x80000000 | 16,    9,
     QMetaType::Void, 0x80000000 | 11,   12,
-    QMetaType::Void, QMetaType::QUrl,   20,
+    QMetaType::Void, QMetaType::QUrl,   19,
 
        0        // eod
 };

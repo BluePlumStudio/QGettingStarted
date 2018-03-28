@@ -89,4 +89,6 @@ protected:
 	State mState;
 	bool mDelete;
 	qint64 mBytesReceived;
+
+	QGSNetwork * mNetworkPtr;
 };
