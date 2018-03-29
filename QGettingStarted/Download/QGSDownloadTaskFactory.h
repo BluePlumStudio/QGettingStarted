@@ -22,7 +22,7 @@
 class QGSDownloadTaskFactory
 {
 public:
-	QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, const QNetworkProxy & proxy = QNetworkProxy::NoProxy);
+	QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, int originalAddressThreadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy);
 
 	QGSDownloadTaskFactory(const QGSDownloadTaskFactory & right) = delete;
 
@@ -34,7 +34,7 @@ public:
 
 	virtual ~QGSDownloadTaskFactory();
 
-	QGSDownloadTask * generateDownloadTask(QFile * targetFile, QGSDownloadInfo downloadInfo = QGSDownloadInfo());
+	QGSDownloadTask * generateDownloadTask(QFile * targetFile, QGSDownloadInfo downloadInfo);
 	/**/
 	QGSDownloadTask * generateGameVersionInfoJsonDownloadTask(QFile * targetFile);
 
@@ -64,6 +64,7 @@ public:
 private:
 	QGSIDownloadSource * mDownloadSourcePtr;
 	QNetworkProxy mProxy;
+	int mOriginalAddressThreadCount;
 };
 
 /**/

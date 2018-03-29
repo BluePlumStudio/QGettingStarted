@@ -3,7 +3,7 @@
 #include <QString>
 
 #include "QGSAuthInfo.h"
-#include "Util/QGSNetwork.h"
+#include "Util/QGSNetworkAccessManager.h"
 
 class QGSIAccount
 {

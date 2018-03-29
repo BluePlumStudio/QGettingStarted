@@ -7,7 +7,7 @@ class QGSAssetIndexJsonDownloadTask : public QGSDownloadTask
 	Q_OBJECT
 
 public:
-	QGSAssetIndexJsonDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSAssetIndexJsonDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSAssetIndexJsonDownloadTask(const QGSAssetIndexJsonDownloadTask & right) = delete;
 

@@ -23,7 +23,7 @@ QGSAuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QS
 	QJsonObject jsonObject;
 	QJsonObject agent;
 	QJsonDocument jsonDocument;
-	QGSNetwork network;
+	QGSNetworkAccessManager networkAccessManager;
 
 	agent.insert("name", "Minecraft");
 	agent.insert("version", 1);
@@ -48,13 +48,14 @@ QGSAuthInfo QGSYggdrasilAccount::authenticate(const QString & userName, const QS
 
 	jsonDocument.setObject(jsonObject);
 	auto && byteArrayRequestData{ jsonDocument.toJson() };
-	auto && request{ QGSNetwork::generateNetworkRequestWithSsl() };
+	auto && request{ QGSNetworkAccessManager::generateHttpsNetworkRequest() };
 	request.setUrl(AuthServerUrl);
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	request.setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());
 	
 	QSharedPointer<QEventLoop> eventLoop{ new QEventLoop };
-	auto * reply = network.setProxy(proxy).post(request, byteArrayRequestData);
+	networkAccessManager.setProxy(proxy);
+	auto * reply{ networkAccessManager.post(request, byteArrayRequestData) };
 	QObject::connect(reply, &QNetworkReply::finished, eventLoop.data(), &QEventLoop::quit);
 	QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=](QNetworkReply::NetworkError code)
 	{

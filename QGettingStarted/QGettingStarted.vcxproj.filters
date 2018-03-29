@@ -81,9 +81,6 @@
     <ClCompile Include="LaunchOptions\QGSILaunchOptionsBuilder.cpp">
       <Filter>LaunchOptions</Filter>
     </ClCompile>
-    <ClCompile Include="Util\QGSNetwork.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
     <ClCompile Include="Launcher\QGSILauncherStrategy.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
@@ -258,6 +255,33 @@
     <ClCompile Include="GameBuilder\QGSGameBuilder.cpp">
       <Filter>GameBuilder</Filter>
     </ClCompile>
+    <ClCompile Include="Util\QGSNetworkAccessManager.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSDownloadInfo.cpp">
+      <Filter>Download</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSOptifineVersionInfo.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSLiteLoaderVersionInfo.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSLiteLoaderVersionMeta.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSLiteLoaderVersionReposity.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSGameVersionInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSForgeVersionInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameVersion\QGSAssetObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Launcher\QGSGameDirectory.h">
@@ -399,11 +423,32 @@
     <ClInclude Include="GameVersion\QGSOptifineVersionInfoList.h">
       <Filter>GameVersion\InfoList</Filter>
     </ClInclude>
+    <ClInclude Include="Download\QGSDownloadInfo.h">
+      <Filter>Download</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSOptifineVersionInfo.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfo.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSLiteLoaderVersionMeta.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSLiteLoaderVersionReposity.h">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSGameVersionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSForgeVersionInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameVersion\QGSAssetObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Util\QGSNetwork.h">
-      <Filter>Util</Filter>
-    </QtMoc>
     <QtMoc Include="Download\QGSIDownloadSource.h">
       <Filter>Download\DownloadSource</Filter>
     </QtMoc>
@@ -457,6 +502,9 @@
     </QtMoc>
     <QtMoc Include="GameBuilder\QGSDownloadTaskGenerationTask.h">
       <Filter>GameBuilder</Filter>
+    </QtMoc>
+    <QtMoc Include="Util\QGSNetworkAccessManager.h">
+      <Filter>Util</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

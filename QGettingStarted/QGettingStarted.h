@@ -17,7 +17,7 @@ namespace qgs
 #include "LaunchOptions/QGSOfflineAccountFactory.h"
 #include "LaunchOptions/QGSYggdrasilAccount.h"
 #include "LaunchOptions/QGSYggdrasilAccountFactory.h"
-#include "Util/QGSNetwork.h"
+#include "Util/QGSNetworkAccessManager.h"
 #include "Download/QGSDownloadTaskFactory.h"
 #include "Download/QGSDownloadSourceBMCLAPI.h"
 #include "Download/QGSDownloadSourceOfficial.h"

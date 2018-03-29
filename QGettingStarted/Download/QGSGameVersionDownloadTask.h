@@ -7,7 +7,7 @@ class QGSGameVersionDownloadTask : public QGSDownloadTask
 	Q_OBJECT
 
 public:
-	QGSGameVersionDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSGameVersionDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 	
 	QGSGameVersionDownloadTask(const QGSGameVersionDownloadTask & right) = delete;
 

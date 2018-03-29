@@ -3,22 +3,39 @@
 #include <QDir>
 #include <QMutexLocker>
 #include <QMutex>
+#include <QTimer>
 
 #include "QGSDownloadTask.h"
 #include "../Util/QGSUuidGenerator.h"
 #include "../Util/QGSOperatingSystem.h"
+#include "../Util/QGSExceptionInvalidValue.h"
 
 static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeparator() };
 
-QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy, QObject * parent)
-	:mTargetFilePtr(targetFile), mDownloadInfo(downloadInfo), mProxy(proxy), mBytesReceived(0), mDelete(false), mState(State::Stop), mReply(nullptr), mNetworkPtr(nullptr)
+/**/
+
+QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount, const QNetworkProxy & proxy, QObject * parent)
+	:mTargetFilePtr(targetFile), 
+	mDownloadInfo(downloadInfo), 
+	mThreadCount(threadCount), 
+	mProxy(proxy), 
+	mBytesReceived(0),
+	mDelete(false), 
+	mState(State::Stop), 
+	mReply(nullptr), 
+	mNetworkAccessManagerPtr(nullptr)
 {
 	if (!mTargetFilePtr)
 	{
-
+		throw QGSExceptionInvalidValue();
 	}
-	mDownloadInfo.setPath(mTargetFilePtr->fileName());
 
+	if (threadCount < 1)
+	{
+		threadCount = 1;
+	}
+
+	mDownloadInfo.setPath(mTargetFilePtr->fileName());
 }
 
 QGSDownloadTask::~QGSDownloadTask()
@@ -26,11 +43,13 @@ QGSDownloadTask::~QGSDownloadTask()
 	if (mReply)
 	{
 		mReply->deleteLater();
+		mReply = nullptr;
 	}
 
-	if (mNetworkPtr)
+	if (mNetworkAccessManagerPtr)
 	{
-		mNetworkPtr->deleteLater();
+		mNetworkAccessManagerPtr->deleteLater();
+		mNetworkAccessManagerPtr = nullptr;
 	}
 }
 
@@ -61,7 +80,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		emit error(this);
 		return;
 	}
-    QNetworkRequest request{ QGSNetwork::generateNetworkRequestWithSsl() };
+    auto && request{ QGSNetworkAccessManager::generateHttpsNetworkRequest() };
 
 	auto && url{ mDownloadInfo.getUrl() };
 	if (!url.isValid()
@@ -74,6 +93,8 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 
 	request.setUrl(url);
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+	request.setRawHeader(QByteArray{ "Connection" }, QByteArray{ "Keep-Alive" });
+	request.setRawHeader(QByteArray{ "Keep-Alive" }, QByteArray{ "Timeout=60" });
 	mDownloadInfo.setUrl(url);
 
 	mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".qtmp");
@@ -92,25 +113,37 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		QString strRange = QString("bytes=%1-").arg(mBytesReceived);
 		request.setRawHeader("Range", strRange.toLatin1());
 	}
-	if (!mNetworkPtr)
+	if (!mNetworkAccessManagerPtr)
 	{
-		mNetworkPtr = new QGSNetwork;
+		mNetworkAccessManagerPtr = new QGSNetworkAccessManager;
 	}
-	//mNetworkPtr->connectToHostEncrypted(url.host(), url.port(), request.sslConfiguration());
-	mReply = mNetworkPtr->setProxy(mProxy).get(request);
+	//mNetworkAccessManagerPtr->connectToHostEncrypted(url.host(), url.port(), request.sslConfiguration());
+	mNetworkAccessManagerPtr->setProxy(mProxy);
+	mReply = mNetworkAccessManagerPtr->get(request);
 	if (!mReply)
 	{
 		emit error(this);
+		emit downloadError(QGSNetworkError{ QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!" }, this);
 		return;
 	}
 
-	mReply->setParent(nullptr);
-
-	connect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
-	connect(mReply, &QNetworkReply::finished, this, &QGSDownloadTask::slotFinished);
 	connect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloadTask::slotError);
 	connect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloadTask::slotSslErrors);
 	connect(mReply, &QNetworkReply::redirected, this, &QGSDownloadTask::slotRedirected);
+
+	if (!waitForConnected())
+	{
+		if (mReply)
+		{
+			mReply->disconnect();
+			mReply->deleteLater();
+			mReply = nullptr;
+		}
+
+		emit error(this);
+		emit downloadError(QGSNetworkError{ QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!" }, this);
+		return;
+	}
 
 	mState = State::Start;
 
@@ -126,11 +159,6 @@ void QGSDownloadTask::templateStop(QGSTask * task)
 	if (mReply)
 	{
 		mReply->disconnect();
-		disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
-		disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloadTask::slotFinished);
-		disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloadTask::slotError);
-		disconnect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloadTask::slotSslErrors);
-		disconnect(mReply, &QNetworkReply::redirected, this, &QGSDownloadTask::slotRedirected);
 		mReply->deleteLater();
 		mReply = nullptr;
 	}
@@ -148,13 +176,15 @@ void QGSDownloadTask::templateCancel(QGSTask * task)
 	if (mReply)
 	{
 		mReply->disconnect();
-		disconnect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
-		disconnect(mReply, &QNetworkReply::finished, this, &QGSDownloadTask::slotFinished);
-		disconnect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloadTask::slotError);
-		disconnect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloadTask::slotSslErrors);
-		disconnect(mReply, &QNetworkReply::redirected, this, &QGSDownloadTask::slotRedirected);
 		mReply->deleteLater();
 		mReply = nullptr;
+	}
+
+	if (mNetworkAccessManagerPtr)
+	{
+		mNetworkAccessManagerPtr->disconnect();
+		mNetworkAccessManagerPtr->deleteLater();
+		mNetworkAccessManagerPtr = nullptr;
 	}
 }
 
@@ -178,6 +208,100 @@ void QGSDownloadTask::downloadTemplateRedirected(const QUrl & url)
 {
 }
 
+bool QGSDownloadTask::waitForConnected()
+{
+	QTimer *timer{ nullptr };
+	QEventLoop eventLoop;
+	bool readTimeOut{ false };
+	const int timeOutms{ 5000 };
+
+	if (timeOutms > 0)
+	{
+		timer = new QTimer{ this };
+
+		connect(timer, &QTimer::timeout, [&readTimeOut]()
+		{
+			readTimeOut = true;
+		});
+		connect(timer, &QTimer::timeout, &eventLoop, &QEventLoop::quit);
+		timer->setSingleShot(true);
+	}
+
+	connect(mNetworkAccessManagerPtr, &QGSNetworkAccessManager::finished, &eventLoop, &QEventLoop::quit);
+
+	if (!mReply)
+	{
+		timer->start(timeOutms);
+		eventLoop.exec();
+	}
+
+	if (mReply)
+	{
+		// Preferrably we wait for the first reply which comes faster than the finished signal
+		connect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
+		connect(mReply, &QNetworkReply::finished, this, &QGSDownloadTask::slotFinished);
+	}
+
+	if (!timer)
+	{
+		timer->stop();
+		delete timer;
+		timer = nullptr;
+	}
+	
+	return !readTimeOut;
+}
+
+quint64 QGSDownloadTask::getFileSize()
+{
+	QTimer *timer{ nullptr };
+	QEventLoop eventLoop;
+	bool readTimeOut{ false };
+	const int timeOutms{ 5000 };
+	quint64 ret{ 0 };
+
+	if (timeOutms > 0)
+	{
+		timer = new QTimer{ this };
+
+		connect(timer, &QTimer::timeout, [&readTimeOut]()
+		{
+			readTimeOut = true;
+		});
+		connect(timer, &QTimer::timeout, &eventLoop, &QEventLoop::quit);
+		timer->setSingleShot(true);
+	}
+
+	auto && request{ QGSNetworkAccessManager::generateHttpsNetworkRequest() };
+	request.setUrl(mDownloadInfo.getUrl());
+	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+
+	connect(mNetworkAccessManagerPtr, &QGSNetworkAccessManager::finished, &eventLoop, &QEventLoop::quit);
+
+	auto * headReply{ mNetworkAccessManagerPtr->head(request) };
+	if (!headReply)
+	{
+		timer->start(timeOutms);
+		eventLoop.exec();
+	}
+
+	if (headReply)
+	{
+		auto && contentLength{ headReply->header(QNetworkRequest::ContentLengthHeader) };
+		headReply->deleteLater();
+		ret = contentLength.toLongLong();
+	}
+
+	if (!timer)
+	{
+		timer->stop();
+		delete timer;
+		timer = nullptr;
+	}
+
+	return ret;
+}
+
 void QGSDownloadTask::slotFinished()
 {	
 	downloadTemplateFinished();
@@ -195,10 +319,18 @@ void QGSDownloadTask::slotFinished()
 	{
 		mTargetFilePtr->remove();
 	}
+
 	if (mReply)
 	{
+		mReply->disconnect();
 		mReply->deleteLater();
 		mReply = nullptr;
+	}
+	if (mNetworkAccessManagerPtr)
+	{
+		mNetworkAccessManagerPtr->disconnect();
+		mNetworkAccessManagerPtr->deleteLater();
+		mNetworkAccessManagerPtr = nullptr;
 	}
 
 	emit finished(this);
@@ -230,8 +362,8 @@ void QGSDownloadTask::slotError(QNetworkReply::NetworkError _error)
 
 void QGSDownloadTask::slotSslErrors(const QList<QSslError>& errors)
 {
-	cancel();
 	downloadTemplateSslErrors(errors);
+	cancel();
 
 	emit error(this);
 	emit sslErrors(errors, this);
@@ -240,14 +372,4 @@ void QGSDownloadTask::slotSslErrors(const QList<QSslError>& errors)
 void QGSDownloadTask::slotRedirected(const QUrl & url)
 {
 	downloadTemplateRedirected(url);
-}
-
-QGSDownloadInfo::QGSDownloadInfo(const QUrl & url, const QString & path, const QString & SHA1)
-	:QGSIDownload(-1, SHA1, path, url)
-{
-
-}
-
-QGSDownloadInfo::~QGSDownloadInfo()
-{
 }

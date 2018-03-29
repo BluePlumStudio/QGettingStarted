@@ -163,10 +163,6 @@ void QGSThreadPool::run()
 		mMutex.lock();
 		if (mTaskQueue.size())
 		{
-			if (mTaskQueue.size() == 150)
-			{
-				qDebug() << "";
-			}
 			bool allBusy{ true };
 			for (auto & thread : mThreadList)
 			{
@@ -269,7 +265,8 @@ void QGSThreadPool::adjust()
 	if (mTaskQueue.size() < threadListSize&&threadListSize > minThreadCount)
 	{
 		mMutex.lock();
-		for (auto it = mThreadList.begin(); it != mThreadList.end(); it++)
+		int i{ 0 };
+		for (auto it = mThreadList.begin(); it != mThreadList.end() && i < minThreadCount; it++, i++)
 		{
 			if (!(*it)->mActive && !(*it)->mTask)
 			{
@@ -279,7 +276,6 @@ void QGSThreadPool::adjust()
 				mMutex.lock();
 				//qDebug() << "Thread:" << (*it) << " released!";
 				mThreadList.erase(it);
-				break;
 			}
 		}
 		mMutex.unlock();

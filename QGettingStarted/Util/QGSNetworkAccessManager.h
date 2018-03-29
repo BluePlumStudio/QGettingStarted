@@ -48,30 +48,30 @@ private:
 	QString mMessage;
 };
 
-class QGSNetwork :public QObject
+class QGSNetworkAccessManager :public QNetworkAccessManager
 {
 	Q_OBJECT
 
 public:
-	static QGSNetwork & getGlobalInstance();
+	static QGSNetworkAccessManager & getGlobalInstance();
 
-	QGSNetwork(QObject * parent = nullptr);
+	QGSNetworkAccessManager(QObject * parent = nullptr);
 
-	QGSNetwork(const QGSNetwork & right) = delete;
+	QGSNetworkAccessManager(const QGSNetworkAccessManager & right) = delete;
 
-	QGSNetwork(QGSNetwork && right) = delete;
+	QGSNetworkAccessManager(QGSNetworkAccessManager && right) = delete;
 
-	QGSNetwork & operator=(const QGSNetwork & right) = delete;
+	QGSNetworkAccessManager & operator=(const QGSNetworkAccessManager & right) = delete;
 
-	QGSNetwork & operator=(QGSNetwork && right) = delete;
+	QGSNetworkAccessManager & operator=(QGSNetworkAccessManager && right) = delete;
 
-	~QGSNetwork();
+	~QGSNetworkAccessManager();
 
 	static QNetworkRequest generateNetworkRequest();
 
-	static QNetworkRequest generateNetworkRequestWithSsl(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_0);
-
-	QGSNetwork & setProxy(QNetworkProxy proxy = QNetworkProxy::NoProxy);
+	static QNetworkRequest generateHttpsNetworkRequest(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_0);
+	/*
+	QGSNetworkAccessManager & setProxy(QNetworkProxy proxy = QNetworkProxy::NoProxy);
 
 	QNetworkReply * get(const QNetworkRequest &request);
 
@@ -86,7 +86,8 @@ public:
 	void connectToHost(const QString &hostName, quint16 port = 80);
 
 	void connectToHostEncrypted(const QString &hostName, quint16 port = 443, const QSslConfiguration &sslConfiguration = QSslConfiguration::defaultConfiguration());
+	*/
 private:
-	QNetworkAccessManager * mManager;
+	//QNetworkAccessManager * mManager;
 };
 

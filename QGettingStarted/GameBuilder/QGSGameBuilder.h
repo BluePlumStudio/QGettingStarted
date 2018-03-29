@@ -28,7 +28,7 @@ public:
 
 	QString getLastErrorString();
 
-	bool isFinished()const;
+	int getTaskListSize();
 protected:
 	virtual void templateStart(QGSTask * task);
 	virtual void templateStop(QGSTask * task);

@@ -3,7 +3,7 @@
 #include <QString>
 
 #include "QGSIAccount.h"
-#include "Util/QGSNetwork.h"
+#include "Util/QGSNetworkAccessManager.h"
 
 class QGSYggdrasilAccount :public QGSIAccount
 {

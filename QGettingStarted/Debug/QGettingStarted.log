@@ -1,3 +1,71 @@
-﻿  QGSGameBuilder.cpp
+﻿  Moc'ing Download\QGSDownloadSourceOfficial.h...
+  Moc'ing GameBuilder\QGSIGameBuilder.h...
+  Moc'ing GameBuilder\QGSGameBuilder.h...
+  Moc'ing Download\QGSAssetIndexJsonDownloadTask.h...
+  Moc'ing Download\QGSAssetObjectDownloadTask.h...
+  Moc'ing Download\QGSDownloadTask.h...
+  Moc'ing Download\QGSForgeDownloadTask.h...
+  Moc'ing Download\QGSGameVersionDownloadTask.h...
+  Moc'ing Download\QGSGameVersionJsonDownloadTask.h...
+  Moc'ing Download\QGSLibraryDownloadTask.h...
+  Moc'ing Download\QGSLiteLoaderDownloadTask.h...
+  Moc'ing Download\QGSOptifineDownloadTask.h...
+  Moc'ing GameBuilder\QGSDownloadTaskGenerationTask.h...
+  Moc'ing Download\QGSIDownloadSource.h...
+  Moc'ing Download\QGSDownloadSourceBMCLAPI.h...
+  Moc'ing Util\QGSNetworkAccessManager.h...
+  Moc'ing Util\QGSThreadPool.h...
+  Moc'ing Util\QGSTask.h...
+  Moc'ing Util\QGSThread.h...
+  QGSDownloadTaskFactory.cpp
+  QGSDownloadSourceBMCLAPI.cpp
+  QGSDownloadSourceOfficial.cpp
+  QGSIDownloadSource.cpp
+  QGSGameBuilder.cpp
+  QGSIGameBuilder.cpp
+  QGSAssetIndexInfo.cpp
+  QGSAssetIndexInfoFactory.cpp
+  QGSAssetObject.cpp
+  QGSGameVersion.cpp
+  QGSGeneralLauncherStrategy.cpp
+  QGSGameDirectory.cpp
+  QGSILauncherStrategy.cpp
+  QGSLauncher.cpp
+  QGSGeneralGameVersionPraseStrategy.cpp
+  QGSIGameVersionPraseStrategy.cpp
+  QGSGameVersionPraser.cpp
+  QGSLaunchOptions.cpp
+  QGSILaunchOptionsBuilder.cpp
+  QGSLaunchOptionsBuilder.cpp
+  main.cpp
+  moc_QGSAssetIndexJsonDownloadTask.cpp
+  moc_QGSAssetObjectDownloadTask.cpp
+  moc_QGSDownloadSourceBMCLAPI.cpp
+  moc_QGSDownloadSourceOfficial.cpp
+  moc_QGSDownloadTask.cpp
+  moc_QGSDownloadTaskGenerationTask.cpp
+  moc_QGSForgeDownloadTask.cpp
+  moc_QGSGameBuilder.cpp
+  moc_QGSGameVersionDownloadTask.cpp
+  moc_QGSGameVersionJsonDownloadTask.cpp
+  moc_QGSIDownloadSource.cpp
+  moc_QGSIGameBuilder.cpp
+  moc_QGSLibraryDownloadTask.cpp
+  moc_QGSLiteLoaderDownloadTask.cpp
+  moc_QGSNetworkAccessManager.cpp
+  moc_QGSOptifineDownloadTask.cpp
+  moc_QGSTask.cpp
+  moc_QGSThread.cpp
+  moc_QGSThreadPool.cpp
+    正在创建库 F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.lib 和对象 F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.exp
+quazip_staticd.lib(unzip.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(unzip.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(zip.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(zip.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(JlCompress.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(JlCompress.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(qioapi.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(qioapi.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(quazip.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(quazip.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(quazipfile.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(quazipfile.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(quazipfileinfo.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(quazipfileinfo.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(quazipnewinfo.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(quazipnewinfo.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
+quazip_staticd.lib(moc_quazipfile.obj) : warning LNK4099: 未找到 PDB“quazip_static.pdb”(使用“quazip_staticd.lib(moc_quazipfile.obj)”或在“F:\Projects\Git\QGettingStarted\Win32\Debug\quazip_static.pdb”中寻找)；正在链接对象，如同没有调试信息一样
   QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.exe
   QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.pdb (Full PDB)

@@ -351,7 +351,7 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 
 static const unsigned long DEFAULT_SLEEP_TIME{ 1000 };
 
-QGSThreadPool QGSGameBuilder::mThreadPool{ 16,32 };
+QGSThreadPool QGSGameBuilder::mThreadPool{ 8,300 };
 
 QGSGameBuilder::QGSGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
 	:mVersionInfo(versionInfo), mGameDirectoryPtr(gameDirectory), mDownloadTaskFactoryPtr(downloadTaskFactory), mFileOverride(false)
@@ -400,8 +400,10 @@ QString QGSGameBuilder::getLastErrorString()
 	return mLastErrorString;
 }
 
-bool QGSGameBuilder::isFinished() const
+int QGSGameBuilder::getTaskListSize()
 {
+	//QMutexLocker mutexLocker{ &mMutex };
+
 	return mTaskList.size();
 }
 
@@ -842,7 +844,7 @@ void QGSGameBuilder::slotEraseDownloadTask(QGSTask * downloadTask)
 
 void QGSGameBuilder::slotFinished()
 {
-	if (!isFinished())
+	if (!getTaskListSize())
 	{
 		mTimer.disconnect();
 		emit finished(this);

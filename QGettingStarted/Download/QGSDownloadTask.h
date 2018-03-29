@@ -8,28 +8,7 @@
 #include <QRunnable>
 #include <QMutex>
 
-#include "../Util/QGSNetwork.h"
-#include "../GameVersion/QGSDownloads.h"
-#include "../Util/QGSTask.h"
-
-class QGSDownloadInfo :public QGSIDownload
-{
-public:
-	QGSDownloadInfo(const QUrl & url = QUrl(), const QString & path = "", const QString & SHA1 = "");
-
-	QGSDownloadInfo(const QGSDownloadInfo & right) = default;
-
-	QGSDownloadInfo(QGSDownloadInfo && right) = default;
-
-	QGSDownloadInfo & operator=(const QGSDownloadInfo & right) = default;
-
-	QGSDownloadInfo & operator=(QGSDownloadInfo && right) = default;
-
-	virtual ~QGSDownloadInfo();
-
-private:
-
-};
+#include "QGSDownloadInfo.h"
 
 class QGSDownloadTask : public QGSTask
 {
@@ -42,7 +21,7 @@ public:
 	};
 
 public:
-	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSDownloadTask(const QGSDownloadTask & right) = delete;
 
@@ -71,6 +50,9 @@ protected:
 	virtual void downloadTemplateError(QNetworkReply::NetworkError error);
 	virtual void downloadTemplateSslErrors(const QList<QSslError> &errors);
 	virtual void downloadTemplateRedirected(const QUrl &url);
+private:
+	bool waitForConnected();
+	quint64 getFileSize();
 private slots:
 	void slotFinished();
 	void slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
@@ -84,11 +66,12 @@ signals:
 protected:
 	QFile * mTargetFilePtr;
 	QGSDownloadInfo mDownloadInfo;
+	int mThreadCount;
 	QNetworkReply * mReply;
 	QNetworkProxy mProxy;
 	State mState;
 	bool mDelete;
 	qint64 mBytesReceived;
 
-	QGSNetwork * mNetworkPtr;
+	QGSNetworkAccessManager * mNetworkAccessManagerPtr;
 };

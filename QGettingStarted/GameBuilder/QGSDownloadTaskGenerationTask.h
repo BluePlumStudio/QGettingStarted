@@ -3,7 +3,7 @@
 #include <QMutex>
 
 #include "../Util/QGSTask.h"
-#include "../Util/QGSNetwork.h"
+#include "../Util/QGSNetworkAccessManager.h"
 
 class QGSDownloadTaskGenerationTask : public QGSTask
 {

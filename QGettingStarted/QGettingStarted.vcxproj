@@ -71,6 +71,10 @@
       <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_NETWORK_LIB;_USING_V110_SDK71_</Define>
     </QtMoc>
+    <QtUic>
+      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
+      <OutputFile>.\GeneratedFiles\ui_%(Filename).h</OutputFile>
+    </QtUic>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -93,10 +97,15 @@
       <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;_USING_V110_SDK71_</Define>
     </QtMoc>
+    <QtUic>
+      <ExecutionDescription>Uic'ing %(Identity)...</ExecutionDescription>
+      <OutputFile>.\GeneratedFiles\ui_%(Filename).h</OutputFile>
+    </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Download\QGSAssetIndexJsonDownloadTask.cpp" />
     <ClCompile Include="Download\QGSAssetObjectDownloadTask.cpp" />
+    <ClCompile Include="Download\QGSDownloadInfo.cpp" />
     <ClCompile Include="Download\QGSDownloadTaskFactory.cpp" />
     <ClCompile Include="Download\QGSDownloadSourceBMCLAPI.cpp" />
     <ClCompile Include="Download\QGSDownloadSourceOfficial.cpp" />
@@ -120,17 +129,24 @@
     <ClCompile Include="GameVersion\QGSAssetIndexInfo.cpp" />
     <ClCompile Include="GameVersion\QGSAssetIndex.cpp" />
     <ClCompile Include="GameVersion\QGSAssetIndexInfoFactory.cpp" />
+    <ClCompile Include="GameVersion\QGSAssetObject.cpp" />
     <ClCompile Include="GameVersion\QGSDownloads.cpp" />
     <ClCompile Include="GameVersion\QGSExtract.cpp" />
+    <ClCompile Include="GameVersion\QGSForgeVersionInfo.cpp" />
     <ClCompile Include="GameVersion\QGSForgeVersionInfoList.cpp" />
     <ClCompile Include="GameVersion\QGSForgeVersionInfoListFactory.cpp" />
     <ClCompile Include="GameVersion\QGSGameVersion.cpp" />
+    <ClCompile Include="GameVersion\QGSGameVersionInfo.cpp" />
     <ClCompile Include="GameVersion\QGSGameVersionInfoList.cpp" />
     <ClCompile Include="GameVersion\QGSGameVersionInfoListFactory.cpp" />
     <ClCompile Include="GameVersion\QGSLibrary.cpp" />
+    <ClCompile Include="GameVersion\QGSLiteLoaderVersionInfo.cpp" />
     <ClCompile Include="GameVersion\QGSLiteLoaderVersionInfoList.cpp" />
     <ClCompile Include="GameVersion\QGSLiteLoaderVersionInfoListFactory.cpp" />
+    <ClCompile Include="GameVersion\QGSLiteLoaderVersionMeta.cpp" />
+    <ClCompile Include="GameVersion\QGSLiteLoaderVersionReposity.cpp" />
     <ClCompile Include="GameVersion\QGSLogging.cpp" />
+    <ClCompile Include="GameVersion\QGSOptifineVersionInfo.cpp" />
     <ClCompile Include="GameVersion\QGSOptifineVersionInfoList.cpp" />
     <ClCompile Include="GameVersion\QGSOptifineVersionInfoListFactory.cpp" />
     <ClCompile Include="GameVersion\QGSRules.cpp" />
@@ -160,7 +176,7 @@
     <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp" />
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp" />
     <ClCompile Include="Util\QGSFileTools.cpp" />
-    <ClCompile Include="Util\QGSNetwork.cpp" />
+    <ClCompile Include="Util\QGSNetworkAccessManager.cpp" />
     <ClCompile Include="Util\QGSOperatingSystem.cpp" />
     <ClCompile Include="Util\QGSTask.cpp" />
     <ClCompile Include="Util\QGSThread.cpp" />
@@ -173,6 +189,7 @@
     <QtMoc Include="GameBuilder\QGSGameBuilder.h" />
     <QtMoc Include="Download\QGSAssetIndexJsonDownloadTask.h" />
     <QtMoc Include="Download\QGSAssetObjectDownloadTask.h" />
+    <ClInclude Include="Download\QGSDownloadInfo.h" />
     <ClInclude Include="Download\QGSDownloadTaskFactory.h" />
     <QtMoc Include="Download\QGSDownloadTask.h" />
     <QtMoc Include="Download\QGSForgeDownloadTask.h" />
@@ -186,17 +203,24 @@
     <ClInclude Include="GameVersion\QGSAssetIndexInfo.h" />
     <ClInclude Include="GameVersion\QGSAssetIndex.h" />
     <ClInclude Include="GameVersion\QGSAssetIndexInfoFactory.h" />
+    <ClInclude Include="GameVersion\QGSAssetObject.h" />
     <ClInclude Include="GameVersion\QGSDownloads.h" />
     <ClInclude Include="GameVersion\QGSExtract.h" />
+    <ClInclude Include="GameVersion\QGSForgeVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSForgeVersionInfoList.h" />
     <ClInclude Include="GameVersion\QGSForgeVersionInfoListFactory.h" />
     <ClInclude Include="GameVersion\QGSGameVersion.h" />
+    <ClInclude Include="GameVersion\QGSGameVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSGameVersionInfoList.h" />
     <ClInclude Include="GameVersion\QGSGameVersionInfoListFactory.h" />
     <ClInclude Include="GameVersion\QGSLibrary.h" />
+    <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfoList.h" />
     <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfoListFactory.h" />
+    <ClInclude Include="GameVersion\QGSLiteLoaderVersionMeta.h" />
+    <ClInclude Include="GameVersion\QGSLiteLoaderVersionReposity.h" />
     <ClInclude Include="GameVersion\QGSLogging.h" />
+    <ClInclude Include="GameVersion\QGSOptifineVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSOptifineVersionInfoList.h" />
     <ClInclude Include="GameVersion\QGSOptifineVersionInfoListFactory.h" />
     <ClInclude Include="GameVersion\QGSRules.h" />
@@ -227,7 +251,7 @@
     <ClInclude Include="Util\QGSExceptionFileIO.h" />
     <ClInclude Include="Util\QGSExceptionJsonPraseError.h" />
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h" />
-    <QtMoc Include="Util\QGSNetwork.h" />
+    <QtMoc Include="Util\QGSNetworkAccessManager.h" />
     <ClInclude Include="Util\QGSFileTools.h" />
     <ClInclude Include="Util\QGSOperatingSystem.h" />
     <QtMoc Include="Util\QGSThreadPool.h" />
