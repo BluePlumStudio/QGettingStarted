@@ -12,7 +12,7 @@ QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount,
 	mMaxThreadCount(maxThreadCount),
 	mMinThreadCount(minThreadCount),
 	//mActiveThreadCount(0),
-	mSleepTime(DEFAULT_SLEEP_TIME)
+	mExpiryTimeout(DEFAULT_SLEEP_TIME)
 {
 	if (minThreadCount >= maxThreadCount)
 	{
@@ -108,10 +108,17 @@ QGSThreadPool & QGSThreadPool::setMinThreadCount(const quint32 minThreadCount)
 	return *this;
 }
 
-QGSThreadPool & QGSThreadPool::setSleepTime(const quint32 msecs)
+QGSThreadPool & QGSThreadPool::setExpiryTimeout(const quint32 msecs)
 {
-	mSleepTime = msecs;
+	mExpiryTimeout = msecs;
 	return *this;
+}
+
+quint32 QGSThreadPool::getExpiryTimeout()
+{
+	QMutexLocker mutexLocker{ &mMutex };
+
+	return mExpiryTimeout;
 }
 
 quint32 QGSThreadPool::getMaxThreadCount()
@@ -157,7 +164,7 @@ void QGSThreadPool::run()
 
 	while (true)
 	{
-		//QGSThread::msleep(mSleepTime);
+		//QGSThread::msleep(mExpiryTimeout);
 
 		//任务分配
 		mMutex.lock();
@@ -220,7 +227,7 @@ void QGSThreadPool::init()
 	}
 
 	mTimer.moveToThread(this);
-	mTimer.singleShot(DEFAULT_SLEEP_TIME, this, &QGSThreadPool::adjust);
+	mTimer.singleShot(mExpiryTimeout, this, &QGSThreadPool::adjust);
 
 }
 
@@ -229,13 +236,18 @@ void QGSThreadPool::adjust()
 
 	//获取成员变量
 	mMutex.lock();
+
 	const bool releaseThreads{ mReleaseThreads };
 	const int taskQueueSize{ mTaskQueue.size() };
+
 	mMutex.unlock();
+
 	mAttribMutex.lock();
+
 	const quint32 minThreadCount{ mMinThreadCount };
 	const quint32 maxThreadCount{ mMaxThreadCount };
 	const int threadListSize{ mThreadList.size() };
+
 	mAttribMutex.unlock();
 
 	/*
@@ -271,8 +283,11 @@ void QGSThreadPool::adjust()
 			if (!(*it)->mActive && !(*it)->mTask)
 			{
 				(*it)->exit(0);
+
 				mMutex.unlock();
+
 				(*it)->wait();
+
 				mMutex.lock();
 				//qDebug() << "Thread:" << (*it) << " released!";
 				mThreadList.erase(it);
@@ -282,7 +297,7 @@ void QGSThreadPool::adjust()
 
 	}
 
-	mTimer.singleShot(DEFAULT_SLEEP_TIME, this, &QGSThreadPool::adjust);
+	mTimer.singleShot(mExpiryTimeout, this, &QGSThreadPool::adjust);
 }
 
 /*
@@ -311,7 +326,7 @@ void QGSThreadPool::run()
 
 	while (!mReleaseThreads)
 	{
-		QGSThread::msleep(mSleepTime);
+		QGSThread::msleep(mExpiryTimeout);
 
 		//获取成员变量
 		mMutex.lock();

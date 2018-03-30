@@ -36,6 +36,7 @@ signals:
 	void downloadTaskFinished(QGSDownloadInfo downloadInfo);
 	void downloadTaskStoped(QGSDownloadInfo downloadInfo);
 	void downloadTaskCanceled(QGSDownloadInfo downloadInfo);
+	void downloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSDownloadInfo downloadInfo);
 	void downloadTaskDownloadError(QGSNetworkError error, QGSDownloadInfo downloadInfo);
 	void downloadTaskError(QGSDownloadInfo downloadInfo);
 };

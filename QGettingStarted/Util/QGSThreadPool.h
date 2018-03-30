@@ -33,7 +33,9 @@ public:
 
 	QGSThreadPool & setMinThreadCount(const quint32 minThreadCount);
 
-	QGSThreadPool & setSleepTime(const quint32 msecs);
+	QGSThreadPool & setExpiryTimeout(const quint32 msecs);
+
+	quint32 getExpiryTimeout();
 
 	quint32 getMaxThreadCount();
 
@@ -67,6 +69,6 @@ private:
 	quint32 mMaxThreadCount;
 	//quint32 mActiveThreadCount;
 
-	int mSleepTime;
+	int mExpiryTimeout;
 	QTimer mTimer;
 };

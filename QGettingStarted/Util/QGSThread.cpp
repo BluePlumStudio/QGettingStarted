@@ -52,38 +52,35 @@ void QGSThread::run()
 		if (!mTask)
 		{
 			mActive = false;
+
 			mThreadPoolPtr->mMutex.unlock();
+
 			continue;
 		}
 		mActive = true;
 
-		/*
-		signals:
-		void started(QGSTask * task);
-		void finished(QGSTask * task);
-		void stoped(QGSTask * task);
-		void canceled(QGSTask * task);
-		void error(QGSTask * task);
-		*/
+		mThreadPoolPtr->mMutex.unlock();
 
 		//任务开始
 		QObject::connect(this, &QGSThread::taskStarted, mTask, &QGSTask::start, Qt::ConnectionType::DirectConnection);
 		QObject::connect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
-		emit taskStarted(mTask);
-		mThreadPoolPtr->mMutex.unlock();
+		//emit taskStarted(mTask);
+		QMetaObject::invokeMethod(mTask, "start", Qt::ConnectionType::DirectConnection);
 		eventLoop.exec();
-		mThreadPoolPtr->mMutex.lock();
 		mTask->moveToOriginalThread();
 		emit taskFinished(mTask);
 		QObject::disconnect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(this, &QGSThread::taskStarted, mTask, &QGSTask::start);
-		eventLoop.disconnect();
+
+		mThreadPoolPtr->mMutex.lock();
+
 		mActive = false;
 		mTask = nullptr;
+
 		mThreadPoolPtr->mMutex.unlock();
 	} while (true);
 

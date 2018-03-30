@@ -1,27 +1,20 @@
 #pragma once
 
-#include <QObject>
-#include <QFile>
-#include <QSharedPointer>
-#include <QThread>
-#include <QEventLoop>
-#include <QRunnable>
 #include <QMutex>
 
-#include "QGSDownloadInfo.h"
+#include "QGSDownloader.h"
+
+namespace DownloadTask
+{
+	const int DEFAULT_CONNECTION_COUNT{ 16 };
+}
 
 class QGSDownloadTask : public QGSTask
 {
 	Q_OBJECT
-public:
-	enum class State
-	{
-		Start,
-		Stop
-	};
 
 public:
-	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSDownloadTask(const QGSDownloadTask & right) = delete;
 
@@ -35,7 +28,7 @@ public:
 
 	QFile * getTargetFile();
 
-	State getState();
+	DownloadState getState();
 
 	QGSDownloadInfo getDownloadInfo();
 
@@ -46,32 +39,33 @@ protected:
 	virtual void templateCancel(QGSTask * task);
 
 	virtual void downloadTemplateFinished();
-	virtual void downloadTemplateDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	virtual void downloadTemplateError(QNetworkReply::NetworkError error);
+	virtual void downloadTemplateDownloadProgress(qint64 bytesNewlyReceived, qint64 bytesReceived, qint64 bytesTotal);
+	virtual void downloadTemplateError(QGSNetworkError error);
 	virtual void downloadTemplateSslErrors(const QList<QSslError> &errors);
 	virtual void downloadTemplateRedirected(const QUrl &url);
-private:
-	bool waitForConnected();
-	quint64 getFileSize();
 private slots:
-	void slotFinished();
-	void slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal);
-	void slotError(QNetworkReply::NetworkError error);
-	void slotSslErrors(const QList<QSslError> &errors);
-	void slotRedirected(const QUrl &url);
+	void slotFinished(QGSDownloader * downloader);
+	void slotDownloadProgress(qint64 bytesNewlyReceived, qint64 bytesReceived, qint64 bytesTotal, QGSDownloader * downloader);
+	void slotDownloadError(QGSNetworkError error, QGSDownloader * downloader);
+	void slotSslErrors(const QList<QSslError> &errors, QGSDownloader * downloader);
+	void slotRedirected(const QUrl &url, QGSDownloader * downloader);
 signals:
 	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task);
 	void downloadError(QGSNetworkError error, QGSTask * task);
 	void sslErrors(const QList<QSslError> &errors, QGSTask * task);
+private:
+	quint64 getFileSize();
 protected:
+	QMutex mMutex;
 	QFile * mTargetFilePtr;
 	QGSDownloadInfo mDownloadInfo;
-	int mThreadCount;
-	QNetworkReply * mReply;
+	int mConnectionCount;
 	QNetworkProxy mProxy;
-	State mState;
-	bool mDelete;
+	DownloadState mState;
 	qint64 mBytesReceived;
+	qint64 mBytesTotal;
+
+	QList<QGSDownloader *> mDownloaderList;
 
 	QGSNetworkAccessManager * mNetworkAccessManagerPtr;
 };

@@ -61,15 +61,7 @@ QUrl QGSDownloadSourceBMCLAPI::generateLibraryUrl(const QGSLibrary & library)
 
 QUrl QGSDownloadSourceBMCLAPI::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
 {
-	QUrl url{ version.getDownloads().value(category).getUrl() };
-	if (url.isValid())
-	{
-		return QUrl{ url.toString().replace(url.host(),"bmclapi2.bangbang93.com") };
-	}
-	else
-	{
-		return QUrl{ QString{"https://bmclapi2.bangbang93.com/version/%1/%2"}.arg(version.getId()).arg(category) };
-	}
+	return QUrl{ QString{ "https://bmclapi2.bangbang93.com/version/%1/%2" }.arg(version.getId()).arg(category) };
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)

@@ -22,7 +22,7 @@
 class QGSDownloadTaskFactory
 {
 public:
-	QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, int originalAddressThreadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy);
+	QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, const int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy);
 
 	QGSDownloadTaskFactory(const QGSDownloadTaskFactory & right) = delete;
 
@@ -33,6 +33,10 @@ public:
 	QGSDownloadTaskFactory & operator=(QGSDownloadTaskFactory && right) = delete;
 
 	virtual ~QGSDownloadTaskFactory();
+
+	QGSDownloadTaskFactory & setConnectionCount(const int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT);
+
+	int getConnectionCount()const;
 
 	QGSDownloadTask * generateDownloadTask(QFile * targetFile, QGSDownloadInfo downloadInfo);
 	/**/
@@ -64,7 +68,7 @@ public:
 private:
 	QGSIDownloadSource * mDownloadSourcePtr;
 	QNetworkProxy mProxy;
-	int mOriginalAddressThreadCount;
+	int mConnectionCount;
 };
 
 /**/

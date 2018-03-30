@@ -29,6 +29,8 @@ public:
 	QString getLastErrorString();
 
 	int getTaskListSize();
+
+	static QGSThreadPool & getThreadPool();
 protected:
 	virtual void templateStart(QGSTask * task);
 	virtual void templateStop(QGSTask * task);
@@ -39,6 +41,7 @@ private slots:
 	void slotDownloadTaskStoped(QGSTask * task);
 	void slotDownloadTaskCanceled(QGSTask * task);
 	void slotDownloadTaskError(QGSTask * task);
+	void slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task);
 	void slotDownloadTaskDownloadError(QGSNetworkError error, QGSTask * task);
 	void slotEraseDownloadTask(QGSTask * downloadTask);
 	void slotFinished();
@@ -60,7 +63,7 @@ private:
 private:
 	static QGSThreadPool mThreadPool;
 	QMutex mMutex;
-	QTimer mTimer;
+	QTimer * mTimerPtr;
 
 	QGSAssetIndexInfo mAssetIndexInfo;
 	QGSGameVersionInfo mVersionInfo;

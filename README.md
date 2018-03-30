@@ -23,11 +23,16 @@
 Visual Studio 2015/Qt 5.10.0 下编译通过。
 
 # 警告
-## Beta阶段的API可能与最终版本有所出入，请留意最新开发文档。
+## Pre阶段的API已经基本定型，请留意最新开发文档。
 
 # 开始
 ## 使用启动核心
 1.下载源码自行编译或下载已编译好的静态库：
+ * Pre 2.0.0：
+- Windows：
+[地址1](https://u15016760.pipipan.com/fs/15016760-242677462)
+[地址2](https://u15016760.ctfile.com/fs/15016760-242677462)
+
  * Beta 1.4.0：
 - Windows：
 [地址1](https://u15016760.pipipan.com/fs/15016760-241286287)
@@ -55,7 +60,7 @@ Visual Studio 2015/Qt 5.10.0 下编译通过。
 
 2.将静态库，如"QGettingStarted.lib，quazip.lib"，添加进工程，包含头文件"QGettingStarted.h"即可。
 
-## 启动Minecraft
+## 启动Minecraft（Beta）
 ```cpp
 /*启动1.11.2原版为例*/
 

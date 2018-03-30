@@ -273,14 +273,17 @@
     <ClCompile Include="GameVersion\QGSLiteLoaderVersionReposity.cpp">
       <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
-    <ClCompile Include="GameVersion\QGSGameVersionInfo.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameVersion\QGSAssetObject.cpp">
+      <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
     <ClCompile Include="GameVersion\QGSForgeVersionInfo.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
-    <ClCompile Include="GameVersion\QGSAssetObject.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="GameVersion\QGSGameVersionInfo.cpp">
+      <Filter>GameVersion\InfoList</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSDownloader.cpp">
+      <Filter>Download\DownloadTask</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -438,14 +441,14 @@
     <ClInclude Include="GameVersion\QGSLiteLoaderVersionReposity.h">
       <Filter>GameVersion\InfoList</Filter>
     </ClInclude>
-    <ClInclude Include="GameVersion\QGSGameVersionInfo.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameVersion\QGSAssetObject.h">
+      <Filter>GameVersion\InfoList</Filter>
     </ClInclude>
     <ClInclude Include="GameVersion\QGSForgeVersionInfo.h">
-      <Filter>Header Files</Filter>
+      <Filter>GameVersion\InfoList</Filter>
     </ClInclude>
-    <ClInclude Include="GameVersion\QGSAssetObject.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameVersion\QGSGameVersionInfo.h">
+      <Filter>GameVersion\InfoList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +508,9 @@
     </QtMoc>
     <QtMoc Include="Util\QGSNetworkAccessManager.h">
       <Filter>Util</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSDownloader.h">
+      <Filter>Download\DownloadTask</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

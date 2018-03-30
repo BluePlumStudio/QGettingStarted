@@ -17,11 +17,11 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -105,6 +105,7 @@
   <ItemGroup>
     <ClCompile Include="Download\QGSAssetIndexJsonDownloadTask.cpp" />
     <ClCompile Include="Download\QGSAssetObjectDownloadTask.cpp" />
+    <ClCompile Include="Download\QGSDownloader.cpp" />
     <ClCompile Include="Download\QGSDownloadInfo.cpp" />
     <ClCompile Include="Download\QGSDownloadTaskFactory.cpp" />
     <ClCompile Include="Download\QGSDownloadSourceBMCLAPI.cpp" />
@@ -189,6 +190,7 @@
     <QtMoc Include="GameBuilder\QGSGameBuilder.h" />
     <QtMoc Include="Download\QGSAssetIndexJsonDownloadTask.h" />
     <QtMoc Include="Download\QGSAssetObjectDownloadTask.h" />
+    <QtMoc Include="Download\QGSDownloader.h" />
     <ClInclude Include="Download\QGSDownloadInfo.h" />
     <ClInclude Include="Download\QGSDownloadTaskFactory.h" />
     <QtMoc Include="Download\QGSDownloadTask.h" />

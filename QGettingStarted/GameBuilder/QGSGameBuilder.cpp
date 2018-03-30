@@ -351,10 +351,10 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 
 static const unsigned long DEFAULT_SLEEP_TIME{ 1000 };
 
-QGSThreadPool QGSGameBuilder::mThreadPool{ 8,300 };
+QGSThreadPool QGSGameBuilder::mThreadPool{ 8,200 };
 
 QGSGameBuilder::QGSGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
-	:mVersionInfo(versionInfo), mGameDirectoryPtr(gameDirectory), mDownloadTaskFactoryPtr(downloadTaskFactory), mFileOverride(false)
+	:mTimerPtr(nullptr), mVersionInfo(versionInfo), mGameDirectoryPtr(gameDirectory), mDownloadTaskFactoryPtr(downloadTaskFactory), mFileOverride(false)
 {
 	if (!mGameDirectoryPtr || !mDownloadTaskFactoryPtr)
 	{
@@ -375,6 +375,12 @@ QGSGameBuilder::~QGSGameBuilder()
 	for (auto & task : mTaskList)
 	{
 		task->deleteLater();
+	}
+
+	if (mTimerPtr)
+	{
+		mTimerPtr->deleteLater();
+		mTimerPtr = nullptr;
 	}
 }
 
@@ -402,16 +408,21 @@ QString QGSGameBuilder::getLastErrorString()
 
 int QGSGameBuilder::getTaskListSize()
 {
-	//QMutexLocker mutexLocker{ &mMutex };
+	QMutexLocker mutexLocker{ &mMutex };
 
 	return mTaskList.size();
 }
 
+QGSThreadPool & QGSGameBuilder::getThreadPool()
+{
+	return mThreadPool;
+}
+
 void QGSGameBuilder::templateStart(QGSTask * task)
 {
-	mMutex.lock();
-
 	emit started(this);
+
+	mMutex.lock();
 
 	if (mTaskList.size())
 	{
@@ -423,13 +434,16 @@ void QGSGameBuilder::templateStart(QGSTask * task)
 		return;
 	}
 	
+	if (!mTimerPtr)
+	{
+		mTimerPtr = new QTimer{ this };
+	}
+	QObject::connect(mTimerPtr, &QTimer::timeout, this, &QGSGameBuilder::deleteTasksFinished);
+	mTimerPtr->start(DEFAULT_SLEEP_TIME);
+
 	mMutex.unlock();
 
 	initDownloadTasks();
-
-	mTimer.moveToThread(thread());
-	QObject::connect(&mTimer, &QTimer::timeout, this, &QGSGameBuilder::deleteTasksFinished);
-	mTimer.start(DEFAULT_SLEEP_TIME);
 
 	/*
 	auto * gameVersionJsonDownloadTaskGenerationTask{ new GameVersionJsonDownloadTaskGenerationTask{ this } };
@@ -476,7 +490,9 @@ void QGSGameBuilder::templateStop(QGSTask * task)
 		downloadTask->stop();
 	}
 
-	mTimer.disconnect();
+	mTimerPtr->disconnect();
+
+	mutexLocker.unlock();
 
 	emit stoped(this);
 }
@@ -490,7 +506,9 @@ void QGSGameBuilder::templateCancel(QGSTask * task)
 		downloadTask->cancel();
 	}
 
-	mTimer.disconnect();
+	mTimerPtr->disconnect();
+
+	mutexLocker.unlock();
 
 	emit canceled(this);
 }
@@ -500,6 +518,9 @@ void QGSGameBuilder::slotDownloadTaskStarted(QGSTask * task)
 	QMutexLocker mutexLocker{ &mMutex };
 
 	auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+
+	mutexLocker.unlock();
+
 	emit downloadTaskStarted(downloadTask->getDownloadInfo());
 }
 
@@ -508,6 +529,9 @@ void QGSGameBuilder::slotDownloadTaskFinished(QGSTask * task)
 	QMutexLocker mutexLocker{ &mMutex };
 
 	auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+
+	mutexLocker.unlock();
+
 	emit downloadTaskFinished(downloadTask->getDownloadInfo());
 }
 
@@ -516,6 +540,9 @@ void QGSGameBuilder::slotDownloadTaskStoped(QGSTask * task)
 	QMutexLocker mutexLocker{ &mMutex };
 
 	auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+
+	mutexLocker.unlock();
+
 	emit downloadTaskStoped(downloadTask->getDownloadInfo());
 }
 
@@ -524,6 +551,9 @@ void QGSGameBuilder::slotDownloadTaskCanceled(QGSTask * task)
 	QMutexLocker mutexLocker{ &mMutex };
 
 	auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+
+	mutexLocker.unlock();
+
 	emit downloadTaskCanceled(downloadTask->getDownloadInfo());
 }
 
@@ -532,6 +562,9 @@ void QGSGameBuilder::slotDownloadTaskDownloadError(QGSNetworkError error, QGSTas
 	QMutexLocker mutexLocker{ &mMutex };
 
 	auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+
+	mutexLocker.unlock();
+
 	emit downloadTaskDownloadError(error, downloadTask->getDownloadInfo());
 }
 
@@ -540,7 +573,20 @@ void QGSGameBuilder::slotDownloadTaskError(QGSTask * task)
 	QMutexLocker mutexLocker{ &mMutex };
 
 	auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+
+	mutexLocker.unlock();
+
 	emit downloadTaskError(downloadTask->getDownloadInfo());
+}
+
+void QGSGameBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
+{
+	QMutexLocker mutexLocker{ &mMutex };
+	auto * downloadTask{ dynamic_cast<QGSDownloadTask *>(task) };
+
+	mutexLocker.unlock();
+
+	emit downloadTaskDownloadProgress(bytesReceived, bytesTotal, downloadTask->getDownloadInfo());
 }
 
 void QGSGameBuilder::initDownloadTasks()
@@ -581,15 +627,16 @@ void QGSGameBuilder::initDownloadTasks()
 				if (initAssetObjectDownloadTasks());
 
 				slotFinished();
-			},
-			Qt::ConnectionType::QueuedConnection);
-		}, 
-		Qt::ConnectionType::QueuedConnection);
+
+			});
+
+		});
 	}
 }
 
 QGSDownloadTask * QGSGameBuilder::initGameVersionJsonDownloadTask()
 {
+	QMutexLocker mutexLocker{ &mMutex };
 	QGSDownloadTask * downloadTask{ nullptr };
 
 	downloadTask = mDownloadTaskFactoryPtr->generateGameVersionJsonDownloadTask(mVersionInfo, *mGameDirectoryPtr);
@@ -607,6 +654,7 @@ QGSDownloadTask * QGSGameBuilder::initGameVersionJsonDownloadTask()
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QObject::connect(downloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
 	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
@@ -619,6 +667,7 @@ QGSDownloadTask * QGSGameBuilder::initGameVersionJsonDownloadTask()
 
 bool QGSGameBuilder::initGameVersionDownloadTask()
 {
+	QMutexLocker mutexLocker{ &mMutex };
 	if (!mFileOverride)
 	{
 		QSharedPointer<QFile> gameVersionJarFile{ mGameDirectoryPtr->generateGameVersionJarFile(mVersionInfo.getId()) };
@@ -646,6 +695,7 @@ bool QGSGameBuilder::initGameVersionDownloadTask()
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QObject::connect(downloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
 	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
@@ -661,6 +711,7 @@ bool QGSGameBuilder::initGameVersionDownloadTask()
 
 bool QGSGameBuilder::initLibraryDownloadTasks()
 {
+	QMutexLocker mutexLocker{ &mMutex };
 	QList<QGSLibrary> libraryList;
 	try
 	{
@@ -702,6 +753,7 @@ bool QGSGameBuilder::initLibraryDownloadTasks()
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 		QObject::connect(downloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
 		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
+		QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
@@ -718,6 +770,7 @@ bool QGSGameBuilder::initLibraryDownloadTasks()
 
 QGSDownloadTask *  QGSGameBuilder::initAssetIndexJsonDownloadTask()
 {
+	QMutexLocker mutexLocker{ &mMutex };
 	QGSDownloadTask * downloadTask{ nullptr };
 
 	try
@@ -747,6 +800,7 @@ QGSDownloadTask *  QGSGameBuilder::initAssetIndexJsonDownloadTask()
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QObject::connect(downloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
 	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
@@ -759,6 +813,7 @@ QGSDownloadTask *  QGSGameBuilder::initAssetIndexJsonDownloadTask()
 
 bool QGSGameBuilder::initAssetObjectDownloadTasks()
 {
+	QMutexLocker mutexLocker{ &mMutex };
 	auto && assetObjectMap{ mAssetIndexInfo.getAssetObjectMap() };
 	QGSDownloadTask * downloadTask{ nullptr };
 
@@ -766,8 +821,8 @@ bool QGSGameBuilder::initAssetObjectDownloadTasks()
 	{
 		if (!mFileOverride)
 		{
-			QSharedPointer<QFile> libraryFile{ mGameDirectoryPtr->generateAssetObjectFile(i) };
-			if (libraryFile->exists())
+			QSharedPointer<QFile> assetObjectFile{ mGameDirectoryPtr->generateAssetObjectFile(i) };
+			if (assetObjectFile->exists())
 			{
 				continue;
 			}
@@ -788,6 +843,7 @@ bool QGSGameBuilder::initAssetObjectDownloadTasks()
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 		QObject::connect(downloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
 		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
+		QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
@@ -804,6 +860,7 @@ bool QGSGameBuilder::initAssetObjectDownloadTasks()
 
 void QGSGameBuilder::deleteTasksFinished()
 {
+	QMutexLocker mutexLocker{ &mMutex };
 	int halfSize{ mTaskWillBeDeletedList.size() / 2 };
 
 	if (!halfSize&&mTaskWillBeDeletedList.size())
@@ -823,6 +880,7 @@ void QGSGameBuilder::deleteTasksFinished()
 
 void QGSGameBuilder::slotEraseDownloadTask(QGSTask * downloadTask)
 {
+	QMutexLocker mutexLocker{ &mMutex };
 	if (!downloadTask)
 	{
 		return;
@@ -846,7 +904,12 @@ void QGSGameBuilder::slotFinished()
 {
 	if (!getTaskListSize())
 	{
-		mTimer.disconnect();
+		mMutex.lock();
+
+		mTimerPtr->disconnect();
+
+		mMutex.unlock();
+
 		emit finished(this);
 	}
 }

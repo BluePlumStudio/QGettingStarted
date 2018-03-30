@@ -69,7 +69,7 @@ public:
 
 	static QNetworkRequest generateNetworkRequest();
 
-	static QNetworkRequest generateHttpsNetworkRequest(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_0);
+	static QNetworkRequest generateHttpsNetworkRequest(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1SslV3);
 	/*
 	QGSNetworkAccessManager & setProxy(QNetworkProxy proxy = QNetworkProxy::NoProxy);
 
