@@ -35,12 +35,6 @@
 
         See header of zip.h
 
-        ---------------------------------------------------------------------------
-
-  As per the requirement above, this file is plainly marked as modified
-  by Sergey A. Tachenov. Most modifications include the I/O API redesign
-  to support QIODevice interface. Some improvements and small fixes were also made.
-
 */
 
 #ifndef _zip12_H
@@ -82,11 +76,6 @@ typedef voidp zipFile;
 #define ZIP_BADZIPFILE                  (-103)
 #define ZIP_INTERNALERROR               (-104)
 
-#define ZIP_WRITE_DATA_DESCRIPTOR 0x8u
-#define ZIP_AUTO_CLOSE 0x1u
-#define ZIP_SEQUENTIAL 0x2u
-#define ZIP_DEFAULT_FLAGS (ZIP_AUTO_CLOSE | ZIP_WRITE_DATA_DESCRIPTOR)
-
 #ifndef DEF_MEM_LEVEL
 #  if MAX_MEM_LEVEL >= 8
 #    define DEF_MEM_LEVEL 8
@@ -124,12 +113,12 @@ typedef const char* zipcharpc;
 #define APPEND_STATUS_CREATEAFTER   (1)
 #define APPEND_STATUS_ADDINZIP      (2)
 
-extern zipFile ZEXPORT zipOpen OF((voidpf file, int append));
-extern zipFile ZEXPORT zipOpen64 OF((voidpf file, int append));
+extern zipFile ZEXPORT zipOpen OF((const char *pathname, int append));
+extern zipFile ZEXPORT zipOpen64 OF((const void *pathname, int append));
 /*
   Create a zipfile.
-     the file argument depends on the API used, for QuaZIP it's a QIODevice
-       pointer.
+     pathname contain on Windows XP a filename like "c:\\zlib\\zlib113.zip" or on
+       an Unix computer "zlib/zlib113.zip".
      if the file pathname exist and append==APPEND_STATUS_CREATEAFTER, the zip
        will be created at the end of the file.
          (useful if the file contain a self extractor code)
@@ -145,26 +134,15 @@ extern zipFile ZEXPORT zipOpen64 OF((voidpf file, int append));
    Of couse, you can use RAW reading and writing to copy the file you did not want delte
 */
 
-extern zipFile ZEXPORT zipOpen2 OF((voidpf file,
+extern zipFile ZEXPORT zipOpen2 OF((const char *pathname,
                                    int append,
                                    zipcharpc* globalcomment,
                                    zlib_filefunc_def* pzlib_filefunc_def));
 
-extern zipFile ZEXPORT zipOpen2_64 OF((voidpf file,
+extern zipFile ZEXPORT zipOpen2_64 OF((const void *pathname,
                                    int append,
                                    zipcharpc* globalcomment,
                                    zlib_filefunc64_def* pzlib_filefunc_def));
-
-/*
- * Exported by Sergey A. Tachenov to suit the needs of QuaZIP.
- * Note that this function MAY change signature in order to
- * provide new QuaZIP features. You have been warned!
- * */
-extern zipFile ZEXPORT zipOpen3 (voidpf file,
-                                 int append,
-                                 zipcharpc* globalcomment,
-                                 zlib_filefunc64_32_def* pzlib_filefunc64_32_def,
-                                 unsigned flags);
 
 extern int ZEXPORT zipOpenNewFileInZip OF((zipFile file,
                        const char* filename,
@@ -376,12 +354,6 @@ extern int ZEXPORT zipRemoveExtraInfoBlock OF((char* pData, int* dataLen, short 
                         Remove ZIP64 Extra information from a Local File Header extra field data
         zipRemoveExtraInfoBlock(pLocalHeaderExtraFieldData, &nLocalHeaderExtraFieldDataLen, 0x0001);
 */
-
-/*
-   Added by Sergey A. Tachenov to tweak zipping behaviour.
-*/
-extern int ZEXPORT zipSetFlags(zipFile file, unsigned flags);
-extern int ZEXPORT zipClearFlags(zipFile file, unsigned flags);
 
 #ifdef __cplusplus
 }

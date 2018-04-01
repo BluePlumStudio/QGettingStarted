@@ -38,8 +38,8 @@ public:
 
 	quint8 getCurrentCpuArchitectureNumber()const;
 
-	QChar getSeparator()const;
-private: 
+	QChar getSeperator()const;
+private:
 	QString mBuildAbi;
 	QString mBuildCpuArchitecture;
 	QString mCurrentCpuArchitecture;

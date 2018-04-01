@@ -11,7 +11,7 @@
 #include "../Util/QGSOperatingSystem.h"
 #include "../Util/QGSExceptionInvalidValue.h"
 
-static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeparator() };
+static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeperator() };
 
 /**/
 
@@ -268,7 +268,7 @@ void QGSDownloadTask::slotDownloadProgress(qint64 bytesNewlyReceived, qint64 byt
 	
 	mBytesReceived += bytesNewlyReceived;
 
-	emit downloadProgress(mBytesReceived, bytesTotal, this);
+    emit downloadProgress(mBytesReceived, mBytesTotal, this);
 }
 
 void QGSDownloadTask::slotDownloadError(QGSNetworkError _error, QGSDownloader * downloader)

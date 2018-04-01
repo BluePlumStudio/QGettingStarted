@@ -108,7 +108,7 @@ quint8 QGSOperatingSystem::getCurrentCpuArchitectureNumber() const
 	}
 }
 
-QChar QGSOperatingSystem::getSeparator()const
+QChar QGSOperatingSystem::getSeperator()const
 {
 	return mSeparator;
 }

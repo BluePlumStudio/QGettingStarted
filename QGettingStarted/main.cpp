@@ -1,3 +1,4 @@
+
 #include <QtCore/QCoreApplication>
 #include <QSharedPointer>
 #include <QTextStream>
@@ -357,16 +358,26 @@ int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
 	qDebug() << "=QGettingStart Test=";
-
+    qDebug()<<"1.Download Game | 2.Generate Launch Command";
+    int ans=0;
+    std::cin>>ans;
 	//threadPoolTest();
 	//downloadTest();
 	//gameBuildTest();
-	//generateLaunchCommandTest();
-	QFile manifestFile{ QCoreApplication::applicationDirPath() + "./version_manifest.json" };
+    if(ans==2)
+    {
+        generateLaunchCommandTest();
+        return 0;
+    }
+
+    QFile manifestFile{ QCoreApplication::applicationDirPath() + "/version_manifest.json" };
 	manifestFile.open(QIODevice::ReadOnly);
 	QGSGameVersionInfoListFactory versionInfoFactory;
 	QGSGameVersionInfoList versionInfoList{ versionInfoFactory.createGameVersionInfoList(manifestFile.readAll()) };
-	auto && versionInfo = versionInfoList.getVersionInfo("1.11.2");
+    std::string versionId;
+    qDebug()<<"Version:";
+    std::cin>>versionId;
+    auto && versionInfo = versionInfoList.getVersionInfo(QString::fromStdString(versionId));
 	QSharedPointer<QGSIDownloadSource> downloadSource{ new QGSDownloadSourceBMCLAPI };
 	QGSDownloadTaskFactory downloadTaskFactory{ downloadSource.data() };
 	QGSGameDirectory gameDirectory{ QDir{ QCoreApplication::applicationDirPath() + "/.minecraft" } };

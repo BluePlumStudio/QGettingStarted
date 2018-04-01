@@ -2,7 +2,7 @@
 
 #include "QGSILauncherStrategy.h"
 
-static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
+static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeperator();
 
 QGSILauncherStrategy::QGSILauncherStrategy() 
 {

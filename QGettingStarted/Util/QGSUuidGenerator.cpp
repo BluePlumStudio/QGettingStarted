@@ -17,7 +17,7 @@ QGSUuidGenerator & QGSUuidGenerator::getInstance()
 QString QGSUuidGenerator::generateUuid(const QString & seed)
 {
 	QString UUID;
-	char * code = "x@&asd%j2813";
+    char code[] = "x@&asd%j2813";
 	char UUIDChars[] = "bad260ecde3bfe752a";
 	int i = 0;
 

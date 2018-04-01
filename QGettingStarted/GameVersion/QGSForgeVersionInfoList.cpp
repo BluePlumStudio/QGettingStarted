@@ -25,7 +25,7 @@ QGSForgeVersionInfoList::~QGSForgeVersionInfoList()
 {
 }
 
-const QGSForgeVersionInfo & QGSForgeVersionInfoList::getVersionInfo(const QString & build)
+const QGSForgeVersionInfo & QGSForgeVersionInfoList::getVersionInfo(const int build)
 {
 	auto it{ findForgeVersionInfo(build) };
 	if (it == mForgeVersionInfoVector.end())
@@ -48,7 +48,7 @@ bool QGSForgeVersionInfoList::addVersionInfo(const QGSForgeVersionInfo & version
 	return true;
 }
 
-bool QGSForgeVersionInfoList::removeVersionInfo(const QString & build)
+bool QGSForgeVersionInfoList::removeVersionInfo(const int build)
 {
 	auto it{ findForgeVersionInfo(build) };
 	if (it == mForgeVersionInfoVector.end())
@@ -61,7 +61,7 @@ bool QGSForgeVersionInfoList::removeVersionInfo(const QString & build)
 	return true;
 }
 
-bool QGSForgeVersionInfoList::containsVersionInfo(const QString & build)
+bool QGSForgeVersionInfoList::containsVersionInfo(const int build)
 {
 	auto it{ findForgeVersionInfo(build) };
 	if (it == mForgeVersionInfoVector.end())
@@ -102,7 +102,7 @@ void QGSForgeVersionInfoList::sort()
 	});
 }
 
-QVector<QGSForgeVersionInfo>::iterator QGSForgeVersionInfoList::findForgeVersionInfo(const QString & build)
+QVector<QGSForgeVersionInfo>::iterator QGSForgeVersionInfoList::findForgeVersionInfo(const int build)
 {
 	auto it{ mForgeVersionInfoVector.begin() };
 

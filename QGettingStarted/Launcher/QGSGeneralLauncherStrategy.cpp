@@ -6,7 +6,7 @@
 #include "Util/QGSExceptionFileIO.h"
 #include "Util/QGSFileTools.h"
 
-static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
+static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeperator();
 
 QGSGeneralLauncherStrategy::QGSGeneralLauncherStrategy() 
 {

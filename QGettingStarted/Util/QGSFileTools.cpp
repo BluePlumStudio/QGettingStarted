@@ -1,4 +1,10 @@
+#include <QDir>
+#include <QFileInfoList>
+
 #include "QGSFileTools.h"
+#include "QGSOperatingSystem.h"
+
+static const QString SEPERATOR{ QGSOperatingSystem::getInstance().getSeperator() };
 
 QGSFileTools::QGSFileTools()
 {
@@ -14,6 +20,7 @@ QGSFileTools::~QGSFileTools()
 {
 }
 
+/*
 bool QGSFileTools::compressDirectory(const QString & file, const QString & directory, bool recursive)
 {
 	bool ret = true;
@@ -29,18 +36,65 @@ bool QGSFileTools::compressDirectory(const QString & file, const QString & direc
 
 	return ret;
 }
+*/
 
-QStringList QGSFileTools::extractDirectory(const QString & file, const QString & directory)
+QStringList QGSFileTools::extractDirectory(const QString & file, const QString & directory, const QString & password)
 {
 	QStringList ret;
 
-	try
+	unz_global_info64 gi;
+	unz_file_info64 FileInfo;
+	unzFile zFile{ unzOpen64(file.toLocal8Bit().toStdString().c_str()) };
+
+	if (unzGetGlobalInfo64(zFile, &gi) == UNZ_OK)
 	{
-		ret = JlCompress::extractDir(file, directory);
-	}
-	catch (...)
-	{
-		ret.clear();
+		for (int i = 0; i < gi.number_entry; i++)
+		{
+			char file[256] = { 0 };
+			char ext[256] = { 0 };
+			char com[1024] = { 0 };
+			if (unzGetCurrentFileInfo64(zFile, &FileInfo, file, sizeof(file), ext, 256, com, 1024) != UNZ_OK)
+			{
+				unzClose(zFile);
+				ret.clear();
+				return ret;
+			}
+			if (!(FileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				unzOpenCurrentFile(zFile);//ÎÞÃÜÂë
+				unzOpenCurrentFilePassword(zFile, password.toLocal8Bit().toStdString().c_str());//ÓÐÃÜÂë
+				QString path{ directory + SEPERATOR + file };
+				ret << path;
+				QFile targetFile{ path };
+				if (!targetFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+				{
+					unzClose(zFile);
+					ret.clear();
+					return ret;
+				}
+				while (true)
+				{
+					char data[256]{ 0 };
+					int size{ unzReadCurrentFile(zFile, data, 256) };
+					//qDebug() << size;
+					if (size <= 0)
+					{
+						break;
+					}
+					targetFile.write(data, size);
+				}
+				targetFile.close();
+				unzCloseCurrentFile(zFile);
+			}
+			else
+			{
+				QDir newDir;
+				newDir.mkpath(directory + SEPERATOR + file);
+				unzCloseCurrentFile(zFile);
+			}
+			unzGoToNextFile(zFile);
+		}
+		unzClose(zFile);
 	}
 
 	return ret;

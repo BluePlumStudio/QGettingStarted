@@ -9,7 +9,7 @@
 #include "../GameVersion/QGSLibrary.h"
 #include "../GameVersion/QGSAssetIndexInfoFactory.h"
 
-static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeparator();
+static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeperator();
 
 QGSGameDirectory::QGSGameDirectory(const QDir & baseDir) :mBaseDir(baseDir)
 {

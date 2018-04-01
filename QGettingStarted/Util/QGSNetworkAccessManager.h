@@ -2,21 +2,12 @@
 
 #include <QObject>
 #include <QString>
-#ifdef Q_CC_MSVC
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QNetworkProxy>
 #include <QSslConfiguration>
 #include <QSslSocket>
-#else
-#include <QtNetwork/QNetworkAccessManager>
-#include <QtNetwork/QNetworkRequest>
-#include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkProxy>
-#include <QtNetwork/QSslConfiguration>
-#include <QtNetwork/QSslSocket>
-#endif
 
 namespace Network
 {

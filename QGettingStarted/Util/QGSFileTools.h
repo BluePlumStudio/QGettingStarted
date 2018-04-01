@@ -1,8 +1,15 @@
 #pragma once
 
-#define QUAZIP_STATIC
+#include <QStringList>
 
-#include "QuaZip/JlCompress.h"
+#include "zlib/zlib.h"
+#include "zlib/zip.h"
+#include "zlib/unzip.h"
+#include "zlib/crypt.h"
+#include "zlib/ioapi.h"
+#include "zlib/iowin32.h"
+#include "zlib/mztools.h"
+#include "zlib/zconf.h"
 
 class QGSFileTools
 {
@@ -19,9 +26,9 @@ public:
 
 	~QGSFileTools();
 
-    static bool compressDirectory(const QString & file, const QString & directory, bool recursive = true);
+    //static bool compressDirectory(const QString & file, const QString & directory, bool recursive = true);
 
-    static QStringList extractDirectory(const QString & file, const QString & directory);
+	static QStringList extractDirectory(const QString & file, const QString & directory, const QString & password = QString());
 
 	static bool removeDirectory(const QString & absolutPath);
 private:

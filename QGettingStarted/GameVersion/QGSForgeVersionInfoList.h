@@ -21,13 +21,13 @@ public:
 
 	~QGSForgeVersionInfoList();
 
-	const QGSForgeVersionInfo & getVersionInfo(const QString & build);
+	const QGSForgeVersionInfo & getVersionInfo(const int build);
 
 	bool addVersionInfo(const QGSForgeVersionInfo & versionInfo);
 
-	bool removeVersionInfo(const QString & build);
+	bool removeVersionInfo(const int build);
 
-	bool containsVersionInfo(const QString & build);
+	bool containsVersionInfo(const int build);
 
 	int size();
 
@@ -36,7 +36,7 @@ public:
 	QVector<QGSForgeVersionInfo> getForgeVersionInfoVector()const;
 private:
 	void sort();
-	QVector<QGSForgeVersionInfo>::iterator findForgeVersionInfo(const QString & build);
+	QVector<QGSForgeVersionInfo>::iterator findForgeVersionInfo(const int build);
 private:
 	QVector<QGSForgeVersionInfo> mForgeVersionInfoVector;
 };
