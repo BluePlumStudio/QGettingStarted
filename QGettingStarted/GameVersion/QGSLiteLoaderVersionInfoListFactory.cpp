@@ -1,10 +1,10 @@
 #include "QGSLiteLoaderVersionInfoListFactory.h"
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionFileIO.h"
+#include "Util/QGSExceptionIO.h"
 #include "Util/QGSExceptionJsonPraseError.h"
 
-QGSLiteLoaderVersionInfoListFactory::QGSLiteLoaderVersionInfoListFactory()
+QGSLiteLoaderVersionInfoListFactory::QGSLiteLoaderVersionInfoListFactory(QObject * parent) :QObject(parent)
 {
 }
 
@@ -17,27 +17,27 @@ QGSLiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoad
 	QGSLiteLoaderVersionInfoList ret;
 
 	QJsonParseError jsonPraseError;
-	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
+	QJsonDocument jsonDocument(QJsonDocument::fromJson(jsonData,&jsonPraseError));
 	if (jsonPraseError.error != QJsonParseError::NoError)
 	{
 		throw QGSExceptionJsonPraseError(jsonPraseError);
 	}
 
-	auto && jsonObject{ jsonDocument.object() };
+	auto && jsonObject(jsonDocument.object());
 	if (!jsonObject.contains("versions"))
 	{
 		throw QGSExceptionJsonPraseError(jsonPraseError, "\"versions\" does not exeist!");
 	}
 
-	auto && versionsObject{ jsonObject.value("versions").toObject() };
-	auto && keys{ versionsObject.keys() };
+	auto && versionsObject(jsonObject.value("versions").toObject());
+	auto && keys(versionsObject.keys());
 	for (auto & i : keys)
 	{
-		auto && versionInfoObject{ versionsObject.value(i).toObject() };
+		auto && versionInfoObject(versionsObject.value(i).toObject());
 		QGSLiteLoaderVersionInfo newVersionInfo;
 
 		QGSLiteLoaderVersionReposity reposity;
-		auto && reposityObject{ versionInfoObject.value("repo").toObject() };
+		auto && reposityObject(versionInfoObject.value("repo").toObject());
 		reposity.setStream(reposityObject.value("stream").toString());
 		reposity.setType(reposityObject.value("type").toString());
 		reposity.setUrl(reposityObject.value("url").toString());
@@ -45,23 +45,21 @@ QGSLiteLoaderVersionInfoList QGSLiteLoaderVersionInfoListFactory::createLiteLoad
 		newVersionInfo.setLiteLoaderVersionReposity(reposity);
 
 		QMap<QString, QGSLiteLoaderVersionMeta> snapshotMetaMap;
-		auto && snapshotMetaObject{
-			versionInfoObject.value("snapshots").toObject().value("com.mumfrey:liteloader").toObject() };
-		auto && snapshotMetaKeys{ snapshotMetaObject.keys() };
+		auto && snapshotMetaObject(versionInfoObject.value("snapshots").toObject().value("com.mumfrey:liteloader").toObject());
+		auto && snapshotMetaKeys(snapshotMetaObject.keys());
 		for (auto & j : snapshotMetaKeys)
 		{
-			auto && metaObject{ snapshotMetaObject.value(j).toObject() };
+			auto && metaObject(snapshotMetaObject.value(j).toObject());
 			snapshotMetaMap.insert(j, praseLiteLoaderVersionMeta(metaObject));
 		}
 		newVersionInfo.setLiteLoaderVersionSnapshotMetaMap(snapshotMetaMap);
 
 		QMap<QString, QGSLiteLoaderVersionMeta> artefactMetaMap;
-		auto && artefactMetaObject{
-			versionInfoObject.value("artefacts").toObject().value("com.mumfrey:liteloader").toObject() };
-		auto && artefactMetaKeys{ artefactMetaObject.keys() };
+		auto && artefactMetaObject(versionInfoObject.value("artefacts").toObject().value("com.mumfrey:liteloader").toObject());
+		auto && artefactMetaKeys(artefactMetaObject.keys());
 		for (auto & j : artefactMetaKeys)
 		{
-			auto && metaObject{ artefactMetaObject.value(j).toObject() };
+			auto && metaObject(artefactMetaObject.value(j).toObject());
 			artefactMetaMap.insert(j, praseLiteLoaderVersionMeta(metaObject));
 		}
 		newVersionInfo.setLiteLoaderVersionArtefactMetaMap(artefactMetaMap);

@@ -1,23 +1,24 @@
 #include <QSysInfo>
+#include <QCoreApplication>
 
 #include "QGSOperatingSystem.h"
 
 namespace CpuArchitecture
 {
-	const QString ARM{ "arm" };
-	const QString ARM64{ "arm64" };
-	const QString I386{ "i386" };
-	const QString IA64{ "ia64" };
-	const QString MIPS{ "mips" };
-	const QString MIPS64{ "mips64" };
-	const QString POWER{ "power" };
-	const QString POWER64{ "power64" };
-	const QString SPARC{ "sparc" };
-	const QString SPARCV9{ "sparcv9" };
-	const QString X86_64{ "x86_64" };
+	const QString ARM("arm");
+	const QString ARM64("arm64");
+	const QString I386("i386");
+	const QString IA64("ia64");
+	const QString MIPS("mips");
+	const QString MIPS64("mips64");
+	const QString POWER("power");
+	const QString POWER64("power64");
+	const QString SPARC("sparc");
+	const QString SPARCV9("sparcv9");
+	const QString X86_64("x86_64");
 }
 
-QGSOperatingSystem::QGSOperatingSystem()
+QGSOperatingSystem::QGSOperatingSystem(QObject * parent) :QObject(parent)
 {
 	mBuildAbi = QSysInfo::buildAbi();
 	mBuildCpuArchitecture = QSysInfo::buildCpuArchitecture();
@@ -43,7 +44,7 @@ QGSOperatingSystem::~QGSOperatingSystem()
 
 QGSOperatingSystem & QGSOperatingSystem::getInstance()
 {
-	static QGSOperatingSystem instance;
+	static QGSOperatingSystem instance(QCoreApplication::instance());
 	return instance;
 }
 

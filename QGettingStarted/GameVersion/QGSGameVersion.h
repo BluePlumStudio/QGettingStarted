@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QMap>
+#include <QMetaType>
 
 #include "QGSArguments.h"
 #include "QGSAssetIndex.h"
@@ -43,7 +44,7 @@ public:
 	QGSAssetIndex getAssetIndex()const;
 	QString getAssets()const;
 	QList<QGSLibrary> getLibraries()const;
-	QMap<QString, QGSIDownload> getDownloads()const;
+	QMap<QString, QGSDownloadBase> getDownloads()const;
 	QMap<QString, QGSLogging> getLogging()const;
 	QString getType()const;
 	QString getTime()const;
@@ -60,7 +61,7 @@ public:
 	QGSGameVersion & setAssetIndex(const QGSAssetIndex & assetIndex);
 	QGSGameVersion & setAssets(const QString & assets);
 	QGSGameVersion & setLibraries(const QList<QGSLibrary> & libraries);
-	QGSGameVersion & setDownloads(const QMap<QString, QGSIDownload> & downloads);
+	QGSGameVersion & setDownloads(const QMap<QString, QGSDownloadBase> & downloads);
 	QGSGameVersion & setLogging(const QMap<QString, QGSLogging> & logging);
 	QGSGameVersion & setType(const QString & type);
 	QGSGameVersion & setTime(const QString & time);
@@ -79,7 +80,7 @@ private:
 	QGSAssetIndex mAssetIndex;
 	QString mAssets;
 	QList<QGSLibrary> mLibraries;
-	QMap<QString, QGSIDownload> mDownloads;
+	QMap<QString, QGSDownloadBase> mDownloads;
 	QMap<QString, QGSLogging> mLogging;
 	QString mType;
 	QString mTime;
@@ -88,3 +89,5 @@ private:
 	int mMinimumLauncherVersion;
 };
 
+
+Q_DECLARE_METATYPE(QGSGameVersion)

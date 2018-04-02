@@ -39,3 +39,5 @@ public:
 private:
 	QMap<QString, QGSLiteLoaderVersionInfo> mLiteLoaderVersionInfoMap;
 };
+
+Q_DECLARE_METATYPE(QGSLiteLoaderVersionInfoList)

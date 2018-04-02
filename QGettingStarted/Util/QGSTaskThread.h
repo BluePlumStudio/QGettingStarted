@@ -9,26 +9,26 @@
 
 class QGSThreadPool;
 
-class QGSThread : public QThread
+class QGSTaskThread : public QThread
 {
 	Q_OBJECT
 
 public:
 	friend class QGSThreadPool;
 
-	QGSThread(QGSThreadPool * threadPool);
+	QGSTaskThread(QGSThreadPool * threadPool);
 
-	QGSThread(const QGSThread & right) = delete;
+	QGSTaskThread(const QGSTaskThread & right) = delete;
 
-	QGSThread(QGSThread && right) = delete;
+	QGSTaskThread(QGSTaskThread && right) = delete;
 
-	QGSThread & operator=(const QGSThread & right) = delete;
+	QGSTaskThread & operator=(const QGSTaskThread & right) = delete;
 
-	QGSThread & operator=(QGSThread && right) = delete;
+	QGSTaskThread & operator=(QGSTaskThread && right) = delete;
 
-	virtual ~QGSThread();
+	virtual ~QGSTaskThread();
 
-	//QGSThread & setTask(QGSTask * task);
+	//QGSTaskThread & setTask(QGSTask * task);
 
 	void exit(int returnCode = 0);
 private:

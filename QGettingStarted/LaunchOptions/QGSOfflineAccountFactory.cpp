@@ -1,6 +1,6 @@
 #include "QGSOfflineAccountFactory.h"
 
-QGSOfflineAccountFactory::QGSOfflineAccountFactory()
+QGSOfflineAccountFactory::QGSOfflineAccountFactory(QObject * parent) :QGSIAccountFactory(parent)
 {
 
 }

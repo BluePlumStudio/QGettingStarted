@@ -7,7 +7,7 @@
 
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionFileIO.h"
+#include "Util/QGSExceptionIO.h"
 #include "Util/QGSExceptionJsonPraseError.h"
 #include "QGSForgeVersionInfoList.h"
 
@@ -27,7 +27,7 @@ QGSForgeVersionInfoList::~QGSForgeVersionInfoList()
 
 const QGSForgeVersionInfo & QGSForgeVersionInfoList::getVersionInfo(const int build)
 {
-	auto it{ findForgeVersionInfo(build) };
+	auto it(findForgeVersionInfo(build));
 	if (it == mForgeVersionInfoVector.end())
 	{
 		throw QGSExceptionVersionNotFound();
@@ -50,7 +50,7 @@ bool QGSForgeVersionInfoList::addVersionInfo(const QGSForgeVersionInfo & version
 
 bool QGSForgeVersionInfoList::removeVersionInfo(const int build)
 {
-	auto it{ findForgeVersionInfo(build) };
+	auto it(findForgeVersionInfo(build));
 	if (it == mForgeVersionInfoVector.end())
 	{
 		return false;
@@ -63,7 +63,7 @@ bool QGSForgeVersionInfoList::removeVersionInfo(const int build)
 
 bool QGSForgeVersionInfoList::containsVersionInfo(const int build)
 {
-	auto it{ findForgeVersionInfo(build) };
+	auto it(findForgeVersionInfo(build));
 	if (it == mForgeVersionInfoVector.end())
 	{
 		return false;
@@ -80,8 +80,8 @@ int QGSForgeVersionInfoList::size()
 bool QGSForgeVersionInfoList::merge(const QGSForgeVersionInfoList & right)
 {
 	std::vector<QGSForgeVersionInfo> newInfoVector;
-	std::vector<QGSForgeVersionInfo> && oldInfoVector{ mForgeVersionInfoVector.toStdVector() };
-	std::vector<QGSForgeVersionInfo> && rightInfoVector{ right.mForgeVersionInfoVector.toStdVector() };
+	std::vector<QGSForgeVersionInfo> && oldInfoVector(mForgeVersionInfoVector.toStdVector());
+	std::vector<QGSForgeVersionInfo> && rightInfoVector(right.mForgeVersionInfoVector.toStdVector());
 	newInfoVector.resize(oldInfoVector.size() + rightInfoVector.size());
 	std::merge(std::begin(oldInfoVector),
 		std::end(oldInfoVector),
@@ -104,7 +104,7 @@ void QGSForgeVersionInfoList::sort()
 
 QVector<QGSForgeVersionInfo>::iterator QGSForgeVersionInfoList::findForgeVersionInfo(const int build)
 {
-	auto it{ mForgeVersionInfoVector.begin() };
+	auto it(mForgeVersionInfoVector.begin());
 
 	while (it++ != mForgeVersionInfoVector.end())
 	{

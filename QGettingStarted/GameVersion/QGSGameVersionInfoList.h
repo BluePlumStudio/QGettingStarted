@@ -49,3 +49,5 @@ private:
 	QString mLatestRelease;
 	QString mLatestSnapshot;
 };
+
+Q_DECLARE_METATYPE(QGSGameVersionInfoList)

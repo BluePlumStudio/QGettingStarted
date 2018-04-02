@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QStringList>
+#include <QObject>
 
 #include "zlib/zlib.h"
 #include "zlib/zip.h"
@@ -11,8 +12,10 @@
 #include "zlib/mztools.h"
 #include "zlib/zconf.h"
 
-class QGSFileTools
+class QGSFileTools :public QObject
 {
+	Q_OBJECT
+
 public:
 	static QGSFileTools & getInstance();
 
@@ -24,7 +27,7 @@ public:
 
 	QGSFileTools & operator=(QGSFileTools && right) = delete;
 
-	~QGSFileTools();
+	virtual ~QGSFileTools();
 
     //static bool compressDirectory(const QString & file, const QString & directory, bool recursive = true);
 
@@ -32,5 +35,5 @@ public:
 
 	static bool removeDirectory(const QString & absolutPath);
 private:
-	QGSFileTools();
+	QGSFileTools(QObject * parent = nullptr);
 };

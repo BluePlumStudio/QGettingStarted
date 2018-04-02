@@ -1,5 +1,58 @@
 #include "QGSArguments.h"
 
+QGSArguments::QGSArgument::QGSArgument(const QStringList & value, const QGSRules & rules)
+	:mRules(rules), mValue(value)
+{
+
+}
+
+QGSArguments::QGSArgument::~QGSArgument()
+{
+
+}
+
+QGSArguments::QGSArgument & QGSArguments::QGSArgument::setRules(const QGSRules & rules)
+{
+	mRules = rules;
+	return *this;
+}
+
+QGSArguments::QGSArgument & QGSArguments::QGSArgument::setValue(const QString & value)
+{
+	mValue = QStringList(value);
+	return *this;
+}
+
+QGSArguments::QGSArgument & QGSArguments::QGSArgument::setValue(const QStringList & value)
+{
+	mValue = value;
+	return *this;
+}
+
+QGSArguments::QGSArgument & QGSArguments::QGSArgument::addValue(const QString & value)
+{
+	mValue.push_back(value);
+	return *this;
+}
+
+QGSRules QGSArguments::QGSArgument::getRules()const
+{
+	return mRules;
+}
+
+QStringList QGSArguments::QGSArgument::getValue()const
+{
+	return mValue;
+}
+
+void QGSArguments::QGSArgument::clear()
+{
+	mRules.clear();
+	mValue.clear();
+}
+
+/**/
+
 QGSArguments::QGSArguments(const QList<QGSArgument> & jvm, const QList<QGSArgument> & game)
 {
 	mJvm = jvm;

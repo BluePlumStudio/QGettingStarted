@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QList>
+#include <QMetaType>
 
 class QGSForgeVersionInfo
 {
@@ -78,3 +79,5 @@ private:
 	QString mId;
 	QList<File> mFileList;
 };
+
+Q_DECLARE_METATYPE(QGSForgeVersionInfo)

@@ -2,10 +2,12 @@
 
 #include "QGSLaunchOptions.h"
 
-class QGSILaunchOptionsBuilder 
+class QGSILaunchOptionsBuilder :public QObject
 {
+	Q_OBJECT
+
 public: 
-	QGSILaunchOptionsBuilder();
+	QGSILaunchOptionsBuilder(QObject * parent = nullptr);
 
 	QGSILaunchOptionsBuilder(const QGSILaunchOptionsBuilder & right) = delete;
 

@@ -55,7 +55,7 @@ QList<QGSLibrary> QGSGameVersion::getLibraries()const
 	return mLibraries;
 }
 
-QMap<QString, QGSIDownload> QGSGameVersion::getDownloads()const
+QMap<QString, QGSDownloadBase> QGSGameVersion::getDownloads()const
 {
 	return mDownloads;
 }
@@ -145,7 +145,7 @@ QGSGameVersion & QGSGameVersion::setLibraries(const QList<QGSLibrary> & librarie
 	return *this;
 }
 
-QGSGameVersion & QGSGameVersion::setDownloads(const QMap<QString, QGSIDownload> & downloads)
+QGSGameVersion & QGSGameVersion::setDownloads(const QMap<QString, QGSDownloadBase> & downloads)
 {
 	mDownloads = downloads;
 	return *this;

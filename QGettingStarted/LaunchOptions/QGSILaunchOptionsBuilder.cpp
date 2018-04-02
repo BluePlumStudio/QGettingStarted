@@ -1,6 +1,6 @@
 #include "QGSILaunchOptionsBuilder.h"
 
-QGSILaunchOptionsBuilder::QGSILaunchOptionsBuilder() :mLaunchOptionsPtr(new QGSLaunchOptions)
+QGSILaunchOptionsBuilder::QGSILaunchOptionsBuilder(QObject * parent) :QObject(parent), mLaunchOptionsPtr(new QGSLaunchOptions)
 {
 	
 }

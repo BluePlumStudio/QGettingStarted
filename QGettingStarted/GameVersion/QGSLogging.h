@@ -2,29 +2,30 @@
 
 #include <QString>
 #include <QStringList>
+#include <QMetaType>
 
 #include "QGSDownloads.h"
 
 class QGSLogging
 {
 public:
-	class File :public QGSIDownload
+	class QGSFileDownload :public QGSDownloadBase
 	{
 	public:
-		File(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "") :QGSIDownload(size, SHA1, path, url), mId(id)
+		QGSFileDownload(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "") :QGSDownloadBase(size, SHA1, path, url), mId(id)
 		{
 
 		}
 
-		File(const File & right) = default;
+		QGSFileDownload(const QGSFileDownload & right) = default;
 
-		File(File && right) = default;
+		QGSFileDownload(QGSFileDownload && right) = default;
 
-		File & operator=(const File & right) = default;
+		QGSFileDownload & operator=(const QGSFileDownload & right) = default;
 
-		File & operator=(File && right) = default;
+		QGSFileDownload & operator=(QGSFileDownload && right) = default;
 
-		~File()
+		~QGSFileDownload()
 		{
 
 		}
@@ -32,7 +33,7 @@ public:
 		QString mId;
 	};
 public:
-	QGSLogging(const File & file = File(), const QString & argument = "", const QString & type = "");
+	QGSLogging(const QGSFileDownload & fileDownload = QGSFileDownload(), const QString & argument = "", const QString & type = "");
 
 	QGSLogging(const QGSLogging & right) = default;
 
@@ -44,15 +45,18 @@ public:
 
 	~QGSLogging();
 
-	QGSLogging & setFile(const File & file);
+	QGSLogging & setFileDownload(const QGSFileDownload & file);
 	QGSLogging & setArgument(const QString & argument);
 	QGSLogging & setType(const QString & type);
 
-	File getFile()const;
+	QGSFileDownload getFileDownload()const;
 	QString getArgument()const;
 	QString getType()const;
 private:
-	File mFile;
+	QGSFileDownload mFileDownload;
 	QString mArgument;
 	QString mType;
 };
+
+Q_DECLARE_METATYPE(QGSLogging::QGSFileDownload)
+Q_DECLARE_METATYPE(QGSLogging)

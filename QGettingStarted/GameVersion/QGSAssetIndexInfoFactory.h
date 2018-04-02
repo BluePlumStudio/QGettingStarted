@@ -8,10 +8,12 @@
 
 #include "QGSAssetIndexInfo.h"
 
-class QGSAssetIndexInfoFactory
+class QGSAssetIndexInfoFactory :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSAssetIndexInfoFactory();
+	QGSAssetIndexInfoFactory(QObject * parent = nullptr);
 
 	QGSAssetIndexInfoFactory(const QGSAssetIndexInfoFactory & right) = delete;
 

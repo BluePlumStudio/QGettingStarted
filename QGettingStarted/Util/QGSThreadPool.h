@@ -3,13 +3,13 @@
 #include <QQueue>
 #include <QTimer>
 
-#include "QGSThread.h"
+#include "QGSTaskThread.h"
 
 class QGSThreadPool : public QThread
 {
 	Q_OBJECT
 public:
-	friend class QGSThread;
+	friend class QGSTaskThread;
 
 	QGSThreadPool(const int minThreadCount, const int maxThreadCount, QObject *parent = nullptr);
 
@@ -58,7 +58,7 @@ private:
 	//QWaitCondition mTaskQueueNotFullCondition;
 
 	QQueue<QGSTask *> mTaskQueue;
-	QList<QGSThread *> mThreadList;
+	QList<QGSTaskThread *> mThreadList;
 	QMutex mMutex;
 	//bool mTaskQueueBlock;
 	bool mReleaseThreads;

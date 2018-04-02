@@ -1,7 +1,7 @@
 #include "QGSLauncher.h"
 #include "QGSGeneralLauncherStrategy.h"
 
-QGSLauncher::QGSLauncher()
+QGSLauncher::QGSLauncher(QObject * parent) :QObject(parent)
 {
 }
 

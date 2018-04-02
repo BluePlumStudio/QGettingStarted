@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMutex>
+#include <QMetaType>
 
 #include "../Util/QGSTask.h"
 #include "../Util/QGSNetworkAccessManager.h"

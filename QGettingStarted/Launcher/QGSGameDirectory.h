@@ -7,12 +7,14 @@
 #include "../GameVersion/QGSGameVersion.h"
 #include "../GameVersion/QGSGameVersionInfoList.h"
 
-class QGSGameDirectory 
+class QGSGameDirectory :public QObject
 {
-public:
-	QGSGameDirectory(const QDir & baseDir);
+	Q_OBJECT
 
-	QGSGameDirectory(QDir && baseDir);
+public:
+	QGSGameDirectory(const QDir & baseDir, QObject * parent = nullptr);
+
+	QGSGameDirectory(QDir && baseDir, QObject * parent = nullptr);
 
 	QGSGameDirectory(const QGSGameDirectory & right) = default;
 
@@ -22,7 +24,7 @@ public:
 
 	QGSGameDirectory & operator=(QGSGameDirectory && right) = default;
 
-	~QGSGameDirectory();
+	virtual ~QGSGameDirectory();
 
 	const QGSGameVersion & getVersion(const QString & version);
 

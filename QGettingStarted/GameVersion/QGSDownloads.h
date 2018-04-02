@@ -4,37 +4,39 @@
 #include <QUrl>
 #include <QMap>
 #include <QStringList>
+#include <QObject>
+#include <QMetaType>
 
 namespace DownloadType
 {
-	const QString CLIENT{ "client" };
-	const QString SERVER{ "server" };
-	const QString WINDOWS_SERVER{ "windows_server" };
-	const QString UNKNOWN{ "unknown" };
+	const QString CLIENT("client");
+	const QString SERVER("server");
+	const QString WINDOWS_SERVER("windows_server");
+	const QString UNKNOWN("unknown");
 }
 
-class QGSIDownload
+class QGSDownloadBase
 {
 public:
-	QGSIDownload(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl());
+	QGSDownloadBase(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl());
 
-	QGSIDownload(const QGSIDownload & right) = default;
+	QGSDownloadBase(const QGSDownloadBase & right) = default;
 
-	QGSIDownload(QGSIDownload && right) = default;
+	QGSDownloadBase(QGSDownloadBase && right) = default;
 
-	QGSIDownload & operator=(const QGSIDownload & right) = default;
+	QGSDownloadBase & operator=(const QGSDownloadBase & right) = default;
 
-	QGSIDownload & operator=(QGSIDownload && right) = default;
+	QGSDownloadBase & operator=(QGSDownloadBase && right) = default;
 
-	virtual ~QGSIDownload();
+	virtual ~QGSDownloadBase();
 
-	QGSIDownload & setSize(const int size);
+	QGSDownloadBase & setSize(const int size);
 
-	QGSIDownload & setSHA1(const QString & SHA1);
+	QGSDownloadBase & setSHA1(const QString & SHA1);
 
-	QGSIDownload & setPath(const QString & path);
+	QGSDownloadBase & setPath(const QString & path);
 
-	QGSIDownload & setUrl(const QUrl & url);
+	QGSDownloadBase & setUrl(const QUrl & url);
 
 	int getSize()const;
 
@@ -56,7 +58,7 @@ protected:
 class QGSDownloads
 {
 public:
-	QGSDownloads(const QGSIDownload & artifact = QGSIDownload(), const QMap<QString, QGSIDownload> & classifiers = QMap<QString, QGSIDownload>());
+	QGSDownloads(const QGSDownloadBase & artifact = QGSDownloadBase(), const QMap<QString, QGSDownloadBase> & classifiers = QMap<QString, QGSDownloadBase>());
 
 	QGSDownloads(const QGSDownloads & right) = default;
 
@@ -68,16 +70,19 @@ public:
 
 	~QGSDownloads();
 
-	QGSDownloads & setArtifact(const QGSIDownload & artifact);
+	QGSDownloads & setArtifact(const QGSDownloadBase & artifact);
 
-	QGSDownloads & setClassifiers(const QMap<QString, QGSIDownload> & classifiers);
+	QGSDownloads & setClassifiers(const QMap<QString, QGSDownloadBase> & classifiers);
 
-	QGSIDownload getArtifact()const;
+	QGSDownloadBase getArtifact()const;
 
-	QMap<QString, QGSIDownload> getClassifiers()const;
+	QMap<QString, QGSDownloadBase> getClassifiers()const;
 
 	void clear();
 public:
-	QGSIDownload mArtifact;
-	QMap<QString, QGSIDownload> mClassifiers;
+	QGSDownloadBase mArtifact;
+	QMap<QString, QGSDownloadBase> mClassifiers;
 };
+
+Q_DECLARE_METATYPE(QGSDownloadBase)
+Q_DECLARE_METATYPE(QGSDownloads)

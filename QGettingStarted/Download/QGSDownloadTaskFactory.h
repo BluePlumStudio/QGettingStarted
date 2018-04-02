@@ -19,10 +19,12 @@
 #include "../Launcher/QGSGameDirectory.h"
 #include "../GameVersion/QGSGameVersionInfoList.h"
 
-class QGSDownloadTaskFactory
+class QGSDownloadTaskFactory :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, const int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy);
+	QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject * parent = nullptr);
 
 	QGSDownloadTaskFactory(const QGSDownloadTaskFactory & right) = delete;
 

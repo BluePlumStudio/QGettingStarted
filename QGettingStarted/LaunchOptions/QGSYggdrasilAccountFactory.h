@@ -5,8 +5,10 @@
 
 class QGSYggdrasilAccountFactory : public QGSIAccountFactory
 {
+	Q_OBJECT
+
 public:
-	QGSYggdrasilAccountFactory();
+	QGSYggdrasilAccountFactory(QObject * parent = nullptr);
 
 	QGSYggdrasilAccountFactory(const QGSIAccountFactory & right) = delete;
 

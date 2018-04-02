@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QUrl>
+#include <QMetaType>
 
 class QGSGameVersionInfo
 {
@@ -43,3 +44,5 @@ private:
 	QString mReleaseTime;
 	QUrl mUrl;
 };
+
+Q_DECLARE_METATYPE(QGSGameVersionInfo)

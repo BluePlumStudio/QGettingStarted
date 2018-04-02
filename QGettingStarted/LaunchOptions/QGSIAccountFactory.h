@@ -4,10 +4,12 @@
 
 #include "QGSIAccount.h"
 
-class QGSIAccountFactory
+class QGSIAccountFactory :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSIAccountFactory();
+	QGSIAccountFactory(QObject * parent = nullptr);
 
 	QGSIAccountFactory(const QGSIAccountFactory & right) = delete;
 

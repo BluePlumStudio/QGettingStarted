@@ -1,6 +1,6 @@
 #include "QGSTask.h"
 
-QGSTask::QGSTask()
+QGSTask::QGSTask(QObject * parent) :QObject(parent)
 {
 	mOriginalThread = thread();
 }

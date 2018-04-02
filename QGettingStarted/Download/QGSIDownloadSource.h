@@ -9,10 +9,10 @@
 
 namespace ApiName
 {
-	static const QString Forge{ "forge" };
-	static const QString LiteLoader{ "liteloader" };
-	static const QString Optifine{ "optifine" };
-	static const QString Unknown{ "unknown" };
+	static const QString Forge("forge");
+	static const QString LiteLoader("liteloader");
+	static const QString Optifine("optifine");
+	static const QString Unknown("unknown");
 }
 
 class QGSIDownloadSource : public QObject

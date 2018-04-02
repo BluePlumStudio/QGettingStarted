@@ -37,3 +37,5 @@ private:
 private:
 	QVector<QGSOptifineVersionInfo> mOptifineVersionInfoVector;
 };
+
+Q_DECLARE_METATYPE(QGSOptifineVersionInfoList)

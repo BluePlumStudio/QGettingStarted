@@ -1,9 +1,10 @@
 #include <QJsonDocument>
 #include <QDebug>
+#include <QTextStream>
 
 #include "QGSGameDirectory.h"
 #include "../Util/QGSExceptionVersionNotFound.h"
-#include "../Util/QGSExceptionFileIO.h"
+#include "../Util/QGSExceptionIO.h"
 #include "../Util/QGSExceptionJsonPraseError.h"
 #include "VersionPraser/QGSGameVersionPraser.h"
 #include "../GameVersion/QGSLibrary.h"
@@ -11,12 +12,12 @@
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeperator();
 
-QGSGameDirectory::QGSGameDirectory(const QDir & baseDir) :mBaseDir(baseDir)
+QGSGameDirectory::QGSGameDirectory(const QDir & baseDir, QObject * parent) :QObject(parent), mBaseDir(baseDir)
 {
 	init();
 }
 
-QGSGameDirectory::QGSGameDirectory(QDir && baseDir) : mBaseDir(baseDir)
+QGSGameDirectory::QGSGameDirectory(QDir && baseDir, QObject * parent) :QObject(parent), mBaseDir(baseDir)
 {
 	init();
 }
@@ -31,18 +32,34 @@ void QGSGameDirectory::init()
 	{
 		if (!mBaseDir.mkpath("." + SEPARATOR))
 		{
-			throw QGSExceptionFileIO(mBaseDir.absolutePath());
+			throw QGSExceptionIO(mBaseDir.absolutePath());
 		}
 	}
 	
 	/*
 		"./versions/"
 	*/
+	QFile launcherProfilesJsonFile(mBaseDir.absolutePath() + SEPARATOR + "launcher_profiles.json");
+	if (!launcherProfilesJsonFile.exists())
+	{
+		if (launcherProfilesJsonFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+		{
+			QByteArray defaultData{
+				"{\"selectedProfile\": \"QGettingStarted\",\"profiles\": {\"(Default)\": {\"name\": \"(QGettingStarted)\"}},\"clientToken\": \"88888888-8888-8888-8888-888888888888\"}"};
+			QTextStream textStream(&launcherProfilesJsonFile);
+			textStream << defaultData;
+		}
+		else
+		{
+			throw QGSExceptionIO(launcherProfilesJsonFile.fileName());
+		}
+	}
+
 	if (!mBaseDir.exists("." + SEPARATOR + "versions" + SEPARATOR))
 	{
 		if (!mBaseDir.mkpath("." + SEPARATOR + "versions" + SEPARATOR))
 		{
-			throw QGSExceptionFileIO(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR);
+			throw QGSExceptionIO(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR);
 		}
 	}
 
@@ -50,7 +67,7 @@ void QGSGameDirectory::init()
 	{
 		if (!mBaseDir.mkpath("." + SEPARATOR + "libraries" + SEPARATOR))
 		{
-			throw QGSExceptionFileIO(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR);
+			throw QGSExceptionIO(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR);
 		}
 	}
 
@@ -58,7 +75,7 @@ void QGSGameDirectory::init()
 	{
 		if (!mBaseDir.mkpath("." + SEPARATOR + "assets" + SEPARATOR))
 		{
-			throw QGSExceptionFileIO(mBaseDir.absolutePath() + SEPARATOR + "assets" + SEPARATOR);
+			throw QGSExceptionIO(mBaseDir.absolutePath() + SEPARATOR + "assets" + SEPARATOR);
 		}
 	}
 }
@@ -125,7 +142,7 @@ QFile * QGSGameDirectory::generateAssetIndexJsonFile(const QString & version, co
 
 QFile * QGSGameDirectory::generateAssetIndexJsonFile(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath)
 {
-	auto rootVersionId{ gameVersionInfo.getId() };
+	auto rootVersionId(gameVersionInfo.getId());
 
 	while (!getVersion(rootVersionId).getInheritsFrom().isEmpty())
 	{
@@ -169,13 +186,13 @@ QDir QGSGameDirectory::getBaseDir() const
 
 QString QGSGameDirectory::praseLibraryName(const QGSLibrary & library)
 {
-	auto package{ library.getPackage().replace(".", SEPARATOR) };
-	auto && name{ library.getName() };
-	auto && version{ library.getVersion() };
-	auto && nativesMap{ library.getNatives() };
-	QString nativeString{ "" };
+	auto package(library.getPackage().replace(".", SEPARATOR));
+	auto && name(library.getName());
+	auto && version(library.getVersion());
+	auto && nativesMap(library.getNatives());
+	QString nativeString("");
 
-	auto && keys{ nativesMap.keys() };
+	auto && keys(nativesMap.keys());
 	for (auto & i : keys)
 	{
 		if (i.contains(QGSOperatingSystem::getInstance().getProductType()))
@@ -192,18 +209,18 @@ QString QGSGameDirectory::praseLibraryName(const QGSLibrary & library)
 bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIndex & assetIndex, QDir & dir)
 {
 	bool ret = true;
-	QString assetsBaseDirStr{ mBaseDir.absolutePath() + SEPARATOR + "assets" };
+	QString assetsBaseDirStr(mBaseDir.absolutePath() + SEPARATOR + "assets");
 
 	if (!assetIndex.getId().isEmpty())
 	{
 		if (assetIndex.getId().contains("legacy"))
 		{
-			dir = QDir{assetsBaseDirStr + SEPARATOR + "virtual" };
+			dir = QDir(assetsBaseDirStr + SEPARATOR + "virtual");
 			ret = true;
 		}
 		else
 		{
-			dir = QDir{ assetsBaseDirStr };
+			dir = QDir(assetsBaseDirStr);
 			ret = true;
 		}
 	}
@@ -215,32 +232,32 @@ bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIn
 			{
 				version = getVersion(version).getInheritsFrom();
 			}
-			int signPosition{ version.indexOf("-") };
+			int signPosition(version.indexOf("-"));
 			if (signPosition != -1)
 			{
 				version.truncate(signPosition);
 			}
-			auto & rootVersion{ getVersion(version) };
+			auto & rootVersion(getVersion(version));
 
-			auto && assetIndex{ rootVersion.getAssetIndex() };
-			QFile assetJsonFile{ assetsBaseDirStr + SEPARATOR + "indexes" + SEPARATOR + assetIndex.getId() + ".json" };
+			auto && assetIndex(rootVersion.getAssetIndex());
+			QFile assetJsonFile(assetsBaseDirStr + SEPARATOR + "indexes" + SEPARATOR + assetIndex.getId() + ".json");
 			if (!assetJsonFile.exists()|| !assetJsonFile.open(QIODevice::ReadOnly))
 			{
-				dir = QDir{ assetsBaseDirStr };
+				dir = QDir(assetsBaseDirStr);
 				ret = false;
 			}
 			else
 			{
 				QGSAssetIndexInfoFactory infoListFactory;
-				auto && assetInfoList{ infoListFactory.createAssetIndexInfo(assetJsonFile.readAll()) };
+				auto && assetInfoList(infoListFactory.createAssetIndexInfo(assetJsonFile.readAll()));
 				if (assetInfoList.getVirtual())
 				{
-					dir = QDir{ assetsBaseDirStr + SEPARATOR + "virtual" };
+					dir = QDir(assetsBaseDirStr + SEPARATOR + "virtual");
 					ret = true;
 				}
 				else
 				{
-					dir = QDir{ assetsBaseDirStr };
+					dir = QDir(assetsBaseDirStr);
 					ret = true;
 				}
 			}
@@ -250,11 +267,11 @@ bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIn
 		{
 			if (version <= "1.7.2")
 			{
-				dir = QDir{ assetsBaseDirStr + SEPARATOR + "virtual" };
+				dir = QDir(assetsBaseDirStr + SEPARATOR + "virtual");
 			}
 			else
 			{
-				dir = QDir{ assetsBaseDirStr };
+				dir = QDir(assetsBaseDirStr);
 			}
 			ret = false;
 		}
@@ -271,7 +288,7 @@ QDir QGSGameDirectory::generateAssetsDirectory(const bool withAbsolutePath)
 
 QFile * QGSGameDirectory::generateAssetObjectFile(const QGSAssetObject & assetObject, const bool withAbsolutePath)
 {
-	auto && hash{ assetObject.getHash() };
+	auto && hash(assetObject.getHash());
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") +
 		SEPARATOR + "assets" + SEPARATOR + "objects" + SEPARATOR + hash.left(2) + SEPARATOR + hash);
 }
@@ -289,7 +306,7 @@ const QGSGameVersion & QGSGameDirectory::addVersion(const QString version)
 	QFile versionJsonFile(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".json");
 	if (!versionJsonFile.exists())
 	{
-		QStringList versionJsonList = versionDir.entryList(QStringList{ "*.json" }, QDir::NoDotAndDotDot);
+		QStringList versionJsonList = versionDir.entryList(QStringList("*.json"), QDir::NoDotAndDotDot);
 		const QString versionJsonFileName = version + ".json";
 		if (!versionJsonList.size())
 		{
@@ -303,10 +320,10 @@ const QGSGameVersion & QGSGameDirectory::addVersion(const QString version)
 	//打开文件读取json
 	if (!versionJsonFile.open(QIODevice::ReadOnly))
 	{
-		throw QGSExceptionFileIO();
+		throw QGSExceptionIO();
 	}
 	QJsonParseError jsonPraseError;
-	QJsonDocument jsonDocument{ QJsonDocument::fromJson(versionJsonFile.readAll(),&jsonPraseError) };
+	QJsonDocument jsonDocument(QJsonDocument::fromJson(versionJsonFile.readAll(),&jsonPraseError));
 	if (jsonPraseError.error != QJsonParseError::NoError)
 	{
 		versionJsonFile.flush();
@@ -314,9 +331,9 @@ const QGSGameVersion & QGSGameDirectory::addVersion(const QString version)
 		throw QGSExceptionJsonPraseError(jsonPraseError);
 	}
 	//解析json生成version
-	QSharedPointer<QGSGameVersionPraser> versionPraser{ new QGSGameVersionPraser() };
+	QSharedPointer<QGSGameVersionPraser> versionPraser(new QGSGameVersionPraser());
 	versionPraser->praseVersion(newVersion, jsonDocument);
-	auto ret{ mVersionMap.insert(version, newVersion) };
+	auto ret(mVersionMap.insert(version, newVersion));
 
 	return !newVersion.getInheritsFrom().isEmpty() ? addVersion(newVersion.getInheritsFrom()) : *ret;
 }

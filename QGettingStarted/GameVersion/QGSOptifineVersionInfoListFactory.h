@@ -8,10 +8,12 @@
 
 #include "QGSOptifineVersionInfoList.h"
 
-class QGSOptifineVersionInfoListFactory
+class QGSOptifineVersionInfoListFactory :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSOptifineVersionInfoListFactory();
+	QGSOptifineVersionInfoListFactory(QObject * parent = nullptr);
 
 	QGSOptifineVersionInfoListFactory(const QGSOptifineVersionInfoListFactory & right) = delete;
 

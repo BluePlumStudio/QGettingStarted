@@ -26,4 +26,4 @@ namespace qgs
 #include "GameVersion/QGSGameVersionInfoListFactory.h"
 #include "GameVersion/QGSLiteLoaderVersionInfoListFactory.h"
 #include "GameVersion/QGSOptifineVersionInfoListFactory.h"
-#include "GameBuilder/QGSGameBuilder.h"
+#include "Builder/QGSBuilderFactory.h"

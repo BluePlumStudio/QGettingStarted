@@ -5,8 +5,10 @@
 
 class QGSOfflineAccountFactory: public QGSIAccountFactory 
 {
+	Q_OBJECT
+
 public: 
-	QGSOfflineAccountFactory();
+	QGSOfflineAccountFactory(QObject * parent = nullptr);
 
 	QGSOfflineAccountFactory(const QGSIAccountFactory & right) = delete;
 

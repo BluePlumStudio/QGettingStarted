@@ -2,6 +2,7 @@
 
 #include <QList>
 #include <QString>
+#include <QMetaType>
 
 #include "QGSLibrary.h"
 
@@ -56,3 +57,5 @@ private:
 	QString mTimestamp;
 	int mLastSuccessfulBuild;
 };
+
+Q_DECLARE_METATYPE(QGSLiteLoaderVersionMeta)

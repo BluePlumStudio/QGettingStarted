@@ -1,10 +1,11 @@
 #pragma once
 
 #include <QString>
+#include <QMetaType>
 
 #include "QGSDownloads.h"
 
-class QGSAssetIndex :public QGSIDownload
+class QGSAssetIndex :public QGSDownloadBase
 {
 public:
 	QGSAssetIndex(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const qint64 totalSize = 0, const QString & id = "");
@@ -29,7 +30,7 @@ public:
 
 	void clear();
 private:
-	/*QGSIDownload
+	/*QGSDownloadBase
 	int mSize;
 	QString mSHA1;
 	QString mPath;
@@ -40,3 +41,4 @@ private:
 	QString mId;
 };
 
+Q_DECLARE_METATYPE(QGSAssetIndex)

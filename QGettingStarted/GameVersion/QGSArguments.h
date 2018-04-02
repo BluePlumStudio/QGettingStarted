@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QMetaType>
 
 #include "QGSRules.h"
 
@@ -11,14 +12,7 @@ public:
 	class QGSArgument
 	{
 	public:
-		QGSArgument(const QString & value = "", const QGSRules & rules = QGSRules()) :mRules(rules), mValue(value)
-		{
-
-		}
-		QGSArgument(const QStringList & value = QStringList(), const QGSRules & rules = QGSRules()) :mRules(rules), mValue(value)
-		{
-
-		}
+		QGSArgument(const QStringList & value = QStringList(), const QGSRules & rules = QGSRules());
 
 		QGSArgument(const QGSArgument & right) = default;
 
@@ -28,48 +22,26 @@ public:
 
 		QGSArgument & operator=(QGSArgument && right) = default;
 
-		~QGSArgument()
-		{
+		~QGSArgument();
 
-		}
+		QGSArgument & setRules(const QGSRules & rules);
 
-		QGSArgument & setRules(const QGSRules & rules)
-		{
-			mRules = rules;
-			return *this;
-		}
+		QGSArgument & setValue(const QString & value);
 
-		QGSArgument & setValue(const QString & value)
-		{
-			mValue = QStringList(value);
-			return *this;
-		}
+		QGSArgument & setValue(const QStringList & value);
 
-		QGSArgument & setValue(const QStringList & value)
-		{
-			mValue = value;
-			return *this;
-		}
+		QGSArgument & addValue(const QString & value);
 
-		QGSRules getRules()const
-		{
-			return mRules;
-		}
+		QGSRules getRules()const;
 
-		QStringList getValue()const
-		{
-			return mValue;
-		}
+		QStringList getValue()const;
 
-		void clear()
-		{
-			mRules.clear();
-			mValue.clear();
-		}
+		void clear();
 	private:
 		QGSRules mRules;
 		QStringList mValue;
 	};
+
 public:
 	QGSArguments(const QList<QGSArgument> & jvm = QList<QGSArgument>(), const QList<QGSArgument> & game = QList<QGSArgument>());
 
@@ -99,3 +71,5 @@ private:
 
 };
 
+Q_DECLARE_METATYPE(QGSArguments::QGSArgument)
+Q_DECLARE_METATYPE(QGSArguments)

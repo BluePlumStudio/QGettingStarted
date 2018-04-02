@@ -2,6 +2,7 @@
 
 #include <QMap>
 #include <QString>
+#include <QMetaType>
 
 class QGSAssetObject
 {
@@ -27,3 +28,5 @@ private:
 	QString mHash;
 	qint64 mSize;
 };
+
+Q_DECLARE_METATYPE(QGSAssetObject)

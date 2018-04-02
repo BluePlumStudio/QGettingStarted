@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QMetaType>
+
 #include "QGSExtract.h"
 #include "QGSRules.h"
 #include "QGSDownloads.h"
@@ -62,3 +64,5 @@ private:
 	QGSRules mRules;
 	QUrl mUrl;
 };
+
+Q_DECLARE_METATYPE(QGSLibrary)

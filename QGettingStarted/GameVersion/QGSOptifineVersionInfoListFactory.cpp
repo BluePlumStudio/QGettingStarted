@@ -1,10 +1,10 @@
 #include "QGSOptifineVersionInfoListFactory.h"
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionFileIO.h"
+#include "Util/QGSExceptionIO.h"
 #include "Util/QGSExceptionJsonPraseError.h"
 
-QGSOptifineVersionInfoListFactory::QGSOptifineVersionInfoListFactory()
+QGSOptifineVersionInfoListFactory::QGSOptifineVersionInfoListFactory(QObject * parent) :QObject(parent)
 {
 }
 
@@ -17,21 +17,21 @@ QGSOptifineVersionInfoList QGSOptifineVersionInfoListFactory::createOptifineVers
 	QGSOptifineVersionInfoList ret;
 
 	QJsonParseError jsonPraseError;
-	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
+	QJsonDocument jsonDocument(QJsonDocument::fromJson(jsonData,&jsonPraseError));
 	if (jsonPraseError.error != QJsonParseError::NoError)
 	{
 		throw QGSExceptionJsonPraseError(jsonPraseError);
 	}
 
-    const auto && jsonArray{ jsonDocument.array() };
+    const auto && jsonArray(jsonDocument.array());
     for (const auto & jsonObject : jsonArray)
 	{
-		auto && versionInfoObject{ jsonObject.toObject() };
-		ret.addVersionInfo(QGSOptifineVersionInfo{ versionInfoObject.value("_id").toString(),
+		auto && versionInfoObject(jsonObject.toObject());
+		ret.addVersionInfo(QGSOptifineVersionInfo(versionInfoObject.value("_id").toString(),
 			versionInfoObject.value("mcversion").toString(),
 			versionInfoObject.value("type").toString(),
 			versionInfoObject.value("patch").toString(),
-			versionInfoObject.value("filename").toString() });
+			versionInfoObject.value("filename").toString()));
 	}
 
 	return ret;

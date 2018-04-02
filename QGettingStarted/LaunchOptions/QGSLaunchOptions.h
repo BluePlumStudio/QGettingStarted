@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QSize>
+#include <QMetaType>
 
 #include "QGSIAccountFactory.h"
 #include "../Launcher/QGSGameDirectory.h"
@@ -104,3 +105,6 @@ private:
 	QString mLoggingPath;
 	QMap<QString, QString> mCustomMinecraftArguments;
 };
+
+Q_DECLARE_METATYPE(QGSServerInfo)
+Q_DECLARE_METATYPE(QGSLaunchOptions)

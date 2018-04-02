@@ -11,15 +11,16 @@
 #include "../Util/QGSOperatingSystem.h"
 #include "../Util/QGSExceptionInvalidValue.h"
 
-static const QString SEPARATOR{ QGSOperatingSystem::getInstance().getSeperator() };
+static const QString SEPARATOR(QGSOperatingSystem::getInstance().getSeperator());
 
 /**/
 
 QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount, const QNetworkProxy & proxy, QObject * parent)
-	:mTargetFilePtr(targetFile), 
-	mDownloadInfo(downloadInfo), 
-	mConnectionCount(threadCount), 
-	mProxy(proxy), 
+	:QGSTask(parent),
+	mTargetFilePtr(targetFile),
+	mDownloadInfo(downloadInfo),
+	mConnectionCount(threadCount),
+	mProxy(proxy),
 	mBytesReceived(0),
 	mBytesTotal(0),
 	mState(DownloadState::Stop),
@@ -73,7 +74,7 @@ QGSDownloadInfo QGSDownloadTask::getDownloadInfo()
 
 QString QGSDownloadTask::generateRandomFileName()
 {
-	return QString{ QGSUuidGenerator::generateUuid() + ".qtmp" };
+	return QString(QGSUuidGenerator::generateUuid() + ".qtmp");
 }
 
 void QGSDownloadTask::templateStart(QGSTask * task)
@@ -84,7 +85,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		return;
 	}
 
-	auto && url{ mDownloadInfo.getUrl() };
+	auto && url(mDownloadInfo.getUrl());
 	if (!url.isValid()
 		|| url.isEmpty()
 		|| url.isLocalFile())
@@ -98,7 +99,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 	mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".qtmp");
 	if (!mTargetFilePtr->isOpen())
 	{
-		QFileInfo{ *mTargetFilePtr }.absoluteDir().mkpath("." + SEPARATOR);
+		QFileInfo(*mTargetFilePtr).absoluteDir().mkpath("." + SEPARATOR);
 		if (!mTargetFilePtr->open(QIODevice::WriteOnly | QIODevice::Truncate))
 		{
 			emit error(this);
@@ -140,10 +141,10 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		//qDebug() << url << "Connection count:" << mConnectionCount;
 		for (int i = 0; i < mConnectionCount; i++)
 		{
-			qint64 bytesBegin{ mBytesTotal*i / mConnectionCount };
-			qint64 bytesEnd{ mBytesTotal*(i + 1) / mConnectionCount };
+			qint64 bytesBegin(mBytesTotal*i / mConnectionCount);
+			qint64 bytesEnd(mBytesTotal*(i + 1) / mConnectionCount);
 
-			auto * newDownloader{ new QGSDownloader{ mTargetFilePtr,mDownloadInfo,mNetworkAccessManagerPtr,bytesBegin,bytesEnd,mProxy } };
+			auto * newDownloader(new QGSDownloader(mTargetFilePtr,mDownloadInfo,mNetworkAccessManagerPtr,bytesBegin,bytesEnd,mProxy));
 
 			QObject::connect(newDownloader, &QGSDownloader::finished, this, &QGSDownloadTask::slotFinished);
 			QObject::connect(newDownloader, &QGSDownloader::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
@@ -153,8 +154,8 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 
 			mDownloaderList.push_back(newDownloader);
 
-			//QMetaObject::invokeMethod(newDownloader, "start", Qt::ConnectionType::DirectConnection);
-			newDownloader->start();
+			QMetaObject::invokeMethod(newDownloader, "start", Qt::ConnectionType::DirectConnection);
+			//newDownloader->start();
 		}
 	}
 	mState = DownloadState::Start;
@@ -296,15 +297,15 @@ void QGSDownloadTask::slotRedirected(const QUrl & url, QGSDownloader * downloade
 
 quint64 QGSDownloadTask::getFileSize()
 {
-	QTimer *timer{ nullptr };
+	QTimer *timer(nullptr);
 	QEventLoop eventLoop;
-	bool readTimeOut{ false };
-	const int timeOutms{ 60000 };
-	quint64 ret{ 0 };
+	bool readTimeOut(false);
+	const int timeOutms(60000);
+	quint64 ret(0);
 
 	if (timeOutms > 0)
 	{
-		timer = new QTimer{ this };
+		timer = new QTimer(this);
 
 		connect(timer, &QTimer::timeout, [&readTimeOut]()
 		{
@@ -314,11 +315,11 @@ quint64 QGSDownloadTask::getFileSize()
 		timer->setSingleShot(true);
 	}
 
-	auto && request{ QGSNetworkAccessManager::generateHttpsNetworkRequest() };
+	auto && request(QGSNetworkAccessManager::generateHttpsNetworkRequest());
 	request.setUrl(mDownloadInfo.getUrl());
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 
-	auto * headReply{ mNetworkAccessManagerPtr->head(request) };
+	auto * headReply(mNetworkAccessManagerPtr->head(request));
 	QObject::connect(headReply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit, Qt::DirectConnection);
 	timer->start(timeOutms);
 

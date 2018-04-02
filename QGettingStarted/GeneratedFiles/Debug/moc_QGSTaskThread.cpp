@@ -1,16 +1,16 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'QGSThread.h'
+** Meta object code from reading C++ file 'QGSTaskThread.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.10.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Util/QGSThread.h"
+#include "../../Util/QGSTaskThread.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'QGSThread.h' doesn't include <QObject>."
+#error "The header file 'QGSTaskThread.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.10.0. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -20,31 +20,31 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_QGSThread_t {
+struct qt_meta_stringdata_QGSTaskThread_t {
     QByteArrayData data[6];
-    char stringdata0[50];
+    char stringdata0[54];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_QGSThread_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_QGSTaskThread_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_QGSThread_t qt_meta_stringdata_QGSThread = {
+static const qt_meta_stringdata_QGSTaskThread_t qt_meta_stringdata_QGSTaskThread = {
     {
-QT_MOC_LITERAL(0, 0, 9), // "QGSThread"
-QT_MOC_LITERAL(1, 10, 11), // "taskStarted"
-QT_MOC_LITERAL(2, 22, 0), // ""
-QT_MOC_LITERAL(3, 23, 8), // "QGSTask*"
-QT_MOC_LITERAL(4, 32, 4), // "task"
-QT_MOC_LITERAL(5, 37, 12) // "taskFinished"
+QT_MOC_LITERAL(0, 0, 13), // "QGSTaskThread"
+QT_MOC_LITERAL(1, 14, 11), // "taskStarted"
+QT_MOC_LITERAL(2, 26, 0), // ""
+QT_MOC_LITERAL(3, 27, 8), // "QGSTask*"
+QT_MOC_LITERAL(4, 36, 4), // "task"
+QT_MOC_LITERAL(5, 41, 12) // "taskFinished"
 
     },
-    "QGSThread\0taskStarted\0\0QGSTask*\0task\0"
-    "taskFinished"
+    "QGSTaskThread\0taskStarted\0\0QGSTask*\0"
+    "task\0taskFinished"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_QGSThread[] = {
+static const uint qt_meta_data_QGSTaskThread[] = {
 
  // content:
        7,       // revision
@@ -68,10 +68,10 @@ static const uint qt_meta_data_QGSThread[] = {
        0        // eod
 };
 
-void QGSThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void QGSTaskThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        QGSThread *_t = static_cast<QGSThread *>(_o);
+        QGSTaskThread *_t = static_cast<QGSTaskThread *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->taskStarted((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
@@ -99,15 +99,15 @@ void QGSThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            typedef void (QGSThread::*_t)(QGSTask * );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&QGSThread::taskStarted)) {
+            typedef void (QGSTaskThread::*_t)(QGSTask * );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&QGSTaskThread::taskStarted)) {
                 *result = 0;
                 return;
             }
         }
         {
-            typedef void (QGSThread::*_t)(QGSTask * );
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&QGSThread::taskFinished)) {
+            typedef void (QGSTaskThread::*_t)(QGSTask * );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&QGSTaskThread::taskFinished)) {
                 *result = 1;
                 return;
             }
@@ -115,26 +115,26 @@ void QGSThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     }
 }
 
-const QMetaObject QGSThread::staticMetaObject = {
-    { &QThread::staticMetaObject, qt_meta_stringdata_QGSThread.data,
-      qt_meta_data_QGSThread,  qt_static_metacall, nullptr, nullptr}
+const QMetaObject QGSTaskThread::staticMetaObject = {
+    { &QThread::staticMetaObject, qt_meta_stringdata_QGSTaskThread.data,
+      qt_meta_data_QGSTaskThread,  qt_static_metacall, nullptr, nullptr}
 };
 
 
-const QMetaObject *QGSThread::metaObject() const
+const QMetaObject *QGSTaskThread::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *QGSThread::qt_metacast(const char *_clname)
+void *QGSTaskThread::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_QGSThread.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_QGSTaskThread.stringdata0))
         return static_cast<void*>(this);
     return QThread::qt_metacast(_clname);
 }
 
-int QGSThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int QGSTaskThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QThread::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -152,14 +152,14 @@ int QGSThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void QGSThread::taskStarted(QGSTask * _t1)
+void QGSTaskThread::taskStarted(QGSTask * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void QGSThread::taskFinished(QGSTask * _t1)
+void QGSTaskThread::taskFinished(QGSTask * _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

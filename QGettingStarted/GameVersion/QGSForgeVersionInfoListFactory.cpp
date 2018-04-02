@@ -1,10 +1,10 @@
 #include "QGSForgeVersionInfoListFactory.h"
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionFileIO.h"
+#include "Util/QGSExceptionIO.h"
 #include "Util/QGSExceptionJsonPraseError.h"
 
-QGSForgeVersionInfoListFactory::QGSForgeVersionInfoListFactory()
+QGSForgeVersionInfoListFactory::QGSForgeVersionInfoListFactory(QObject * parent) :QObject(parent)
 {
 }
 
@@ -17,7 +17,7 @@ QGSForgeVersionInfoList QGSForgeVersionInfoListFactory::createForgeVersionInfoLi
 	QGSForgeVersionInfoList ret;
 
 	QJsonParseError jsonPraseError;
-	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
+	QJsonDocument jsonDocument(QJsonDocument::fromJson(jsonData,&jsonPraseError));
 	if (jsonPraseError.error != QJsonParseError::NoError)
 	{
 		throw QGSExceptionJsonPraseError(jsonPraseError);
@@ -42,12 +42,12 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(const Q
 		throw QGSExceptionJsonPraseError(QJsonParseError(), "\"number\" does not exeist!");
 	}
 
-	auto && numberObject{ jsonObject.value("number").toObject() };
-	auto && keys{ numberObject.keys() };
+	auto && numberObject(jsonObject.value("number").toObject());
+	auto && keys(numberObject.keys());
 	limit = qMin(limit, keys.size());
 	for (int i = 0; i < limit; i += offset)
 	{
-		auto && infoObject{ numberObject.value(keys[i]).toObject() };
+		auto && infoObject(numberObject.value(keys[i]).toObject());
 		QGSForgeVersionInfo newForgeVersionInfo;
 		if (!infoObject.contains("build"))
 		{
@@ -60,15 +60,15 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(const Q
 		newForgeVersionInfo.setVersion(infoObject.value("version").toString());
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
-        const auto && fileArray{ infoObject.value("files").toArray() };
+        const auto && fileArray(infoObject.value("files").toArray());
 		QList<QGSForgeVersionInfo::File> fileList;
         for (const auto & j : fileArray)
 		{
-			auto && fileInfoArray{ j.toArray() };
+			auto && fileInfoArray(j.toArray());
 
-			fileList.push_back(QGSForgeVersionInfo::File{ fileInfoArray.at(0).toString(),
+			fileList.push_back(QGSForgeVersionInfo::File(fileInfoArray.at(0).toString(),
 				fileInfoArray.at(1).toString() ,
-				fileInfoArray.at(2).toString() });
+				fileInfoArray.at(2).toString()));
 		}
 		newForgeVersionInfo.setFiles(fileList);
 
@@ -81,7 +81,7 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(con
 	limit = qMin(limit, jsonArray.size());
 	for (int i = 0; i < limit; i += offset)
 	{
-		auto && infoObject{ jsonArray.at(i).toObject() };
+		auto && infoObject(jsonArray.at(i).toObject());
 		QGSForgeVersionInfo newForgeVersionInfo;
 		if (!infoObject.contains("build"))
 		{
@@ -94,16 +94,16 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(con
 		newForgeVersionInfo.setVersion(infoObject.value("version").toString());
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
-        const auto && fileArray{ infoObject.value("files").toArray() };
+        const auto && fileArray(infoObject.value("files").toArray());
 		QList<QGSForgeVersionInfo::File> fileList;
         for (const auto & j : fileArray)
 		{
-			auto && fileObject{ j.toObject() };
+			auto && fileObject(j.toObject());
 
-			fileList.push_back(QGSForgeVersionInfo::File{ fileObject.value("format").toString(),
+			fileList.push_back(QGSForgeVersionInfo::File(fileObject.value("format").toString(),
 				fileObject.value("category").toString() ,
 				fileObject.value("hash").toString() ,
-				fileObject.value("_id").toString() });
+				fileObject.value("_id").toString()));
 		}
 		newForgeVersionInfo.setFiles(fileList);
 

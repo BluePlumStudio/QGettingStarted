@@ -4,10 +4,12 @@
 
 #include "QGSIGameVersionPraseStrategy.h"
 
-class QGSGameVersionPraser
+class QGSGameVersionPraser :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSGameVersionPraser();
+	QGSGameVersionPraser(QObject * parent = nullptr);
 
 	QGSGameVersionPraser(const QGSGameVersionPraser & right) = delete;
 
@@ -17,7 +19,7 @@ public:
 
 	QGSGameVersionPraser & operator=(QGSGameVersionPraser && right) = delete;
 
-	~QGSGameVersionPraser();
+	virtual ~QGSGameVersionPraser();
 
 	bool praseVersion(QGSGameVersion & version, QJsonDocument & jsonDocument)const;
 private:

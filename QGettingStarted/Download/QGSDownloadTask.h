@@ -6,7 +6,7 @@
 
 namespace DownloadTask
 {
-	const int DEFAULT_CONNECTION_COUNT{ 16 };
+	const int DEFAULT_CONNECTION_COUNT(16);
 }
 
 class QGSDownloadTask : public QGSTask

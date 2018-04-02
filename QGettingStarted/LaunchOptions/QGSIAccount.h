@@ -1,14 +1,17 @@
 #pragma once
 
 #include <QString>
+#include <QObject>
 
 #include "QGSAuthInfo.h"
 #include "Util/QGSNetworkAccessManager.h"
 
-class QGSIAccount
+class QGSIAccount :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSIAccount();
+	QGSIAccount(QObject * parent = nullptr);
 
 	virtual ~QGSIAccount();
 

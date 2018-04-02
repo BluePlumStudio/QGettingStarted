@@ -1,9 +1,11 @@
 #include "QGSIAccountFactory.h"
 
-QGSIAccountFactory::QGSIAccountFactory()
+QGSIAccountFactory::QGSIAccountFactory(QObject * parent) :QObject(parent)
 {
+
 }
 
 QGSIAccountFactory::~QGSIAccountFactory()
 {
+
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QStringList>
+#include <QMetaType>
 
 class QGSExtract
 {
@@ -23,3 +24,5 @@ public:
 private:
 	QStringList mExclude;
 };
+
+Q_DECLARE_METATYPE(QGSExtract)

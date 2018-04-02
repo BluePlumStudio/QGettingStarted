@@ -8,10 +8,12 @@
 
 #include "QGSLiteLoaderVersionInfoList.h"
 
-class QGSLiteLoaderVersionInfoListFactory
+class QGSLiteLoaderVersionInfoListFactory :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSLiteLoaderVersionInfoListFactory();
+	QGSLiteLoaderVersionInfoListFactory(QObject * parent = nullptr);
 
 	QGSLiteLoaderVersionInfoListFactory(const QGSLiteLoaderVersionInfoListFactory & right) = delete;
 

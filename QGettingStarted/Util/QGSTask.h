@@ -8,7 +8,7 @@ class QGSTask : public QObject
 	Q_OBJECT
 
 public:
-	QGSTask();
+	QGSTask(QObject * parent = nullptr);
 
 	QGSTask(const QGSTask & right) = delete;
 

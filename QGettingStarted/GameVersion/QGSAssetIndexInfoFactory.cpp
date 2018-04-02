@@ -1,10 +1,10 @@
 #include "QGSAssetIndexInfoFactory.h"
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionFileIO.h"
+#include "Util/QGSExceptionIO.h"
 #include "Util/QGSExceptionJsonPraseError.h"
 
-QGSAssetIndexInfoFactory::QGSAssetIndexInfoFactory()
+QGSAssetIndexInfoFactory::QGSAssetIndexInfoFactory(QObject * parent) :QObject(parent)
 {
 }
 
@@ -17,24 +17,24 @@ QGSAssetIndexInfo QGSAssetIndexInfoFactory::createAssetIndexInfo(const QByteArra
 	QGSAssetIndexInfo ret;
 
 	QJsonParseError jsonPraseError;
-	QJsonDocument jsonDocument{ QJsonDocument::fromJson(jsonData,&jsonPraseError) };
+	QJsonDocument jsonDocument(QJsonDocument::fromJson(jsonData,&jsonPraseError));
 	if (jsonPraseError.error != QJsonParseError::NoError)
 	{
 		throw QGSExceptionJsonPraseError(jsonPraseError);
 	}
 
-	auto && jsonObject{ jsonDocument.object() };
+	auto && jsonObject(jsonDocument.object());
 	if (!jsonObject.contains("objects"))
 	{
 		throw QGSExceptionJsonPraseError(jsonPraseError, "\"objects\" does not exeist!");
 	}
 
-	auto && assetInfoListObject{ jsonObject.value("objects").toObject() };
-	auto && keys{ assetInfoListObject.keys() };
+	auto && assetInfoListObject(jsonObject.value("objects").toObject());
+	auto && keys(assetInfoListObject.keys());
 	for (auto & key : keys)
 	{
-		auto && assetInfoObject{ assetInfoListObject.value(key).toObject() };
-		ret.addAssetObject(key, QGSAssetObject{ assetInfoObject.value("hash").toString(),assetInfoObject.value("size").toInt() });
+		auto && assetInfoObject(assetInfoListObject.value(key).toObject());
+		ret.addAssetObject(key, QGSAssetObject(assetInfoObject.value("hash").toString(),assetInfoObject.value("size").toInt()));
 	}
 
 	ret.setVirtual(jsonObject.value("virtual").toBool());

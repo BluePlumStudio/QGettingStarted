@@ -1,17 +1,12 @@
 #include "QGSDownloadTaskFactory.h"
 #include "Util/QGSExceptionInvalidValue.h"
 
-QGSDownloadTaskFactory::QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, const int connectionCount, const QNetworkProxy & proxy)
-	:mDownloadSourcePtr(downloadSource), mConnectionCount(connectionCount), mProxy(proxy)
+QGSDownloadTaskFactory::QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, const QNetworkProxy & proxy, QObject * parent)
+	:QObject(parent), mDownloadSourcePtr(downloadSource), mConnectionCount(DownloadTask::DEFAULT_CONNECTION_COUNT), mProxy(proxy)
 {
 	if (!downloadSource)
 	{
 		throw QGSExceptionInvalidValue();
-	}
-
-	if (mConnectionCount < 1)
-	{
-		mConnectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
 	}
 }
 
@@ -37,9 +32,8 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateDownloadTask(QFile * targetFil
 		return nullptr;
 	}
 
-	return new QGSDownloadTask{ targetFile,downloadInfo,mConnectionCount,mProxy };
+	return new QGSDownloadTask(targetFile, downloadInfo, mConnectionCount, mProxy);
 }
-
 
 QGSDownloadTask * QGSDownloadTaskFactory::generateGameVersionInfoJsonDownloadTask(QFile * targetFile)
 {
@@ -48,7 +42,7 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateGameVersionInfoJsonDownloadTas
 		return nullptr;
 	}
 
-	auto && url{ mDownloadSourcePtr->generateGameVersionInfoJsonUrl() };
+	auto && url(mDownloadSourcePtr->generateGameVersionInfoJsonUrl());
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
@@ -62,7 +56,7 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateForgeVersionInfoJsonDownloadTa
 		return nullptr;
 	}
 
-	auto && url{ mDownloadSourcePtr->generateForgeVersionInfoJsonUrl(offset,limit) };
+	auto && url(mDownloadSourcePtr->generateForgeVersionInfoJsonUrl(offset,limit));
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
@@ -76,7 +70,7 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderVersionInfoJsonDownl
 		return nullptr;
 	}
 
-	auto && url{ mDownloadSourcePtr->generateLiteLoaderVersionInfoJsonUrl() };
+	auto && url(mDownloadSourcePtr->generateLiteLoaderVersionInfoJsonUrl());
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
@@ -90,7 +84,7 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateOptifineVersionInfoJsonDownloa
 		return nullptr;
 	}
 
-	auto && url{ mDownloadSourcePtr->generateOptifineVersionInfoJsonUrl() };
+	auto && url(mDownloadSourcePtr->generateOptifineVersionInfoJsonUrl());
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
@@ -104,7 +98,7 @@ QGSDownloadTask * QGSDownloadTaskFactory::generateLoggingDownloadTask(QFile * ta
 		return nullptr;
 	}
 
-	auto && url{ mDownloadSourcePtr->generateLoggingUrl(logging) };
+	auto && url(mDownloadSourcePtr->generateLoggingUrl(logging));
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(url);
@@ -120,7 +114,7 @@ QGSGameVersionJsonDownloadTask * QGSDownloadTaskFactory::generateGameVersionJson
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateGameVersionJsonUrl(versionInfo));
-	return new QGSGameVersionJsonDownloadTask{ gameDirectory.generateGameVersionJsonFile(versionInfo.getId()), downloadInfo,mConnectionCount,mProxy };
+	return new QGSGameVersionJsonDownloadTask(gameDirectory.generateGameVersionJsonFile(versionInfo.getId()), downloadInfo,mConnectionCount,mProxy);
 }
 
 
@@ -133,13 +127,13 @@ QGSLibraryDownloadTask * QGSDownloadTaskFactory::generateLibraryDownloadTask(con
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateLibraryUrl(library));
-	return new QGSLibraryDownloadTask{ gameDirectory.generateLibraryFile(library),downloadInfo,mConnectionCount,mProxy };
+	return new QGSLibraryDownloadTask(gameDirectory.generateLibraryFile(library),downloadInfo,mConnectionCount,mProxy);
 }
 
 
 QGSGameVersionDownloadTask * QGSDownloadTaskFactory::generateGameVersionDownloadTask(const QGSGameVersion & version, QGSGameDirectory & gameDirectory, const QString & category)
 {
-	auto && versionDownloads{ version.getDownloads() };
+	auto && versionDownloads(version.getDownloads());
 
 	if (category.isEmpty()
 		|| versionDownloads.isEmpty()
@@ -151,7 +145,7 @@ QGSGameVersionDownloadTask * QGSDownloadTaskFactory::generateGameVersionDownload
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateGameVersionUrl(version, category));
-	return new QGSGameVersionDownloadTask{ gameDirectory.generateGameVersionJarFile(version.getId()),downloadInfo,mConnectionCount,mProxy };
+	return new QGSGameVersionDownloadTask(gameDirectory.generateGameVersionJarFile(version.getId()),downloadInfo,mConnectionCount,mProxy);
 }
 
 QGSAssetIndexJsonDownloadTask * QGSDownloadTaskFactory::generateAssetIndexJsonDownloadTask(const QGSAssetIndex & assetIndex, QGSGameDirectory & gameDirectory)
@@ -163,7 +157,7 @@ QGSAssetIndexJsonDownloadTask * QGSDownloadTaskFactory::generateAssetIndexJsonDo
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateAssetIndexJsonUrl(assetIndex));
-	return new QGSAssetIndexJsonDownloadTask{ gameDirectory.generateAssetIndexJsonFile(assetIndex),downloadInfo,mConnectionCount,mProxy };
+	return new QGSAssetIndexJsonDownloadTask(gameDirectory.generateAssetIndexJsonFile(assetIndex),downloadInfo,mConnectionCount,mProxy);
 }
 
 QGSAssetObjectDownloadTask * QGSDownloadTaskFactory::generateAssetObjectDownloadTask(const QGSAssetObject & assetObject, QGSGameDirectory & gameDirectory)
@@ -175,7 +169,7 @@ QGSAssetObjectDownloadTask * QGSDownloadTaskFactory::generateAssetObjectDownload
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateAssetObjectUrl(assetObject));
-	return new QGSAssetObjectDownloadTask{ gameDirectory.generateAssetObjectFile(assetObject),downloadInfo,mConnectionCount,mProxy };
+	return new QGSAssetObjectDownloadTask(gameDirectory.generateAssetObjectFile(assetObject),downloadInfo,mConnectionCount,mProxy);
 }
 
 
@@ -193,7 +187,7 @@ QGSForgeDownloadTask * QGSDownloadTaskFactory::generateForgeDownloadTask(QFile *
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateForgeUrl(mcversion, version, category, format, branch));
-	return new QGSForgeDownloadTask{ targetFile,downloadInfo,mConnectionCount,mProxy };
+	return new QGSForgeDownloadTask(targetFile,downloadInfo,mConnectionCount,mProxy);
 }
 
 
@@ -210,7 +204,7 @@ QGSLiteLoaderDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderDownloadTa
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateLiteLoaderUrl(mcversion, version, category));
-	return new QGSLiteLoaderDownloadTask{ targetFile,downloadInfo,mConnectionCount,mProxy };
+	return new QGSLiteLoaderDownloadTask(targetFile,downloadInfo,mConnectionCount,mProxy);
 }
 
 
@@ -223,5 +217,5 @@ QGSOptifineDownloadTask * QGSDownloadTaskFactory::generateOptifineDownloadTask(Q
 
 	QGSDownloadInfo downloadInfo;
 	downloadInfo.setUrl(mDownloadSourcePtr->generateOptifineUrl(mcversion, type, patch));
-	return new QGSOptifineDownloadTask{ targetFile,downloadInfo,mConnectionCount,mProxy };
+	return new QGSOptifineDownloadTask(targetFile,downloadInfo,mConnectionCount,mProxy);
 }

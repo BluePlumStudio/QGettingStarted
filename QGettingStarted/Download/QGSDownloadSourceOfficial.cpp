@@ -16,27 +16,27 @@ QGSDownloadSourceOfficial::~QGSDownloadSourceOfficial()
 
 QUrl QGSDownloadSourceOfficial::generateGameVersionInfoJsonUrl()
 {
-	return QUrl{ "https://launchermeta.mojang.com/mc/game/version_manifest.json" };
+	return QUrl("https://launchermeta.mojang.com/mc/game/version_manifest.json");
 }
 
 QUrl QGSDownloadSourceOfficial::generateForgeVersionInfoJsonUrl(int offset, int limit)
 {
-	return QUrl{ "http://files.minecraftforge.net/maven/net/minecraftforge/forge/json" };
+	return QUrl("http://files.minecraftforge.net/maven/net/minecraftforge/forge/json");
 }
 
 QUrl QGSDownloadSourceOfficial::generateLiteLoaderVersionInfoJsonUrl()
 {
-	return QUrl{ "http://dl.liteloader.com/versions/versions.json" };
+	return QUrl("http://dl.liteloader.com/versions/versions.json");
 }
 
 QUrl QGSDownloadSourceOfficial::generateOptifineVersionInfoJsonUrl()
 {
-	return QUrl{ "https://bmclapi2.bangbang93.com/optifine/versionList" };
+	return QUrl("https://bmclapi2.bangbang93.com/optifine/versionList");
 }
 
 QUrl QGSDownloadSourceOfficial::generateLoggingUrl(const QGSLogging & logging)
 {
-	return logging.getFile().getUrl();
+	return logging.getFileDownload().getUrl();
 }
 
 QUrl QGSDownloadSourceOfficial::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
@@ -46,15 +46,15 @@ QUrl QGSDownloadSourceOfficial::generateGameVersionJsonUrl(const QGSGameVersionI
 
 QUrl QGSDownloadSourceOfficial::generateLibraryUrl(const QGSLibrary & library)
 {
-	QString urlStr{ "https://libraries.minecraft.net/" };
+	QString urlStr("https://libraries.minecraft.net/");
 
-	auto && url{ library.getUrl() };
+	auto && url(library.getUrl());
 	if (url.isValid())
 	{
 		urlStr = url.toString();
 	}
 
-	return QUrl{ QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")) };
+	return QUrl(QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")));
 }
 
 QUrl QGSDownloadSourceOfficial::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
@@ -70,7 +70,7 @@ QUrl QGSDownloadSourceOfficial::generateAssetIndexJsonUrl(const QGSAssetIndex & 
 QUrl QGSDownloadSourceOfficial::generateAssetObjectUrl(const QGSAssetObject & assetObject)
 {
 	//http://resources.download.minecraft.net/<first 2 hex letters of hash>/<whole hash>
-	auto && hash{ assetObject.getHash() };
+	auto && hash(assetObject.getHash());
 	return QUrl{
 		QString{"https://resources.download.minecraft.net/%1/%2"}.arg(hash.left(2)).arg(hash)
 	};
@@ -105,7 +105,7 @@ QUrl QGSDownloadSourceOfficial::generateLiteLoaderUrl(QString mcversion, QString
 			}
 			return QUrl{
 				"http://jenkins.liteloader.com/job/LiteLoaderInstaller%20" +
-				QString{ "%1/lastSuccessfulBuild/artifact/build/libs/liteloader-installer-%2.jar" }.arg(mcversion).arg(version)
+				QString("%1/lastSuccessfulBuild/artifact/build/libs/liteloader-installer-%2.jar").arg(mcversion).arg(version)
 			};
 		}
 		else
@@ -116,7 +116,7 @@ QUrl QGSDownloadSourceOfficial::generateLiteLoaderUrl(QString mcversion, QString
 				version.append("-00");
 			}
 			return QUrl{
-				QString{ "http://dl.liteloader.com/redist/%1/liteloader-installer-%2.jar" }.arg(mcversion).arg(version)
+				QString("http://dl.liteloader.com/redist/%1/liteloader-installer-%2.jar").arg(mcversion).arg(version)
 			};
 		}
 	}

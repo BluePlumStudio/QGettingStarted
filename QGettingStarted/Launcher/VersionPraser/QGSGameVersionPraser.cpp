@@ -3,7 +3,7 @@
 #include "QGSGameVersionPraser.h"
 #include "QGSGeneralGameVersionPraseStrategy.h"
 
-QGSGameVersionPraser::QGSGameVersionPraser()
+QGSGameVersionPraser::QGSGameVersionPraser(QObject * parent) :QObject(parent)
 {
 
 }
@@ -19,7 +19,7 @@ bool QGSGameVersionPraser::praseVersion(QGSGameVersion & version, QJsonDocument 
 		object.contains("minimumLauncherVersion") ?
 		object.value("minimumLauncherVersion").toInt() : 0;
 
-	QSharedPointer<QGSIGameVersionPraseStrategy>versionPraseStrategy{ new QGSGeneralGameVersionPraseStrategy };
+	QSharedPointer<QGSIGameVersionPraseStrategy>versionPraseStrategy(new QGSGeneralGameVersionPraseStrategy);
 
 	versionPraseStrategy->praseVersion(version, jsonDocument);
 

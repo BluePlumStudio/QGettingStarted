@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QMap>
+#include <QMetaType>
 
 #include "QGSLiteLoaderVersionReposity.h"
 #include "QGSLiteLoaderVersionMeta.h"
@@ -33,3 +34,5 @@ private:
 	QMap<QString, QGSLiteLoaderVersionMeta> mLiteLoaderVersionSnapshotMetaMap;
 	QMap<QString, QGSLiteLoaderVersionMeta> mLiteLoaderVersionArtefactMetaMap;
 };
+
+Q_DECLARE_METATYPE(QGSLiteLoaderVersionInfo)

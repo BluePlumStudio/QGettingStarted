@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QObject>
 
 namespace OS
 {
@@ -10,11 +11,22 @@ namespace OS
 	const QString UNKNOWN("unknown");
 }
 
-class QGSOperatingSystem 
+class QGSOperatingSystem :public QObject
 {
+	Q_OBJECT
+
 private:
-	QGSOperatingSystem();
-	~QGSOperatingSystem();
+	QGSOperatingSystem(QObject * parent = nullptr);
+
+	QGSOperatingSystem(const QGSOperatingSystem & right) = default;
+
+	QGSOperatingSystem(QGSOperatingSystem && right) = default;
+
+	QGSOperatingSystem & operator=(const QGSOperatingSystem & right) = default;
+
+	QGSOperatingSystem & operator=(QGSOperatingSystem && right) = default;
+
+	virtual ~QGSOperatingSystem();
 public:
 	static QGSOperatingSystem & getInstance();
 

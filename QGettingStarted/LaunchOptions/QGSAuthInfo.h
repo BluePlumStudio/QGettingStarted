@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QMetaType>
 
 namespace UserType
 {
@@ -11,58 +12,32 @@ namespace UserType
 class QGSAuthInfo
 {
 public:
-	struct Profile
+	class QGSProfile
 	{
-		Profile(const QString & id = "{}", const QString name = "{}", const bool legacy = false) :mId(id), mName(name), mLegacy(legacy)
-		{
+	public:
+		QGSProfile(const QString & id = "{}", const QString name = "{}", const bool legacy = false);
 
-		}
+		QGSProfile(const QGSProfile & right) = default;
 
-		Profile(const Profile & right) = default;
+		QGSProfile(QGSProfile && right) = default;
 
-		Profile(Profile && right) = default;
+		QGSProfile & operator=(const QGSProfile & right) = default;
 
-		Profile & operator=(const Profile & right) = default;
+		QGSProfile & operator=(QGSProfile && right) = default;
 
-		Profile & operator=(Profile && right) = default;
+		~QGSProfile();
 
-		~Profile()
-		{
+		QGSProfile & setId(const QString & id);
 
-		}
+		QGSProfile & setName(const QString & name);
 
-		Profile & setId(const QString & id)
-		{
-			mId = id;
-			return *this;
-		}
+		QGSProfile & setId(const bool legacy);
 
-		Profile & setName(const QString & name)
-		{
-			mName = name;
-			return *this;
-		}
+		QString getId()const;
 
-		Profile & setId(const bool legacy)
-		{
-			mLegacy = legacy;
-			return *this;
-		}
+		QString getName()const;
 
-		QString getId()const
-		{
-			return mId;
-		}
-
-		QString getName()const
-		{
-			return mName;
-		}
-
-		bool getLegacy()const
-		{
-			return mLegacy;
-		}
+		bool isLegacy()const;
 
 	private:
 		QString mId;
@@ -73,7 +48,7 @@ public:
 	QGSAuthInfo(const QString & accessToken = "{}",
 		const QString & clientToken = "{}",
 		const QString & userType = UserType::Legacy,
-		const Profile & selectedProfile = Profile(),
+		const QGSProfile & selectedProfile = QGSProfile(),
 		const QString & twitchAccessToken = "{}");
 	
 	~QGSAuthInfo();
@@ -81,19 +56,22 @@ public:
 	QGSAuthInfo & setAccessToken(const QString & accessToken);
 	QGSAuthInfo & setClientToken(const QString & clientToken);
 	QGSAuthInfo & setUserType(const QString & userType);
-	QGSAuthInfo & setSelectedProfile(const Profile & selectedProfile);
+	QGSAuthInfo & setSelectedProfile(const QGSProfile & selectedProfile);
 	QGSAuthInfo & setTwitchAccessToken(const QString & twitchAccessToken);
 
 	QString getAccessToken()const;
 	QString getClientToken()const;
 	QString getUserType()const;
-	Profile getSelectedProfile()const;
+	QGSProfile getSelectedProfile()const;
 	QString getTwitchAccessToken()const;
 
 private:
 	QString mAccessToken;
 	QString mClientToken;
 	QString mUserType;
-	Profile mSelectedProfile;
+	QGSProfile mSelectedProfile;
 	QString mTwitchAccessToken;
 };
+
+Q_DECLARE_METATYPE(QGSAuthInfo::QGSProfile)
+Q_DECLARE_METATYPE(QGSAuthInfo)

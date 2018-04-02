@@ -1,6 +1,6 @@
 #include "QGSLogging.h"
 
-QGSLogging::QGSLogging(const File & file, const QString & argument, const QString & type) :mFile(file), mArgument(argument), mType(type)
+QGSLogging::QGSLogging(const QGSFileDownload & fileDownload, const QString & argument, const QString & type) :mFileDownload(fileDownload), mArgument(argument), mType(type)
 {
 }
 
@@ -8,9 +8,9 @@ QGSLogging::~QGSLogging()
 {
 }
 
-QGSLogging & QGSLogging::setFile(const File & file)
+QGSLogging & QGSLogging::setFileDownload(const QGSFileDownload & fileDownload)
 {
-	mFile = file;
+	mFileDownload = fileDownload;
 	return *this;
 }
 
@@ -26,9 +26,9 @@ QGSLogging & QGSLogging::setType(const QString & type)
 	return *this;
 }
 
-QGSLogging::File QGSLogging::getFile()const
+QGSLogging::QGSFileDownload QGSLogging::getFileDownload()const
 {
-	return mFile;
+	return mFileDownload;
 }
 
 QString QGSLogging::getArgument()const

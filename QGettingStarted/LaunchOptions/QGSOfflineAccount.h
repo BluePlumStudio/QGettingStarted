@@ -4,8 +4,10 @@
 
 class QGSOfflineAccount :public QGSIAccount
 {
+	Q_OBJECT
+
 public:
-	QGSOfflineAccount();
+	QGSOfflineAccount(QObject * parent = nullptr);
 
 	virtual ~QGSOfflineAccount();
 

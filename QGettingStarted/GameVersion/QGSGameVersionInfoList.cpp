@@ -5,7 +5,7 @@
 
 #include "Util/QGSExceptionVersionNotFound.h"
 #include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionFileIO.h"
+#include "Util/QGSExceptionIO.h"
 #include "Util/QGSExceptionJsonPraseError.h"
 #include "QGSGameVersionInfoList.h"
 
@@ -47,7 +47,7 @@ QGSGameVersionInfoList & QGSGameVersionInfoList::setLatestRelease(const QString 
 
 QGSGameVersionInfo & QGSGameVersionInfoList::getVersionInfo(const QString & version)
 {
-	auto it{ findGameVersionInfo(version) };
+	auto it(findGameVersionInfo(version));
 	if (it == mGameVersionInfoVector.end())
 	{
 		throw QGSExceptionVersionNotFound();
@@ -70,7 +70,7 @@ bool QGSGameVersionInfoList::addVersionInfo(const QGSGameVersionInfo & versionIn
 
 bool QGSGameVersionInfoList::removeVersionInfo(const QString & version)
 {
-	auto it{ findGameVersionInfo(version) };
+	auto it(findGameVersionInfo(version));
 	if (it == mGameVersionInfoVector.end())
 	{
 		return false;
@@ -83,7 +83,7 @@ bool QGSGameVersionInfoList::removeVersionInfo(const QString & version)
 
 bool QGSGameVersionInfoList::containsVersionInfo(const QString & version)
 {
-	auto it{ findGameVersionInfo(version) };
+	auto it(findGameVersionInfo(version));
 	if (it == mGameVersionInfoVector.end())
 	{
 		return false;
@@ -104,7 +104,7 @@ void QGSGameVersionInfoList::sort()
 
 QVector<QGSGameVersionInfo>::iterator QGSGameVersionInfoList::findGameVersionInfo(const QString & version)
 {
-	auto it{ mGameVersionInfoVector.begin() };
+	auto it(mGameVersionInfoVector.begin());
 
 	while (it++ != mGameVersionInfoVector.end())
 	{

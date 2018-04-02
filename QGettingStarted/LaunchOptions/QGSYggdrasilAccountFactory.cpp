@@ -1,6 +1,6 @@
 #include "QGSYggdrasilAccountFactory.h"
 
-QGSYggdrasilAccountFactory::QGSYggdrasilAccountFactory()
+QGSYggdrasilAccountFactory::QGSYggdrasilAccountFactory(QObject * parent) :QGSIAccountFactory(parent)
 {
 
 }

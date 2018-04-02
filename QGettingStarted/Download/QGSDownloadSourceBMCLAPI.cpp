@@ -16,65 +16,65 @@ QGSDownloadSourceBMCLAPI::~QGSDownloadSourceBMCLAPI()
 
 QUrl QGSDownloadSourceBMCLAPI::generateGameVersionInfoJsonUrl()
 {
-	return QUrl{ "https://bmclapi2.bangbang93.com/mc/game/version_manifest.json" };
+	return QUrl("https://bmclapi2.bangbang93.com/mc/game/version_manifest.json");
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateForgeVersionInfoJsonUrl(int offset, int limit)
 {
-	return QUrl{ QString{"https://bmclapi2.bangbang93.com/forge/list/%1/%2"}.arg(offset).arg(limit) };
+	return QUrl(QString{"https://bmclapi2.bangbang93.com/forge/list/%1/%2"}.arg(offset).arg(limit));
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateLiteLoaderVersionInfoJsonUrl()
 {
 	//BMCLAPI Bug:Unexpected end of json
 	//https://bmclapi2.bangbang93.com/maven/com/mumfrey/liteloader/versions.json
-	return QUrl{ "http://dl.liteloader.com/versions/versions.json" };
+	return QUrl("http://dl.liteloader.com/versions/versions.json");
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateOptifineVersionInfoJsonUrl()
 {
-	return QUrl{ "https://bmclapi2.bangbang93.com/optifine/versionList" };
+	return QUrl("https://bmclapi2.bangbang93.com/optifine/versionList");
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateLoggingUrl(const QGSLogging & logging)
 {
-	return logging.getFile().getUrl();
+	return logging.getFileDownload().getUrl();
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
 {
-	QUrl ret{ versionInfo.getUrl() };
-	return QUrl{ ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com") };
+	QUrl ret(versionInfo.getUrl());
+	return QUrl(ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com"));
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateLibraryUrl(const QGSLibrary & library)
 {
-	QString urlStr{ "https://bmclapi2.bangbang93.com/libraries/" };
+	QString urlStr("https://bmclapi2.bangbang93.com/libraries/");
 
-	auto && url{ library.getUrl() };
+	auto && url(library.getUrl());
 	if (!url.isEmpty() && url.isValid())
 	{
 		urlStr = url.toString();
 	}
-	return QUrl{ QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")) };
+	return QUrl(QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")));
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
 {
-	return QUrl{ QString{ "https://bmclapi2.bangbang93.com/version/%1/%2" }.arg(version.getId()).arg(category) };
+	return QUrl(QString("https://bmclapi2.bangbang93.com/version/%1/%2").arg(version.getId()).arg(category));
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)
 {
-	QUrl ret{ assetIndex.getUrl() };
-	return QUrl{ ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com") };
+	QUrl ret(assetIndex.getUrl());
+	return QUrl(ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com"));
 }
 
 QUrl QGSDownloadSourceBMCLAPI::generateAssetObjectUrl(const QGSAssetObject & assetObject)
 {
-	auto && hash{ assetObject.getHash() };
+	auto && hash(assetObject.getHash());
 	return QUrl{
-		QString{ "https://bmclapi2.bangbang93.com/assets/%1/%2" }.arg(hash.left(2)).arg(hash)
+		QString("https://bmclapi2.bangbang93.com/assets/%1/%2").arg(hash.left(2)).arg(hash)
 	};
 }
 

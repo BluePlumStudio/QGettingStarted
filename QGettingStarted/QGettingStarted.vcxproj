@@ -105,6 +105,10 @@
     </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Builder\QGSBuilderFactory.cpp" />
+    <ClCompile Include="Builder\QGSDownloadTaskGenerationTask.cpp" />
+    <ClCompile Include="Builder\QGSGameBuilder.cpp" />
+    <ClCompile Include="Builder\QGSIBuilder.cpp" />
     <ClCompile Include="Download\QGSAssetIndexJsonDownloadTask.cpp" />
     <ClCompile Include="Download\QGSAssetObjectDownloadTask.cpp" />
     <ClCompile Include="Download\QGSDownloader.cpp" />
@@ -120,14 +124,6 @@
     <ClCompile Include="Download\QGSLibraryDownloadTask.cpp" />
     <ClCompile Include="Download\QGSLiteLoaderDownloadTask.cpp" />
     <ClCompile Include="Download\QGSOptifineDownloadTask.cpp" />
-    <ClCompile Include="GameBuilder\QGSDownloadTaskGenerationTask.cpp" />
-    <ClCompile Include="GameBuilder\QGSGameBuilder.cpp">
-      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">input</DynamicSource>
-      <OutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\%(Filename).moc</OutputFile>
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">input</DynamicSource>
-    </ClCompile>
-    <ClCompile Include="GameBuilder\QGSIGameBuilder.cpp" />
     <ClCompile Include="GameVersion\QGSArguments.cpp" />
     <ClCompile Include="GameVersion\QGSAssetIndexInfo.cpp" />
     <ClCompile Include="GameVersion\QGSAssetIndex.cpp" />
@@ -174,7 +170,7 @@
     <ClCompile Include="Util\QGSException.cpp" />
     <ClCompile Include="Util\QGSExceptionAuthentication.cpp" />
     <ClCompile Include="Util\QGSExceptionCompress.cpp" />
-    <ClCompile Include="Util\QGSExceptionFileIO.cpp" />
+    <ClCompile Include="Util\QGSExceptionIO.cpp" />
     <ClCompile Include="Util\QGSExceptionInvalidValue.cpp" />
     <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp" />
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp" />
@@ -182,7 +178,7 @@
     <ClCompile Include="Util\QGSNetworkAccessManager.cpp" />
     <ClCompile Include="Util\QGSOperatingSystem.cpp" />
     <ClCompile Include="Util\QGSTask.cpp" />
-    <ClCompile Include="Util\QGSThread.cpp" />
+    <ClCompile Include="Util\QGSTaskThread.cpp" />
     <ClCompile Include="Util\QGSThreadPool.cpp" />
     <ClCompile Include="Util\QGSUuidGenerator.cpp" />
     <ClCompile Include="Util\zlib\inffas86.c" />
@@ -193,26 +189,16 @@
     <ClCompile Include="Util\zlib\zip.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Util\zlib\crypt.h" />
-    <ClInclude Include="Util\zlib\inffast.h" />
-    <ClInclude Include="Util\zlib\inflate.h" />
-    <ClInclude Include="Util\zlib\inftrees.h" />
-    <ClInclude Include="Util\zlib\ioapi.h" />
-    <ClInclude Include="Util\zlib\iowin32.h" />
-    <ClInclude Include="Util\zlib\mztools.h" />
-    <ClInclude Include="Util\zlib\unzip.h" />
-    <ClInclude Include="Util\zlib\zconf.h" />
-    <ClInclude Include="Util\zlib\zip.h" />
-    <ClInclude Include="Util\zlib\zlib.h" />
-    <ClInclude Include="Util\zlib\zutil.h" />
     <QtMoc Include="Download\QGSDownloadSourceOfficial.h" />
-    <QtMoc Include="GameBuilder\QGSIGameBuilder.h" />
-    <QtMoc Include="GameBuilder\QGSGameBuilder.h" />
     <QtMoc Include="Download\QGSAssetIndexJsonDownloadTask.h" />
     <QtMoc Include="Download\QGSAssetObjectDownloadTask.h" />
     <QtMoc Include="Download\QGSDownloader.h" />
+    <QtMoc Include="Builder\QGSBuilderFactory.h" />
+    <QtMoc Include="Builder\QGSDownloadTaskGenerationTask.h" />
+    <QtMoc Include="Builder\QGSGameBuilder.h" />
+    <QtMoc Include="Builder\QGSIBuilder.h" />
     <ClInclude Include="Download\QGSDownloadInfo.h" />
-    <ClInclude Include="Download\QGSDownloadTaskFactory.h" />
+    <QtMoc Include="Download\QGSDownloadTaskFactory.h" />
     <QtMoc Include="Download\QGSDownloadTask.h" />
     <QtMoc Include="Download\QGSForgeDownloadTask.h" />
     <QtMoc Include="Download\QGSGameVersionDownloadTask.h" />
@@ -220,66 +206,65 @@
     <QtMoc Include="Download\QGSLibraryDownloadTask.h" />
     <QtMoc Include="Download\QGSLiteLoaderDownloadTask.h" />
     <QtMoc Include="Download\QGSOptifineDownloadTask.h" />
-    <QtMoc Include="GameBuilder\QGSDownloadTaskGenerationTask.h" />
     <ClInclude Include="GameVersion\QGSArguments.h" />
     <ClInclude Include="GameVersion\QGSAssetIndexInfo.h" />
     <ClInclude Include="GameVersion\QGSAssetIndex.h" />
-    <ClInclude Include="GameVersion\QGSAssetIndexInfoFactory.h" />
+    <QtMoc Include="GameVersion\QGSAssetIndexInfoFactory.h" />
     <ClInclude Include="GameVersion\QGSAssetObject.h" />
     <ClInclude Include="GameVersion\QGSDownloads.h" />
     <ClInclude Include="GameVersion\QGSExtract.h" />
     <ClInclude Include="GameVersion\QGSForgeVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSForgeVersionInfoList.h" />
-    <ClInclude Include="GameVersion\QGSForgeVersionInfoListFactory.h" />
+    <QtMoc Include="GameVersion\QGSForgeVersionInfoListFactory.h" />
     <ClInclude Include="GameVersion\QGSGameVersion.h" />
     <ClInclude Include="GameVersion\QGSGameVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSGameVersionInfoList.h" />
-    <ClInclude Include="GameVersion\QGSGameVersionInfoListFactory.h" />
+    <QtMoc Include="GameVersion\QGSGameVersionInfoListFactory.h" />
     <ClInclude Include="GameVersion\QGSLibrary.h" />
     <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfoList.h" />
-    <ClInclude Include="GameVersion\QGSLiteLoaderVersionInfoListFactory.h" />
+    <QtMoc Include="GameVersion\QGSLiteLoaderVersionInfoListFactory.h" />
     <ClInclude Include="GameVersion\QGSLiteLoaderVersionMeta.h" />
     <ClInclude Include="GameVersion\QGSLiteLoaderVersionReposity.h" />
     <ClInclude Include="GameVersion\QGSLogging.h" />
     <ClInclude Include="GameVersion\QGSOptifineVersionInfo.h" />
     <ClInclude Include="GameVersion\QGSOptifineVersionInfoList.h" />
-    <ClInclude Include="GameVersion\QGSOptifineVersionInfoListFactory.h" />
+    <QtMoc Include="GameVersion\QGSOptifineVersionInfoListFactory.h" />
     <ClInclude Include="GameVersion\QGSRules.h" />
     <ClInclude Include="Util\QGSExceptionInvalidValue.h" />
     <QtMoc Include="Download\QGSIDownloadSource.h" />
     <QtMoc Include="Download\QGSDownloadSourceBMCLAPI.h" />
     <ClInclude Include="Launcher\QGSGeneralLauncherStrategy.h" />
-    <ClInclude Include="Launcher\QGSGameDirectory.h" />
+    <QtMoc Include="Launcher\QGSGameDirectory.h" />
     <ClInclude Include="Launcher\QGSILauncherStrategy.h" />
-    <ClInclude Include="Launcher\QGSLauncher.h" />
+    <QtMoc Include="Launcher\QGSLauncher.h" />
     <ClInclude Include="Launcher\VersionPraser\QGSGeneralGameVersionPraseStrategy.h" />
     <ClInclude Include="Launcher\VersionPraser\QGSIGameVersionPraseStrategy.h" />
-    <ClInclude Include="Launcher\VersionPraser\QGSGameVersionPraser.h" />
+    <QtMoc Include="Launcher\VersionPraser\QGSGameVersionPraser.h" />
     <ClInclude Include="LaunchOptions\QGSAuthInfo.h" />
-    <ClInclude Include="LaunchOptions\QGSIAccount.h" />
-    <ClInclude Include="LaunchOptions\QGSIAccountFactory.h" />
+    <QtMoc Include="LaunchOptions\QGSIAccount.h" />
+    <QtMoc Include="LaunchOptions\QGSIAccountFactory.h" />
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h" />
-    <ClInclude Include="LaunchOptions\QGSILaunchOptionsBuilder.h" />
-    <ClInclude Include="LaunchOptions\QGSLaunchOptionsBuilder.h" />
-    <ClInclude Include="LaunchOptions\QGSOfflineAccount.h" />
-    <ClInclude Include="LaunchOptions\QGSOfflineAccountFactory.h" />
-    <ClInclude Include="LaunchOptions\QGSYggdrasilAccount.h" />
-    <ClInclude Include="LaunchOptions\QGSYggdrasilAccountFactory.h" />
+    <QtMoc Include="LaunchOptions\QGSILaunchOptionsBuilder.h" />
+    <QtMoc Include="LaunchOptions\QGSLaunchOptionsBuilder.h" />
+    <QtMoc Include="LaunchOptions\QGSOfflineAccount.h" />
+    <QtMoc Include="LaunchOptions\QGSOfflineAccountFactory.h" />
+    <QtMoc Include="LaunchOptions\QGSYggdrasilAccount.h" />
+    <QtMoc Include="LaunchOptions\QGSYggdrasilAccountFactory.h" />
     <ClInclude Include="QGettingStarted.h" />
     <ClInclude Include="Util\QGSException.h" />
     <ClInclude Include="Util\QGSExceptionAuthentication.h" />
     <ClInclude Include="Util\QGSExceptionCompress.h" />
-    <ClInclude Include="Util\QGSExceptionFileIO.h" />
+    <ClInclude Include="Util\QGSExceptionIO.h" />
     <ClInclude Include="Util\QGSExceptionJsonPraseError.h" />
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h" />
     <QtMoc Include="Util\QGSNetworkAccessManager.h" />
-    <ClInclude Include="Util\QGSFileTools.h" />
-    <ClInclude Include="Util\QGSOperatingSystem.h" />
+    <QtMoc Include="Util\QGSFileTools.h" />
+    <QtMoc Include="Util\QGSOperatingSystem.h" />
     <QtMoc Include="Util\QGSThreadPool.h" />
     <QtMoc Include="Util\QGSTask.h" />
-    <QtMoc Include="Util\QGSThread.h" />
-    <ClInclude Include="Util\QGSUuidGenerator.h" />
+    <QtMoc Include="Util\QGSTaskThread.h" />
+    <QtMoc Include="Util\QGSUuidGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

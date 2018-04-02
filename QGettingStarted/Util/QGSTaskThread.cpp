@@ -1,7 +1,7 @@
-#include "QGSThread.h"
+#include "QGSTaskThread.h"
 #include "QGSThreadPool.h"
 
-QGSThread::QGSThread(QGSThreadPool * threadPool) :mThreadPoolPtr(threadPool), mActive(false), mTask(nullptr), mExit(false)
+QGSTaskThread::QGSTaskThread(QGSThreadPool * threadPool) :mThreadPoolPtr(threadPool), mActive(false), mTask(nullptr), mExit(false)
 {
 	if (!threadPool)
 	{
@@ -9,26 +9,26 @@ QGSThread::QGSThread(QGSThreadPool * threadPool) :mThreadPoolPtr(threadPool), mA
 	}
 }
 
-QGSThread::~QGSThread()
+QGSTaskThread::~QGSTaskThread()
 {
 
 }
 
 /*
-QGSThread & QGSThread::setTask(QGSTask * task)
+QGSTaskThread & QGSTaskThread::setTask(QGSTask * task)
 {
 	mTask = task;
 	return *this;
 }
 */
 
-void QGSThread::exit(int returnCode)
+void QGSTaskThread::exit(int returnCode)
 {
 	mExit = true;
 	QThread::exit(returnCode);
 }
 
-void QGSThread::run()
+void QGSTaskThread::run()
 {
 	if (!mThreadPoolPtr)
 	{
@@ -62,7 +62,7 @@ void QGSThread::run()
 		mThreadPoolPtr->mMutex.unlock();
 
 		//任务开始
-		QObject::connect(this, &QGSThread::taskStarted, mTask, &QGSTask::start, Qt::ConnectionType::DirectConnection);
+		QObject::connect(this, &QGSTaskThread::taskStarted, mTask, &QGSTask::start, Qt::ConnectionType::DirectConnection);
 		QObject::connect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
@@ -74,7 +74,7 @@ void QGSThread::run()
 		QObject::disconnect(mTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(mTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(mTask, &QGSTask::error, &eventLoop, &QEventLoop::quit);
-		QObject::disconnect(this, &QGSThread::taskStarted, mTask, &QGSTask::start);
+		QObject::disconnect(this, &QGSTaskThread::taskStarted, mTask, &QGSTask::start);
 
 		mThreadPoolPtr->mMutex.lock();
 
@@ -88,7 +88,7 @@ void QGSThread::run()
 }
 
 /*
-void QGSThread::run()
+void QGSTaskThread::run()
 {
 	if (!mThreadPoolPtr)
 	{
@@ -122,7 +122,7 @@ void QGSThread::run()
 			continue;
 		}
 		//获取任务
-		auto * task{ mThreadPoolPtr->mTaskQueue.front() };
+		auto * task(mThreadPoolPtr->mTaskQueue.front());
 		//qDebug() << "Current task queue size:" << mThreadPoolPtr->mTaskQueue.size();
 		mThreadPoolPtr->mTaskQueue.pop_front();
 		mThreadPoolPtr->mTaskQueueBlock = task->isTaskQueueBlock();
@@ -131,7 +131,7 @@ void QGSThread::run()
 		QObject::connect(task, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
 		QObject::connect(task, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
 		QObject::connect(task, &QGSTask::error, &eventLoop, &QEventLoop::quit);
-		QObject::connect(this, &QGSThread::taskStart, task, &QGSTask::start);
+		QObject::connect(this, &QGSTaskThread::taskStart, task, &QGSTask::start);
 		mThreadPoolPtr->mMutex.unlock();
 		//计数
 		mThreadPoolPtr->mAttribMutex.lock();
@@ -140,7 +140,7 @@ void QGSThread::run()
 		//任务开始
 		emit taskStart(task);
 		eventLoop.exec();
-		QObject::disconnect(this, &QGSThread::taskStart, task, &QGSTask::start);
+		QObject::disconnect(this, &QGSTaskThread::taskStart, task, &QGSTask::start);
 		//如果当前任务为阻塞队列的任务
 		if (task->isTaskQueueBlock())
 		{

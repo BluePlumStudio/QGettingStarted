@@ -5,8 +5,10 @@
 
 class QGSLaunchOptionsBuilder: public QGSILaunchOptionsBuilder 
 {
+	Q_OBJECT
+
 public: 
-	QGSLaunchOptionsBuilder();
+	QGSLaunchOptionsBuilder(QObject * parent = nullptr);
 
 	QGSLaunchOptionsBuilder(const QGSLaunchOptionsBuilder & right) = delete;
 

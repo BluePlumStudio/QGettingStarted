@@ -51,12 +51,13 @@ QNetworkReply * QGSDownloader::getNetworkReply() const
 
 void QGSDownloader::start()
 {
-	auto && request{ QGSNetworkAccessManager::generateHttpsNetworkRequest() };
+	auto && request(QGSNetworkAccessManager::generateHttpsNetworkRequest());
 
 	request.setUrl(mDownloadInfo.getUrl());
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-	request.setRawHeader(QByteArray{ "Connection" }, QByteArray{ "Keep-Alive" });
-	request.setRawHeader(QByteArray{ "Keep-Alive" }, QByteArray{ "Timeout=60" });
+	request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
+	request.setRawHeader(QByteArray("Connection"), QByteArray("Keep-Alive"));
+	request.setRawHeader(QByteArray("Keep-Alive"), QByteArray("Timeout=60"));
 
 	if (mBytesBegin >= 0 && mBytesEnd >= 0 && (mBytesBegin < mBytesEnd))
 	{
@@ -68,7 +69,7 @@ void QGSDownloader::start()
 	mReply = mNetworkAccessManagerPtr->get(request);
 	if (!mReply)
 	{
-		emit downloadError(QGSNetworkError{ QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!" }, this);
+		emit downloadError(QGSNetworkError(QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!"), this);
 		return;
 	}
 
@@ -85,7 +86,7 @@ void QGSDownloader::start()
 			mReply = nullptr;
 		}
 
-		emit downloadError(QGSNetworkError{ QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!" }, this);
+		emit downloadError(QGSNetworkError(QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!"), this);
 	}
 }
 
@@ -132,7 +133,7 @@ void QGSDownloader::slotFinished()
 
 void QGSDownloader::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
 {
-	auto && data{ mReply->readAll() };
+	auto && data(mReply->readAll());
 
 	mTargetFilePtr->seek(mBytesBegin + mBytesReceived);
 	mTargetFilePtr->write(data);
@@ -144,10 +145,10 @@ void QGSDownloader::slotDownloadProgress(qint64 bytesReceived, qint64 bytesTotal
 
 void QGSDownloader::slotDownloadError(QNetworkReply::NetworkError _error)
 {
-	auto && errorString{ mReply ? mReply->errorString() : "Unknown error string!" };
+	auto && errorString(mReply ? mReply->errorString() : "Unknown error string!");
 	cancel();
 
-	emit downloadError(QGSNetworkError{ _error,errorString }, this);
+	emit downloadError(QGSNetworkError(_error,errorString), this);
 }
 
 void QGSDownloader::slotSslErrors(const QList<QSslError>& errors)
@@ -164,14 +165,14 @@ void QGSDownloader::slotRedirected(const QUrl & url)
 
 bool QGSDownloader::get()
 {
-	QTimer *timer{ nullptr };
+	QTimer *timer(nullptr);
 	QEventLoop eventLoop;
-	bool readTimeOut{ false };
-	const int timeOutms{ 5000 };
+	bool readTimeOut(false);
+	const int timeOutms(30000);
 
 	if (timeOutms > 0)
 	{
-		timer = new QTimer{ this };
+		timer = new QTimer(this);
 
 		connect(timer, &QTimer::timeout, [&readTimeOut]()
 		{

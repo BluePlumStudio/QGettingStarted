@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <QMetaType>
 
 class QGSOptifineVersionInfo
 {
@@ -45,3 +46,5 @@ private:
 	QString mPatch;
 	QString mFileName;
 };
+
+Q_DECLARE_METATYPE(QGSOptifineVersionInfo)

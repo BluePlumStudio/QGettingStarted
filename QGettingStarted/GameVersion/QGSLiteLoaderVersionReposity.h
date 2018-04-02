@@ -2,6 +2,7 @@
 
 #include <QUrl>
 #include <QString>
+#include <QMetaType>
 
 class QGSLiteLoaderVersionReposity
 {
@@ -33,3 +34,5 @@ private:
 	QUrl mUrl;
 	QString mClassifier;
 };
+
+Q_DECLARE_METATYPE(QGSLiteLoaderVersionReposity)

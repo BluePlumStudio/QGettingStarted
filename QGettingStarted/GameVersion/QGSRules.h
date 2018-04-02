@@ -3,99 +3,63 @@
 #include <QList>
 #include <QString>
 #include <QMap>
+#include <QMetaType>
 
 #include "../Util/QGSOperatingSystem.h"
 
 namespace Action
 {
-	const QString ALLOW{ "allow" };
-	const QString DISALLOW{ "disallow" };
+	const QString ALLOW("allow");
+	const QString DISALLOW("disallow");
 }
-
-class Rule
-{
-public:
-    Rule(const QString & action = Action::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = OS::UNKNOWN, const QString & osVersion = "")
-        :mAction(action), mFeatures(features), mOs(os), mOsVersion(osVersion), mOperatingSystemPtr(&QGSOperatingSystem::getInstance())
-    {
-
-    }
-
-    Rule(const Rule & right) = default;
-
-    Rule(Rule && right) = default;
-
-    Rule & operator=(const Rule & right) = default;
-
-    Rule & operator=(Rule && right) = default;
-
-    ~Rule()
-    {
-
-    }
-
-    Rule & setAction(const QString & action)
-    {
-        mAction = action;
-        return *this;
-    }
-
-    Rule & setFeatures(const QMap<QString, bool> & features)
-    {
-        mFeatures = features;
-        return *this;
-    }
-
-    Rule & setOs(const QString & os)
-    {
-        mOs = os;
-    }
-
-    Rule & setOsVersion(const QString & osVersion)
-    {
-        mOsVersion = osVersion;
-    }
-
-    QString getAction()const
-    {
-        return mAction;
-    }
-
-    QMap<QString, bool> getFeatures()const
-    {
-        return mFeatures;
-    }
-
-    QString getOs()const
-    {
-        return mOs;
-    }
-
-    QString getOsVersion()const
-    {
-        return mOsVersion;
-    }
-
-    void clear()
-    {
-        mAction = Action::ALLOW;
-        mFeatures.clear();
-        mOs.clear();
-    }
-private:
-    QString mAction;
-    QMap<QString, bool> mFeatures;
-    QString mOs;
-    QString mOsVersion;
-    QGSOperatingSystem * mOperatingSystemPtr;
-};
 
 class QGSRules 
 {
 public:
+	class QGSRule
+	{
+	public:
+		QGSRule(const QString & action = Action::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = OS::UNKNOWN, const QString & osVersion = "");
+
+		QGSRule(const QGSRule & right) = default;
+
+		QGSRule(QGSRule && right) = default;
+
+		QGSRule & operator=(const QGSRule & right) = default;
+
+		QGSRule & operator=(QGSRule && right) = default;
+
+		~QGSRule();
+
+		QGSRule & setAction(const QString & action);
+
+		QGSRule & setFeatures(const QMap<QString, bool> & features);
+
+		QGSRule & setOs(const QString & os);
+
+		QGSRule & setOsVersion(const QString & osVersion);
+
+		QString getAction()const;
+
+		QMap<QString, bool> getFeatures()const;
+
+		QString getOs()const;
+
+		QString getOsVersion()const;
+
+		void clear();
+	private:
+		QString mAction;
+		QMap<QString, bool> mFeatures;
+		QString mOs;
+		QString mOsVersion;
+		QGSOperatingSystem * mOperatingSystemPtr;
+	};
+
+public:
 	QGSRules();
 
-	QGSRules(const QList<Rule> & rules);
+	QGSRules(const QList<QGSRule> & rules);
 
 	QGSRules(const QGSRules & right) = default;
 
@@ -107,13 +71,16 @@ public:
 
 	~QGSRules();
 
-	QGSRules & setRules(const QList<Rule> & rules);
+	QGSRules & setRules(const QList<QGSRule> & rules);
 
-	QList<Rule> getRules()const;
+	QList<QGSRule> getRules()const;
 
-	QGSRules & addRule(const Rule & rule);
+	QGSRules & addRule(const QGSRule & rule);
 
 	void clear();
 private: 
-	QList<Rule> mRules;
+	QList<QGSRule> mRules;
 };
+
+Q_DECLARE_METATYPE(QGSRules::QGSRule)
+Q_DECLARE_METATYPE(QGSRules)

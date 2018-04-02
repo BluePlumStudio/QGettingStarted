@@ -1,6 +1,6 @@
 #include "QGSIAccount.h"
 
-QGSIAccount::QGSIAccount()
+QGSIAccount::QGSIAccount(QObject * parent) :QObject(parent)
 {
 }
 

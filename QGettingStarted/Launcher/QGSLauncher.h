@@ -5,10 +5,12 @@
 #include "QGSILauncherStrategy.h"
 #include "QGSGameDirectory.h"
 
-class QGSLauncher
+class QGSLauncher :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSLauncher();
+	QGSLauncher(QObject * parent = nullptr);
 
 	QGSLauncher(const QGSLauncher & right) = delete;
 
@@ -18,7 +20,7 @@ public:
 
 	QGSLauncher & operator=(QGSLauncher && right) = delete;
 
-	~QGSLauncher();
+	virtual ~QGSLauncher();
 
 	virtual LauncherError::ErrorFlags generateLaunchCommand(const QGSGameVersion & version, QGSGameDirectory & gameDirectory, const QGSLaunchOptions * launchOptions, QString & command);
 private:

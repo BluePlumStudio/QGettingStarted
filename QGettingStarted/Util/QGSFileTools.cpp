@@ -1,18 +1,19 @@
 #include <QDir>
 #include <QFileInfoList>
+#include <QCoreApplication>
 
 #include "QGSFileTools.h"
 #include "QGSOperatingSystem.h"
 
-static const QString SEPERATOR{ QGSOperatingSystem::getInstance().getSeperator() };
+static const QString SEPERATOR(QGSOperatingSystem::getInstance().getSeperator());
 
-QGSFileTools::QGSFileTools()
+QGSFileTools::QGSFileTools(QObject * parent) :QObject(parent)
 {
 }
 
 QGSFileTools & QGSFileTools::getInstance()
 {
-	static QGSFileTools instance;
+	static QGSFileTools instance(QCoreApplication::instance());
 	return instance;
 }
 
@@ -44,15 +45,15 @@ QStringList QGSFileTools::extractDirectory(const QString & file, const QString &
 
 	unz_global_info64 gi;
 	unz_file_info64 FileInfo;
-	unzFile zFile{ unzOpen64(file.toLocal8Bit().toStdString().c_str()) };
+	unzFile zFile(unzOpen64(file.toLocal8Bit().toStdString().c_str()));
 
 	if (unzGetGlobalInfo64(zFile, &gi) == UNZ_OK)
 	{
 		for (int i = 0; i < gi.number_entry; i++)
 		{
-			char file[256] = { 0 };
-			char ext[256] = { 0 };
-			char com[1024] = { 0 };
+			char file[256]{ 0 };
+			char ext[256]{ 0 };
+			char com[1024]{ 0 };
 			if (unzGetCurrentFileInfo64(zFile, &FileInfo, file, sizeof(file), ext, 256, com, 1024) != UNZ_OK)
 			{
 				unzClose(zFile);
@@ -63,9 +64,9 @@ QStringList QGSFileTools::extractDirectory(const QString & file, const QString &
 			{
 				unzOpenCurrentFile(zFile);//ÎÞÃÜÂë
 				unzOpenCurrentFilePassword(zFile, password.toLocal8Bit().toStdString().c_str());//ÓÐÃÜÂë
-				QString path{ directory + SEPERATOR + file };
+				QString path(directory + SEPERATOR + file);
 				ret << path;
-				QFile targetFile{ path };
+				QFile targetFile(path);
 				if (!targetFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
 				{
 					unzClose(zFile);
@@ -75,7 +76,7 @@ QStringList QGSFileTools::extractDirectory(const QString & file, const QString &
 				while (true)
 				{
 					char data[256]{ 0 };
-					int size{ unzReadCurrentFile(zFile, data, 256) };
+					int size(unzReadCurrentFile(zFile, data, 256));
 					//qDebug() << size;
 					if (size <= 0)
 					{

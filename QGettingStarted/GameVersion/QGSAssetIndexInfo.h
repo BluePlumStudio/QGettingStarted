@@ -1,5 +1,7 @@
 #pragma once
 
+#include <QMetaType>
+
 #include "QGSAssetObject.h"
 
 class QGSAssetIndexInfo
@@ -38,3 +40,5 @@ private:
 	bool mVirtual;
 	QMap<QString, QGSAssetObject> mAssetObjectMap;
 };
+
+Q_DECLARE_METATYPE(QGSAssetIndexInfo)

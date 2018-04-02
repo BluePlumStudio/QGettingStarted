@@ -8,10 +8,12 @@
 
 #include "QGSForgeVersionInfoList.h"
 
-class QGSForgeVersionInfoListFactory
+class QGSForgeVersionInfoListFactory :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSForgeVersionInfoListFactory();
+	QGSForgeVersionInfoListFactory(QObject * parent = nullptr);
 
 	QGSForgeVersionInfoListFactory(const QGSForgeVersionInfoListFactory & right) = delete;
 

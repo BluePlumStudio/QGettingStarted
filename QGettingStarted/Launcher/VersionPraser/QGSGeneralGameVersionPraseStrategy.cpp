@@ -80,7 +80,10 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 		{
 			if (i.isString())
 			{
-				gameList.push_back(QGSArguments::QGSArgument{ i.toString() });
+				QGSArguments::QGSArgument newArgument;
+				newArgument.addValue(i.toString());
+
+				gameList.push_back(newArgument);
 			}
 			else if (i.isObject())
 			{
@@ -97,14 +100,17 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 				{
 					value = praseValue(gameObject.value("value"));
 				}
-				gameList.push_back(QGSArguments::QGSArgument{ value,rules });
+				gameList.push_back(QGSArguments::QGSArgument(value,rules));
 			}
 		}
         for (const auto & i : JvmArray)
 		{
 			if (i.isString())
 			{
-				jvmList.push_back(QGSArguments::QGSArgument{ i.toString() });
+				QGSArguments::QGSArgument newArgument;
+				newArgument.addValue(i.toString());
+
+				jvmList.push_back(newArgument);
 			}
 			else if (i.isObject())
 			{
@@ -121,11 +127,11 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 				{
 					value = praseValue(gameObject.value("value"));
 				}
-				jvmList.push_back(QGSArguments::QGSArgument{ value,rules });
+				jvmList.push_back(QGSArguments::QGSArgument(value,rules));
 			}
 		}
 
-		version.setArguments(QGSArguments{ jvmList,gameList });
+		version.setArguments(QGSArguments(jvmList,gameList));
 	}
 
 	return true;
@@ -229,7 +235,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseDownloads(QGSGameVersion & version
 		return false;
 	}
 
-	QMap<QString, QGSIDownload> downloadMap;
+	QMap<QString, QGSDownloadBase> downloadMap;
 	auto downloadsObject = object.value("downloads").toObject();
 	auto keys = downloadsObject.keys();
 	for (auto & i : keys)
@@ -238,7 +244,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseDownloads(QGSGameVersion & version
 
 		downloadMap.insert(
 			i,
-			QGSIDownload{
+			QGSDownloadBase{
 			downloadObject.contains("size") ? downloadObject.value("size").toInt() : 0,
 			downloadObject.contains("sha1") ? downloadObject.value("sha1").toString() : "",
 			downloadObject.contains("path") ? downloadObject.value("path").toString() : "",
@@ -269,7 +275,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseLogging(QGSGameVersion & version, 
 		if (downloadTypeObject.contains("file"))
 		{
 			auto fileObject = downloadTypeObject.value("file").toObject();
-			logging.setFile(QGSLogging::File{
+			logging.setFileDownload(QGSLogging::QGSFileDownload{
 				fileObject.contains("size") ? fileObject.value("size").toInt() : 0,
 				fileObject.contains("sha1") ? fileObject.value("sha1").toString() : "",
 				fileObject.contains("path") ? fileObject.value("path").toString() : "",
@@ -339,9 +345,9 @@ QGSRules QGSGeneralGameVersionPraseStrategy::praseRules(const QJsonArray & array
 	{
 		auto ruleObject = i.toObject();
 
-		auto action{ ruleObject.contains("action") ? ruleObject.value("action").toString() : Action::ALLOW };
+		auto action(ruleObject.contains("action") ? ruleObject.value("action").toString() : Action::ALLOW);
 		QMap<QString, bool> featureMap;
-		QString os{ OS::UNKNOWN };
+		QString os(OS::UNKNOWN);
 		QString osVersion;
 		if (ruleObject.contains("os"))
 		{
@@ -359,7 +365,7 @@ QGSRules QGSGeneralGameVersionPraseStrategy::praseRules(const QJsonArray & array
 				featureMap.insert(k, objectFeatures.value(k).toBool());
 			}
 		}
-        rules.addRule(Rule{ action,featureMap,os,osVersion });
+        rules.addRule(QGSRules::QGSRule(action,featureMap,os,osVersion));
 	}
 
 	return rules;
@@ -447,7 +453,7 @@ QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(const QJsonObject & 
 		//classifiers
 		if (downloadsObject.contains("classifiers"))
 		{
-			QMap<QString, QGSIDownload> classifiers;
+			QMap<QString, QGSDownloadBase> classifiers;
 			auto classifiersObject = downloadsObject.value("classifiers").toObject();
 
 			auto keys = classifiersObject.keys();
@@ -455,7 +461,7 @@ QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(const QJsonObject & 
 			{
 				auto objectClassifier = classifiersObject.value(i).toObject();
 
-				classifiers.insert(i, QGSIDownload{
+				classifiers.insert(i, QGSDownloadBase{
 					objectClassifier.contains("size") ? objectClassifier.value("size").toInt() : 0,
 					objectClassifier.contains("sha1") ? objectClassifier.value("sha1").toString() : "",
 					objectClassifier.contains("path") ? objectClassifier.value("path").toString() : "",
@@ -469,7 +475,7 @@ QGSLibrary QGSGeneralGameVersionPraseStrategy::praseLibrary(const QJsonObject & 
 		if (downloadsObject.contains("artifact"))
 		{
 			auto artifactObject = downloadsObject.value("artifact").toObject();
-			downloads.setArtifact(QGSIDownload{
+			downloads.setArtifact(QGSDownloadBase{
 				artifactObject.contains("size") ? artifactObject.value("size").toInt() : 0,
 				artifactObject.contains("sha1") ? artifactObject.value("sha1").toString() : "",
 				artifactObject.contains("path") ? artifactObject.value("path").toString() : "",

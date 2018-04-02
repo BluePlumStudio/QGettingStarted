@@ -8,10 +8,12 @@
 
 #include "QGSGameVersionInfoList.h"
 
-class QGSGameVersionInfoListFactory
+class QGSGameVersionInfoListFactory :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSGameVersionInfoListFactory();
+	QGSGameVersionInfoListFactory(QObject * parent = nullptr);
 
 	QGSGameVersionInfoListFactory(const QGSGameVersionInfoListFactory & right) = delete;
 

@@ -8,15 +8,15 @@
 #include <QNetworkProxy>
 #include <QSslConfiguration>
 #include <QSslSocket>
+#include <QMetaType>
 
 namespace Network
 {
 	static const int DefaultTimeout = 300000;
 }
 
-class QGSNetworkError //:public QObject
+class QGSNetworkError
 {
-	//Q_OBJECT
 public:
 	QGSNetworkError(const QNetworkReply::NetworkError code = QNetworkReply::NetworkError::NoError, const QString & message = "");
 
@@ -38,6 +38,8 @@ private:
 	QNetworkReply::NetworkError mCode;
 	QString mMessage;
 };
+
+Q_DECLARE_METATYPE(QGSNetworkError)
 
 class QGSNetworkAccessManager :public QNetworkAccessManager
 {

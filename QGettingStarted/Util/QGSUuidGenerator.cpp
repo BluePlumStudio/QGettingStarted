@@ -1,6 +1,6 @@
 #include "QGSUuidGenerator.h"
 
-QGSUuidGenerator::QGSUuidGenerator()
+QGSUuidGenerator::QGSUuidGenerator(QObject * parent) :QObject(parent)
 {
 }
 

@@ -2,11 +2,14 @@
 
 #include <QString>
 #include <QUuid>
+#include <QObject>
 
-class QGSUuidGenerator
+class QGSUuidGenerator :public QObject
 {
+	Q_OBJECT
+
 public:
-	QGSUuidGenerator();
+	QGSUuidGenerator(QObject * parent = nullptr);
 
 	QGSUuidGenerator(const QGSUuidGenerator & right) = delete;
 
@@ -16,7 +19,7 @@ public:
 
 	QGSUuidGenerator & operator=(QGSUuidGenerator && right) = delete;
 
-	~QGSUuidGenerator();
+	virtual ~QGSUuidGenerator();
 
 	static QGSUuidGenerator & getInstance();
 

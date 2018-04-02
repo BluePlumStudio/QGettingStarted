@@ -1,10 +1,12 @@
 #pragma once
 
+#include <QMetaType>
+
 #include "../Util/QGSNetworkAccessManager.h"
 #include "../GameVersion/QGSDownloads.h"
 #include "../Util/QGSTask.h"
 
-class QGSDownloadInfo :public QGSIDownload
+class QGSDownloadInfo :public QGSDownloadBase
 {
 public:
 	QGSDownloadInfo(const QUrl & url = QUrl(), const QString & path = "", const QString & SHA1 = "");
@@ -22,3 +24,5 @@ public:
 private:
 
 };
+
+Q_DECLARE_METATYPE(QGSDownloadInfo)

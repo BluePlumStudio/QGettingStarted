@@ -7,8 +7,10 @@
 
 class QGSYggdrasilAccount :public QGSIAccount
 {
+	Q_OBJECT
+
 public:
-	QGSYggdrasilAccount();
+	QGSYggdrasilAccount(QObject * parent = nullptr);
 
 	virtual ~QGSYggdrasilAccount();
 

@@ -1,16 +1,17 @@
 #pragma once
 
-#include "QGSIGameBuilder.h"
+#include <QMutex>
+#include <QMetaType>
+
+#include "QGSIBuilder.h"
 #include "QGSDownloadTaskGenerationTask.h"
 
-#include <QMutex>
-
-class QGSGameBuilder :public QGSIGameBuilder
+class QGSGameBuilder :public QGSIBuilder
 {
 	Q_OBJECT
 
 public:
-	QGSGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
+	QGSGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory, QObject * parent = nullptr);
 
 	QGSGameBuilder(const QGSGameBuilder & right) = delete;
 

@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QTemporaryDir>
 #include <QTemporaryFile>
+#include <QMetaType>
 
 #include "../Download/QGSDownloadTaskFactory.h"
 #include "../Download/QGSDownloadSourceBMCLAPI.h"
@@ -15,22 +16,22 @@
 #include "../Launcher/QGSGameDirectory.h"
 #include "../Util/QGSThreadPool.h"
 
-class QGSIGameBuilder :public QGSTask
+class QGSIBuilder :public QGSTask
 {
 	Q_OBJECT
 
 public:
-	QGSIGameBuilder();
+	QGSIBuilder(QObject * parent = nullptr);
 
-	QGSIGameBuilder(const QGSIGameBuilder & right) = delete;
+	QGSIBuilder(const QGSIBuilder & right) = delete;
 
-	QGSIGameBuilder(QGSIGameBuilder && right) = delete;
+	QGSIBuilder(QGSIBuilder && right) = delete;
 
-	QGSIGameBuilder & operator=(const QGSIGameBuilder & right) = delete;
+	QGSIBuilder & operator=(const QGSIBuilder & right) = delete;
 
-	QGSIGameBuilder & operator=(QGSIGameBuilder && right) = delete;
+	QGSIBuilder & operator=(QGSIBuilder && right) = delete;
 
-	virtual ~QGSIGameBuilder();
+	virtual ~QGSIBuilder();
 signals:
 	void downloadTaskStarted(QGSDownloadInfo downloadInfo);
 	void downloadTaskFinished(QGSDownloadInfo downloadInfo);

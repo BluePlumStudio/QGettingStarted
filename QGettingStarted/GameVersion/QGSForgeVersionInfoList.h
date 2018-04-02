@@ -40,3 +40,5 @@ private:
 private:
 	QVector<QGSForgeVersionInfo> mForgeVersionInfoVector;
 };
+
+Q_DECLARE_METATYPE(QGSForgeVersionInfoList)
