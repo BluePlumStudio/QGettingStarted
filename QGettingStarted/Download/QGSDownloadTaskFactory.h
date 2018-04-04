@@ -64,7 +64,7 @@ public:
 	/**/
 	QGSForgeDownloadTask * generateForgeDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch = "");
 
-	QGSLiteLoaderDownloadTask * generateLiteLoaderDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category = "universial");
+	QGSLiteLoaderDownloadTask * generateLiteLoaderDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category = "universal");
 
 	QGSOptifineDownloadTask * generateOptifineDownloadTask(QFile * targetFile, const QString & mcversion, const QString & type, const QString & patch);
 private:

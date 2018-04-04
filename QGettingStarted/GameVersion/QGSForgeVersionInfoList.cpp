@@ -25,7 +25,7 @@ QGSForgeVersionInfoList::~QGSForgeVersionInfoList()
 {
 }
 
-const QGSForgeVersionInfo & QGSForgeVersionInfoList::getVersionInfo(const int build)
+QGSForgeVersionInfo & QGSForgeVersionInfoList::getVersionInfo(const int build)
 {
 	auto it(findForgeVersionInfo(build));
 	if (it == mForgeVersionInfoVector.end())

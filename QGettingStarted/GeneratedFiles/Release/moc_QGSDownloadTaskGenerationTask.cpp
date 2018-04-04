@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../GameBuilder/QGSDownloadTaskGenerationTask.h"
+#include "../../Builder/QGSDownloadTaskGenerationTask.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -130,6 +130,8 @@ void QGSDownloadTaskGenerationTask::qt_static_metacall(QObject *_o, QMetaObject:
         case 4:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSNetworkError >(); break;
             case 1:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
             }

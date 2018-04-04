@@ -55,6 +55,7 @@ signals:
 	void sslErrors(const QList<QSslError> &errors, QGSTask * task);
 private:
 	quint64 getFileSize();
+	void cancelTask();
 protected:
 	QMutex mMutex;
 	QFile * mTargetFilePtr;

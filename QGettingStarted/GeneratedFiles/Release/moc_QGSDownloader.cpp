@@ -164,6 +164,8 @@ void QGSDownloader::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSDownloader* >(); break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSNetworkError >(); break;
             }
             break;
         case 5:

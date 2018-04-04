@@ -13,3 +13,8 @@ QGSGameBuilder * QGSBuilderFactory::createGameBuilder(QGSGameVersionInfo & versi
 {
 	return new QGSGameBuilder(versionInfo, gameDirectory, downloadTaskFactory);
 }
+
+QGSForgeBuilder * QGSBuilderFactory::createForgeBuilder(QGSForgeVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
+{
+	return new QGSForgeBuilder(versionInfo, gameDirectory, downloadTaskFactory);
+}

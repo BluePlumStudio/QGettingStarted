@@ -193,7 +193,7 @@ QGSForgeDownloadTask * QGSDownloadTaskFactory::generateForgeDownloadTask(QFile *
 
 QGSLiteLoaderDownloadTask * QGSDownloadTaskFactory::generateLiteLoaderDownloadTask(QFile * targetFile, const QString & mcversion, const QString & version, const QString & category)
 {
-	/* universial
+	/* universal
 	手工拼接`/maven/com/mumfrey/liteloader/${mcversion}/liteloader-${version}.jar`进行下载
 	但是SNAPSHOT版需要按照`/maven/com/mumfrey/liteloader/${version}/liteloader-${version}.jar`进行拼接
 	*/

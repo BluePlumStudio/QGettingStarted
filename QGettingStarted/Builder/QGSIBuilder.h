@@ -4,10 +4,11 @@
 #include <QTemporaryDir>
 #include <QTemporaryFile>
 #include <QMetaType>
+#include <QMutex>
 
 #include "../Download/QGSDownloadTaskFactory.h"
-#include "../Download/QGSDownloadSourceBMCLAPI.h"
-#include "../Download/QGSDownloadSourceOfficial.h"
+#include "../Download/QGSBMCLAPIDownloadSource.h"
+#include "../Download/QGSOfficialDownloadSource.h"
 #include "../GameVersion/QGSAssetIndexInfoFactory.h"
 #include "../GameVersion/QGSForgeVersionInfoListFactory.h"
 #include "../GameVersion/QGSGameVersionInfoListFactory.h"
@@ -32,6 +33,10 @@ public:
 	QGSIBuilder & operator=(QGSIBuilder && right) = delete;
 
 	virtual ~QGSIBuilder();
+
+	static QGSThreadPool & getThreadPool();
+
+	QString getLastErrorString();
 signals:
 	void downloadTaskStarted(QGSDownloadInfo downloadInfo);
 	void downloadTaskFinished(QGSDownloadInfo downloadInfo);
@@ -40,4 +45,9 @@ signals:
 	void downloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSDownloadInfo downloadInfo);
 	void downloadTaskDownloadError(QGSNetworkError error, QGSDownloadInfo downloadInfo);
 	void downloadTaskError(QGSDownloadInfo downloadInfo);
+protected:
+	static QGSThreadPool mThreadPool;
+
+	QMutex mMutex;
+	QString mLastErrorString;
 };

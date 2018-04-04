@@ -7,17 +7,25 @@
 class QGSForgeVersionInfo
 {
 public:
-	class File
+	class QGSForgeFileInfo
 	{
 	public:
-		File(const QString & format = "", const QString & category = "", const QString & hash = "", const QString & id = "");
+		QGSForgeFileInfo(const QString & format = "", const QString & category = "", const QString & hash = "", const QString & id = "");
 
-		~File();
+		QGSForgeFileInfo(const QGSForgeFileInfo & right) = default;
 
-		File & setFormat(const QString & format);
-		File & setCategory(const QString & category);
-		File & setHash(const QString & hash);
-		File & setId(const QString & id);
+		QGSForgeFileInfo(QGSForgeFileInfo && right) = default;
+
+		QGSForgeFileInfo & operator=(const QGSForgeFileInfo & right) = default;
+
+		QGSForgeFileInfo & operator=(QGSForgeFileInfo && right) = default;
+
+		~QGSForgeFileInfo();
+
+		QGSForgeFileInfo & setFormat(const QString & format);
+		QGSForgeFileInfo & setCategory(const QString & category);
+		QGSForgeFileInfo & setHash(const QString & hash);
+		QGSForgeFileInfo & setId(const QString & id);
 
 		QString getFormat()const;
 		QString getCategory()const;
@@ -37,7 +45,7 @@ public:
 		const QString & modified = "",
 		const QString & version = "",
 		const QString & id = "",
-		const QList<File> & files = QList<File>());
+		const QList<QGSForgeFileInfo> & files = QList<QGSForgeFileInfo>());
 
 	QGSForgeVersionInfo(const QGSForgeVersionInfo & right) = default;
 
@@ -61,7 +69,7 @@ public:
 	QString getModified()const;
 	QString getVersion()const;
 	QString getId()const;
-	QList<File> getFiles()const;
+	QList<QGSForgeFileInfo> getFiles()const;
 
 	QGSForgeVersionInfo & setBranch(const QString & branch);
 	QGSForgeVersionInfo & setBuild(const int build);
@@ -69,7 +77,7 @@ public:
 	QGSForgeVersionInfo & setModified(const QString & modified);
 	QGSForgeVersionInfo & setVersion(const QString & version);
 	QGSForgeVersionInfo & setId(const QString & id);
-	QGSForgeVersionInfo & setFiles(const QList<File> & files);
+	QGSForgeVersionInfo & setFiles(const QList<QGSForgeFileInfo> & files);
 private:
 	QString mBranch;
 	int mBuild;
@@ -77,7 +85,8 @@ private:
 	QString mModified;
 	QString mVersion;
 	QString mId;
-	QList<File> mFileList;
+	QList<QGSForgeFileInfo> mFileList;
 };
 
 Q_DECLARE_METATYPE(QGSForgeVersionInfo)
+Q_DECLARE_METATYPE(QGSForgeVersionInfo::QGSForgeFileInfo)

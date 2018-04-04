@@ -1,53 +1,53 @@
 #include <QDebug>
 
-#include "QGSDownloadSourceBMCLAPI.h"
+#include "QGSBMCLAPIDownloadSource.h"
 #include "Launcher/QGSGameDirectory.h"
 
-QGSDownloadSourceBMCLAPI::QGSDownloadSourceBMCLAPI(QObject *parent)
+QGSBMCLAPIDownloadSource::QGSBMCLAPIDownloadSource(QObject *parent)
 	: QGSIDownloadSource(parent)
 {
 
 }
 
-QGSDownloadSourceBMCLAPI::~QGSDownloadSourceBMCLAPI()
+QGSBMCLAPIDownloadSource::~QGSBMCLAPIDownloadSource()
 {
 
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateGameVersionInfoJsonUrl()
+QUrl QGSBMCLAPIDownloadSource::generateGameVersionInfoJsonUrl()
 {
 	return QUrl("https://bmclapi2.bangbang93.com/mc/game/version_manifest.json");
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateForgeVersionInfoJsonUrl(int offset, int limit)
+QUrl QGSBMCLAPIDownloadSource::generateForgeVersionInfoJsonUrl(int offset, int limit)
 {
 	return QUrl(QString{"https://bmclapi2.bangbang93.com/forge/list/%1/%2"}.arg(offset).arg(limit));
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateLiteLoaderVersionInfoJsonUrl()
+QUrl QGSBMCLAPIDownloadSource::generateLiteLoaderVersionInfoJsonUrl()
 {
 	//BMCLAPI Bug:Unexpected end of json
 	//https://bmclapi2.bangbang93.com/maven/com/mumfrey/liteloader/versions.json
 	return QUrl("http://dl.liteloader.com/versions/versions.json");
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateOptifineVersionInfoJsonUrl()
+QUrl QGSBMCLAPIDownloadSource::generateOptifineVersionInfoJsonUrl()
 {
 	return QUrl("https://bmclapi2.bangbang93.com/optifine/versionList");
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateLoggingUrl(const QGSLogging & logging)
+QUrl QGSBMCLAPIDownloadSource::generateLoggingUrl(const QGSLogging & logging)
 {
-	return logging.getFileDownload().getUrl();
+	return logging.getLoggingDownload().getUrl();
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
+QUrl QGSBMCLAPIDownloadSource::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
 {
 	QUrl ret(versionInfo.getUrl());
 	return QUrl(ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com"));
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateLibraryUrl(const QGSLibrary & library)
+QUrl QGSBMCLAPIDownloadSource::generateLibraryUrl(const QGSLibrary & library)
 {
 	QString urlStr("https://bmclapi2.bangbang93.com/libraries/");
 
@@ -59,18 +59,18 @@ QUrl QGSDownloadSourceBMCLAPI::generateLibraryUrl(const QGSLibrary & library)
 	return QUrl(QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")));
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
+QUrl QGSBMCLAPIDownloadSource::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
 {
 	return QUrl(QString("https://bmclapi2.bangbang93.com/version/%1/%2").arg(version.getId()).arg(category));
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)
+QUrl QGSBMCLAPIDownloadSource::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)
 {
 	QUrl ret(assetIndex.getUrl());
 	return QUrl(ret.toString().replace(ret.host(),"bmclapi2.bangbang93.com"));
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateAssetObjectUrl(const QGSAssetObject & assetObject)
+QUrl QGSBMCLAPIDownloadSource::generateAssetObjectUrl(const QGSAssetObject & assetObject)
 {
 	auto && hash(assetObject.getHash());
 	return QUrl{
@@ -78,7 +78,7 @@ QUrl QGSDownloadSourceBMCLAPI::generateAssetObjectUrl(const QGSAssetObject & ass
 	};
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateForgeUrl(const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch)
+QUrl QGSBMCLAPIDownloadSource::generateForgeUrl(const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch)
 {
 	return QUrl {
 		QString("https://bmclapi2.bangbang93.com/maven/net/minecraftforge/forge/%1-%2%3/forge-%4-%5%6-%7.%8")
@@ -93,7 +93,7 @@ QUrl QGSDownloadSourceBMCLAPI::generateForgeUrl(const QString & mcversion, const
 	};
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateLiteLoaderUrl(QString mcversion, QString version, const QString & category)
+QUrl QGSBMCLAPIDownloadSource::generateLiteLoaderUrl(QString mcversion, QString version, const QString & category)
 {
 	if (category.contains("installer"))
 	{
@@ -132,7 +132,7 @@ QUrl QGSDownloadSourceBMCLAPI::generateLiteLoaderUrl(QString mcversion, QString 
 	}
 }
 
-QUrl QGSDownloadSourceBMCLAPI::generateOptifineUrl(const QString & mcversion, const QString & type, const QString & patch)
+QUrl QGSBMCLAPIDownloadSource::generateOptifineUrl(const QString & mcversion, const QString & type, const QString & patch)
 {
 	return QUrl {
 		QString("https://bmclapi2.bangbang93.com/optifine/%1/%2/%3")

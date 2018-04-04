@@ -44,7 +44,15 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(const Q
 
 	auto && numberObject(jsonObject.value("number").toObject());
 	auto && keys(numberObject.keys());
-	limit = qMin(limit, keys.size());
+	if (limit < 1)
+	{
+		limit = keys.size();
+	}
+	else
+	{
+		limit = qMin(limit, keys.size());
+	}
+
 	for (int i = 0; i < limit; i += offset)
 	{
 		auto && infoObject(numberObject.value(keys[i]).toObject());
@@ -61,12 +69,12 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(const Q
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
         const auto && fileArray(infoObject.value("files").toArray());
-		QList<QGSForgeVersionInfo::File> fileList;
+		QList<QGSForgeVersionInfo::QGSForgeFileInfo> fileList;
         for (const auto & j : fileArray)
 		{
 			auto && fileInfoArray(j.toArray());
 
-			fileList.push_back(QGSForgeVersionInfo::File(fileInfoArray.at(0).toString(),
+			fileList.push_back(QGSForgeVersionInfo::QGSForgeFileInfo(fileInfoArray.at(0).toString(),
 				fileInfoArray.at(1).toString() ,
 				fileInfoArray.at(2).toString()));
 		}
@@ -78,7 +86,15 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListStd(const Q
 
 inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(const QJsonArray & jsonArray, int offset, int limit, QGSForgeVersionInfoList & forgeVersionInfoList)
 {
-	limit = qMin(limit, jsonArray.size());
+	if (limit < 1)
+	{
+		limit = jsonArray.size();
+	}
+	else
+	{
+		limit = qMin(limit, jsonArray.size());
+	}
+
 	for (int i = 0; i < limit; i += offset)
 	{
 		auto && infoObject(jsonArray.at(i).toObject());
@@ -95,12 +111,12 @@ inline void QGSForgeVersionInfoListFactory::praseForgeVersionInfoListBMCLAPI(con
 		newForgeVersionInfo.setId(infoObject.value("_id").toString());
 
         const auto && fileArray(infoObject.value("files").toArray());
-		QList<QGSForgeVersionInfo::File> fileList;
+		QList<QGSForgeVersionInfo::QGSForgeFileInfo> fileList;
         for (const auto & j : fileArray)
 		{
 			auto && fileObject(j.toObject());
 
-			fileList.push_back(QGSForgeVersionInfo::File(fileObject.value("format").toString(),
+			fileList.push_back(QGSForgeVersionInfo::QGSForgeFileInfo(fileObject.value("format").toString(),
 				fileObject.value("category").toString() ,
 				fileObject.value("hash").toString() ,
 				fileObject.value("_id").toString()));

@@ -1,64 +1,64 @@
 #include "QGSForgeVersionInfo.h"
 
 
-QGSForgeVersionInfo::File::File(const QString & format, const QString & category, const QString & hash, const QString & id)
+QGSForgeVersionInfo::QGSForgeFileInfo::QGSForgeFileInfo(const QString & format, const QString & category, const QString & hash, const QString & id)
 	:mFormat(format), mCategory(category), mHash(hash), mId(id)
 {
 
 }
 
-QGSForgeVersionInfo::File::~File()
+QGSForgeVersionInfo::QGSForgeFileInfo::~QGSForgeFileInfo()
 {
 
 }
 
-QGSForgeVersionInfo::File & QGSForgeVersionInfo::File::setFormat(const QString & format)
+QGSForgeVersionInfo::QGSForgeFileInfo & QGSForgeVersionInfo::QGSForgeFileInfo::setFormat(const QString & format)
 {
 	mFormat = format;
 	return *this;
 }
 
-QGSForgeVersionInfo::File & QGSForgeVersionInfo::File::setCategory(const QString & category)
+QGSForgeVersionInfo::QGSForgeFileInfo & QGSForgeVersionInfo::QGSForgeFileInfo::setCategory(const QString & category)
 {
 	mCategory = category;
 	return *this;
 }
 
-QGSForgeVersionInfo::File & QGSForgeVersionInfo::File::setHash(const QString & hash)
+QGSForgeVersionInfo::QGSForgeFileInfo & QGSForgeVersionInfo::QGSForgeFileInfo::setHash(const QString & hash)
 {
 	mHash = hash;
 	return *this;
 }
 
-QGSForgeVersionInfo::File & QGSForgeVersionInfo::File::setId(const QString & id)
+QGSForgeVersionInfo::QGSForgeFileInfo & QGSForgeVersionInfo::QGSForgeFileInfo::setId(const QString & id)
 {
 	mId = id;
 	return *this;
 }
 
-QString QGSForgeVersionInfo::File::getFormat()const
+QString QGSForgeVersionInfo::QGSForgeFileInfo::getFormat()const
 {
 	return mFormat;
 }
 
-QString QGSForgeVersionInfo::File::getCategory()const
+QString QGSForgeVersionInfo::QGSForgeFileInfo::getCategory()const
 {
 	return mCategory;
 }
 
-QString QGSForgeVersionInfo::File::getHash()const
+QString QGSForgeVersionInfo::QGSForgeFileInfo::getHash()const
 {
 	return mHash;
 }
 
-QString QGSForgeVersionInfo::File::getId()const
+QString QGSForgeVersionInfo::QGSForgeFileInfo::getId()const
 {
 	return mId;
 }
 
 /**/
 
-QGSForgeVersionInfo::QGSForgeVersionInfo(const QString & branch, const int build, const QString & mcversion, const QString & modified, const QString & version, const QString & id, const QList<File> & files)
+QGSForgeVersionInfo::QGSForgeVersionInfo(const QString & branch, const int build, const QString & mcversion, const QString & modified, const QString & version, const QString & id, const QList<QGSForgeFileInfo> & files)
 	:mBranch(branch), mBuild(build), mMcversion(mcversion), mModified(modified), mVersion(version), mId(id), mFileList(files)
 {
 
@@ -117,7 +117,7 @@ QString QGSForgeVersionInfo::getId()const
 	return mId;
 }
 
-QList<QGSForgeVersionInfo::File> QGSForgeVersionInfo::getFiles()const
+QList<QGSForgeVersionInfo::QGSForgeFileInfo> QGSForgeVersionInfo::getFiles()const
 {
 	return mFileList;
 }
@@ -158,7 +158,7 @@ QGSForgeVersionInfo & QGSForgeVersionInfo::setId(const QString & id)
 	return *this;
 }
 
-QGSForgeVersionInfo & QGSForgeVersionInfo::setFiles(const QList<File> & files)
+QGSForgeVersionInfo & QGSForgeVersionInfo::setFiles(const QList<QGSForgeFileInfo> & files)
 {
 	mFileList = files;
 	return *this;

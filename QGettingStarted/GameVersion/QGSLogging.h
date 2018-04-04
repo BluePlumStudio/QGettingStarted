@@ -9,23 +9,23 @@
 class QGSLogging
 {
 public:
-	class QGSFileDownload :public QGSDownloadBase
+	class QGSLoggingDownload :public QGSDownloadBase
 	{
 	public:
-		QGSFileDownload(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "") :QGSDownloadBase(size, SHA1, path, url), mId(id)
+		QGSLoggingDownload(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "") :QGSDownloadBase(size, SHA1, path, url), mId(id)
 		{
 
 		}
 
-		QGSFileDownload(const QGSFileDownload & right) = default;
+		QGSLoggingDownload(const QGSLoggingDownload & right) = default;
 
-		QGSFileDownload(QGSFileDownload && right) = default;
+		QGSLoggingDownload(QGSLoggingDownload && right) = default;
 
-		QGSFileDownload & operator=(const QGSFileDownload & right) = default;
+		QGSLoggingDownload & operator=(const QGSLoggingDownload & right) = default;
 
-		QGSFileDownload & operator=(QGSFileDownload && right) = default;
+		QGSLoggingDownload & operator=(QGSLoggingDownload && right) = default;
 
-		~QGSFileDownload()
+		~QGSLoggingDownload()
 		{
 
 		}
@@ -33,7 +33,7 @@ public:
 		QString mId;
 	};
 public:
-	QGSLogging(const QGSFileDownload & fileDownload = QGSFileDownload(), const QString & argument = "", const QString & type = "");
+	QGSLogging(const QGSLoggingDownload & fileDownload = QGSLoggingDownload(), const QString & argument = "", const QString & type = "");
 
 	QGSLogging(const QGSLogging & right) = default;
 
@@ -45,18 +45,18 @@ public:
 
 	~QGSLogging();
 
-	QGSLogging & setFileDownload(const QGSFileDownload & file);
+	QGSLogging & setLoggingDownload(const QGSLoggingDownload & file);
 	QGSLogging & setArgument(const QString & argument);
 	QGSLogging & setType(const QString & type);
 
-	QGSFileDownload getFileDownload()const;
+	QGSLoggingDownload getLoggingDownload()const;
 	QString getArgument()const;
 	QString getType()const;
 private:
-	QGSFileDownload mFileDownload;
+	QGSLoggingDownload mLoggingDownload;
 	QString mArgument;
 	QString mType;
 };
 
-Q_DECLARE_METATYPE(QGSLogging::QGSFileDownload)
+Q_DECLARE_METATYPE(QGSLogging::QGSLoggingDownload)
 Q_DECLARE_METATYPE(QGSLogging)

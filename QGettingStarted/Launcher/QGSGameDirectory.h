@@ -56,6 +56,10 @@ public:
 
 	QVector<QFile *> generateLibraryFiles(const QList<QGSLibrary> & libraryList, const bool withAbsolutePath = true)const;
 
+	QDir generateVersionsDirectory(const bool withAbsolutePath = true)const;
+
+	QDir generateLibrariesDirectory(const bool withAbsolutePath = true)const;
+
 	QDir generateNativesDirectory(const QString & version, const bool withAbsolutePath = true)const;
 
 	QDir generateNativesDirectory(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath = true)const;
@@ -63,7 +67,9 @@ public:
 	QDir getBaseDir()const;
 
 	static QString praseLibraryName(const QGSLibrary & library);
-	
+
+	static QString praseName(const QString & name);
+
 	/*need to be updated*/
 	bool generateAssetsDirectory(QString version, const QGSAssetIndex & assetIndex, QDir & dir);
 

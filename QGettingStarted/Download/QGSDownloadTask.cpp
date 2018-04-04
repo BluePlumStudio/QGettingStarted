@@ -180,24 +180,7 @@ void QGSDownloadTask::templateCancel(QGSTask * task)
 {
 	mState = DownloadState::Stop;
 
-	for (auto it = mDownloaderList.begin(); it != mDownloaderList.end(); it++)
-	{
-		QMetaObject::invokeMethod((*it), "cancel", Qt::ConnectionType::DirectConnection);
-		(*it)->disconnect();
-		(*it)->deleteLater();
-		mDownloaderList.erase(it);
-	}
-
-	mTargetFilePtr->close();
-	mBytesReceived = 0;
-	mTargetFilePtr->remove();
-
-	if (mNetworkAccessManagerPtr)
-	{
-		mNetworkAccessManagerPtr->disconnect();
-		mNetworkAccessManagerPtr->deleteLater();
-		mNetworkAccessManagerPtr = nullptr;
-	}
+	cancelTask();
 
 	emit canceled(this);
 }
@@ -275,19 +258,19 @@ void QGSDownloadTask::slotDownloadProgress(qint64 bytesNewlyReceived, qint64 byt
 void QGSDownloadTask::slotDownloadError(QGSNetworkError _error, QGSDownloader * downloader)
 {
 	downloadTemplateError(_error);
-	cancel();
+	cancelTask();
 
-	emit error(this);
 	emit downloadError(_error, this);
+	emit error(this);
 }
 
 void QGSDownloadTask::slotSslErrors(const QList<QSslError>& errors, QGSDownloader * downloader)
 {
 	downloadTemplateSslErrors(errors);
-	cancel();
+	cancelTask();
 
-	emit error(this);
 	emit sslErrors(errors, this);
+	emit error(this);
 }
 
 void QGSDownloadTask::slotRedirected(const QUrl & url, QGSDownloader * downloader)
@@ -339,4 +322,26 @@ quint64 QGSDownloadTask::getFileSize()
 	}
 
 	return ret;
+}
+
+void QGSDownloadTask::cancelTask()
+{
+	for (auto it = mDownloaderList.begin(); it != mDownloaderList.end(); it++)
+	{
+		QMetaObject::invokeMethod((*it), "cancel", Qt::ConnectionType::DirectConnection);
+		(*it)->disconnect();
+		(*it)->deleteLater();
+		mDownloaderList.erase(it);
+	}
+
+	mTargetFilePtr->close();
+	mBytesReceived = 0;
+	mTargetFilePtr->remove();
+
+	if (mNetworkAccessManagerPtr)
+	{
+		mNetworkAccessManagerPtr->disconnect();
+		mNetworkAccessManagerPtr->deleteLater();
+		mNetworkAccessManagerPtr = nullptr;
+	}
 }

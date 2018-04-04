@@ -1,10 +1,6 @@
 #pragma once
 
-#include <QMutex>
-#include <QMetaType>
-
 #include "QGSIBuilder.h"
-#include "QGSDownloadTaskGenerationTask.h"
 
 class QGSGameBuilder :public QGSIBuilder
 {
@@ -27,11 +23,7 @@ public:
 
 	QGSGameBuilder & setFileOverride(const bool fileOverride);
 
-	QString getLastErrorString();
-
 	int getTaskListSize();
-
-	static QGSThreadPool & getThreadPool();
 protected:
 	virtual void templateStart(QGSTask * task);
 	virtual void templateStop(QGSTask * task);
@@ -44,8 +36,6 @@ private slots:
 	void slotDownloadTaskError(QGSTask * task);
 	void slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task);
 	void slotDownloadTaskDownloadError(QGSNetworkError error, QGSTask * task);
-	void slotEraseDownloadTask(QGSTask * downloadTask);
-	void slotFinished();
 private:
 	friend class GameVersionJsonDownloadTaskGenerationTask;
 	friend class GameVersionDownloadTaskGenerationTask;
@@ -59,21 +49,22 @@ private:
 	bool initLibraryDownloadTasks();
 	QGSDownloadTask *  initAssetIndexJsonDownloadTask();
 	bool initAssetObjectDownloadTasks();
+	void eraseDownloadTask(QGSTask * downloadTask);
+	void taskFinished(QGSTask * downloadTask);
 
-	void deleteTasksFinished();
+	//void deleteTasksFinished();
 private:
-	static QGSThreadPool mThreadPool;
-	QMutex mMutex;
-	QTimer * mTimerPtr;
+	//QTimer * mTimerPtr;
 
 	QGSAssetIndexInfo mAssetIndexInfo;
 	QGSGameVersionInfo mVersionInfo;
 	QGSGameDirectory * mGameDirectoryPtr;
 	QGSDownloadTaskFactory * mDownloadTaskFactoryPtr;
 	QList<QGSTask *> mTaskList;
-	QList<QGSTask *> mTaskWillBeDeletedList;
+	//QList<QGSTask *> mTaskWillBeDeletedList;
+	QGSDownloadTask * mGameVersionJsonDownloadTask;
+	QGSDownloadTask * mAssetIndexJsonDownloadTask;
 	bool mFileOverride;
-	QString mLastErrorString;
 };
 
 /**/

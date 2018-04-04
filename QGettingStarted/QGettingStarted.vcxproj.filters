@@ -99,12 +99,6 @@
     <ClCompile Include="Download\QGSIDownloadSource.cpp">
       <Filter>Download\DownloadSource</Filter>
     </ClCompile>
-    <ClCompile Include="Download\QGSDownloadSourceOfficial.cpp">
-      <Filter>Download\DownloadSource</Filter>
-    </ClCompile>
-    <ClCompile Include="Download\QGSDownloadSourceBMCLAPI.cpp">
-      <Filter>Download\DownloadSource</Filter>
-    </ClCompile>
     <ClCompile Include="Launcher\VersionPraser\QGSIGameVersionPraseStrategy.cpp">
       <Filter>Launcher\GameVersionPraser</Filter>
     </ClCompile>
@@ -312,6 +306,15 @@
     <ClCompile Include="Util\QGSExceptionIO.cpp">
       <Filter>Util\Exception</Filter>
     </ClCompile>
+    <ClCompile Include="Download\QGSOfficialDownloadSource.cpp">
+      <Filter>Download\DownloadSource</Filter>
+    </ClCompile>
+    <ClCompile Include="Download\QGSBMCLAPIDownloadSource.cpp">
+      <Filter>Download\DownloadSource</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\QGSForgeBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h">
@@ -420,12 +423,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Download\QGSIDownloadSource.h">
-      <Filter>Download\DownloadSource</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloadSourceOfficial.h">
-      <Filter>Download\DownloadSource</Filter>
-    </QtMoc>
-    <QtMoc Include="Download\QGSDownloadSourceBMCLAPI.h">
       <Filter>Download\DownloadSource</Filter>
     </QtMoc>
     <QtMoc Include="Util\QGSThreadPool.h">
@@ -540,6 +537,15 @@
       <Filter>Builder</Filter>
     </QtMoc>
     <QtMoc Include="Builder\QGSIBuilder.h">
+      <Filter>Builder</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSOfficialDownloadSource.h">
+      <Filter>Download\DownloadSource</Filter>
+    </QtMoc>
+    <QtMoc Include="Download\QGSBMCLAPIDownloadSource.h">
+      <Filter>Download\DownloadSource</Filter>
+    </QtMoc>
+    <QtMoc Include="Builder\QGSForgeBuilder.h">
       <Filter>Builder</Filter>
     </QtMoc>
   </ItemGroup>

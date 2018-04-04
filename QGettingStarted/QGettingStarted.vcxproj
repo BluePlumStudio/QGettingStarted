@@ -55,7 +55,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
@@ -69,7 +69,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder</IncludePath>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_NETWORK_LIB;_USING_V110_SDK71_</Define>
     </QtMoc>
     <QtUic>
@@ -82,7 +82,7 @@
       <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPlatformCompositorSupport;$(QTDIR)\include\QtPlatformHeaders;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPlatformCompositorSupport;$(QTDIR)\include\QtPlatformHeaders;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
@@ -96,7 +96,7 @@
     <QtMoc>
       <OutputFile>.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</OutputFile>
       <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
-      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPlatformCompositorSupport;$(QTDIR)\include\QtPlatformHeaders;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder</IncludePath>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName)\.;.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPlatformCompositorSupport;$(QTDIR)\include\QtPlatformHeaders;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder</IncludePath>
       <Define>UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;_USING_V110_SDK71_</Define>
     </QtMoc>
     <QtUic>
@@ -107,6 +107,7 @@
   <ItemGroup>
     <ClCompile Include="Builder\QGSBuilderFactory.cpp" />
     <ClCompile Include="Builder\QGSDownloadTaskGenerationTask.cpp" />
+    <ClCompile Include="Builder\QGSForgeBuilder.cpp" />
     <ClCompile Include="Builder\QGSGameBuilder.cpp" />
     <ClCompile Include="Builder\QGSIBuilder.cpp" />
     <ClCompile Include="Download\QGSAssetIndexJsonDownloadTask.cpp" />
@@ -114,8 +115,8 @@
     <ClCompile Include="Download\QGSDownloader.cpp" />
     <ClCompile Include="Download\QGSDownloadInfo.cpp" />
     <ClCompile Include="Download\QGSDownloadTaskFactory.cpp" />
-    <ClCompile Include="Download\QGSDownloadSourceBMCLAPI.cpp" />
-    <ClCompile Include="Download\QGSDownloadSourceOfficial.cpp" />
+    <ClCompile Include="Download\QGSBMCLAPIDownloadSource.cpp" />
+    <ClCompile Include="Download\QGSOfficialDownloadSource.cpp" />
     <ClCompile Include="Download\QGSDownloadTask.cpp" />
     <ClCompile Include="Download\QGSForgeDownloadTask.cpp" />
     <ClCompile Include="Download\QGSGameVersionDownloadTask.cpp" />
@@ -189,7 +190,7 @@
     <ClCompile Include="Util\zlib\zip.c" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="Download\QGSDownloadSourceOfficial.h" />
+    <QtMoc Include="Download\QGSOfficialDownloadSource.h" />
     <QtMoc Include="Download\QGSAssetIndexJsonDownloadTask.h" />
     <QtMoc Include="Download\QGSAssetObjectDownloadTask.h" />
     <QtMoc Include="Download\QGSDownloader.h" />
@@ -197,6 +198,7 @@
     <QtMoc Include="Builder\QGSDownloadTaskGenerationTask.h" />
     <QtMoc Include="Builder\QGSGameBuilder.h" />
     <QtMoc Include="Builder\QGSIBuilder.h" />
+    <QtMoc Include="Builder\QGSForgeBuilder.h" />
     <ClInclude Include="Download\QGSDownloadInfo.h" />
     <QtMoc Include="Download\QGSDownloadTaskFactory.h" />
     <QtMoc Include="Download\QGSDownloadTask.h" />
@@ -233,7 +235,7 @@
     <ClInclude Include="GameVersion\QGSRules.h" />
     <ClInclude Include="Util\QGSExceptionInvalidValue.h" />
     <QtMoc Include="Download\QGSIDownloadSource.h" />
-    <QtMoc Include="Download\QGSDownloadSourceBMCLAPI.h" />
+    <QtMoc Include="Download\QGSBMCLAPIDownloadSource.h" />
     <ClInclude Include="Launcher\QGSGeneralLauncherStrategy.h" />
     <QtMoc Include="Launcher\QGSGameDirectory.h" />
     <ClInclude Include="Launcher\QGSILauncherStrategy.h" />

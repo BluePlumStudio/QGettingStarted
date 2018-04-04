@@ -1,3 +1,32 @@
-﻿  QGSFileTools.cpp
+﻿  Moc'ing Download\QGSDownloadTask.h...
+  QGSBuilderFactory.cpp
+  QGSForgeBuilder.cpp
+  QGSGameBuilder.cpp
+  QGSIBuilder.cpp
+  QGSAssetIndexJsonDownloadTask.cpp
+  QGSAssetObjectDownloadTask.cpp
+  QGSDownloadTask.cpp
+  QGSDownloadTaskFactory.cpp
+  QGSForgeDownloadTask.cpp
+  QGSGameVersionDownloadTask.cpp
+  QGSGameVersionJsonDownloadTask.cpp
+  QGSLibraryDownloadTask.cpp
+  QGSLiteLoaderDownloadTask.cpp
+  QGSOptifineDownloadTask.cpp
+  main.cpp
+  moc_QGSAssetIndexJsonDownloadTask.cpp
+  moc_QGSAssetObjectDownloadTask.cpp
+  moc_QGSBuilderFactory.cpp
+  moc_QGSDownloadTask.cpp
+  moc_QGSDownloadTaskFactory.cpp
+  moc_QGSForgeBuilder.cpp
+  moc_QGSForgeDownloadTask.cpp
+  moc_QGSGameBuilder.cpp
+  moc_QGSGameVersionDownloadTask.cpp
+  moc_QGSGameVersionJsonDownloadTask.cpp
+  moc_QGSIBuilder.cpp
+  moc_QGSLibraryDownloadTask.cpp
+  moc_QGSLiteLoaderDownloadTask.cpp
+  moc_QGSOptifineDownloadTask.cpp
 LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
   QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.exe

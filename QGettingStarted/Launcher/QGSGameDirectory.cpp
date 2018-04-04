@@ -169,6 +169,16 @@ QVector<QFile *> QGSGameDirectory::generateLibraryFiles(const QList<QGSLibrary> 
 	return ret;
 }
 
+QDir QGSGameDirectory::generateVersionsDirectory(const bool withAbsolutePath) const
+{
+	return QDir((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "versions");
+}
+
+QDir QGSGameDirectory::generateLibrariesDirectory(const bool withAbsolutePath) const
+{
+	return QDir((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "libraries");
+}
+
 QDir QGSGameDirectory::generateNativesDirectory(const QString & version, const bool withAbsolutePath)const
 {
 	return QDir((withAbsolutePath ? mBaseDir.absolutePath() : "") + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + "-natives");
@@ -204,6 +214,20 @@ QString QGSGameDirectory::praseLibraryName(const QGSLibrary & library)
 	}
 
 	return QString(package + SEPARATOR + name + SEPARATOR + version + SEPARATOR + name + "-" + version + nativeString + ".jar");
+}
+
+QString QGSGameDirectory::praseName(const QString & name)
+{
+	return QString(name.left(name.indexOf(":")).replace(".", SEPARATOR) +
+		SEPARATOR + 
+		name.mid(name.indexOf(":") + 1, name.lastIndexOf(":") - name.indexOf(":") - 1) + 
+		SEPARATOR + 
+		name.mid(name.lastIndexOf(":") + 1) + 
+		SEPARATOR + 
+		name.mid(name.indexOf(":") + 1, name.lastIndexOf(":") - name.indexOf(":") - 1) + 
+		"-" + 
+		name.mid(name.lastIndexOf(":") + 1) + 
+		".jar");
 }
 
 bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIndex & assetIndex, QDir & dir)

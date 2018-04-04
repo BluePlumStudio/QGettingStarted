@@ -4,22 +4,22 @@
 
 #include "QGSIDownloadSource.h"
 
-class QGSDownloadSourceOfficial : public QGSIDownloadSource
+class QGSOfficialDownloadSource : public QGSIDownloadSource
 {
 	Q_OBJECT
 
 public:
-	QGSDownloadSourceOfficial(QObject *parent = nullptr);
+	QGSOfficialDownloadSource(QObject *parent = nullptr);
 
-	QGSDownloadSourceOfficial(const QGSDownloadSourceOfficial & right) = delete;
+	QGSOfficialDownloadSource(const QGSOfficialDownloadSource & right) = delete;
 
-	QGSDownloadSourceOfficial(QGSDownloadSourceOfficial && right) = delete;
+	QGSOfficialDownloadSource(QGSOfficialDownloadSource && right) = delete;
 
-	QGSDownloadSourceOfficial & operator=(const QGSDownloadSourceOfficial & right) = delete;
+	QGSOfficialDownloadSource & operator=(const QGSOfficialDownloadSource & right) = delete;
 
-	QGSDownloadSourceOfficial & operator=(QGSDownloadSourceOfficial && right) = delete;
+	QGSOfficialDownloadSource & operator=(QGSOfficialDownloadSource && right) = delete;
 
-	virtual ~QGSDownloadSourceOfficial();
+	virtual ~QGSOfficialDownloadSource();
 
 	virtual QUrl generateGameVersionInfoJsonUrl()override;
 	virtual QUrl generateForgeVersionInfoJsonUrl(int offset = 1, int limit = 0)override;

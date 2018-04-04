@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../GameBuilder/QGSGameBuilder.h"
+#include "../../Builder/QGSGameBuilder.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -166,6 +166,8 @@ void QGSGameBuilder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 6:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSNetworkError >(); break;
             case 1:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
             }
@@ -182,7 +184,7 @@ void QGSGameBuilder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
 }
 
 const QMetaObject QGSGameBuilder::staticMetaObject = {
-    { &QGSIGameBuilder::staticMetaObject, qt_meta_stringdata_QGSGameBuilder.data,
+    { &QGSIBuilder::staticMetaObject, qt_meta_stringdata_QGSGameBuilder.data,
       qt_meta_data_QGSGameBuilder,  qt_static_metacall, nullptr, nullptr}
 };
 
@@ -197,12 +199,12 @@ void *QGSGameBuilder::qt_metacast(const char *_clname)
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_QGSGameBuilder.stringdata0))
         return static_cast<void*>(this);
-    return QGSIGameBuilder::qt_metacast(_clname);
+    return QGSIBuilder::qt_metacast(_clname);
 }
 
 int QGSGameBuilder::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QGSIGameBuilder::qt_metacall(_c, _id, _a);
+    _id = QGSIBuilder::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

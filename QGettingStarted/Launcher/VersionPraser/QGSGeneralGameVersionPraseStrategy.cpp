@@ -275,7 +275,7 @@ bool QGSGeneralGameVersionPraseStrategy::praseLogging(QGSGameVersion & version, 
 		if (downloadTypeObject.contains("file"))
 		{
 			auto fileObject = downloadTypeObject.value("file").toObject();
-			logging.setFileDownload(QGSLogging::QGSFileDownload{
+			logging.setLoggingDownload(QGSLogging::QGSLoggingDownload{
 				fileObject.contains("size") ? fileObject.value("size").toInt() : 0,
 				fileObject.contains("sha1") ? fileObject.value("sha1").toString() : "",
 				fileObject.contains("path") ? fileObject.value("path").toString() : "",

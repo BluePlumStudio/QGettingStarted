@@ -1,50 +1,50 @@
 #include <QDebug>
 
-#include "QGSDownloadSourceOfficial.h"
+#include "QGSOfficialDownloadSource.h"
 #include "Launcher/QGSGameDirectory.h"
 
-QGSDownloadSourceOfficial::QGSDownloadSourceOfficial(QObject *parent)
+QGSOfficialDownloadSource::QGSOfficialDownloadSource(QObject *parent)
 	: QGSIDownloadSource(parent)
 {
 
 }
 
-QGSDownloadSourceOfficial::~QGSDownloadSourceOfficial()
+QGSOfficialDownloadSource::~QGSOfficialDownloadSource()
 {
 
 }
 
-QUrl QGSDownloadSourceOfficial::generateGameVersionInfoJsonUrl()
+QUrl QGSOfficialDownloadSource::generateGameVersionInfoJsonUrl()
 {
 	return QUrl("https://launchermeta.mojang.com/mc/game/version_manifest.json");
 }
 
-QUrl QGSDownloadSourceOfficial::generateForgeVersionInfoJsonUrl(int offset, int limit)
+QUrl QGSOfficialDownloadSource::generateForgeVersionInfoJsonUrl(int offset, int limit)
 {
 	return QUrl("http://files.minecraftforge.net/maven/net/minecraftforge/forge/json");
 }
 
-QUrl QGSDownloadSourceOfficial::generateLiteLoaderVersionInfoJsonUrl()
+QUrl QGSOfficialDownloadSource::generateLiteLoaderVersionInfoJsonUrl()
 {
 	return QUrl("http://dl.liteloader.com/versions/versions.json");
 }
 
-QUrl QGSDownloadSourceOfficial::generateOptifineVersionInfoJsonUrl()
+QUrl QGSOfficialDownloadSource::generateOptifineVersionInfoJsonUrl()
 {
 	return QUrl("https://bmclapi2.bangbang93.com/optifine/versionList");
 }
 
-QUrl QGSDownloadSourceOfficial::generateLoggingUrl(const QGSLogging & logging)
+QUrl QGSOfficialDownloadSource::generateLoggingUrl(const QGSLogging & logging)
 {
-	return logging.getFileDownload().getUrl();
+	return logging.getLoggingDownload().getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
+QUrl QGSOfficialDownloadSource::generateGameVersionJsonUrl(const QGSGameVersionInfo & versionInfo)
 {
 	return versionInfo.getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateLibraryUrl(const QGSLibrary & library)
+QUrl QGSOfficialDownloadSource::generateLibraryUrl(const QGSLibrary & library)
 {
 	QString urlStr("https://libraries.minecraft.net/");
 
@@ -57,17 +57,17 @@ QUrl QGSDownloadSourceOfficial::generateLibraryUrl(const QGSLibrary & library)
 	return QUrl(QString(urlStr + QGSGameDirectory::praseLibraryName(library).replace("\\","/")));
 }
 
-QUrl QGSDownloadSourceOfficial::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
+QUrl QGSOfficialDownloadSource::generateGameVersionUrl(const QGSGameVersion & version, const QString & category)
 {
 	return version.getDownloads().value(category).getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)
+QUrl QGSOfficialDownloadSource::generateAssetIndexJsonUrl(const QGSAssetIndex & assetIndex)
 {
 	return assetIndex.getUrl();
 }
 
-QUrl QGSDownloadSourceOfficial::generateAssetObjectUrl(const QGSAssetObject & assetObject)
+QUrl QGSOfficialDownloadSource::generateAssetObjectUrl(const QGSAssetObject & assetObject)
 {
 	//http://resources.download.minecraft.net/<first 2 hex letters of hash>/<whole hash>
 	auto && hash(assetObject.getHash());
@@ -76,7 +76,7 @@ QUrl QGSDownloadSourceOfficial::generateAssetObjectUrl(const QGSAssetObject & as
 	};
 }
 
-QUrl QGSDownloadSourceOfficial::generateForgeUrl(const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch)
+QUrl QGSOfficialDownloadSource::generateForgeUrl(const QString & mcversion, const QString & version, const QString & category, const QString & format, const QString & branch)
 {
 	return QUrl{
 		QString("https://files.minecraftforge.net/maven/net/minecraftforge/forge/%1-%2%3/forge-%4-%5%6-%7.%8")
@@ -91,7 +91,7 @@ QUrl QGSDownloadSourceOfficial::generateForgeUrl(const QString & mcversion, cons
 	};
 }
 
-QUrl QGSDownloadSourceOfficial::generateLiteLoaderUrl(QString mcversion, QString version, const QString & category)
+QUrl QGSOfficialDownloadSource::generateLiteLoaderUrl(QString mcversion, QString version, const QString & category)
 {
 	if (category.contains("installer"))
 	{
@@ -130,7 +130,7 @@ QUrl QGSDownloadSourceOfficial::generateLiteLoaderUrl(QString mcversion, QString
 	}
 }
 
-QUrl QGSDownloadSourceOfficial::generateOptifineUrl(const QString & mcversion, const QString & type, const QString & patch)
+QUrl QGSOfficialDownloadSource::generateOptifineUrl(const QString & mcversion, const QString & type, const QString & patch)
 {
 	return QUrl{
 		QString("https://bmclapi2.bangbang93.com/optifine/%1/%2/%3")

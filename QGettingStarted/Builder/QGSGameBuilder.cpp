@@ -33,11 +33,11 @@ void GameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	{
 		QObject::connect(this, &GameVersionJsonDownloadTaskGenerationTask::error, mGameBuilderPtr, &QGSGameBuilder::error);
 		QObject::connect(this, &GameVersionJsonDownloadTaskGenerationTask::generationTaskDownloadError, mGameBuilderPtr, &QGSGameBuilder::downloadTaskDownloadError);
-		mGameBuilderPtr->mLastErrorString = "Generating game version json download task failed!";
+		mGameBuilderPtr->mLastErrorString = "Generating game version json download task!";
 
 		mutexLocker.unlock();
 		emit error(this);
-		emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating game version json download task failed!"),
+		emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating game version json download task!"),
 			downloadTask);
 
 		return;
@@ -50,7 +50,7 @@ void GameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	QObject::connect(downloadTask, &QGSDownloadTask::canceled, mGameBuilderPtr, &QGSGameBuilder::downloadTaskCanceled);
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, mGameBuilderPtr, &QGSGameBuilder::downloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, mGameBuilderPtr, &QGSGameBuilder::downloadTaskError);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskFront(downloadTask);
 
@@ -93,12 +93,12 @@ void GameVersionDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	{
 		QObject::connect(this, &GameVersionJsonDownloadTaskGenerationTask::error, mGameBuilderPtr, &QGSGameBuilder::error);
 		QObject::connect(this, &GameVersionJsonDownloadTaskGenerationTask::generationTaskDownloadError, mGameBuilderPtr, &QGSGameBuilder::downloadTaskDownloadError);
-		mGameBuilderPtr->mLastErrorString = "Generating game version download task failed!";
+		mGameBuilderPtr->mLastErrorString = "Generating game version download task!";
 
 		mutexLocker.unlock();
 
 		emit error(this);
-		emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating game version download task failed!"),
+		emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating game version download task!"),
 			downloadTask);
 
 		return;
@@ -110,7 +110,7 @@ void GameVersionDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	QObject::connect(downloadTask, &QGSDownloadTask::canceled, mGameBuilderPtr, &QGSGameBuilder::downloadTaskCanceled);
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, mGameBuilderPtr, &QGSGameBuilder::downloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, mGameBuilderPtr, &QGSGameBuilder::downloadTaskError);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskBack(downloadTask);
 
@@ -169,11 +169,11 @@ void LibraryDownloadTasksGenerationTask::templateStart(QGSTask * task)
 		downloadTask = mGameBuilderPtr->mDownloadTaskFactoryPtr->generateLibraryDownloadTask(i, *(mGameBuilderPtr->mGameDirectoryPtr));
 		if (!downloadTask)
 		{
-			mGameBuilderPtr->mLastErrorString = "Generating library download task failed!";
+			mGameBuilderPtr->mLastErrorString = "Generating library download task!";
 			mutexLocker.unlock();
 
 			emit error(this);
-			emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating library download task failed!"),
+			emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating library download task!"),
 				downloadTask);
 
 			return;
@@ -185,7 +185,7 @@ void LibraryDownloadTasksGenerationTask::templateStart(QGSTask * task)
 		QObject::connect(downloadTask, &QGSDownloadTask::canceled, mGameBuilderPtr, &QGSGameBuilder::downloadTaskCanceled);
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadError, mGameBuilderPtr, &QGSGameBuilder::downloadTaskDownloadError);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, mGameBuilderPtr, &QGSGameBuilder::downloadTaskError);
-		QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotEraseDownloadTask);
+		QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::eraseDownloadTask);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotDownloadTaskFinished);
 		QGSThreadPool::getGlobalInstance().addTaskBack(downloadTask);
 	}
@@ -232,11 +232,11 @@ void AssetIndexJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 
 	if (!downloadTask)
 	{
-		mGameBuilderPtr->mLastErrorString = "Generating asset index json download task failed!";
+		mGameBuilderPtr->mLastErrorString = "Generating asset index json download task!";
 		mutexLocker.unlock();
 
 		emit error(this);
-		emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating asset index json download task failed!"),
+		emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating asset index json download task!"),
 			downloadTask);
 
 		return;
@@ -249,7 +249,7 @@ void AssetIndexJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	QObject::connect(downloadTask, &QGSDownloadTask::canceled, mGameBuilderPtr, &QGSGameBuilder::downloadTaskCanceled);
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, mGameBuilderPtr, &QGSGameBuilder::downloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, mGameBuilderPtr, &QGSGameBuilder::downloadTaskError);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskFront(downloadTask);
 
@@ -283,7 +283,7 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 	QSharedPointer<QFile> assetIndexJsonFile(mGameBuilderPtr->mGameDirectoryPtr->generateAssetIndexJsonFile(mGameBuilderPtr->mVersionInfo));
 	if (!assetIndexJsonFile->open(QIODevice::ReadOnly))
 	{
-		mGameBuilderPtr->mLastErrorString = "Opening asset index json file failed!";
+		mGameBuilderPtr->mLastErrorString = "Opening asset index json file!";
 		mutexLocker.unlock();
 
 		emit error(this);
@@ -298,7 +298,7 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 	}
 	catch (const QGSExceptionJsonPraseError & exception)
 	{
-		mGameBuilderPtr->mLastErrorString = "Prasing asset index json failed!";
+		mGameBuilderPtr->mLastErrorString = "Prasing asset index json!";
 		mutexLocker.unlock();
 
 		emit error(this);
@@ -322,11 +322,11 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 		downloadTask = mGameBuilderPtr->mDownloadTaskFactoryPtr->generateAssetObjectDownloadTask(i, *(mGameBuilderPtr->mGameDirectoryPtr));
 		if (!downloadTask)
 		{
-			mGameBuilderPtr->mLastErrorString = "Generating asset object download task failed!";
+			mGameBuilderPtr->mLastErrorString = "Generating asset object download task!";
 
 			mutexLocker.unlock();
 			emit error(this);
-			emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating asset object download task failed!"),
+			emit generationTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating asset object download task!"),
 				downloadTask);
 
 			return;
@@ -338,7 +338,7 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 		QObject::connect(downloadTask, &QGSDownloadTask::canceled, mGameBuilderPtr, &QGSGameBuilder::downloadTaskCanceled);
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadError, mGameBuilderPtr, &QGSGameBuilder::downloadTaskDownloadError);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, mGameBuilderPtr, &QGSGameBuilder::downloadTaskError);
-		QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotEraseDownloadTask);
+		QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::eraseDownloadTask);
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, mGameBuilderPtr, &QGSGameBuilder::slotDownloadTaskFinished);
 		QGSThreadPool::getGlobalInstance().addTaskBack(downloadTask);
 	}
@@ -351,19 +351,19 @@ void AssetObjectDownloadTasksGenerationTask::templateStart(QGSTask * task)
 
 static const unsigned long DEFAULT_SLEEP_TIME(1000);
 
-QGSThreadPool QGSGameBuilder::mThreadPool(8,200);
-
 QGSGameBuilder::QGSGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory, QObject * parent)
-	:QGSIBuilder(parent), mTimerPtr(nullptr), mVersionInfo(versionInfo), mGameDirectoryPtr(gameDirectory), mDownloadTaskFactoryPtr(downloadTaskFactory), mFileOverride(false)
+	:QGSIBuilder(parent), 
+	//mTimerPtr(nullptr),
+	mVersionInfo(versionInfo),
+	mGameDirectoryPtr(gameDirectory),
+	mDownloadTaskFactoryPtr(downloadTaskFactory), 
+	mGameVersionJsonDownloadTask(nullptr),
+	mAssetIndexJsonDownloadTask(nullptr),
+	mFileOverride(false)
 {
 	if (!mGameDirectoryPtr || !mDownloadTaskFactoryPtr)
 	{
 		throw QGSExceptionInvalidValue();
-	}
-
-	if (!mThreadPool.isRunning())
-	{
-		mThreadPool.start();
 	}
 
 }
@@ -377,10 +377,16 @@ QGSGameBuilder::~QGSGameBuilder()
 		task->deleteLater();
 	}
 
-	if (mTimerPtr)
+	if (mGameVersionJsonDownloadTask)
 	{
-		mTimerPtr->deleteLater();
-		mTimerPtr = nullptr;
+		mGameVersionJsonDownloadTask->deleteLater();
+		mGameVersionJsonDownloadTask = nullptr;
+	}
+
+	if (mAssetIndexJsonDownloadTask)
+	{
+		mAssetIndexJsonDownloadTask->deleteLater();
+		mAssetIndexJsonDownloadTask = nullptr;
 	}
 }
 
@@ -399,23 +405,11 @@ QGSGameBuilder & QGSGameBuilder::setFileOverride(const bool fileOverride)
 	return *this;
 }
 
-QString QGSGameBuilder::getLastErrorString()
-{
-	QMutexLocker mutexLocker(&mMutex);
-
-	return mLastErrorString;
-}
-
 int QGSGameBuilder::getTaskListSize()
 {
 	QMutexLocker mutexLocker(&mMutex);
 
 	return mTaskList.size();
-}
-
-QGSThreadPool & QGSGameBuilder::getThreadPool()
-{
-	return mThreadPool;
 }
 
 void QGSGameBuilder::templateStart(QGSTask * task)
@@ -434,12 +428,14 @@ void QGSGameBuilder::templateStart(QGSTask * task)
 		return;
 	}
 	
+	/*
 	if (!mTimerPtr)
 	{
 		mTimerPtr = new QTimer(this);
 	}
 	QObject::connect(mTimerPtr, &QTimer::timeout, this, &QGSGameBuilder::deleteTasksFinished);
 	mTimerPtr->start(DEFAULT_SLEEP_TIME);
+	*/
 
 	mMutex.unlock();
 
@@ -449,32 +445,32 @@ void QGSGameBuilder::templateStart(QGSTask * task)
 	auto * gameVersionJsonDownloadTaskGenerationTask(new GameVersionJsonDownloadTaskGenerationTask(this));
 	mTaskList.push_back(gameVersionJsonDownloadTaskGenerationTask);
 	gameVersionJsonDownloadTaskGenerationTask->setTaskQueueBlock(true);
-	QObject::connect(gameVersionJsonDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(gameVersionJsonDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(gameVersionJsonDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskBack(gameVersionJsonDownloadTaskGenerationTask);
 
 	auto * gameVersionDownloadTaskGenerationTask(new GameVersionDownloadTaskGenerationTask(this));
 	mTaskList.push_back(gameVersionDownloadTaskGenerationTask);
-	QObject::connect(gameVersionDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(gameVersionDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(gameVersionDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskBack(gameVersionDownloadTaskGenerationTask);
 
 	auto * libraryDownloadTasksGenerationTask(new LibraryDownloadTasksGenerationTask(this));
 	mTaskList.push_back(libraryDownloadTasksGenerationTask);
-	QObject::connect(libraryDownloadTasksGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(libraryDownloadTasksGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(libraryDownloadTasksGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskBack(libraryDownloadTasksGenerationTask);
 
 	auto * assetIndexJsonDownloadTaskGenerationTask(new AssetIndexJsonDownloadTaskGenerationTask(this));
 	mTaskList.push_back(assetIndexJsonDownloadTaskGenerationTask);
 	assetIndexJsonDownloadTaskGenerationTask->setTaskQueueBlock(true);
-	QObject::connect(assetIndexJsonDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(assetIndexJsonDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(assetIndexJsonDownloadTaskGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskBack(assetIndexJsonDownloadTaskGenerationTask);
 
 	auto * assetObjectDownloadTasksGenerationTask(new AssetObjectDownloadTasksGenerationTask(this));
 	mTaskList.push_back(assetObjectDownloadTasksGenerationTask);
-	QObject::connect(assetObjectDownloadTasksGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
+	QObject::connect(assetObjectDownloadTasksGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::eraseDownloadTask);
 	QObject::connect(assetObjectDownloadTasksGenerationTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
 	QGSThreadPool::getGlobalInstance().addTaskBack(assetObjectDownloadTasksGenerationTask);
 	*/
@@ -490,7 +486,7 @@ void QGSGameBuilder::templateStop(QGSTask * task)
 		downloadTask->stop();
 	}
 
-	mTimerPtr->disconnect();
+	//mTimerPtr->disconnect();
 
 	mutexLocker.unlock();
 
@@ -506,8 +502,17 @@ void QGSGameBuilder::templateCancel(QGSTask * task)
 		downloadTask->cancel();
 	}
 
-	mTimerPtr->disconnect();
+	if (mGameVersionJsonDownloadTask)
+	{
+		mGameVersionJsonDownloadTask->deleteLater();
+		mGameVersionJsonDownloadTask = nullptr;
+	}
 
+	if (mAssetIndexJsonDownloadTask)
+	{
+		mAssetIndexJsonDownloadTask->deleteLater();
+		mAssetIndexJsonDownloadTask = nullptr;
+	}
 	mutexLocker.unlock();
 
 	emit canceled(this);
@@ -515,154 +520,153 @@ void QGSGameBuilder::templateCancel(QGSTask * task)
 
 void QGSGameBuilder::slotDownloadTaskStarted(QGSTask * task)
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * downloadTask(dynamic_cast<QGSDownloadTask *>(task));
+	auto && downloadInfo(downloadTask->getDownloadInfo());
 
-	mutexLocker.unlock();
-
-	emit downloadTaskStarted(downloadTask->getDownloadInfo());
+	emit downloadTaskStarted(downloadInfo);
 }
 
 void QGSGameBuilder::slotDownloadTaskFinished(QGSTask * task)
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * downloadTask(dynamic_cast<QGSDownloadTask *>(task));
+	auto && downloadInfo(downloadTask->getDownloadInfo());
 
+	emit downloadTaskFinished(downloadInfo);
+
+	QMutexLocker mutexLocker(&mMutex);
+	taskFinished(downloadTask);
 	mutexLocker.unlock();
-
-	emit downloadTaskFinished(downloadTask->getDownloadInfo());
 }
 
 void QGSGameBuilder::slotDownloadTaskStoped(QGSTask * task)
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * downloadTask(dynamic_cast<QGSDownloadTask *>(task));
+	auto && downloadInfo(downloadTask->getDownloadInfo());
 
-	mutexLocker.unlock();
-
-	emit downloadTaskStoped(downloadTask->getDownloadInfo());
+	emit downloadTaskStoped(downloadInfo);
 }
 
 void QGSGameBuilder::slotDownloadTaskCanceled(QGSTask * task)
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * downloadTask(dynamic_cast<QGSDownloadTask *>(task));
+	auto && downloadInfo(downloadTask->getDownloadInfo());
 
+	emit downloadTaskCanceled(downloadInfo);
+
+	QMutexLocker mutexLocker(&mMutex);
+	taskFinished(downloadTask);
 	mutexLocker.unlock();
-
-	emit downloadTaskCanceled(downloadTask->getDownloadInfo());
 }
 
-void QGSGameBuilder::slotDownloadTaskDownloadError(QGSNetworkError error, QGSTask * task)
+void QGSGameBuilder::slotDownloadTaskDownloadError(QGSNetworkError _error, QGSTask * task)
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * downloadTask(dynamic_cast<QGSDownloadTask *>(task));
+	auto && downloadInfo(downloadTask->getDownloadInfo());
+	auto && error(_error);
 
-	mutexLocker.unlock();
-
-	emit downloadTaskDownloadError(error, downloadTask->getDownloadInfo());
+	emit downloadTaskDownloadError(error, downloadInfo);
 }
 
 void QGSGameBuilder::slotDownloadTaskError(QGSTask * task)
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * downloadTask(dynamic_cast<QGSDownloadTask *>(task));
+	auto && downloadInfo(downloadTask->getDownloadInfo());
 
+	emit downloadTaskError(downloadInfo);
+
+	QMutexLocker mutexLocker(&mMutex);
+	taskFinished(downloadTask);
 	mutexLocker.unlock();
-
-	emit downloadTaskError(downloadTask->getDownloadInfo());
 }
 
 void QGSGameBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
 {
-	QMutexLocker mutexLocker(&mMutex);
 	auto * downloadTask(dynamic_cast<QGSDownloadTask *>(task));
+	auto && downloadInfo(downloadTask->getDownloadInfo());
 
-	mutexLocker.unlock();
-
-	emit downloadTaskDownloadProgress(bytesReceived, bytesTotal, downloadTask->getDownloadInfo());
+	emit downloadTaskDownloadProgress(bytesReceived, bytesTotal, downloadInfo);
 }
 
 void QGSGameBuilder::initDownloadTasks()
 {
-	auto * gameVersionJsonDownloadTask(initGameVersionJsonDownloadTask());
-	if (gameVersionJsonDownloadTask)
+	initGameVersionJsonDownloadTask();
+	
+	if (!mGameVersionJsonDownloadTask)
 	{
-		QObject::connect(gameVersionJsonDownloadTask, &QGSDownloadTask::finished, this, [=]()
+		taskFinished(nullptr);
+
+		return;
+	}
+
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::finished, this, [=]()
+	{
+		if (initGameVersionDownloadTask() && initLibraryDownloadTasks());
+
+		initAssetIndexJsonDownloadTask();
+
+		if (!mAssetIndexJsonDownloadTask)
 		{
-			if (initGameVersionDownloadTask() && initLibraryDownloadTasks());
+			taskFinished(nullptr);
 
-			auto * assetIndexJsonDownloadTask(initAssetIndexJsonDownloadTask());
+			return;
+		}
 
-			QObject::connect(assetIndexJsonDownloadTask, &QGSDownloadTask::finished, this, [=]()
+		QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::finished, this, [=]()
+		{
+			QGSAssetIndexInfoFactory assetIndexversionInfoFactory;
+
+			if (!mAssetIndexJsonDownloadTask->getTargetFile()->open(QIODevice::ReadOnly))
 			{
-				QGSAssetIndexInfoFactory assetIndexversionInfoFactory;
+				emit error(this);
+				mLastErrorString = "Failed to open asset index json file!";
 
-				if (!assetIndexJsonDownloadTask->getTargetFile()->open(QIODevice::ReadOnly))
-				{
-					emit error(this);
-					mLastErrorString = "Opening asset index json file failed!";
+				return;
+			}
 
-					return;
-				}
+			try
+			{
+				mAssetIndexInfo = assetIndexversionInfoFactory.createAssetIndexInfo(mAssetIndexJsonDownloadTask->getTargetFile()->readAll());
+			}
+			catch (const QGSExceptionJsonPraseError & exception)
+			{
+				emit error(this);
+				mLastErrorString = "Failed to prase asset index json!";
 
-				try
-				{
-					mAssetIndexInfo = assetIndexversionInfoFactory.createAssetIndexInfo(assetIndexJsonDownloadTask->getTargetFile()->readAll());
-				}
-				catch (const QGSExceptionJsonPraseError & exception)
-				{
-					emit error(this);
-					mLastErrorString = "Prasing asset index json failed!";
+				return;
+			}
 
-					return;
-				}
+			if (initAssetObjectDownloadTasks());
 
-				if (initAssetObjectDownloadTasks());
-
-				slotFinished();
-
-			});
+			taskFinished(nullptr);
 
 		});
-	}
+
+	});
 }
 
 QGSDownloadTask * QGSGameBuilder::initGameVersionJsonDownloadTask()
 {
 	QMutexLocker mutexLocker(&mMutex);
-	QGSDownloadTask * downloadTask(nullptr);
 
-	downloadTask = mDownloadTaskFactoryPtr->generateGameVersionJsonDownloadTask(mVersionInfo, *mGameDirectoryPtr);
-	if (!downloadTask)
+	mGameVersionJsonDownloadTask = mDownloadTaskFactoryPtr->generateGameVersionJsonDownloadTask(mVersionInfo, *mGameDirectoryPtr);
+	if (!mGameVersionJsonDownloadTask)
 	{
 		emit error(this);
-		emit downloadTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating game version json download task failed!"),
-			downloadTask->getDownloadInfo());
-		mLastErrorString = "Generating game version json download task failed!";
+		mLastErrorString = "Failed to generate game version json download task!";
 
 		return nullptr;
 	}
-	mTaskList.push_back(downloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::started, this, &QGSGameBuilder::slotDownloadTaskStarted);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
-	QObject::connect(downloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
-	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
-	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
-	mThreadPool.addTaskBack(downloadTask);
+	mTaskList.push_back(mGameVersionJsonDownloadTask);
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::started, this, &QGSGameBuilder::slotDownloadTaskStarted);
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
+	QObject::connect(mGameVersionJsonDownloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
+	mThreadPool.addTaskBack(mGameVersionJsonDownloadTask);
 
-	return downloadTask;
+	return mGameVersionJsonDownloadTask;
 }
 
 bool QGSGameBuilder::initGameVersionDownloadTask()
@@ -684,9 +688,7 @@ bool QGSGameBuilder::initGameVersionDownloadTask()
 	if (!downloadTask)
 	{
 		emit error(this);
-		emit downloadTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating game version download task failed!"),
-			downloadTask->getDownloadInfo());
-		mLastErrorString = "Generating game version download task failed!";
+		mLastErrorString = "Failed to generate game version download task!";
 
 		return false;
 	}
@@ -698,12 +700,6 @@ bool QGSGameBuilder::initGameVersionDownloadTask()
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotFinished);
-	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotFinished);
-	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotFinished);
 	mThreadPool.addTaskBack(downloadTask);
 
 	return true;
@@ -742,9 +738,7 @@ bool QGSGameBuilder::initLibraryDownloadTasks()
 		if (!downloadTask)
 		{
 			emit error(this);
-			emit downloadTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating library download task failed!"),
-				downloadTask->getDownloadInfo());
-			mLastErrorString = "Generating library download task failed!";
+			mLastErrorString = "Failed to generate library download task!";
 
 			return false;
 		}
@@ -756,12 +750,6 @@ bool QGSGameBuilder::initLibraryDownloadTasks()
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
-		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
-		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotFinished);
-		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
-		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotFinished);
-		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
-		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotFinished);
 		mThreadPool.addTaskBack(downloadTask);
 	}
 
@@ -771,11 +759,10 @@ bool QGSGameBuilder::initLibraryDownloadTasks()
 QGSDownloadTask *  QGSGameBuilder::initAssetIndexJsonDownloadTask()
 {
 	QMutexLocker mutexLocker(&mMutex);
-	QGSDownloadTask * downloadTask(nullptr);
 
 	try
 	{
-		downloadTask = mDownloadTaskFactoryPtr->generateAssetIndexJsonDownloadTask(mGameDirectoryPtr->getVersion(mVersionInfo).getAssetIndex(),
+		mAssetIndexJsonDownloadTask = mDownloadTaskFactoryPtr->generateAssetIndexJsonDownloadTask(mGameDirectoryPtr->getVersion(mVersionInfo).getAssetIndex(),
 			*mGameDirectoryPtr);
 	}
 	catch (const QGSExceptionVersionNotFound & exception)
@@ -786,29 +773,24 @@ QGSDownloadTask *  QGSGameBuilder::initAssetIndexJsonDownloadTask()
 		return nullptr;
 	}
 
-	if (!downloadTask)
+	if (!mAssetIndexJsonDownloadTask)
 	{
 		emit error(this);
-		emit downloadTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating asset index json download task failed!"),
-			downloadTask->getDownloadInfo());
-		mLastErrorString = "Generating asset index json download task failed!";
+		mLastErrorString = "Failed to generate asset index json download task!";
 
 		return nullptr;
 	}
-	mTaskList.push_back(downloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::started, this, &QGSGameBuilder::slotDownloadTaskStarted);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
-	QObject::connect(downloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
-	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
-	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
-	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
-	QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
-	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
-	mThreadPool.addTaskBack(downloadTask);
+	mTaskList.push_back(mAssetIndexJsonDownloadTask);
+	QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::started, this, &QGSGameBuilder::slotDownloadTaskStarted);
+	QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotDownloadTaskFinished);
+	QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::stoped, this, &QGSGameBuilder::slotDownloadTaskStoped);
+	QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotDownloadTaskCanceled);
+	QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
+	QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
+	QObject::connect(mAssetIndexJsonDownloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
+	mThreadPool.addTaskBack(mAssetIndexJsonDownloadTask);
 
-	return downloadTask;
+	return mAssetIndexJsonDownloadTask;
 }
 
 bool QGSGameBuilder::initAssetObjectDownloadTasks()
@@ -832,9 +814,7 @@ bool QGSGameBuilder::initAssetObjectDownloadTasks()
 		if (!downloadTask)
 		{
 			emit error(this);
-			emit downloadTaskDownloadError(QGSNetworkError(QNetworkReply::NetworkError::NoError, "Generating asset object download task failed!"),
-				downloadTask->getDownloadInfo());
-			mLastErrorString = "Generating asset object download task failed!";
+			mLastErrorString = "Failed to generate asset object download task!";
 
 			return false;
 		}
@@ -846,18 +826,13 @@ bool QGSGameBuilder::initAssetObjectDownloadTasks()
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, this, &QGSGameBuilder::slotDownloadTaskDownloadProgress);
 		QObject::connect(downloadTask, &QGSDownloadTask::downloadError, this, &QGSGameBuilder::slotDownloadTaskDownloadError);
 		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotDownloadTaskError);
-		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotEraseDownloadTask);
-		QObject::connect(downloadTask, &QGSDownloadTask::finished, this, &QGSGameBuilder::slotFinished);
-		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotEraseDownloadTask);
-		QObject::connect(downloadTask, &QGSDownloadTask::canceled, this, &QGSGameBuilder::slotFinished);
-		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotEraseDownloadTask);
-		QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameBuilder::slotFinished);
 		mThreadPool.addTaskBack(downloadTask);
 	}
 
 	return true;
 }
 
+/*
 void QGSGameBuilder::deleteTasksFinished()
 {
 	QMutexLocker mutexLocker(&mMutex);
@@ -870,17 +845,16 @@ void QGSGameBuilder::deleteTasksFinished()
 
 	for (auto i = 0; i < halfSize; i++)
 	{
-		QGSTask * taskWillBeDeleted(mTaskWillBeDeletedList.front());
+		mTaskWillBeDeletedList.front()->deleteLater();
 		mTaskWillBeDeletedList.pop_front();
-		taskWillBeDeleted->deleteLater();
 	}
 
 	//qDebug() << "QGSGameBuilder::deleteTasksFinished!";
 }
+*/
 
-void QGSGameBuilder::slotEraseDownloadTask(QGSTask * downloadTask)
+void QGSGameBuilder::eraseDownloadTask(QGSTask * downloadTask)
 {
-	QMutexLocker mutexLocker(&mMutex);
 	if (!downloadTask)
 	{
 		return;
@@ -890,26 +864,25 @@ void QGSGameBuilder::slotEraseDownloadTask(QGSTask * downloadTask)
 	{
 		if (*it == downloadTask)
 		{
-			//downloadTask->moveToThread(QCoreApplication::instance()->thread());
-			//downloadTask->deleteLater();
-			mTaskWillBeDeletedList.push_back(downloadTask);
 			mTaskList.erase(it);
+			if (downloadTask != mAssetIndexJsonDownloadTask && downloadTask != mGameVersionJsonDownloadTask)
+			{
+				downloadTask->deleteLater();
+
+			}
 			break;
+
 		}
 	}
 
 }
 
-void QGSGameBuilder::slotFinished()
+void QGSGameBuilder::taskFinished(QGSTask * downloadTask)
 {
-	if (!getTaskListSize())
+	eraseDownloadTask(downloadTask);
+
+	if (!mTaskList.size())
 	{
-		mMutex.lock();
-
-		mTimerPtr->disconnect();
-
-		mMutex.unlock();
-
 		emit finished(this);
 	}
 }
