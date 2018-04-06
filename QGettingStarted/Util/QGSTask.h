@@ -23,6 +23,8 @@ public:
 	void moveToOriginalThread();
 
 	void deleteLater();
+
+	QGSTask & setNextTask(QGSTask * task);
 signals:
 	void started(QGSTask * task);
 	void finished(QGSTask * task);
@@ -39,4 +41,5 @@ protected:
 	virtual void templateCancel(QGSTask * task);
 protected:
 	QThread * mOriginalThread;
+	QGSTask * mNextTask;
 };

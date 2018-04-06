@@ -40,6 +40,10 @@ public:
 
 	int getConnectionCount()const;
 
+	QGSDownloadTaskFactory & setLargeFileSize(const quint64 bytes);
+
+	QGSDownloadTaskFactory & setSmallFileSize(const quint64 bytes);
+
 	QGSDownloadTask * generateDownloadTask(QFile * targetFile, QGSDownloadInfo downloadInfo);
 	/**/
 	QGSDownloadTask * generateGameVersionInfoJsonDownloadTask(QFile * targetFile);

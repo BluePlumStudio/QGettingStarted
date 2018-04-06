@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QGSIBuilder_t {
-    QByteArrayData data[15];
-    char stringdata0[236];
+    QByteArrayData data[17];
+    char stringdata0[271];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,7 +45,9 @@ QT_MOC_LITERAL(10, 159, 10), // "bytesTotal"
 QT_MOC_LITERAL(11, 170, 25), // "downloadTaskDownloadError"
 QT_MOC_LITERAL(12, 196, 15), // "QGSNetworkError"
 QT_MOC_LITERAL(13, 212, 5), // "error"
-QT_MOC_LITERAL(14, 218, 17) // "downloadTaskError"
+QT_MOC_LITERAL(14, 218, 17), // "downloadTaskError"
+QT_MOC_LITERAL(15, 236, 18), // "setLastErrorString"
+QT_MOC_LITERAL(16, 255, 15) // "lastErrorString"
 
     },
     "QGSIBuilder\0downloadTaskStarted\0\0"
@@ -53,7 +55,8 @@ QT_MOC_LITERAL(14, 218, 17) // "downloadTaskError"
     "downloadTaskStoped\0downloadTaskCanceled\0"
     "downloadTaskDownloadProgress\0bytesReceived\0"
     "bytesTotal\0downloadTaskDownloadError\0"
-    "QGSNetworkError\0error\0downloadTaskError"
+    "QGSNetworkError\0error\0downloadTaskError\0"
+    "setLastErrorString\0lastErrorString"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,7 +66,7 @@ static const uint qt_meta_data_QGSIBuilder[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -71,13 +74,16 @@ static const uint qt_meta_data_QGSIBuilder[] = {
        7,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
-       5,    1,   52,    2, 0x06 /* Public */,
-       6,    1,   55,    2, 0x06 /* Public */,
-       7,    1,   58,    2, 0x06 /* Public */,
-       8,    3,   61,    2, 0x06 /* Public */,
-      11,    2,   68,    2, 0x06 /* Public */,
-      14,    1,   73,    2, 0x06 /* Public */,
+       1,    1,   54,    2, 0x06 /* Public */,
+       5,    1,   57,    2, 0x06 /* Public */,
+       6,    1,   60,    2, 0x06 /* Public */,
+       7,    1,   63,    2, 0x06 /* Public */,
+       8,    3,   66,    2, 0x06 /* Public */,
+      11,    2,   73,    2, 0x06 /* Public */,
+      14,    1,   78,    2, 0x06 /* Public */,
+
+ // slots: name, argc, parameters, tag, flags
+      15,    1,   81,    2, 0x09 /* Protected */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -87,6 +93,9 @@ static const uint qt_meta_data_QGSIBuilder[] = {
     QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, 0x80000000 | 3,    9,   10,    4,
     QMetaType::Void, 0x80000000 | 12, 0x80000000 | 3,   13,    4,
     QMetaType::Void, 0x80000000 | 3,    4,
+
+ // slots: parameters
+    QMetaType::Void, QMetaType::QString,   16,
 
        0        // eod
 };
@@ -104,6 +113,7 @@ void QGSIBuilder::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 4: _t->downloadTaskDownloadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< QGSDownloadTask*(*)>(_a[3]))); break;
         case 5: _t->downloadTaskDownloadError((*reinterpret_cast< QGSNetworkError(*)>(_a[1])),(*reinterpret_cast< QGSDownloadTask*(*)>(_a[2]))); break;
         case 6: _t->downloadTaskError((*reinterpret_cast< QGSDownloadTask*(*)>(_a[1]))); break;
+        case 7: _t->setLastErrorString((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -240,13 +250,13 @@ int QGSIBuilder::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }

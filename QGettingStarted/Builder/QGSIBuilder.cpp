@@ -2,10 +2,10 @@
 #include "../Util/QGSExceptionInvalidValue.h"
 #include "../Util/QGSExceptionIO.h"
 
-QGSThreadPool QGSIBuilder::mThreadPool(8, 64);
+QGSThreadPool QGSIBuilder::mThreadPool(0, 16);
 
 QGSIBuilder::QGSIBuilder(QObject * parent)
-	:QGSTask(parent)
+	:QGSTask(parent), mLastErrorString("")
 {
 	if (!mThreadPool.isRunning())
 	{
@@ -30,3 +30,9 @@ QString QGSIBuilder::getLastErrorString()
 	return mLastErrorString;
 }
 
+void QGSIBuilder::setLastErrorString(QString lastErrorString)
+{
+	QMutexLocker mutexLocker(&mMutex);
+	
+	mLastErrorString = lastErrorString;
+}

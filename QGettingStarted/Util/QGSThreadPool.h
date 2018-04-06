@@ -55,11 +55,12 @@ signals:
 	void taskFinished(QGSTask* task);
 private:
 	//QWaitCondition mTaskQueueStartCondition;
-	//QWaitCondition mTaskQueueNotFullCondition;
+	QWaitCondition mTaskThreadsNotActiveCondition;
 
 	QQueue<QGSTask *> mTaskQueue;
 	QList<QGSTaskThread *> mThreadList;
 	QMutex mMutex;
+	QMutex mConditionMutex;
 	//bool mTaskQueueBlock;
 	bool mReleaseThreads;
 	//quint32 mWaitReleasedThreadCount;

@@ -34,6 +34,7 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 		if (gameVersionJsonFile->exists())
 		{
 			emit finished(this);
+
 			wakeGameVersionJsonDownloadTaskEnded();
 
 			return;
@@ -45,6 +46,8 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	if (!downloadTask)
 	{
 		emit error(this);
+
+		wakeGameVersionJsonDownloadTaskEnded();
 
 		return;
 	}

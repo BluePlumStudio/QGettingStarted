@@ -105,12 +105,16 @@
     </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Builder\QGSAssetBuilder.cpp" />
+    <ClCompile Include="Builder\QGSAssetIndexJsonDownloadTaskGenerationTask.cpp" />
+    <ClCompile Include="Builder\QGSAssetObjectDownloadTaskGenerationTask.cpp" />
     <ClCompile Include="Builder\QGSBuilderFactory.cpp" />
     <ClCompile Include="Builder\QGSDownloadTaskGenerationTask.cpp" />
     <ClCompile Include="Builder\QGSGameVersionBuilder.cpp" />
     <ClCompile Include="Builder\QGSGameVersionDownloadTaskGenerationTask.cpp" />
     <ClCompile Include="Builder\QGSGameVersionJsonDownloadTaskGenerationTask.cpp" />
     <ClCompile Include="Builder\QGSIBuilder.cpp" />
+    <ClCompile Include="Builder\QGSLibraryBuilder.cpp" />
     <ClCompile Include="Download\QGSAssetIndexJsonDownloadTask.cpp" />
     <ClCompile Include="Download\QGSAssetObjectDownloadTask.cpp" />
     <ClCompile Include="Download\QGSDownloader.cpp" />
@@ -199,8 +203,12 @@
     <QtMoc Include="Builder\QGSDownloadTaskGenerationTask.h" />
     <QtMoc Include="Builder\QGSIBuilder.h" />
     <QtMoc Include="Builder\QGSGameVersionBuilder.h" />
+    <QtMoc Include="Builder\QGSAssetBuilder.h" />
+    <ClInclude Include="Builder\QGSAssetIndexJsonDownloadTaskGenerationTask.h" />
+    <ClInclude Include="Builder\QGSAssetObjectDownloadTaskGenerationTask.h" />
     <ClInclude Include="Builder\QGSGameVersionDownloadTaskGenerationTask.h" />
     <ClInclude Include="Builder\QGSGameVersionJsonDownloadTaskGenerationTask.h" />
+    <QtMoc Include="Builder\QGSLibraryBuilder.h" />
     <ClInclude Include="Download\QGSDownloadInfo.h" />
     <QtMoc Include="Download\QGSDownloadTaskFactory.h" />
     <QtMoc Include="Download\QGSDownloadTask.h" />
@@ -278,7 +286,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="5.10.0-msvc2015_static" MocOptions="" />
+      <UserProperties MocDir=".\GeneratedFiles\$(ConfigurationName)" UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" lupdateOptions="" lupdateOnBuild="0" lreleaseOptions="" Qt5Version_x0020_Win32="5.10.0-msvc2015" MocOptions="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

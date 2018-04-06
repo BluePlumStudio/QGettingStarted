@@ -3,7 +3,7 @@
 #include "QGSThreadPool.h"
 
 //msecs
-static const unsigned long DEFAULT_SLEEP_TIME(1000);
+static const unsigned long DEFAULT_SLEEP_TIME(100);
 
 QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount, QObject *parent)
 	: QThread(parent), 
@@ -14,7 +14,7 @@ QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount,
 	//mActiveThreadCount(0),
 	mExpiryTimeout(DEFAULT_SLEEP_TIME)
 {
-	if (minThreadCount >= maxThreadCount)
+	if (minThreadCount > maxThreadCount)
 	{
 		mMinThreadCount = 1;
 	}
@@ -38,7 +38,7 @@ QGSThreadPool::~QGSThreadPool()
 
 QGSThreadPool & QGSThreadPool::getGlobalInstance()
 {
-	static QGSThreadPool instance(QGSTaskThread::idealThreadCount(), QGSTaskThread::idealThreadCount());
+	static QGSThreadPool instance(0, QGSTaskThread::idealThreadCount());
 	if (!instance.isRunning())
 	{
 		instance.start();
@@ -61,6 +61,7 @@ bool QGSThreadPool::addTaskBack(QGSTask * task)
 	}
 	task->moveToThread(this);
 	mTaskQueue.push_back(task);
+	mTaskThreadsNotActiveCondition.wakeOne();
 
 	return true;
 }
@@ -80,6 +81,7 @@ bool QGSThreadPool::addTaskFront(QGSTask * task)
 	}
 	task->moveToThread(this);
 	mTaskQueue.push_front(task);
+	mTaskThreadsNotActiveCondition.wakeOne();
 
 	return true;
 }
@@ -164,7 +166,7 @@ void QGSThreadPool::run()
 
 	while (true)
 	{
-		//QGSTaskThread::msleep(mExpiryTimeout);
+		QGSTaskThread::msleep(1);
 
 		//任务分配
 		mMutex.lock();
@@ -188,7 +190,7 @@ void QGSThreadPool::run()
 			if (allBusy)
 			{
 				//增加线程
-				if (mThreadList.size() < mMaxThreadCount)
+				if (mThreadList.size() < mMaxThreadCount && mTaskQueue.size())
 				{
 					auto * newThread(new QGSTaskThread(this));
 					if (newThread)
@@ -278,7 +280,7 @@ void QGSThreadPool::adjust()
 	{
 		mMutex.lock();
 		int i(0);
-		for (auto it = mThreadList.begin(); it != mThreadList.end() && i < minThreadCount; it++, i++)
+		for (auto it = mThreadList.begin(); it != mThreadList.end() && i < minThreadCount + 1; it++, i++)
 		{
 			if (!(*it)->mActive && !(*it)->mTask)
 			{

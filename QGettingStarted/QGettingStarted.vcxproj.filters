@@ -321,6 +321,18 @@
     <ClCompile Include="Builder\QGSGameVersionDownloadTaskGenerationTask.cpp">
       <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </ClCompile>
+    <ClCompile Include="Builder\QGSLibraryBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\QGSAssetBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\QGSAssetIndexJsonDownloadTaskGenerationTask.cpp">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\QGSAssetObjectDownloadTaskGenerationTask.cpp">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h">
@@ -430,6 +442,12 @@
       <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </ClInclude>
     <ClInclude Include="Builder\QGSGameVersionDownloadTaskGenerationTask.h">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder\QGSAssetIndexJsonDownloadTaskGenerationTask.h">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder\QGSAssetObjectDownloadTaskGenerationTask.h">
       <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </ClInclude>
   </ItemGroup>
@@ -556,6 +574,12 @@
     </QtMoc>
     <QtMoc Include="Builder\QGSDownloadTaskGenerationTask.h">
       <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </QtMoc>
+    <QtMoc Include="Builder\QGSLibraryBuilder.h">
+      <Filter>Builder</Filter>
+    </QtMoc>
+    <QtMoc Include="Builder\QGSAssetBuilder.h">
+      <Filter>Builder</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

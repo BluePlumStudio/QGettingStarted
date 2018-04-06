@@ -59,16 +59,50 @@ int QGSGameVersionBuilder::getTaskListSize()
 void QGSGameVersionBuilder::templateStart(QGSTask * task)
 {
 	emit started(this);
-	
-	initDownloadTasks();
+
+	QMutexLocker mutexLocker(&mMutex);
+
+	if (mTaskList.size())
+	{
+		for (auto & task : mTaskList)
+		{
+			task->start();
+		}
+	}
+	else
+	{
+		initDownloadTasks();
+	}
 }
 
 void QGSGameVersionBuilder::templateStop(QGSTask * task)
 {
+	emit stoped(this);
+
+	QMutexLocker mutexLocker(&mMutex);
+
+	if (mTaskList.size())
+	{
+		for (auto & task : mTaskList)
+		{
+			task->stop();
+		}
+	}
 }
 
 void QGSGameVersionBuilder::templateCancel(QGSTask * task)
 {
+	emit canceled(this);
+
+	QMutexLocker mutexLocker(&mMutex);
+
+	if (mTaskList.size())
+	{
+		for (auto & task : mTaskList)
+		{
+			task->cancel();
+		}
+	}
 }
 
 void QGSGameVersionBuilder::slotDownloadTaskStarted(QGSTask * task)
@@ -143,14 +177,12 @@ void QGSGameVersionBuilder::slotFinished()
 
 void QGSGameVersionBuilder::initDownloadTasks()
 {
-	initGameVersionJsonDownloadTaskGenerationTask();
 	initGameVersionDownloadTaskGenerationTask();
+	initGameVersionJsonDownloadTaskGenerationTask();
 }
 
 QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionJsonDownloadTaskGenerationTask()
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * generationTask(new QGSGameVersionJsonDownloadTaskGenerationTask(this, mFileOverride));
 
 	QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::finished, this, &QGSGameVersionBuilder::slotEraseTask);
@@ -170,8 +202,6 @@ QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionJsonDownlo
 
 QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionDownloadTaskGenerationTask()
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	auto * generationTask(new QGSGameVersionDownloadTaskGenerationTask(this, mFileOverride));
 
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::finished, this, &QGSGameVersionBuilder::slotEraseTask);

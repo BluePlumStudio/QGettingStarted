@@ -45,6 +45,8 @@ signals:
 	void downloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task);
 	void downloadTaskDownloadError(QGSNetworkError error, QGSDownloadTask * task);
 	void downloadTaskError(QGSDownloadTask * task);
+protected slots:
+	void setLastErrorString(QString lastErrorString);
 protected:
 	static QGSThreadPool mThreadPool;
 

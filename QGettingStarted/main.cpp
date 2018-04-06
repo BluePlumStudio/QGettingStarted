@@ -485,7 +485,10 @@ void gameVersionBuilderTest()
 	static QGSDownloadTaskFactory downloadTaskFactory(downloadSource);
 	static QGSGameDirectory gameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft"));
 	QGSBuilderFactory * builderFactory(new QGSBuilderFactory);
-	QGSGameVersionBuilder * gameVersionBuilder = new QGSGameVersionBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	QGSGameVersionBuilder * gameVersionBuilder = builderFactory->createGameVersionBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	QGSLibraryBuilder * libraryBuilder = builderFactory->createLibraryBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	QGSAssetBuilder * assetBuilder = builderFactory->createAssetBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	gameVersionBuilder->setNextTask(libraryBuilder).setNextTask(assetBuilder);
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::started, [=]()
 	{
 		qDebug() << "gameVersionBuilder started!";
@@ -533,13 +536,109 @@ void gameVersionBuilderTest()
 		qDebug() << "gameVersionBuilder finished!";
 		qDebug() << "gameVersionBuilder finished!";
 	});
-
+	//
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::started, [=]()
+	{
+		qDebug() << "libraryBuilder started!";
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskStarted, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " started!";
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " finished!" << libraryBuilder->getTaskListSize() << "left!";
+		task->deleteLater();
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " stoped!";
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " canceled!";
+		task->deleteLater();
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download error!" << libraryBuilder->getTaskListSize() << "left!" << "Error code:" << error.getCode();
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskError, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " error!" << libraryBuilder->getTaskListSize() << "left!";
+		task->deleteLater();
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::error, [=]()
+	{
+		qDebug() << "libraryBuilder error!";
+		qDebug() << "libraryBuilder error!";
+		qDebug() << "libraryBuilder error!";
+	});
+	QObject::connect(libraryBuilder, &QGSLibraryBuilder::finished, [=]()
+	{
+		qDebug() << "libraryBuilder finished!";
+		qDebug() << "libraryBuilder finished!";
+		qDebug() << "libraryBuilder finished!";
+	});
+	//
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::started, [=]()
+	{
+		qDebug() << "assetBuilder started!";
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskStarted, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " started!";
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " finished!" << assetBuilder->getTaskListSize() << "left!";
+		task->deleteLater();
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " stoped!";
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " canceled!";
+		task->deleteLater();
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download error!" << assetBuilder->getTaskListSize() << "left!" << "Error code:" << error.getCode();
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskError, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " error!" << assetBuilder->getTaskListSize() << "left!";
+		task->deleteLater();
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::error, [=]()
+	{
+		qDebug() << "assetBuilder error!";
+		qDebug() << "assetBuilder error!";
+		qDebug() << "assetBuilder error!";
+	});
+	QObject::connect(assetBuilder, &QGSLibraryBuilder::finished, [=]()
+	{
+		qDebug() << "assetBuilder finished!";
+		qDebug() << "assetBuilder finished!";
+		qDebug() << "assetBuilder finished!";
+	});
 	QGSThreadPool::getGlobalInstance().addTaskBack(gameVersionBuilder);
 }
 
 int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
+
 	qDebug() << "=QGettingStart Test=";
     qDebug()<<"1.Generate launch command | 2.Download game | 3 Download Forge | 4.Download game (lite)";
     int ans=0;

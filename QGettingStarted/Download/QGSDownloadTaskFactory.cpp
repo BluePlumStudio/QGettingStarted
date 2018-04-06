@@ -25,6 +25,20 @@ int QGSDownloadTaskFactory::getConnectionCount() const
 	return mConnectionCount;
 }
 
+QGSDownloadTaskFactory & QGSDownloadTaskFactory::setLargeFileSize(const quint64 bytes)
+{
+	QGSDownloadTask::setLargeFileSize(bytes);
+
+	return *this;
+}
+
+QGSDownloadTaskFactory & QGSDownloadTaskFactory::setSmallFileSize(const quint64 bytes)
+{
+	QGSDownloadTask::setSmallFileSize(bytes);
+
+	return *this;
+}
+
 QGSDownloadTask * QGSDownloadTaskFactory::generateDownloadTask(QFile * targetFile, QGSDownloadInfo downloadInfo)
 {
 	if (!targetFile)

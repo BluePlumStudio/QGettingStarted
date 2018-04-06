@@ -2,9 +2,10 @@
 
 #include <QObject>
 
-//#include "QGSGameBuilder.h"
 //#include "QGSForgeBuilder.h"
 #include "QGSGameVersionBuilder.h"
+#include "QGSLibraryBuilder.h"
+#include "QGSAssetBuilder.h"
 
 class QGSBuilderFactory : public QObject
 {
@@ -24,6 +25,10 @@ public:
 	virtual ~QGSBuilderFactory();
 
 	QGSGameVersionBuilder * createGameVersionBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
+
+	QGSLibraryBuilder * createLibraryBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
+
+	QGSAssetBuilder * createAssetBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
 
 	//QGSForgeBuilder * createForgeBuilder(QGSForgeVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
 };

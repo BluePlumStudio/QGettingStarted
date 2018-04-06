@@ -39,6 +39,10 @@ public:
 	QGSDownloadInfo getDownloadInfo();
 
 	static QString generateRandomFileName();
+
+	static void setLargeFileSize(const quint64 bytes);
+
+	static void setSmallFileSize(const quint64 bytes);
 protected:
 	virtual void templateStart(QGSTask * task);
 	virtual void templateStop(QGSTask * task);
@@ -75,4 +79,7 @@ protected:
 	QList<QGSDownloader *> mDownloaderList;
 
 	QGSNetworkAccessManager * mNetworkAccessManagerPtr;
+
+	static quint64 mLargeFileSize;
+	static quint64 mSmallFileSize;
 };

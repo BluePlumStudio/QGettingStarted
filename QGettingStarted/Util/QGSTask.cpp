@@ -1,6 +1,7 @@
 #include <QTimer>
 
 #include "QGSTask.h"
+#include "../Util/QGSExceptionInvalidValue.h"
 
 static const unsigned long DEFAULT_WAIT_TIME(5000);
 
@@ -26,6 +27,19 @@ void QGSTask::deleteLater()
 	newTimer->start(DEFAULT_WAIT_TIME);
 	QObject::connect(newTimer, &QTimer::timeout, this, &QGSTask::deleteLater);
 	QObject::connect(newTimer, &QTimer::timeout, newTimer, &QTimer::deleteLater);
+}
+
+QGSTask & QGSTask::setNextTask(QGSTask * task)
+{
+	if (!task)
+	{
+		throw QGSExceptionInvalidValue();
+	}
+
+	mNextTask = task;
+	QObject::connect(this, &QGSTask::finished, mNextTask, &QGSTask::start, Qt::ConnectionType::UniqueConnection);
+
+	return *task;
 }
 
 void QGSTask::start()

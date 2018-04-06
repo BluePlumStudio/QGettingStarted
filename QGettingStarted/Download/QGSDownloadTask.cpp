@@ -12,7 +12,8 @@
 #include "../Util/QGSExceptionInvalidValue.h"
 
 static const QString SEPARATOR(QGSOperatingSystem::getInstance().getSeperator());
-
+quint64 QGSDownloadTask::mLargeFileSize(4194304);
+quint64 QGSDownloadTask::mSmallFileSize(262144);
 /**/
 
 QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & proxy, QObject * parent)
@@ -103,6 +104,22 @@ QString QGSDownloadTask::generateRandomFileName()
 	return QString(QGSUuidGenerator::generateUuid() + ".qtmp");
 }
 
+void QGSDownloadTask::setLargeFileSize(const quint64 bytes)
+{
+	if (bytes > mSmallFileSize)
+	{
+		mLargeFileSize = bytes;
+	}
+}
+
+void QGSDownloadTask::setSmallFileSize(const quint64 bytes)
+{
+	if (bytes < mLargeFileSize)
+	{
+		mSmallFileSize = bytes;
+	}
+}
+
 void QGSDownloadTask::templateStart(QGSTask * task)
 {
 	if (mState == DownloadState::Start)
@@ -160,7 +177,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 			mConnectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
 		}
 
-		if (!mBytesTotal)
+		if (mBytesTotal <= mSmallFileSize)
 		{
 			mConnectionCount = 1;
 		}
