@@ -7,7 +7,7 @@ class QGSOptifineDownloadTask : public QGSDownloadTask
 	Q_OBJECT
 
 public:
-	QGSOptifineDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSOptifineDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int connectionCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 	
 	QGSOptifineDownloadTask(const QGSOptifineDownloadTask & right) = delete;
 

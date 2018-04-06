@@ -9,12 +9,14 @@ QGSBuilderFactory::~QGSBuilderFactory()
 {
 }
 
-QGSGameBuilder * QGSBuilderFactory::createGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
+QGSGameVersionBuilder * QGSBuilderFactory::createGameVersionBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
 {
-	return new QGSGameBuilder(versionInfo, gameDirectory, downloadTaskFactory);
+	return new QGSGameVersionBuilder(versionInfo, gameDirectory, downloadTaskFactory);
 }
 
+/*
 QGSForgeBuilder * QGSBuilderFactory::createForgeBuilder(QGSForgeVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
 {
 	return new QGSForgeBuilder(versionInfo, gameDirectory, downloadTaskFactory);
 }
+*/

@@ -1,9 +1,16 @@
 #include "QGSAssetIndexJsonDownloadTask.h"
+#include "../Util/QGSExceptionInvalidValue.h"
 
-QGSAssetIndexJsonDownloadTask::QGSAssetIndexJsonDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount, const QNetworkProxy & proxy, QObject * parent)
-	:QGSDownloadTask(targetFile, downloadInfo, threadCount, proxy, parent)
+QGSAssetIndexJsonDownloadTask::QGSAssetIndexJsonDownloadTask(const QGSAssetIndex & assetIndex, QGSIDownloadSource * downloadSource, QGSGameDirectory & gameDirectory, int connectionCount, const QNetworkProxy & proxy, QObject * parent)
+	:QGSDownloadTask(connectionCount, proxy, parent)
 {
+	if (!downloadSource || assetIndex.getUrl().isEmpty())
+	{
+		throw QGSExceptionInvalidValue();
+	}
 
+	mDownloadInfo.setUrl(downloadSource->generateAssetIndexJsonUrl(assetIndex));
+	mTargetFilePtr = gameDirectory.generateAssetIndexJsonFile(assetIndex);
 }
 
 QGSAssetIndexJsonDownloadTask::~QGSAssetIndexJsonDownloadTask()

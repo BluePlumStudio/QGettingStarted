@@ -52,7 +52,7 @@ private:
 	void adjust();
 signals:
 	void taskStarted(QGSTask * task);
-	void taskFinished(QGSTask * task);
+	void taskFinished(QGSTask* task);
 private:
 	//QWaitCondition mTaskQueueStartCondition;
 	//QWaitCondition mTaskQueueNotFullCondition;

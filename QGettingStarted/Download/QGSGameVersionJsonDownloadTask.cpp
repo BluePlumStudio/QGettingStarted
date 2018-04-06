@@ -1,9 +1,23 @@
 #include "QGSGameVersionJsonDownloadTask.h"
+#include "../Util/QGSExceptionInvalidValue.h"
 
-QGSGameVersionJsonDownloadTask::QGSGameVersionJsonDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount, const QNetworkProxy & proxy, QObject * parent)
-	:QGSDownloadTask(targetFile, downloadInfo, threadCount, proxy, parent)
+QGSGameVersionJsonDownloadTask::QGSGameVersionJsonDownloadTask(
+	const QGSGameVersionInfo & versionInfo, 
+	QGSIDownloadSource * downloadSource, 
+	QGSGameDirectory & gameDirectory, 
+	int connectionCount, 
+	const QNetworkProxy & proxy, 
+	QObject * parent)
+
+	:QGSDownloadTask(connectionCount, proxy, parent)
 {
+	if (!downloadSource || versionInfo.getUrl().isEmpty() || versionInfo.getId().isEmpty())
+	{
+		throw QGSExceptionInvalidValue();
+	}
 
+	mDownloadInfo.setUrl(downloadSource->generateGameVersionJsonUrl(versionInfo));
+	mTargetFilePtr = gameDirectory.generateGameVersionJsonFile(versionInfo.getId());
 }
 
 QGSGameVersionJsonDownloadTask::~QGSGameVersionJsonDownloadTask()

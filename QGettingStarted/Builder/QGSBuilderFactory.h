@@ -4,6 +4,7 @@
 
 #include "QGSGameBuilder.h"
 #include "QGSForgeBuilder.h"
+#include "QGSGameVersionBuilder.h"
 
 class QGSBuilderFactory : public QObject
 {
@@ -22,7 +23,7 @@ public:
 
 	virtual ~QGSBuilderFactory();
 
-	QGSGameBuilder * createGameBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
+	QGSGameVersionBuilder * createGameVersionBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
 
-	QGSForgeBuilder * createForgeBuilder(QGSForgeVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
+	//QGSForgeBuilder * createForgeBuilder(QGSForgeVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
 };

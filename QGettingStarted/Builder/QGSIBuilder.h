@@ -1,8 +1,7 @@
 #pragma once
 
 #include <QObject>
-#include <QTemporaryDir>
-#include <QTemporaryFile>
+#include <QSharedPointer>
 #include <QMetaType>
 #include <QMutex>
 
@@ -16,6 +15,7 @@
 #include "../GameVersion/QGSOptifineVersionInfoListFactory.h"
 #include "../Launcher/QGSGameDirectory.h"
 #include "../Util/QGSThreadPool.h"
+#include "QGSDownloadTaskGenerationTask.h"
 
 class QGSIBuilder :public QGSTask
 {
@@ -38,13 +38,13 @@ public:
 
 	QString getLastErrorString();
 signals:
-	void downloadTaskStarted(QGSDownloadInfo downloadInfo);
-	void downloadTaskFinished(QGSDownloadInfo downloadInfo);
-	void downloadTaskStoped(QGSDownloadInfo downloadInfo);
-	void downloadTaskCanceled(QGSDownloadInfo downloadInfo);
-	void downloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSDownloadInfo downloadInfo);
-	void downloadTaskDownloadError(QGSNetworkError error, QGSDownloadInfo downloadInfo);
-	void downloadTaskError(QGSDownloadInfo downloadInfo);
+	void downloadTaskStarted(QGSDownloadTask * task);
+	void downloadTaskFinished(QGSDownloadTask* task);
+	void downloadTaskStoped(QGSDownloadTask * task);
+	void downloadTaskCanceled(QGSDownloadTask * task);
+	void downloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task);
+	void downloadTaskDownloadError(QGSNetworkError error, QGSDownloadTask * task);
+	void downloadTaskError(QGSDownloadTask * task);
 protected:
 	static QGSThreadPool mThreadPool;
 

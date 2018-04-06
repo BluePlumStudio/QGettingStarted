@@ -84,7 +84,7 @@ void QGSForgeBuilder::templateStart(QGSTask * task)
 			}
 
 			if (!initLibraryDownloadTasks());
-			taskFinished(nullptr);
+			slotFinished(nullptr);
 
 			return;
 
@@ -109,7 +109,7 @@ void QGSForgeBuilder::templateStart(QGSTask * task)
 			}
 
 			if (!initLibraryDownloadTasks());
-			taskFinished(nullptr);
+			slotFinished(nullptr);
 
 		});
 	}
@@ -166,7 +166,7 @@ void QGSForgeBuilder::slotDownloadTaskFinished(QGSTask * task)
 	emit downloadTaskFinished(downloadInfo);
 
 	QMutexLocker mutexLocker(&mMutex);
-	taskFinished(downloadTask);
+	slotFinished(downloadTask);
 	mutexLocker.unlock();
 }
 
@@ -186,7 +186,7 @@ void QGSForgeBuilder::slotDownloadTaskCanceled(QGSTask * task)
 	emit downloadTaskCanceled(downloadInfo);
 
 	QMutexLocker mutexLocker(&mMutex);
-	taskFinished(downloadTask);
+	slotFinished(downloadTask);
 	mutexLocker.unlock();
 }
 
@@ -207,7 +207,7 @@ void QGSForgeBuilder::slotDownloadTaskError(QGSTask * task)
 	emit downloadTaskError(downloadInfo);
 
 	QMutexLocker mutexLocker(&mMutex);
-	taskFinished(downloadTask);
+	slotFinished(downloadTask);
 	mutexLocker.unlock();
 }
 
@@ -414,7 +414,7 @@ bool QGSForgeBuilder::initLibraryDownloadTasks()
 	return true;
 }
 
-void QGSForgeBuilder::eraseDownloadTask(QGSTask * downloadTask)
+void QGSForgeBuilder::slotEraseDownloadTask(QGSTask * downloadTask)
 {
 	if (!downloadTask)
 	{
@@ -436,9 +436,9 @@ void QGSForgeBuilder::eraseDownloadTask(QGSTask * downloadTask)
 	}
 }
 
-void QGSForgeBuilder::taskFinished(QGSTask * downloadTask)
+void QGSForgeBuilder::slotFinished(QGSTask * downloadTask)
 {
-	eraseDownloadTask(downloadTask);
+	slotEraseDownloadTask(downloadTask);
 
 	if (!mTaskList.size())
 	{

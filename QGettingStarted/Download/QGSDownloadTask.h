@@ -14,7 +14,9 @@ class QGSDownloadTask : public QGSTask
 	Q_OBJECT
 
 public:
-	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSDownloadTask(int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+
+	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSDownloadTask(const QGSDownloadTask & right) = delete;
 
@@ -25,6 +27,10 @@ public:
 	QGSDownloadTask & operator=(QGSDownloadTask && right) = delete;
 
 	virtual ~QGSDownloadTask();
+
+	QGSDownloadTask & setTargetFile(QFile * targetFile);
+
+	QGSDownloadTask & setDownloadInfo(const QGSDownloadInfo & downloadInfo);
 
 	QFile * getTargetFile();
 

@@ -1,7 +1,8 @@
 #include "QGSDownloadTaskGenerationTask.h"
 
-QGSDownloadTaskGenerationTask::QGSDownloadTaskGenerationTask()
+QGSDownloadTaskGenerationTask::QGSDownloadTaskGenerationTask(QObject * parent) :QGSTask(parent)
 {
+
 }
 
 QGSDownloadTaskGenerationTask::~QGSDownloadTaskGenerationTask()

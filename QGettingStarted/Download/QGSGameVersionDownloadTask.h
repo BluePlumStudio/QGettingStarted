@@ -1,13 +1,17 @@
 #pragma once
 
 #include "QGSDownloadTask.h"
+#include "QGSIDownloadSource.h"
+#include "../GameVersion/QGSGameVersion.h"
+#include "../Launcher/QGSGameDirectory.h"
+#include "../GameVersion/QGSGameVersionInfoList.h"
 
 class QGSGameVersionDownloadTask : public QGSDownloadTask
 {
 	Q_OBJECT
 
 public:
-	QGSGameVersionDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSGameVersionDownloadTask(const QGSGameVersion & version, const QString & category, QGSIDownloadSource * downloadSource, QGSGameDirectory & gameDirectory, int connectionCount = 4, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 	
 	QGSGameVersionDownloadTask(const QGSGameVersionDownloadTask & right) = delete;
 

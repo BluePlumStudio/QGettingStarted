@@ -2,6 +2,7 @@
 
 #include <QMutex>
 #include <QMetaType>
+#include <QWaitCondition>
 
 #include "../Util/QGSTask.h"
 #include "../Util/QGSNetworkAccessManager.h"
@@ -11,7 +12,7 @@ class QGSDownloadTaskGenerationTask : public QGSTask
 	Q_OBJECT
 
 public:
-	QGSDownloadTaskGenerationTask();
+	QGSDownloadTaskGenerationTask(QObject * parent = nullptr);
 
 	QGSDownloadTaskGenerationTask(const QGSDownloadTaskGenerationTask & right) = delete;
 
@@ -22,11 +23,4 @@ public:
 	QGSDownloadTaskGenerationTask & operator=(QGSDownloadTaskGenerationTask && right) = delete;
 
 	virtual ~QGSDownloadTaskGenerationTask();
-signals:
-	void generationTaskStarted(QGSTask * task);
-	void generationTaskFinished(QGSTask * task);
-	void generationTaskStoped(QGSTask * task);
-	void generationTaskCanceled(QGSTask * task);
-	void generationTaskDownloadError(QGSNetworkError error, QGSTask * task);
-protected:
 };

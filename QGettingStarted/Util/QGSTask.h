@@ -21,6 +21,8 @@ public:
 	virtual ~QGSTask();
 
 	void moveToOriginalThread();
+
+	void deleteLater();
 signals:
 	void started(QGSTask * task);
 	void finished(QGSTask * task);

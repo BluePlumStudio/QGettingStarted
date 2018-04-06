@@ -45,8 +45,8 @@ private:
 	QGSDownloadTask * initForgeDownloadTask();
 	bool installForge();
 	bool initLibraryDownloadTasks();
-	void eraseDownloadTask(QGSTask * downloadTask);
-	void taskFinished(QGSTask * downloadTask);
+	void slotEraseDownloadTask(QGSTask * downloadTask);
+	void slotFinished(QGSTask * downloadTask);
 
 private:
 	QString mVersionId;

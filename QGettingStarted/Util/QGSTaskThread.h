@@ -35,7 +35,7 @@ private:
 	virtual void run();
 signals:
 	void taskStarted(QGSTask * task);
-	void taskFinished(QGSTask * task); 
+	void taskFinished(QGSTask* task); 
 private:
 	QGSThreadPool * mThreadPoolPtr;
 	QGSTask * mTask;

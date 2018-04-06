@@ -66,6 +66,9 @@
     <Filter Include="Builder">
       <UniqueIdentifier>{cfb38674-9fed-4ab1-882f-381a8aabf870}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Builder\DownloadTaskGenerationTask">
+      <UniqueIdentifier>{772475a1-fdca-40ee-ab2e-a65c6ce16090}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Launcher\QGSGameDirectory.cpp">
@@ -294,12 +297,6 @@
     <ClCompile Include="Builder\QGSBuilderFactory.cpp">
       <Filter>Builder</Filter>
     </ClCompile>
-    <ClCompile Include="Builder\QGSDownloadTaskGenerationTask.cpp">
-      <Filter>Builder</Filter>
-    </ClCompile>
-    <ClCompile Include="Builder\QGSGameBuilder.cpp">
-      <Filter>Builder</Filter>
-    </ClCompile>
     <ClCompile Include="Builder\QGSIBuilder.cpp">
       <Filter>Builder</Filter>
     </ClCompile>
@@ -312,8 +309,17 @@
     <ClCompile Include="Download\QGSBMCLAPIDownloadSource.cpp">
       <Filter>Download\DownloadSource</Filter>
     </ClCompile>
-    <ClCompile Include="Builder\QGSForgeBuilder.cpp">
+    <ClCompile Include="Builder\QGSGameVersionBuilder.cpp">
       <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\QGSDownloadTaskGenerationTask.cpp">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\QGSGameVersionJsonDownloadTaskGenerationTask.cpp">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\QGSGameVersionDownloadTaskGenerationTask.cpp">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -419,6 +425,12 @@
     </ClInclude>
     <ClInclude Include="Util\QGSExceptionIO.h">
       <Filter>Util\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder\QGSGameVersionJsonDownloadTaskGenerationTask.h">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder\QGSGameVersionDownloadTaskGenerationTask.h">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -530,12 +542,6 @@
     <QtMoc Include="Builder\QGSBuilderFactory.h">
       <Filter>Builder</Filter>
     </QtMoc>
-    <QtMoc Include="Builder\QGSDownloadTaskGenerationTask.h">
-      <Filter>Builder</Filter>
-    </QtMoc>
-    <QtMoc Include="Builder\QGSGameBuilder.h">
-      <Filter>Builder</Filter>
-    </QtMoc>
     <QtMoc Include="Builder\QGSIBuilder.h">
       <Filter>Builder</Filter>
     </QtMoc>
@@ -545,8 +551,11 @@
     <QtMoc Include="Download\QGSBMCLAPIDownloadSource.h">
       <Filter>Download\DownloadSource</Filter>
     </QtMoc>
-    <QtMoc Include="Builder\QGSForgeBuilder.h">
+    <QtMoc Include="Builder\QGSGameVersionBuilder.h">
       <Filter>Builder</Filter>
+    </QtMoc>
+    <QtMoc Include="Builder\QGSDownloadTaskGenerationTask.h">
+      <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

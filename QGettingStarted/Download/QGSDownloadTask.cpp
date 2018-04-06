@@ -15,16 +15,30 @@ static const QString SEPARATOR(QGSOperatingSystem::getInstance().getSeperator())
 
 /**/
 
-QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int threadCount, const QNetworkProxy & proxy, QObject * parent)
+QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & proxy, QObject * parent)
 	:QGSTask(parent),
-	mTargetFilePtr(targetFile),
-	mDownloadInfo(downloadInfo),
-	mConnectionCount(threadCount),
+	mConnectionCount(connectionCount),
 	mProxy(proxy),
 	mBytesReceived(0),
 	mBytesTotal(0),
 	mState(DownloadState::Stop),
-	//mReply(nullptr), 
+	mNetworkAccessManagerPtr(nullptr)
+{
+	if (connectionCount < 1)
+	{
+		connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
+	}
+}
+
+QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int connectionCount, const QNetworkProxy & proxy, QObject * parent)
+	:QGSTask(parent),
+	mTargetFilePtr(targetFile),
+	mDownloadInfo(downloadInfo),
+	mConnectionCount(connectionCount),
+	mProxy(proxy),
+	mBytesReceived(0),
+	mBytesTotal(0),
+	mState(DownloadState::Stop),
 	mNetworkAccessManagerPtr(nullptr)
 {
 	if (!mTargetFilePtr)
@@ -32,9 +46,9 @@ QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & dow
 		throw QGSExceptionInvalidValue();
 	}
 
-	if (threadCount < 1)
+	if (connectionCount < 1)
 	{
-		threadCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
+		connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
 	}
 
 	mDownloadInfo.setPath(mTargetFilePtr->fileName());
@@ -55,6 +69,18 @@ QGSDownloadTask::~QGSDownloadTask()
 		mNetworkAccessManagerPtr->deleteLater();
 		mNetworkAccessManagerPtr = nullptr;
 	}
+}
+
+QGSDownloadTask & QGSDownloadTask::setTargetFile(QFile * targetFile)
+{
+	mTargetFilePtr = targetFile;
+	return *this;
+}
+
+QGSDownloadTask & QGSDownloadTask::setDownloadInfo(const QGSDownloadInfo & downloadInfo)
+{
+	mDownloadInfo = downloadInfo;
+	return *this;
 }
 
 QFile * QGSDownloadTask::getTargetFile()
@@ -94,6 +120,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		return;
 	}
 
+	mDownloadInfo.setPath(mTargetFilePtr->fileName());
 	mDownloadInfo.setUrl(url);
 
 	mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".qtmp");

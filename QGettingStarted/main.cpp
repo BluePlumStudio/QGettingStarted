@@ -69,6 +69,7 @@ void generateLaunchCommandTest()
 	}
 }
 
+/*
 int downloadTest()
 {
 	QSharedPointer<QGSIDownloadSource> downloadSource(new QGSBMCLAPIDownloadSource);
@@ -360,7 +361,7 @@ void gameBuilderTest()
 	qDebug() << "Version:";
 	std::getline(cin, versionId);
 	static auto && versionInfo = versionInfoList.getVersionInfo(QString::fromStdString(versionId));
-	QGSIDownloadSource * downloadSource(new QGSOfficialDownloadSource);
+	QGSIDownloadSource * downloadSource(new QGSBMCLAPIDownloadSource);
 	static QGSDownloadTaskFactory downloadTaskFactory(downloadSource);
 	static QGSGameDirectory gameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft"));
 	QGSBuilderFactory * builderFactory(new QGSBuilderFactory);
@@ -466,12 +467,81 @@ void forgeBuilderTest()
 	});
 
 	QGSThreadPool::getGlobalInstance().addTaskBack(forgeBuilder);
+
 }
+*/
+
+void gameVersionBuilderTest()
+{
+	QFile manifestFile(QCoreApplication::applicationDirPath() + "/version_manifest.json");
+	manifestFile.open(QIODevice::ReadOnly);
+	QGSGameVersionInfoListFactory versionInfoFactory;
+	QGSGameVersionInfoList versionInfoList(versionInfoFactory.createGameVersionInfoList(manifestFile.readAll()));
+	std::string versionId;
+	qDebug() << "Version:";
+	std::getline(cin, versionId);
+	static auto && versionInfo = versionInfoList.getVersionInfo(QString::fromStdString(versionId));
+	QGSIDownloadSource * downloadSource(new QGSBMCLAPIDownloadSource);
+	static QGSDownloadTaskFactory downloadTaskFactory(downloadSource);
+	static QGSGameDirectory gameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft"));
+	QGSBuilderFactory * builderFactory(new QGSBuilderFactory);
+	QGSGameVersionBuilder * gameVersionBuilder = new QGSGameVersionBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::started, [=]()
+	{
+		qDebug() << "gameVersionBuilder started!";
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskStarted, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " started!";
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " finished!" << gameVersionBuilder->getTaskListSize() << "left!";
+		task->deleteLater();
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " stoped!";
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " canceled!";
+		task->deleteLater();
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download error!" << gameVersionBuilder->getTaskListSize() << "left!" << "Error code:" << error.getCode();
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskError, [=](QGSDownloadTask * task)
+	{
+		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " error!" << gameVersionBuilder->getTaskListSize() << "left!";
+		task->deleteLater();
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::error, [=]()
+	{
+		qDebug() << "gameVersionBuilder error!";
+		qDebug() << "gameVersionBuilder error!";
+		qDebug() << "gameVersionBuilder error!";
+	});
+	QObject::connect(gameVersionBuilder, &QGSGameBuilder::finished, [=]()
+	{
+		qDebug() << "gameVersionBuilder finished!";
+		qDebug() << "gameVersionBuilder finished!";
+		qDebug() << "gameVersionBuilder finished!";
+	});
+
+	QGSThreadPool::getGlobalInstance().addTaskBack(gameVersionBuilder);
+}
+
 int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
 	qDebug() << "=QGettingStart Test=";
-    qDebug()<<"1.Generate launch command | 2.Download game | 3 Download Forge";
+    qDebug()<<"1.Generate launch command | 2.Download game | 3 Download Forge | 4.Download game (lite)";
     int ans=0;
     std::cin>>ans;
 	cin.get();
@@ -485,12 +555,16 @@ int main(int argc, char *argv[])
 	}
 	else if (ans == 2)
 	{
-		gameBuilderTest();
+		//gameBuilderTest();
 
 	}
 	else if (ans == 3)
 	{
-		forgeBuilderTest();
+		//forgeBuilderTest();
+	}
+	else if (ans == 4)
+	{
+		gameVersionBuilderTest();
 	}
 	//QGSThreadPool::getGlobalInstance().setMinThreadCount(512);
 

@@ -36,6 +36,9 @@ private slots:
 	void slotDownloadTaskError(QGSTask * task);
 	void slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task);
 	void slotDownloadTaskDownloadError(QGSNetworkError error, QGSTask * task);
+	void slotEraseDownloadTask(QGSTask * downloadTask);
+	void slotFinished(QGSTask * downloadTask);
+
 private:
 	friend class GameVersionJsonDownloadTaskGenerationTask;
 	friend class GameVersionDownloadTaskGenerationTask;
@@ -49,21 +52,14 @@ private:
 	bool initLibraryDownloadTasks();
 	QGSDownloadTask *  initAssetIndexJsonDownloadTask();
 	bool initAssetObjectDownloadTasks();
-	void eraseDownloadTask(QGSTask * downloadTask);
-	void taskFinished(QGSTask * downloadTask);
 
 	//void deleteTasksFinished();
 private:
-	//QTimer * mTimerPtr;
-
 	QGSAssetIndexInfo mAssetIndexInfo;
 	QGSGameVersionInfo mVersionInfo;
 	QGSGameDirectory * mGameDirectoryPtr;
 	QGSDownloadTaskFactory * mDownloadTaskFactoryPtr;
 	QList<QGSTask *> mTaskList;
-	//QList<QGSTask *> mTaskWillBeDeletedList;
-	QGSDownloadTask * mGameVersionJsonDownloadTask;
-	QGSDownloadTask * mAssetIndexJsonDownloadTask;
 	bool mFileOverride;
 };
 
