@@ -1,5 +1,5 @@
 #include "QGSLibraryDownloadTask.h"
-#include "Util/QGSExceptionInvalidValue.h"
+#include "../Util/QGSExceptionInvalidValue.h"
 
 QGSLibraryDownloadTask::QGSLibraryDownloadTask(const QGSLibrary & library, QGSIDownloadSource * downloadSource, QGSGameDirectory & gameDirectory, int connectionCount, const QNetworkProxy & proxy, QObject * parent)
 	:QGSDownloadTask(connectionCount, proxy, parent)

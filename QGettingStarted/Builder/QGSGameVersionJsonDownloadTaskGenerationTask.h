@@ -5,9 +5,9 @@
 class QGSGameVersionJsonDownloadTaskGenerationTask :public QGSDownloadTaskGenerationTask
 {
 public:
-	friend QGSGameVersionDownloadTaskGenerationTask;
+    friend class QGSGameVersionDownloadTaskGenerationTask;
 
-	QGSGameVersionJsonDownloadTaskGenerationTask(QGSGameVersionBuilder * gameVersionBuilder, QObject * parent = nullptr);
+	QGSGameVersionJsonDownloadTaskGenerationTask(QGSGameVersionBuilder * gameVersionBuilder, bool fileOverride = false, QObject * parent = nullptr);
 
 	QGSGameVersionJsonDownloadTaskGenerationTask(const QGSGameVersionJsonDownloadTaskGenerationTask & right) = delete;
 
@@ -29,4 +29,5 @@ private:
 	QGSGameVersionBuilder * mGameVersionBuilderPtr;
 	static QMutex mMutex;
 	static QWaitCondition mGameVersionJsonDownloadTaskEnded;
+	bool mFileOverride;
 };

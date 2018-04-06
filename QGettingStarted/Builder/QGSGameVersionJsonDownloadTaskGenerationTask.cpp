@@ -6,9 +6,10 @@ QWaitCondition QGSGameVersionJsonDownloadTaskGenerationTask::mGameVersionJsonDow
 
 QGSGameVersionJsonDownloadTaskGenerationTask::QGSGameVersionJsonDownloadTaskGenerationTask(
 	QGSGameVersionBuilder * gameVersionBuilder,
+	bool fileOverride,
 	QObject * parent)
 
-	:QGSDownloadTaskGenerationTask(parent), mGameVersionBuilderPtr(gameVersionBuilder)
+	:QGSDownloadTaskGenerationTask(parent), mFileOverride(fileOverride), mGameVersionBuilderPtr(gameVersionBuilder)
 {
 	if (!mGameVersionBuilderPtr)
 	{
@@ -25,6 +26,19 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	emit started(this);
 
 	QGSDownloadTask * downloadTask(nullptr);
+
+	if (!mFileOverride)
+	{
+		QSharedPointer<QFile> gameVersionJsonFile(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJsonFile(mGameVersionBuilderPtr->mVersionInfo));
+		
+		if (gameVersionJsonFile->exists())
+		{
+			emit finished(this);
+			wakeGameVersionJsonDownloadTaskEnded();
+
+			return;
+		}
+	}
 
 	downloadTask = mGameVersionBuilderPtr->mDownloadTaskFactoryPtr->generateGameVersionJsonDownloadTask(mGameVersionBuilderPtr->mVersionInfo,
 		*(mGameVersionBuilderPtr->mGameDirectoryPtr));

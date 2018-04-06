@@ -1,7 +1,7 @@
 #include <QDebug>
 
 #include "QGSOfficialDownloadSource.h"
-#include "Launcher/QGSGameDirectory.h"
+#include "../Launcher/QGSGameDirectory.h"
 
 QGSOfficialDownloadSource::QGSOfficialDownloadSource(QObject *parent)
 	: QGSIDownloadSource(parent)

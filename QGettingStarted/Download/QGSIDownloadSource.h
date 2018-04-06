@@ -4,8 +4,8 @@
 #include <QString>
 #include <QUrl>
 
-#include "GameVersion/QGSGameVersion.h"
-#include "GameVersion/QGSGameVersionInfoList.h"
+#include "../GameVersion/QGSGameVersion.h"
+#include "../GameVersion/QGSGameVersionInfoList.h"
 
 namespace ApiName
 {

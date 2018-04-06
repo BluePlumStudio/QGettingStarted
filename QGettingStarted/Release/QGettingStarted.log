@@ -1,32 +1,454 @@
-﻿  Moc'ing Download\QGSDownloadTask.h...
+﻿  Moc'ing Download\QGSOfficialDownloadSource.h...
+  Moc'ing Download\QGSAssetIndexJsonDownloadTask.h...
+  Moc'ing Download\QGSAssetObjectDownloadTask.h...
+  Moc'ing Download\QGSDownloader.h...
+  Moc'ing Builder\QGSBuilderFactory.h...
+  Moc'ing Builder\QGSDownloadTaskGenerationTask.h...
+  Moc'ing Builder\QGSIBuilder.h...
+  Moc'ing Builder\QGSGameVersionBuilder.h...
+  Moc'ing Download\QGSDownloadTaskFactory.h...
+  Moc'ing Download\QGSDownloadTask.h...
+  Moc'ing Download\QGSForgeDownloadTask.h...
+  Moc'ing Download\QGSGameVersionDownloadTask.h...
+  Moc'ing Download\QGSGameVersionJsonDownloadTask.h...
+  Moc'ing Download\QGSLibraryDownloadTask.h...
+  Moc'ing Download\QGSLiteLoaderDownloadTask.h...
+  Moc'ing Download\QGSOptifineDownloadTask.h...
+  Moc'ing GameVersion\QGSAssetIndexInfoFactory.h...
+  Moc'ing GameVersion\QGSForgeVersionInfoListFactory.h...
+  Moc'ing GameVersion\QGSGameVersionInfoListFactory.h...
+  Moc'ing GameVersion\QGSLiteLoaderVersionInfoListFactory.h...
+  Moc'ing GameVersion\QGSOptifineVersionInfoListFactory.h...
+  Moc'ing Download\QGSIDownloadSource.h...
+  Moc'ing Download\QGSBMCLAPIDownloadSource.h...
+  Moc'ing Launcher\QGSGameDirectory.h...
+  Moc'ing Launcher\QGSLauncher.h...
+  Moc'ing Launcher\VersionPraser\QGSGameVersionPraser.h...
+  Moc'ing LaunchOptions\QGSIAccount.h...
+  Moc'ing LaunchOptions\QGSIAccountFactory.h...
+  Moc'ing LaunchOptions\QGSILaunchOptionsBuilder.h...
+  Moc'ing LaunchOptions\QGSLaunchOptionsBuilder.h...
+  Moc'ing LaunchOptions\QGSOfflineAccount.h...
+  Moc'ing LaunchOptions\QGSOfflineAccountFactory.h...
+  Moc'ing LaunchOptions\QGSYggdrasilAccount.h...
+  Moc'ing LaunchOptions\QGSYggdrasilAccountFactory.h...
+  Moc'ing Util\QGSNetworkAccessManager.h...
+  Moc'ing Util\QGSFileTools.h...
+  Moc'ing Util\QGSOperatingSystem.h...
+  Moc'ing Util\QGSThreadPool.h...
+  Moc'ing Util\QGSTask.h...
+  Moc'ing Util\QGSTaskThread.h...
+  Moc'ing Util\QGSUuidGenerator.h...
   QGSBuilderFactory.cpp
-  QGSForgeBuilder.cpp
-  QGSGameBuilder.cpp
+  QGSDownloadTaskGenerationTask.cpp
+  QGSGameVersionBuilder.cpp
+  QGSGameVersionDownloadTaskGenerationTask.cpp
+  QGSGameVersionJsonDownloadTaskGenerationTask.cpp
   QGSIBuilder.cpp
   QGSAssetIndexJsonDownloadTask.cpp
   QGSAssetObjectDownloadTask.cpp
-  QGSDownloadTask.cpp
+  QGSDownloader.cpp
+  QGSDownloadInfo.cpp
   QGSDownloadTaskFactory.cpp
+  QGSBMCLAPIDownloadSource.cpp
+  QGSOfficialDownloadSource.cpp
+  QGSDownloadTask.cpp
   QGSForgeDownloadTask.cpp
   QGSGameVersionDownloadTask.cpp
   QGSGameVersionJsonDownloadTask.cpp
+  QGSIDownloadSource.cpp
   QGSLibraryDownloadTask.cpp
   QGSLiteLoaderDownloadTask.cpp
   QGSOptifineDownloadTask.cpp
+  QGSArguments.cpp
+  QGSAssetIndexInfo.cpp
+  QGSAssetIndex.cpp
+  QGSAssetIndexInfoFactory.cpp
+  QGSAssetObject.cpp
+  QGSDownloads.cpp
+  QGSExtract.cpp
+  QGSForgeVersionInfo.cpp
+  QGSForgeVersionInfoList.cpp
+  QGSForgeVersionInfoListFactory.cpp
+  QGSGameVersion.cpp
+  QGSGameVersionInfo.cpp
+  QGSGameVersionInfoList.cpp
+  QGSGameVersionInfoListFactory.cpp
+  QGSLibrary.cpp
+  QGSLiteLoaderVersionInfo.cpp
+  QGSLiteLoaderVersionInfoList.cpp
+  QGSLiteLoaderVersionInfoListFactory.cpp
+  QGSLiteLoaderVersionMeta.cpp
+  QGSLiteLoaderVersionReposity.cpp
+  QGSLogging.cpp
+  QGSOptifineVersionInfo.cpp
+  QGSOptifineVersionInfoList.cpp
+  QGSOptifineVersionInfoListFactory.cpp
+  QGSRules.cpp
+  QGSGeneralLauncherStrategy.cpp
+  QGSGameDirectory.cpp
+  QGSILauncherStrategy.cpp
+  QGSLauncher.cpp
+  QGSGeneralGameVersionPraseStrategy.cpp
+  QGSIGameVersionPraseStrategy.cpp
+  QGSGameVersionPraser.cpp
+  QGSAuthInfo.cpp
+  QGSIAccount.cpp
+  QGSIAccountFactory.cpp
+  QGSLaunchOptions.cpp
+  QGSILaunchOptionsBuilder.cpp
+  QGSLaunchOptionsBuilder.cpp
+  QGSOfflineAccount.cpp
+  QGSOfflineAccountFactory.cpp
+  QGSYggdrasilAccount.cpp
+  QGSYggdrasilAccountFactory.cpp
   main.cpp
+  QGSException.cpp
+  QGSExceptionAuthentication.cpp
+  QGSExceptionCompress.cpp
+  QGSExceptionIO.cpp
+  QGSExceptionInvalidValue.cpp
+  QGSExceptionJsonPraseError.cpp
+  QGSExceptionVersionNotFound.cpp
+  QGSFileTools.cpp
+  QGSNetworkAccessManager.cpp
+  QGSOperatingSystem.cpp
+  QGSTask.cpp
+  QGSTaskThread.cpp
+  QGSThreadPool.cpp
+  QGSUuidGenerator.cpp
+  inffas86.c
+  ioapi.c
+  iowin32.c
+  mztools.c
+  unzip.c
+  zip.c
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(807): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(898): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(899): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(929): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(952): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(958): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(979): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(1087): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(1118): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+  moc_QGSOfficialDownloadSource.cpp
   moc_QGSAssetIndexJsonDownloadTask.cpp
   moc_QGSAssetObjectDownloadTask.cpp
+  moc_QGSDownloader.cpp
   moc_QGSBuilderFactory.cpp
-  moc_QGSDownloadTask.cpp
+  moc_QGSDownloadTaskGenerationTask.cpp
+  moc_QGSIBuilder.cpp
+  moc_QGSGameVersionBuilder.cpp
   moc_QGSDownloadTaskFactory.cpp
-  moc_QGSForgeBuilder.cpp
+  moc_QGSDownloadTask.cpp
   moc_QGSForgeDownloadTask.cpp
-  moc_QGSGameBuilder.cpp
   moc_QGSGameVersionDownloadTask.cpp
   moc_QGSGameVersionJsonDownloadTask.cpp
-  moc_QGSIBuilder.cpp
   moc_QGSLibraryDownloadTask.cpp
   moc_QGSLiteLoaderDownloadTask.cpp
   moc_QGSOptifineDownloadTask.cpp
-LINK : warning LNK4098: 默认库“LIBCMT”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
-  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.exe
+  moc_QGSAssetIndexInfoFactory.cpp
+  moc_QGSForgeVersionInfoListFactory.cpp
+  moc_QGSGameVersionInfoListFactory.cpp
+  moc_QGSLiteLoaderVersionInfoListFactory.cpp
+  moc_QGSOptifineVersionInfoListFactory.cpp
+  moc_QGSIDownloadSource.cpp
+  moc_QGSBMCLAPIDownloadSource.cpp
+  moc_QGSGameDirectory.cpp
+  moc_QGSLauncher.cpp
+  moc_QGSGameVersionPraser.cpp
+  moc_QGSIAccount.cpp
+  moc_QGSIAccountFactory.cpp
+  moc_QGSILaunchOptionsBuilder.cpp
+  moc_QGSLaunchOptionsBuilder.cpp
+  moc_QGSOfflineAccount.cpp
+  moc_QGSOfflineAccountFactory.cpp
+  moc_QGSYggdrasilAccount.cpp
+  moc_QGSYggdrasilAccountFactory.cpp
+  moc_QGSNetworkAccessManager.cpp
+  moc_QGSFileTools.cpp
+  moc_QGSOperatingSystem.cpp
+  moc_QGSThreadPool.cpp
+  moc_QGSTask.cpp
+  moc_QGSTaskThread.cpp
+  moc_QGSUuidGenerator.cpp
+Qt5Core.lib(qglobal.obj) : error LNK2019: 无法解析的外部符号 _gethostname@8，该符号在函数 "public: static class QString __cdecl QSysInfo::machineHostName(void)" (?machineHostName@QSysInfo@@SA?AVQString@@XZ) 中被引用
+Qt5Core.lib(qglobal.obj) : error LNK2019: 无法解析的外部符号 _WSAStartup@8，该符号在函数 "public: __thiscall `class QWindowsSockInit * __cdecl `anonymous namespace'::Q_QGS_winsockInit::innerFunction(void)'::`2'::Holder::Holder(void)" (??0Holder@?1??innerFunction@Q_QGS_winsockInit@?A0xdac6d71e@@YAPAVQWindowsSockInit@@XZ@QAE@XZ) 中被引用
+Qt5Core.lib(qglobal.obj) : error LNK2019: 无法解析的外部符号 _WSACleanup@0，该符号在函数 "public: __thiscall QWindowsSockInit::~QWindowsSockInit(void)" (??1QWindowsSockInit@@QAE@XZ) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_config_16，该符号在函数 "public: void __thiscall QRegularExpressionPrivate::getPatternInfo(void)" (?getPatternInfo@QRegularExpressionPrivate@@QAEXXZ) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_match_context_create_16，该符号在函数 "public: struct QRegularExpressionMatchPrivate * __thiscall QRegularExpressionPrivate::doMatch(class QString const &,int,int,int,enum QRegularExpression::MatchType,class QFlags<enum QRegularExpression::MatchOption>,enum QRegularExpressionPrivate::CheckSubjectStringOption,struct QRegularExpressionMatchPrivate const *)const " (?doMatch@QRegularExpressionPrivate@@QBEPAUQRegularExpressionMatchPrivate@@ABVQString@@HHHW4MatchType@QRegularExpression@@V?$QFlags@W4MatchOption@QRegularExpression@@@@W4CheckSubjectStringOption@1@PBU2@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_match_context_free_16，该符号在函数 "public: struct QRegularExpressionMatchPrivate * __thiscall QRegularExpressionPrivate::doMatch(class QString const &,int,int,int,enum QRegularExpression::MatchType,class QFlags<enum QRegularExpression::MatchOption>,enum QRegularExpressionPrivate::CheckSubjectStringOption,struct QRegularExpressionMatchPrivate const *)const " (?doMatch@QRegularExpressionPrivate@@QBEPAUQRegularExpressionMatchPrivate@@ABVQString@@HHHW4MatchType@QRegularExpression@@V?$QFlags@W4MatchOption@QRegularExpression@@@@W4CheckSubjectStringOption@1@PBU2@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_compile_16，该符号在函数 "public: void __thiscall QRegularExpressionPrivate::compilePattern(void)" (?compilePattern@QRegularExpressionPrivate@@QAEXXZ) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_code_free_16，该符号在函数 "public: __thiscall QRegularExpressionPrivate::~QRegularExpressionPrivate(void)" (??1QRegularExpressionPrivate@@QAE@XZ) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_pattern_info_16，该符号在函数 "public: struct QRegularExpressionMatchPrivate * __thiscall QRegularExpressionPrivate::doMatch(class QString const &,int,int,int,enum QRegularExpression::MatchType,class QFlags<enum QRegularExpression::MatchOption>,enum QRegularExpressionPrivate::CheckSubjectStringOption,struct QRegularExpressionMatchPrivate const *)const " (?doMatch@QRegularExpressionPrivate@@QBEPAUQRegularExpressionMatchPrivate@@ABVQString@@HHHW4MatchType@QRegularExpression@@V?$QFlags@W4MatchOption@QRegularExpression@@@@W4CheckSubjectStringOption@1@PBU2@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_match_data_create_from_pattern_16，该符号在函数 "public: struct QRegularExpressionMatchPrivate * __thiscall QRegularExpressionPrivate::doMatch(class QString const &,int,int,int,enum QRegularExpression::MatchType,class QFlags<enum QRegularExpression::MatchOption>,enum QRegularExpressionPrivate::CheckSubjectStringOption,struct QRegularExpressionMatchPrivate const *)const " (?doMatch@QRegularExpressionPrivate@@QBEPAUQRegularExpressionMatchPrivate@@ABVQString@@HHHW4MatchType@QRegularExpression@@V?$QFlags@W4MatchOption@QRegularExpression@@@@W4CheckSubjectStringOption@1@PBU2@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_match_16，该符号在函数 "int __cdecl safe_pcre2_match_16(struct pcre2_real_code_16 const *,unsigned short const *,int,int,int,struct pcre2_real_match_data_16 *,struct pcre2_real_match_context_16 *)" (?safe_pcre2_match_16@@YAHPBUpcre2_real_code_16@@PBGHHHPAUpcre2_real_match_data_16@@PAUpcre2_real_match_context_16@@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_match_data_free_16，该符号在函数 "public: struct QRegularExpressionMatchPrivate * __thiscall QRegularExpressionPrivate::doMatch(class QString const &,int,int,int,enum QRegularExpression::MatchType,class QFlags<enum QRegularExpression::MatchOption>,enum QRegularExpressionPrivate::CheckSubjectStringOption,struct QRegularExpressionMatchPrivate const *)const " (?doMatch@QRegularExpressionPrivate@@QBEPAUQRegularExpressionMatchPrivate@@ABVQString@@HHHW4MatchType@QRegularExpression@@V?$QFlags@W4MatchOption@QRegularExpression@@@@W4CheckSubjectStringOption@1@PBU2@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_get_ovector_pointer_16，该符号在函数 "public: struct QRegularExpressionMatchPrivate * __thiscall QRegularExpressionPrivate::doMatch(class QString const &,int,int,int,enum QRegularExpression::MatchType,class QFlags<enum QRegularExpression::MatchOption>,enum QRegularExpressionPrivate::CheckSubjectStringOption,struct QRegularExpressionMatchPrivate const *)const " (?doMatch@QRegularExpressionPrivate@@QBEPAUQRegularExpressionMatchPrivate@@ABVQString@@HHHW4MatchType@QRegularExpression@@V?$QFlags@W4MatchOption@QRegularExpression@@@@W4CheckSubjectStringOption@1@PBU2@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_substring_number_from_name_16，该符号在函数 "public: int __thiscall QRegularExpressionPrivate::captureIndexForName(class QStringView)const " (?captureIndexForName@QRegularExpressionPrivate@@QBEHVQStringView@@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_jit_compile_16，该符号在函数 "public: void __thiscall QRegularExpressionPrivate::optimizePattern(enum QRegularExpressionPrivate::OptimizePatternOption)" (?optimizePattern@QRegularExpressionPrivate@@QAEXW4OptimizePatternOption@1@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_jit_stack_create_16，该符号在函数 "int __cdecl safe_pcre2_match_16(struct pcre2_real_code_16 const *,unsigned short const *,int,int,int,struct pcre2_real_match_data_16 *,struct pcre2_real_match_context_16 *)" (?safe_pcre2_match_16@@YAHPBUpcre2_real_code_16@@PBGHHHPAUpcre2_real_match_data_16@@PAUpcre2_real_match_context_16@@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_jit_stack_assign_16，该符号在函数 "public: struct QRegularExpressionMatchPrivate * __thiscall QRegularExpressionPrivate::doMatch(class QString const &,int,int,int,enum QRegularExpression::MatchType,class QFlags<enum QRegularExpression::MatchOption>,enum QRegularExpressionPrivate::CheckSubjectStringOption,struct QRegularExpressionMatchPrivate const *)const " (?doMatch@QRegularExpressionPrivate@@QBEPAUQRegularExpressionMatchPrivate@@ABVQString@@HHHW4MatchType@QRegularExpression@@V?$QFlags@W4MatchOption@QRegularExpression@@@@W4CheckSubjectStringOption@1@PBU2@@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_jit_stack_free_16，该符号在函数 "private: static void __cdecl QThreadStorage<class QPcreJitStackPointer *>::deleteData(void *)" (?deleteData@?$QThreadStorage@PAVQPcreJitStackPointer@@@@CAXPAX@Z) 中被引用
+Qt5Core.lib(qregularexpression.obj) : error LNK2019: 无法解析的外部符号 _pcre2_get_error_message_16，该符号在函数 "public: class QString __thiscall QRegularExpression::errorString(void)const " (?errorString@QRegularExpression@@QBE?AVQString@@XZ) 中被引用
+Qt5Core.lib(qfilesystemengine_win.obj) : error LNK2019: 无法解析的外部符号 _NetShareEnum@28，该符号在函数 "public: static bool __cdecl QFileSystemEngine::uncListSharesOnServer(class QString const &,class QStringList *)" (?uncListSharesOnServer@QFileSystemEngine@@SA_NABVQString@@PAVQStringList@@@Z) 中被引用
+Qt5Core.lib(qfilesystemengine_win.obj) : error LNK2019: 无法解析的外部符号 _NetApiBufferFree@4，该符号在函数 "public: static bool __cdecl QFileSystemEngine::uncListSharesOnServer(class QString const &,class QStringList *)" (?uncListSharesOnServer@QFileSystemEngine@@SA_NABVQString@@PAVQStringList@@@Z) 中被引用
+Qt5Core.lib(qfilesystemengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__GetUserProfileDirectoryW@12，该符号在函数 "public: static class QString __cdecl QFileSystemEngine::homePath(void)" (?homePath@QFileSystemEngine@@SA?AVQString@@XZ) 中被引用
+Qt5Core.lib(qeventdispatcher_win.obj) : error LNK2019: 无法解析的外部符号 __imp__timeSetEvent@20，该符号在函数 "public: void __thiscall QEventDispatcherWin32Private::registerTimer(struct WinTimerInfo *)" (?registerTimer@QEventDispatcherWin32Private@@QAEXPAUWinTimerInfo@@@Z) 中被引用
+Qt5Core.lib(qeventdispatcher_win.obj) : error LNK2019: 无法解析的外部符号 __imp__timeKillEvent@4，该符号在函数 "public: virtual void __thiscall QEventDispatcherWin32::closingDown(void)" (?closingDown@QEventDispatcherWin32@@UAEXXZ) 中被引用
+Qt5Core.lib(qeventdispatcher_win.obj) : error LNK2019: 无法解析的外部符号 _WSAAsyncSelect@16，该符号在函数 "protected: void __thiscall QEventDispatcherWin32::doUnregisterSocketNotifier(class QSocketNotifier *)" (?doUnregisterSocketNotifier@QEventDispatcherWin32@@IAEXPAVQSocketNotifier@@@Z) 中被引用
+Qt5Core.lib(qcoreapplication_win.obj) : error LNK2019: 无法解析的外部符号 _GetFileVersionInfoSizeW@8，该符号在函数 "public: class QString __thiscall QCoreApplicationPrivate::appVersion(void)const " (?appVersion@QCoreApplicationPrivate@@QBE?AVQString@@XZ) 中被引用
+Qt5Core.lib(qcoreapplication_win.obj) : error LNK2019: 无法解析的外部符号 _GetFileVersionInfoW@16，该符号在函数 "public: class QString __thiscall QCoreApplicationPrivate::appVersion(void)const " (?appVersion@QCoreApplicationPrivate@@QBE?AVQString@@XZ) 中被引用
+Qt5Core.lib(qcoreapplication_win.obj) : error LNK2019: 无法解析的外部符号 _VerQueryValueW@16，该符号在函数 "public: class QString __thiscall QCoreApplicationPrivate::appVersion(void)const " (?appVersion@QCoreApplicationPrivate@@QBE?AVQString@@XZ) 中被引用
+Qt5Network.lib(qhostaddress.obj) : error LNK2019: 无法解析的外部符号 __imp__htonl@4，该符号在函数 "public: __thiscall QHostAddress::QHostAddress(struct sockaddr const *)" (??0QHostAddress@@QAE@PBUsockaddr@@@Z) 中被引用
+Qt5Network.lib(qhostinfo_win.obj) : error LNK2001: 无法解析的外部符号 __imp__htonl@4
+Qt5Network.lib(qnetworkinterface_win.obj) : error LNK2001: 无法解析的外部符号 __imp__htonl@4
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2001: 无法解析的外部符号 __imp__htonl@4
+Qt5Network.lib(qsslsocket_openssl.obj) : error LNK2019: 无法解析的外部符号 __imp__CertCreateCertificateContext@12，该符号在函数 "public: void __thiscall QWindowsCaRootFetcher::start(void)" (?start@QWindowsCaRootFetcher@@QAEXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl.obj) : error LNK2019: 无法解析的外部符号 __imp__CertFreeCertificateContext@4，该符号在函数 "public: void __thiscall QWindowsCaRootFetcher::start(void)" (?start@QWindowsCaRootFetcher@@QAEXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl.obj) : error LNK2019: 无法解析的外部符号 __imp__CertGetCertificateChain@32，该符号在函数 "public: void __thiscall QWindowsCaRootFetcher::start(void)" (?start@QWindowsCaRootFetcher@@QAEXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl.obj) : error LNK2019: 无法解析的外部符号 __imp__CertFreeCertificateChain@4，该符号在函数 "public: void __thiscall QWindowsCaRootFetcher::start(void)" (?start@QWindowsCaRootFetcher@@QAEXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _sk_num，该符号在函数 "int __cdecl q_sk_num(struct stack_st *)" (?q_sk_num@@YAHPAUstack_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _sk_value，该符号在函数 "void * __cdecl q_sk_value(struct stack_st *,int)" (?q_sk_value@@YAPAXPAUstack_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _sk_new_null，该符号在函数 "struct stack_st * __cdecl q_sk_new_null(void)" (?q_sk_new_null@@YAPAUstack_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _sk_free，该符号在函数 "void __cdecl q_sk_free(struct stack_st *)" (?q_sk_free@@YAXPAUstack_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _sk_pop_free，该符号在函数 "void __cdecl q_sk_pop_free(struct stack_st *,void (__cdecl*)(void *))" (?q_sk_pop_free@@YAXPAUstack_st@@P6AXPAX@Z@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _sk_push，该符号在函数 "void __cdecl q_sk_push(struct stack_st *,void *)" (?q_sk_push@@YAXPAUstack_st@@PAX@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSLeay_version，该符号在函数 "char const * __cdecl q_SSLeay_version(int)" (?q_SSLeay_version@@YAPBDH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSLeay，该符号在函数 "long __cdecl q_SSLeay(void)" (?q_SSLeay@@YAJXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _CRYPTO_num_locks，该符号在函数 "int __cdecl q_CRYPTO_num_locks(void)" (?q_CRYPTO_num_locks@@YAHXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _CRYPTO_set_locking_callback，该符号在函数 "void __cdecl q_CRYPTO_set_locking_callback(void (__cdecl*)(int,int,char const *,int))" (?q_CRYPTO_set_locking_callback@@YAXP6AXHHPBDH@Z@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _CRYPTO_set_id_callback，该符号在函数 "void __cdecl q_CRYPTO_set_id_callback(unsigned long (__cdecl*)(void))" (?q_CRYPTO_set_id_callback@@YAXP6AKXZ@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _CRYPTO_free，该符号在函数 "void __cdecl q_CRYPTO_free(void *)" (?q_CRYPTO_free@@YAXPAX@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_new_file，该符号在函数 "struct bio_st * __cdecl q_BIO_new_file(char const *,char const *)" (?q_BIO_new_file@@YAPAUbio_st@@PBD0@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_new，该符号在函数 "struct bio_st * __cdecl q_BIO_new(struct bio_method_st *)" (?q_BIO_new@@YAPAUbio_st@@PAUbio_method_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_free，该符号在函数 "int __cdecl q_BIO_free(struct bio_st *)" (?q_BIO_free@@YAHPAUbio_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_read，该符号在函数 "int __cdecl q_BIO_read(struct bio_st *,void *,int)" (?q_BIO_read@@YAHPAUbio_st@@PAXH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_write，该符号在函数 "int __cdecl q_BIO_write(struct bio_st *,void const *,int)" (?q_BIO_write@@YAHPAUbio_st@@PBXH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_ctrl，该符号在函数 "long __cdecl q_BIO_ctrl(struct bio_st *,int,long,void *)" (?q_BIO_ctrl@@YAJPAUbio_st@@HJPAX@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_s_mem，该符号在函数 "struct bio_method_st * __cdecl q_BIO_s_mem(void)" (?q_BIO_s_mem@@YAPAUbio_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BIO_new_mem_buf，该符号在函数 "struct bio_st * __cdecl q_BIO_new_mem_buf(void *,int)" (?q_BIO_new_mem_buf@@YAPAUbio_st@@PAXH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BN_num_bits，该符号在函数 "int __cdecl q_BN_num_bits(struct bignum_st const *)" (?q_BN_num_bits@@YAHPBUbignum_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BN_bin2bn，该符号在函数 "struct bignum_st * __cdecl q_BN_bin2bn(unsigned char const *,int,struct bignum_st *)" (?q_BN_bin2bn@@YAPAUbignum_st@@PBEHPAU1@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BN_mod_word，该符号在函数 "unsigned int __cdecl q_BN_mod_word(struct bignum_st const *,unsigned int)" (?q_BN_mod_word@@YAIPBUbignum_st@@I@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ASN1_STRING_length，该符号在函数 "int __cdecl q_ASN1_STRING_length(struct asn1_string_st *)" (?q_ASN1_STRING_length@@YAHPAUasn1_string_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ASN1_STRING_data，该符号在函数 "unsigned char * __cdecl q_ASN1_STRING_data(struct asn1_string_st *)" (?q_ASN1_STRING_data@@YAPAEPAUasn1_string_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _i2t_ASN1_OBJECT，该符号在函数 "int __cdecl q_i2t_ASN1_OBJECT(char *,int,struct asn1_object_st *)" (?q_i2t_ASN1_OBJECT@@YAHPADHPAUasn1_object_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ASN1_INTEGER_get，该符号在函数 "long __cdecl q_ASN1_INTEGER_get(struct asn1_string_st *)" (?q_ASN1_INTEGER_get@@YAJPAUasn1_string_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ASN1_STRING_to_UTF8，该符号在函数 "int __cdecl q_ASN1_STRING_to_UTF8(unsigned char * *,struct asn1_string_st *)" (?q_ASN1_STRING_to_UTF8@@YAHPAPAEPAUasn1_string_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ASN1_STRING_print，该符号在函数 "int __cdecl q_ASN1_STRING_print(struct bio_st *,struct asn1_string_st const *)" (?q_ASN1_STRING_print@@YAHPAUbio_st@@PBUasn1_string_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OBJ_nid2ln，该符号在函数 "char const * __cdecl q_OBJ_nid2ln(int)" (?q_OBJ_nid2ln@@YAPBDH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OBJ_nid2sn，该符号在函数 "char const * __cdecl q_OBJ_nid2sn(int)" (?q_OBJ_nid2sn@@YAPBDH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OBJ_obj2nid，该符号在函数 "int __cdecl q_OBJ_obj2nid(struct asn1_object_st const *)" (?q_OBJ_obj2nid@@YAHPBUasn1_object_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OBJ_obj2txt，该符号在函数 "int __cdecl q_OBJ_obj2txt(char *,int,struct asn1_object_st *,int)" (?q_OBJ_obj2txt@@YAHPADHPAUasn1_object_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OBJ_ln2nid，该符号在函数 "int __cdecl q_OBJ_ln2nid(char const *)" (?q_OBJ_ln2nid@@YAHPBD@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OBJ_sn2nid，该符号在函数 "int __cdecl q_OBJ_sn2nid(char const *)" (?q_OBJ_sn2nid@@YAHPBD@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CipherInit，该符号在函数 "int __cdecl q_EVP_CipherInit(struct evp_cipher_ctx_st *,struct evp_cipher_st const *,unsigned char const *,unsigned char const *,int)" (?q_EVP_CipherInit@@YAHPAUevp_cipher_ctx_st@@PBUevp_cipher_st@@PBE2H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CipherInit_ex，该符号在函数 "int __cdecl q_EVP_CipherInit_ex(struct evp_cipher_ctx_st *,struct evp_cipher_st const *,struct engine_st *,unsigned char const *,unsigned char const *,int)" (?q_EVP_CipherInit_ex@@YAHPAUevp_cipher_ctx_st@@PBUevp_cipher_st@@PAUengine_st@@PBE3H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CipherUpdate，该符号在函数 "int __cdecl q_EVP_CipherUpdate(struct evp_cipher_ctx_st *,unsigned char *,int *,unsigned char const *,int)" (?q_EVP_CipherUpdate@@YAHPAUevp_cipher_ctx_st@@PAEPAHPBEH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CipherFinal，该符号在函数 "int __cdecl q_EVP_CipherFinal(struct evp_cipher_ctx_st *,unsigned char *,int *)" (?q_EVP_CipherFinal@@YAHPAUevp_cipher_ctx_st@@PAEPAH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CIPHER_CTX_init，该符号在函数 "void __cdecl q_EVP_CIPHER_CTX_init(struct evp_cipher_ctx_st *)" (?q_EVP_CIPHER_CTX_init@@YAXPAUevp_cipher_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CIPHER_CTX_cleanup，该符号在函数 "void __cdecl q_EVP_CIPHER_CTX_cleanup(struct evp_cipher_ctx_st *)" (?q_EVP_CIPHER_CTX_cleanup@@YAXPAUevp_cipher_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CIPHER_CTX_new，该符号在函数 "struct evp_cipher_ctx_st * __cdecl q_EVP_CIPHER_CTX_new(void)" (?q_EVP_CIPHER_CTX_new@@YAPAUevp_cipher_ctx_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CIPHER_CTX_free，该符号在函数 "void __cdecl q_EVP_CIPHER_CTX_free(struct evp_cipher_ctx_st *)" (?q_EVP_CIPHER_CTX_free@@YAXPAUevp_cipher_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CIPHER_CTX_set_key_length，该符号在函数 "int __cdecl q_EVP_CIPHER_CTX_set_key_length(struct evp_cipher_ctx_st *,int)" (?q_EVP_CIPHER_CTX_set_key_length@@YAHPAUevp_cipher_ctx_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_CIPHER_CTX_ctrl，该符号在函数 "int __cdecl q_EVP_CIPHER_CTX_ctrl(struct evp_cipher_ctx_st *,int,int,void *)" (?q_EVP_CIPHER_CTX_ctrl@@YAHPAUevp_cipher_ctx_st@@HHPAX@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_sha1，该符号在函数 "struct env_md_st const * __cdecl q_EVP_sha1(void)" (?q_EVP_sha1@@YAPBUenv_md_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_des_cbc，该符号在函数 "struct evp_cipher_st const * __cdecl q_EVP_des_cbc(void)" (?q_EVP_des_cbc@@YAPBUevp_cipher_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_des_ede3_cbc，该符号在函数 "struct evp_cipher_st const * __cdecl q_EVP_des_ede3_cbc(void)" (?q_EVP_des_ede3_cbc@@YAPBUevp_cipher_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_rc2_cbc，该符号在函数 "struct evp_cipher_st const * __cdecl q_EVP_rc2_cbc(void)" (?q_EVP_rc2_cbc@@YAPBUevp_cipher_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OPENSSL_add_all_algorithms_noconf，该符号在函数 "void __cdecl q_OPENSSL_add_all_algorithms_noconf(void)" (?q_OPENSSL_add_all_algorithms_noconf@@YAXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _OPENSSL_add_all_algorithms_conf，该符号在函数 "void __cdecl q_OPENSSL_add_all_algorithms_conf(void)" (?q_OPENSSL_add_all_algorithms_conf@@YAXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_type，该符号在函数 "int __cdecl q_EVP_PKEY_type(int)" (?q_EVP_PKEY_type@@YAHH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_assign，该符号在函数 "int __cdecl q_EVP_PKEY_assign(struct evp_pkey_st *,int,char *)" (?q_EVP_PKEY_assign@@YAHPAUevp_pkey_st@@HPAD@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_set1_RSA，该符号在函数 "int __cdecl q_EVP_PKEY_set1_RSA(struct evp_pkey_st *,struct rsa_st *)" (?q_EVP_PKEY_set1_RSA@@YAHPAUevp_pkey_st@@PAUrsa_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_get1_RSA，该符号在函数 "struct rsa_st * __cdecl q_EVP_PKEY_get1_RSA(struct evp_pkey_st *)" (?q_EVP_PKEY_get1_RSA@@YAPAUrsa_st@@PAUevp_pkey_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_set1_DSA，该符号在函数 "int __cdecl q_EVP_PKEY_set1_DSA(struct evp_pkey_st *,struct dsa_st *)" (?q_EVP_PKEY_set1_DSA@@YAHPAUevp_pkey_st@@PAUdsa_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_get1_DSA，该符号在函数 "struct dsa_st * __cdecl q_EVP_PKEY_get1_DSA(struct evp_pkey_st *)" (?q_EVP_PKEY_get1_DSA@@YAPAUdsa_st@@PAUevp_pkey_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_set1_EC_KEY，该符号在函数 "int __cdecl q_EVP_PKEY_set1_EC_KEY(struct evp_pkey_st *,struct ec_key_st *)" (?q_EVP_PKEY_set1_EC_KEY@@YAHPAUevp_pkey_st@@PAUec_key_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_get1_EC_KEY，该符号在函数 "struct ec_key_st * __cdecl q_EVP_PKEY_get1_EC_KEY(struct evp_pkey_st *)" (?q_EVP_PKEY_get1_EC_KEY@@YAPAUec_key_st@@PAUevp_pkey_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_new，该符号在函数 "struct evp_pkey_st * __cdecl q_EVP_PKEY_new(void)" (?q_EVP_PKEY_new@@YAPAUevp_pkey_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EVP_PKEY_free，该符号在函数 "void __cdecl q_EVP_PKEY_free(struct evp_pkey_st *)" (?q_EVP_PKEY_free@@YAXPAUevp_pkey_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EC_GROUP_get_degree，该符号在函数 "int __cdecl q_EC_GROUP_get_degree(struct ec_group_st const *)" (?q_EC_GROUP_get_degree@@YAHPBUec_group_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EC_get_builtin_curves，该符号在函数 "unsigned int __cdecl q_EC_get_builtin_curves(struct EC_builtin_curve *,unsigned int)" (?q_EC_get_builtin_curves@@YAIPAUEC_builtin_curve@@I@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EC_curve_nist2nid，该符号在函数 "int __cdecl q_EC_curve_nist2nid(char const *)" (?q_EC_curve_nist2nid@@YAHPBD@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EC_KEY_new_by_curve_name，该符号在函数 "struct ec_key_st * __cdecl q_EC_KEY_new_by_curve_name(int)" (?q_EC_KEY_new_by_curve_name@@YAPAUec_key_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EC_KEY_free，该符号在函数 "void __cdecl q_EC_KEY_free(struct ec_key_st *)" (?q_EC_KEY_free@@YAXPAUec_key_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EC_KEY_dup，该符号在函数 "struct ec_key_st * __cdecl q_EC_KEY_dup(struct ec_key_st const *)" (?q_EC_KEY_dup@@YAPAUec_key_st@@PBU1@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _EC_KEY_get0_group，该符号在函数 "struct ec_group_st const * __cdecl q_EC_KEY_get0_group(struct ec_key_st const *)" (?q_EC_KEY_get0_group@@YAPBUec_group_st@@PBUec_key_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _RSA_new，该符号在函数 "struct rsa_st * __cdecl q_RSA_new(void)" (?q_RSA_new@@YAPAUrsa_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _RSA_free，该符号在函数 "void __cdecl q_RSA_free(struct rsa_st *)" (?q_RSA_free@@YAXPAUrsa_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _DH_new，该符号在函数 "struct dh_st * __cdecl q_DH_new(void)" (?q_DH_new@@YAPAUdh_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _DH_free，该符号在函数 "void __cdecl q_DH_free(struct dh_st *)" (?q_DH_free@@YAXPAUdh_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _DH_check，该符号在函数 "int __cdecl q_DH_check(struct dh_st *,int *)" (?q_DH_check@@YAHPAUdh_st@@PAH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _d2i_DHparams，该符号在函数 "struct dh_st * __cdecl q_d2i_DHparams(struct dh_st * *,unsigned char const * *,long)" (?q_d2i_DHparams@@YAPAUdh_st@@PAPAU1@PAPBEJ@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _i2d_DHparams，该符号在函数 "int __cdecl q_i2d_DHparams(struct dh_st *,unsigned char * *)" (?q_i2d_DHparams@@YAHPAUdh_st@@PAPAE@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _DSA_new，该符号在函数 "struct dsa_st * __cdecl q_DSA_new(void)" (?q_DSA_new@@YAPAUdsa_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _DSA_free，该符号在函数 "void __cdecl q_DSA_free(struct dsa_st *)" (?q_DSA_free@@YAXPAUdsa_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_new，该符号在函数 "struct x509_store_st * __cdecl q_X509_STORE_new(void)" (?q_X509_STORE_new@@YAPAUx509_store_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_free，该符号在函数 "void __cdecl q_X509_STORE_free(struct x509_store_st *)" (?q_X509_STORE_free@@YAXPAUx509_store_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_new，该符号在函数 "struct x509_store_ctx_st * __cdecl q_X509_STORE_CTX_new(void)" (?q_X509_STORE_CTX_new@@YAPAUx509_store_ctx_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_free，该符号在函数 "void __cdecl q_X509_STORE_CTX_free(struct x509_store_ctx_st *)" (?q_X509_STORE_CTX_free@@YAXPAUx509_store_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_init，该符号在函数 "int __cdecl q_X509_STORE_CTX_init(struct x509_store_ctx_st *,struct x509_store_st *,struct x509_st *,struct stack_st_X509 *)" (?q_X509_STORE_CTX_init@@YAHPAUx509_store_ctx_st@@PAUx509_store_st@@PAUx509_st@@PAUstack_st_X509@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_add_cert，该符号在函数 "int __cdecl q_X509_STORE_add_cert(struct x509_store_st *,struct x509_st *)" (?q_X509_STORE_add_cert@@YAHPAUx509_store_st@@PAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_get_error，该符号在函数 "int __cdecl q_X509_STORE_CTX_get_error(struct x509_store_ctx_st *)" (?q_X509_STORE_CTX_get_error@@YAHPAUx509_store_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_get_error_depth，该符号在函数 "int __cdecl q_X509_STORE_CTX_get_error_depth(struct x509_store_ctx_st *)" (?q_X509_STORE_CTX_get_error_depth@@YAHPAUx509_store_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_get_current_cert，该符号在函数 "struct x509_st * __cdecl q_X509_STORE_CTX_get_current_cert(struct x509_store_ctx_st *)" (?q_X509_STORE_CTX_get_current_cert@@YAPAUx509_st@@PAUx509_store_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_get_chain，该符号在函数 "struct stack_st_X509 * __cdecl q_X509_STORE_CTX_get_chain(struct x509_store_ctx_st *)" (?q_X509_STORE_CTX_get_chain@@YAPAUstack_st_X509@@PAUx509_store_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_STORE_CTX_set_purpose，该符号在函数 "int __cdecl q_X509_STORE_CTX_set_purpose(struct x509_store_ctx_st *,int)" (?q_X509_STORE_CTX_set_purpose@@YAHPAUx509_store_ctx_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_digest，该符号在函数 "int __cdecl q_X509_digest(struct x509_st const *,struct env_md_st const *,unsigned char *,unsigned int *)" (?q_X509_digest@@YAHPBUx509_st@@PBUenv_md_st@@PAEPAI@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_dup，该符号在函数 "struct x509_st * __cdecl q_X509_dup(struct x509_st *)" (?q_X509_dup@@YAPAUx509_st@@PAU1@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_PUBKEY_get，该符号在函数 "struct evp_pkey_st * __cdecl q_X509_PUBKEY_get(struct X509_pubkey_st *)" (?q_X509_PUBKEY_get@@YAPAUevp_pkey_st@@PAUX509_pubkey_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_free，该符号在函数 "void __cdecl q_X509_free(struct x509_st *)" (?q_X509_free@@YAXPAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _d2i_X509，该符号在函数 "struct x509_st * __cdecl q_d2i_X509(struct x509_st * *,unsigned char const * *,long)" (?q_d2i_X509@@YAPAUx509_st@@PAPAU1@PAPBEJ@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _i2d_X509，该符号在函数 "int __cdecl q_i2d_X509(struct x509_st *,unsigned char * *)" (?q_i2d_X509@@YAHPAUx509_st@@PAPAE@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_get_serialNumber，该符号在函数 "struct asn1_string_st * __cdecl q_X509_get_serialNumber(struct x509_st *)" (?q_X509_get_serialNumber@@YAPAUasn1_string_st@@PAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_get_issuer_name，该符号在函数 "struct X509_name_st * __cdecl q_X509_get_issuer_name(struct x509_st *)" (?q_X509_get_issuer_name@@YAPAUX509_name_st@@PAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_get_subject_name，该符号在函数 "struct X509_name_st * __cdecl q_X509_get_subject_name(struct x509_st *)" (?q_X509_get_subject_name@@YAPAUX509_name_st@@PAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_cmp，该符号在函数 "int __cdecl q_X509_cmp(struct x509_st *,struct x509_st *)" (?q_X509_cmp@@YAHPAUx509_st@@0@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_print，该符号在函数 "void __cdecl q_X509_print(struct bio_st *,struct x509_st *)" (?q_X509_print@@YAXPAUbio_st@@PAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_NAME_entry_count，该符号在函数 "int __cdecl q_X509_NAME_entry_count(struct X509_name_st *)" (?q_X509_NAME_entry_count@@YAHPAUX509_name_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_NAME_get_entry，该符号在函数 "struct X509_name_entry_st * __cdecl q_X509_NAME_get_entry(struct X509_name_st *,int)" (?q_X509_NAME_get_entry@@YAPAUX509_name_entry_st@@PAUX509_name_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_NAME_ENTRY_get_object，该符号在函数 "struct asn1_object_st * __cdecl q_X509_NAME_ENTRY_get_object(struct X509_name_entry_st *)" (?q_X509_NAME_ENTRY_get_object@@YAPAUasn1_object_st@@PAUX509_name_entry_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_NAME_ENTRY_get_data，该符号在函数 "struct asn1_string_st * __cdecl q_X509_NAME_ENTRY_get_data(struct X509_name_entry_st *)" (?q_X509_NAME_ENTRY_get_data@@YAPAUasn1_string_st@@PAUX509_name_entry_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_get_ext_count，该符号在函数 "int __cdecl q_X509_get_ext_count(struct x509_st *)" (?q_X509_get_ext_count@@YAHPAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_get_ext，该符号在函数 "struct X509_extension_st * __cdecl q_X509_get_ext(struct x509_st *,int)" (?q_X509_get_ext@@YAPAUX509_extension_st@@PAUx509_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_get_ext_d2i，该符号在函数 "void * __cdecl q_X509_get_ext_d2i(struct x509_st *,int,int *,int *)" (?q_X509_get_ext_d2i@@YAPAXPAUx509_st@@HPAH1@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_EXTENSION_get_object，该符号在函数 "struct asn1_object_st * __cdecl q_X509_EXTENSION_get_object(struct X509_extension_st *)" (?q_X509_EXTENSION_get_object@@YAPAUasn1_object_st@@PAUX509_extension_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_EXTENSION_get_data，该符号在函数 "struct asn1_string_st * __cdecl q_X509_EXTENSION_get_data(struct X509_extension_st *)" (?q_X509_EXTENSION_get_data@@YAPAUasn1_string_st@@PAUX509_extension_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_EXTENSION_get_critical，该符号在函数 "int __cdecl q_X509_EXTENSION_get_critical(struct X509_extension_st *)" (?q_X509_EXTENSION_get_critical@@YAHPAUX509_extension_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_verify_cert，该符号在函数 "int __cdecl q_X509_verify_cert(struct x509_store_ctx_st *)" (?q_X509_verify_cert@@YAHPAUx509_store_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_RSAPrivateKey，该符号在函数 "struct rsa_st * __cdecl q_PEM_read_bio_RSAPrivateKey(struct bio_st *,struct rsa_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_RSAPrivateKey@@YAPAUrsa_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_write_bio_RSAPrivateKey，该符号在函数 "int __cdecl q_PEM_write_bio_RSAPrivateKey(struct bio_st *,struct rsa_st *,struct evp_cipher_st const *,unsigned char *,int,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_write_bio_RSAPrivateKey@@YAHPAUbio_st@@PAUrsa_st@@PBUevp_cipher_st@@PAEHP6AHPADHHPAX@Z5@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_RSA_PUBKEY，该符号在函数 "struct rsa_st * __cdecl q_PEM_read_bio_RSA_PUBKEY(struct bio_st *,struct rsa_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_RSA_PUBKEY@@YAPAUrsa_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_write_bio_RSA_PUBKEY，该符号在函数 "int __cdecl q_PEM_write_bio_RSA_PUBKEY(struct bio_st *,struct rsa_st *)" (?q_PEM_write_bio_RSA_PUBKEY@@YAHPAUbio_st@@PAUrsa_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_DSAPrivateKey，该符号在函数 "struct dsa_st * __cdecl q_PEM_read_bio_DSAPrivateKey(struct bio_st *,struct dsa_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_DSAPrivateKey@@YAPAUdsa_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_write_bio_DSAPrivateKey，该符号在函数 "int __cdecl q_PEM_write_bio_DSAPrivateKey(struct bio_st *,struct dsa_st *,struct evp_cipher_st const *,unsigned char *,int,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_write_bio_DSAPrivateKey@@YAHPAUbio_st@@PAUdsa_st@@PBUevp_cipher_st@@PAEHP6AHPADHHPAX@Z5@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_DSA_PUBKEY，该符号在函数 "struct dsa_st * __cdecl q_PEM_read_bio_DSA_PUBKEY(struct bio_st *,struct dsa_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_DSA_PUBKEY@@YAPAUdsa_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_write_bio_DSA_PUBKEY，该符号在函数 "int __cdecl q_PEM_write_bio_DSA_PUBKEY(struct bio_st *,struct dsa_st *)" (?q_PEM_write_bio_DSA_PUBKEY@@YAHPAUbio_st@@PAUdsa_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_ECPrivateKey，该符号在函数 "struct ec_key_st * __cdecl q_PEM_read_bio_ECPrivateKey(struct bio_st *,struct ec_key_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_ECPrivateKey@@YAPAUec_key_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_write_bio_ECPrivateKey，该符号在函数 "int __cdecl q_PEM_write_bio_ECPrivateKey(struct bio_st *,struct ec_key_st *,struct evp_cipher_st const *,unsigned char *,int,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_write_bio_ECPrivateKey@@YAHPAUbio_st@@PAUec_key_st@@PBUevp_cipher_st@@PAEHP6AHPADHHPAX@Z5@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_EC_PUBKEY，该符号在函数 "struct ec_key_st * __cdecl q_PEM_read_bio_EC_PUBKEY(struct bio_st *,struct ec_key_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_EC_PUBKEY@@YAPAUec_key_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_write_bio_EC_PUBKEY，该符号在函数 "int __cdecl q_PEM_write_bio_EC_PUBKEY(struct bio_st *,struct ec_key_st *)" (?q_PEM_write_bio_EC_PUBKEY@@YAHPAUbio_st@@PAUec_key_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_DHparams，该符号在函数 "struct dh_st * __cdecl q_PEM_read_bio_DHparams(struct bio_st *,struct dh_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_DHparams@@YAPAUdh_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_PrivateKey，该符号在函数 "struct evp_pkey_st * __cdecl q_PEM_read_bio_PrivateKey(struct bio_st *,struct evp_pkey_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_PrivateKey@@YAPAUevp_pkey_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PEM_read_bio_PUBKEY，该符号在函数 "struct evp_pkey_st * __cdecl q_PEM_read_bio_PUBKEY(struct bio_st *,struct evp_pkey_st * *,int (__cdecl*)(char *,int,int,void *),void *)" (?q_PEM_read_bio_PUBKEY@@YAPAUevp_pkey_st@@PAUbio_st@@PAPAU1@P6AHPADHHPAX@Z3@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_set_next_proto_select_cb，该符号在函数 "void __cdecl q_SSL_CTX_set_next_proto_select_cb(struct ssl_ctx_st *,int (__cdecl*)(struct ssl_st *,unsigned char * *,unsigned char *,unsigned char const *,unsigned int,void *),void *)" (?q_SSL_CTX_set_next_proto_select_cb@@YAXPAUssl_ctx_st@@P6AHPAUssl_st@@PAPAEPAEPBEIPAX@Z5@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get0_next_proto_negotiated，该符号在函数 "void __cdecl q_SSL_get0_next_proto_negotiated(struct ssl_st const *,unsigned char const * *,unsigned int *)" (?q_SSL_get0_next_proto_negotiated@@YAXPBUssl_st@@PAPBEPAI@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_select_next_proto，该符号在函数 "int __cdecl q_SSL_select_next_proto(unsigned char * *,unsigned char *,unsigned char const *,unsigned int,unsigned char const *,unsigned int)" (?q_SSL_select_next_proto@@YAHPAPAEPAEPBEI2I@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_alpn_protos，该符号在函数 "int __cdecl q_SSL_set_alpn_protos(struct ssl_st *,unsigned char const *,unsigned int)" (?q_SSL_set_alpn_protos@@YAHPAUssl_st@@PBEI@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_set_alpn_select_cb，该符号在函数 "void __cdecl q_SSL_CTX_set_alpn_select_cb(struct ssl_ctx_st *,int (__cdecl*)(struct ssl_st *,unsigned char const * *,unsigned char *,unsigned char const *,unsigned int,void *),void *)" (?q_SSL_CTX_set_alpn_select_cb@@YAXPAUssl_ctx_st@@P6AHPAUssl_st@@PAPBEPAEPBEIPAX@Z5@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get0_alpn_selected，该符号在函数 "void __cdecl q_SSL_get0_alpn_selected(struct ssl_st const *,unsigned char const * *,unsigned int *)" (?q_SSL_get0_alpn_selected@@YAXPBUssl_st@@PAPBEPAI@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_psk_client_callback，该符号在函数 "void __cdecl q_SSL_set_psk_client_callback(struct ssl_st *,unsigned int (__cdecl*)(struct ssl_st *,char const *,char *,unsigned int,unsigned char *,unsigned int))" (?q_SSL_set_psk_client_callback@@YAXPAUssl_st@@P6AI0PBDPADIPAEI@Z@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_psk_server_callback，该符号在函数 "void __cdecl q_SSL_set_psk_server_callback(struct ssl_st *,unsigned int (__cdecl*)(struct ssl_st *,char const *,unsigned char *,unsigned int))" (?q_SSL_set_psk_server_callback@@YAXPAUssl_st@@P6AI0PBDPAEI@Z@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_use_psk_identity_hint，该符号在函数 "int __cdecl q_SSL_CTX_use_psk_identity_hint(struct ssl_ctx_st *,char const *)" (?q_SSL_CTX_use_psk_identity_hint@@YAHPAUssl_ctx_st@@PBD@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_set_cipher_list，该符号在函数 "int __cdecl q_SSL_CTX_set_cipher_list(struct ssl_ctx_st *,char const *)" (?q_SSL_CTX_set_cipher_list@@YAHPAUssl_ctx_st@@PBD@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_new，该符号在函数 "struct ssl_ctx_st * __cdecl q_SSL_CTX_new(struct ssl_method_st const *)" (?q_SSL_CTX_new@@YAPAUssl_ctx_st@@PBUssl_method_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_free，该符号在函数 "void __cdecl q_SSL_CTX_free(struct ssl_ctx_st *)" (?q_SSL_CTX_free@@YAXPAUssl_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_get_cert_store，该符号在函数 "struct x509_store_st * __cdecl q_SSL_CTX_get_cert_store(struct ssl_ctx_st const *)" (?q_SSL_CTX_get_cert_store@@YAPAUx509_store_st@@PBUssl_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_clear，该符号在函数 "int __cdecl q_SSL_clear(struct ssl_st *)" (?q_SSL_clear@@YAHPAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_current_cipher，该符号在函数 "struct ssl_cipher_st const * __cdecl q_SSL_get_current_cipher(struct ssl_st *)" (?q_SSL_get_current_cipher@@YAPBUssl_cipher_st@@PAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CIPHER_get_bits，该符号在函数 "int __cdecl q_SSL_CIPHER_get_bits(struct ssl_cipher_st const *,int *)" (?q_SSL_CIPHER_get_bits@@YAHPBUssl_cipher_st@@PAH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_bio，该符号在函数 "void __cdecl q_SSL_set_bio(struct ssl_st *,struct bio_st *,struct bio_st *)" (?q_SSL_set_bio@@YAXPAUssl_st@@PAUbio_st@@1@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_use_PrivateKey_file，该符号在函数 "int __cdecl q_SSL_CTX_use_PrivateKey_file(struct ssl_ctx_st *,char const *,int)" (?q_SSL_CTX_use_PrivateKey_file@@YAHPAUssl_ctx_st@@PBDH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_use_certificate_file，该符号在函数 "int __cdecl q_SSL_CTX_use_certificate_file(struct ssl_ctx_st *,char const *,int)" (?q_SSL_CTX_use_certificate_file@@YAHPAUssl_ctx_st@@PBDH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_load_error_strings，该符号在函数 "void __cdecl q_SSL_load_error_strings(void)" (?q_SSL_load_error_strings@@YAXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_SESSION_free，该符号在函数 "void __cdecl q_SSL_SESSION_free(struct ssl_session_st *)" (?q_SSL_SESSION_free@@YAXPAUssl_session_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _i2d_SSL_SESSION，该符号在函数 "int __cdecl q_i2d_SSL_SESSION(struct ssl_session_st *,unsigned char * *)" (?q_i2d_SSL_SESSION@@YAHPAUssl_session_st@@PAPAE@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_session，该符号在函数 "int __cdecl q_SSL_set_session(struct ssl_st *,struct ssl_session_st *)" (?q_SSL_set_session@@YAHPAUssl_st@@PAUssl_session_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _d2i_SSL_SESSION，该符号在函数 "struct ssl_session_st * __cdecl q_d2i_SSL_SESSION(struct ssl_session_st * *,unsigned char const * *,long)" (?q_d2i_SSL_SESSION@@YAPAUssl_session_st@@PAPAU1@PAPBEJ@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_peer_certificate，该符号在函数 "struct x509_st * __cdecl q_SSL_get_peer_certificate(struct ssl_st *)" (?q_SSL_get_peer_certificate@@YAPAUx509_st@@PAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_peer_cert_chain，该符号在函数 "struct stack_st_X509 * __cdecl q_SSL_get_peer_cert_chain(struct ssl_st *)" (?q_SSL_get_peer_cert_chain@@YAPAUstack_st_X509@@PAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_set_verify，该符号在函数 "void __cdecl q_SSL_CTX_set_verify(struct ssl_ctx_st *,int,int (__cdecl*)(int,struct x509_store_ctx_st *))" (?q_SSL_CTX_set_verify@@YAXPAUssl_ctx_st@@HP6AHHPAUx509_store_ctx_st@@@Z@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_set_verify_depth，该符号在函数 "void __cdecl q_SSL_CTX_set_verify_depth(struct ssl_ctx_st *,int)" (?q_SSL_CTX_set_verify_depth@@YAXPAUssl_ctx_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_use_RSAPrivateKey，该符号在函数 "int __cdecl q_SSL_CTX_use_RSAPrivateKey(struct ssl_ctx_st *,struct rsa_st *)" (?q_SSL_CTX_use_RSAPrivateKey@@YAHPAUssl_ctx_st@@PAUrsa_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_use_PrivateKey，该符号在函数 "int __cdecl q_SSL_CTX_use_PrivateKey(struct ssl_ctx_st *,struct evp_pkey_st *)" (?q_SSL_CTX_use_PrivateKey@@YAHPAUssl_ctx_st@@PAUevp_pkey_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_use_certificate，该符号在函数 "int __cdecl q_SSL_CTX_use_certificate(struct ssl_ctx_st *,struct x509_st *)" (?q_SSL_CTX_use_certificate@@YAHPAUssl_ctx_st@@PAUx509_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_check_private_key，该符号在函数 "int __cdecl q_SSL_CTX_check_private_key(struct ssl_ctx_st const *)" (?q_SSL_CTX_check_private_key@@YAHPBUssl_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_new，该符号在函数 "struct ssl_st * __cdecl q_SSL_new(struct ssl_ctx_st *)" (?q_SSL_new@@YAPAUssl_st@@PAUssl_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_free，该符号在函数 "void __cdecl q_SSL_free(struct ssl_st *)" (?q_SSL_free@@YAXPAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_accept，该符号在函数 "int __cdecl q_SSL_accept(struct ssl_st *)" (?q_SSL_accept@@YAHPAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_connect，该符号在函数 "int __cdecl q_SSL_connect(struct ssl_st *)" (?q_SSL_connect@@YAHPAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_read，该符号在函数 "int __cdecl q_SSL_read(struct ssl_st *,void *,int)" (?q_SSL_read@@YAHPAUssl_st@@PAXH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_write，该符号在函数 "int __cdecl q_SSL_write(struct ssl_st *,void const *,int)" (?q_SSL_write@@YAHPAUssl_st@@PBXH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_ctrl，该符号在函数 "long __cdecl q_SSL_ctrl(struct ssl_st *,int,long,void *)" (?q_SSL_ctrl@@YAJPAUssl_st@@HJPAX@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_ctrl，该符号在函数 "long __cdecl q_SSL_CTX_ctrl(struct ssl_ctx_st *,int,long,void *)" (?q_SSL_CTX_ctrl@@YAJPAUssl_ctx_st@@HJPAX@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_error，该符号在函数 "int __cdecl q_SSL_get_error(struct ssl_st *,int)" (?q_SSL_get_error@@YAHPAUssl_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSLv3_server_method，该符号在函数 "struct ssl_method_st const * __cdecl q_SSLv3_server_method(void)" (?q_SSLv3_server_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSLv3_client_method，该符号在函数 "struct ssl_method_st const * __cdecl q_SSLv3_client_method(void)" (?q_SSLv3_client_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSLv23_server_method，该符号在函数 "struct ssl_method_st const * __cdecl q_SSLv23_server_method(void)" (?q_SSLv23_server_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSLv23_client_method，该符号在函数 "struct ssl_method_st const * __cdecl q_SSLv23_client_method(void)" (?q_SSLv23_client_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _TLSv1_server_method，该符号在函数 "struct ssl_method_st const * __cdecl q_TLSv1_server_method(void)" (?q_TLSv1_server_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _TLSv1_client_method，该符号在函数 "struct ssl_method_st const * __cdecl q_TLSv1_client_method(void)" (?q_TLSv1_client_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _TLSv1_1_server_method，该符号在函数 "struct ssl_method_st const * __cdecl q_TLSv1_1_server_method(void)" (?q_TLSv1_1_server_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _TLSv1_1_client_method，该符号在函数 "struct ssl_method_st const * __cdecl q_TLSv1_1_client_method(void)" (?q_TLSv1_1_client_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _TLSv1_2_server_method，该符号在函数 "struct ssl_method_st const * __cdecl q_TLSv1_2_server_method(void)" (?q_TLSv1_2_server_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _TLSv1_2_client_method，该符号在函数 "struct ssl_method_st const * __cdecl q_TLSv1_2_client_method(void)" (?q_TLSv1_2_client_method@@YAPBUssl_method_st@@XZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_ciphers，该符号在函数 "struct stack_st_SSL_CIPHER * __cdecl q_SSL_get_ciphers(struct ssl_st const *)" (?q_SSL_get_ciphers@@YAPAUstack_st_SSL_CIPHER@@PBUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_shutdown，该符号在函数 "int __cdecl q_SSL_shutdown(struct ssl_st *)" (?q_SSL_shutdown@@YAHPAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_connect_state，该符号在函数 "void __cdecl q_SSL_set_connect_state(struct ssl_st *)" (?q_SSL_set_connect_state@@YAXPAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_accept_state，该符号在函数 "void __cdecl q_SSL_set_accept_state(struct ssl_st *)" (?q_SSL_set_accept_state@@YAXPAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_library_init，该符号在函数 "int __cdecl q_SSL_library_init(void)" (?q_SSL_library_init@@YAHXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CIPHER_description，该符号在函数 "char * __cdecl q_SSL_CIPHER_description(struct ssl_cipher_st const *,char *,int)" (?q_SSL_CIPHER_description@@YAPADPBUssl_cipher_st@@PADH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_version，该符号在函数 "int __cdecl q_SSL_version(struct ssl_st const *)" (?q_SSL_version@@YAHPBUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_set_default_verify_paths，该符号在函数 "int __cdecl q_SSL_CTX_set_default_verify_paths(struct ssl_ctx_st *)" (?q_SSL_CTX_set_default_verify_paths@@YAHPAUssl_ctx_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_CTX_load_verify_locations，该符号在函数 "int __cdecl q_SSL_CTX_load_verify_locations(struct ssl_ctx_st *,char const *,char const *)" (?q_SSL_CTX_load_verify_locations@@YAHPAUssl_ctx_st@@PBD1@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_session，该符号在函数 "struct ssl_session_st * __cdecl q_SSL_get_session(struct ssl_st const *)" (?q_SSL_get_session@@YAPAUssl_session_st@@PBUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get1_session，该符号在函数 "struct ssl_session_st * __cdecl q_SSL_get1_session(struct ssl_st *)" (?q_SSL_get1_session@@YAPAUssl_session_st@@PAUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_verify_result，该符号在函数 "long __cdecl q_SSL_get_verify_result(struct ssl_st const *)" (?q_SSL_get_verify_result@@YAJPBUssl_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_set_ex_data，该符号在函数 "int __cdecl q_SSL_set_ex_data(struct ssl_st *,int,void *)" (?q_SSL_set_ex_data@@YAHPAUssl_st@@HPAX@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_ex_data，该符号在函数 "void * __cdecl q_SSL_get_ex_data(struct ssl_st const *,int)" (?q_SSL_get_ex_data@@YAPAXPBUssl_st@@H@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _SSL_get_ex_new_index，该符号在函数 "int __cdecl q_SSL_get_ex_new_index(long,void *,int (__cdecl*)(void *,void *,struct crypto_ex_data_st *,int,long,void *),int (__cdecl*)(struct crypto_ex_data_st *,struct crypto_ex_data_st *,void *,int,long,void *),void (__cdecl*)(void *,void *,struct crypto_ex_data_st *,int,long,void *))" (?q_SSL_get_ex_new_index@@YAHJPAXP6AH00PAUcrypto_ex_data_st@@HJ0@ZP6AH110HJ0@ZP6AX001HJ0@Z@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ERR_get_error，该符号在函数 "unsigned long __cdecl q_ERR_get_error(void)" (?q_ERR_get_error@@YAKXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ERR_peek_last_error，该符号在函数 "unsigned long __cdecl q_ERR_peek_last_error(void)" (?q_ERR_peek_last_error@@YAKXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ERR_clear_error，该符号在函数 "void __cdecl q_ERR_clear_error(void)" (?q_ERR_clear_error@@YAXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ERR_error_string，该符号在函数 "char * __cdecl q_ERR_error_string(unsigned long,char *)" (?q_ERR_error_string@@YAPADKPAD@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _ERR_free_strings，该符号在函数 "void __cdecl q_ERR_free_strings(void)" (?q_ERR_free_strings@@YAXXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PKCS12_free，该符号在函数 "void __cdecl q_PKCS12_free(struct PKCS12 *)" (?q_PKCS12_free@@YAXPAUPKCS12@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _PKCS12_parse，该符号在函数 "int __cdecl q_PKCS12_parse(struct PKCS12 *,char const *,struct evp_pkey_st * *,struct x509_st * *,struct stack_st_X509 * *)" (?q_PKCS12_parse@@YAHPAUPKCS12@@PBDPAPAUevp_pkey_st@@PAPAUx509_st@@PAPAUstack_st_X509@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _d2i_PKCS12_bio，该符号在函数 "struct PKCS12 * __cdecl q_d2i_PKCS12_bio(struct bio_st *,struct PKCS12 * *)" (?q_d2i_PKCS12_bio@@YAPAUPKCS12@@PAUbio_st@@PAPAU1@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _RAND_seed，该符号在函数 "void __cdecl q_RAND_seed(void const *,int)" (?q_RAND_seed@@YAXPBXH@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _RAND_status，该符号在函数 "int __cdecl q_RAND_status(void)" (?q_RAND_status@@YAHXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _CONF_get1_default_config_file，该符号在函数 "char * __cdecl q_CONF_get1_default_config_file(void)" (?q_CONF_get1_default_config_file@@YAPADXZ) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _BASIC_CONSTRAINTS_free，该符号在函数 "void __cdecl q_BASIC_CONSTRAINTS_free(struct BASIC_CONSTRAINTS_st *)" (?q_BASIC_CONSTRAINTS_free@@YAXPAUBASIC_CONSTRAINTS_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _AUTHORITY_KEYID_free，该符号在函数 "void __cdecl q_AUTHORITY_KEYID_free(struct AUTHORITY_KEYID_st *)" (?q_AUTHORITY_KEYID_free@@YAXPAUAUTHORITY_KEYID_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509V3_EXT_get，该符号在函数 "struct v3_ext_method const * __cdecl q_X509V3_EXT_get(struct X509_extension_st *)" (?q_X509V3_EXT_get@@YAPBUv3_ext_method@@PAUX509_extension_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509V3_EXT_d2i，该符号在函数 "void * __cdecl q_X509V3_EXT_d2i(struct X509_extension_st *)" (?q_X509V3_EXT_d2i@@YAPAXPAUX509_extension_st@@@Z) 中被引用
+Qt5Network.lib(qsslsocket_openssl_symbols.obj) : error LNK2019: 无法解析的外部符号 _X509_check_issued，该符号在函数 "int __cdecl q_X509_check_issued(struct x509_st *,struct x509_st *)" (?q_X509_check_issued@@YAHPAUx509_st@@0@Z) 中被引用
+Qt5Network.lib(qhostinfo_win.obj) : error LNK2019: 无法解析的外部符号 __imp__ntohl@4，该符号在函数 "public: static class QHostInfo __cdecl QHostInfoAgent::fromName(class QString const &)" (?fromName@QHostInfoAgent@@SA?AVQHostInfo@@ABVQString@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2001: 无法解析的外部符号 __imp__ntohl@4
+Qt5Network.lib(qhostinfo_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSAGetLastError@0，该符号在函数 "public: static class QHostInfo __cdecl QHostInfoAgent::fromName(class QString const &)" (?fromName@QHostInfoAgent@@SA?AVQHostInfo@@ABVQString@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2001: 无法解析的外部符号 __imp__WSAGetLastError@0
+Qt5Network.lib(qhostinfo_win.obj) : error LNK2019: 无法解析的外部符号 __imp__getaddrinfo@16，该符号在函数 "public: static class QHostInfo __cdecl QHostInfoAgent::fromName(class QString const &)" (?fromName@QHostInfoAgent@@SA?AVQHostInfo@@ABVQString@@@Z) 中被引用
+Qt5Network.lib(qhostinfo_win.obj) : error LNK2019: 无法解析的外部符号 __imp__freeaddrinfo@4，该符号在函数 "public: static class QHostInfo __cdecl QHostInfoAgent::fromName(class QString const &)" (?fromName@QHostInfoAgent@@SA?AVQHostInfo@@ABVQString@@@Z) 中被引用
+Qt5Network.lib(qhostinfo_win.obj) : error LNK2019: 无法解析的外部符号 __imp__getnameinfo@28，该符号在函数 "public: static class QHostInfo __cdecl QHostInfoAgent::fromName(class QString const &)" (?fromName@QHostInfoAgent@@SA?AVQHostInfo@@ABVQString@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine.obj) : error LNK2019: 无法解析的外部符号 __imp__getsockopt@20，该符号在函数 "public: virtual bool __thiscall QNativeSocketEngine::waitForReadOrWrite(bool *,bool *,bool,bool,int,bool *)" (?waitForReadOrWrite@QNativeSocketEngine@@UAE_NPA_N0_N1H0@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2001: 无法解析的外部符号 __imp__getsockopt@20
+Qt5Network.lib(qnetworkinterface_win.obj) : error LNK2019: 无法解析的外部符号 _GetNetworkParams@8，该符号在函数 "public: static class QString __cdecl QHostInfo::localDomainName(void)" (?localDomainName@QHostInfo@@SA?AVQString@@XZ) 中被引用
+Qt5Network.lib(qnetworkinterface_win.obj) : error LNK2019: 无法解析的外部符号 _GetAdaptersAddresses@20，该符号在函数 "class QList<class QNetworkInterfacePrivate *> __cdecl interfaceListing(void)" (?interfaceListing@@YA?AV?$QList@PAVQNetworkInterfacePrivate@@@@XZ) 中被引用
+Qt5Network.lib(qnetworkinterface_win.obj) : error LNK2019: 无法解析的外部符号 _ConvertInterfaceNameToLuidW@8，该符号在函数 "public: static unsigned int __cdecl QNetworkInterfaceManager::interfaceIndexFromName(class QString const &)" (?interfaceIndexFromName@QNetworkInterfaceManager@@SAIABVQString@@@Z) 中被引用
+Qt5Network.lib(qnetworkinterface_win.obj) : error LNK2019: 无法解析的外部符号 _ConvertInterfaceLuidToNameW@12，该符号在函数 "class QList<class QNetworkInterfacePrivate *> __cdecl interfaceListing(void)" (?interfaceListing@@YA?AV?$QList@PAVQNetworkInterfacePrivate@@@@XZ) 中被引用
+Qt5Network.lib(qnetworkinterface_win.obj) : error LNK2019: 无法解析的外部符号 _ConvertInterfaceLuidToIndex@8，该符号在函数 "public: static unsigned int __cdecl QNetworkInterfaceManager::interfaceIndexFromName(class QString const &)" (?interfaceIndexFromName@QNetworkInterfaceManager@@SAIABVQString@@@Z) 中被引用
+Qt5Network.lib(qnetworkinterface_win.obj) : error LNK2019: 无法解析的外部符号 _ConvertInterfaceIndexToLuid@8，该符号在函数 "public: static class QString __cdecl QNetworkInterfaceManager::interfaceNameFromIndex(unsigned int)" (?interfaceNameFromIndex@QNetworkInterfaceManager@@SA?AVQString@@I@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 ___WSAFDIsSet@8，该符号在函数 "public: int __thiscall QNativeSocketEnginePrivate::nativeSelect(int,bool,bool,bool *,bool *)const " (?nativeSelect@QNativeSocketEnginePrivate@@QBEHH_N0PA_N1@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__bind@12，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::nativeBind(class QHostAddress const &,unsigned short)" (?nativeBind@QNativeSocketEnginePrivate@@QAE_NABVQHostAddress@@G@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__closesocket@4，该符号在函数 "public: void __thiscall QNativeSocketEnginePrivate::nativeClose(void)" (?nativeClose@QNativeSocketEnginePrivate@@QAEXXZ) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__getpeername@12，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::fetchConnectionParameters(void)" (?fetchConnectionParameters@QNativeSocketEnginePrivate@@QAE_NXZ) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__getsockname@12，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::fetchConnectionParameters(void)" (?fetchConnectionParameters@QNativeSocketEnginePrivate@@QAE_NXZ) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__htons@4，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::nativeBind(class QHostAddress const &,unsigned short)" (?nativeBind@QNativeSocketEnginePrivate@@QAE_NABVQHostAddress@@G@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__listen@8，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::nativeListen(int)" (?nativeListen@QNativeSocketEnginePrivate@@QAE_NH@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__select@20，该符号在函数 "public: int __thiscall QNativeSocketEnginePrivate::nativeSelect(int,bool,bool,bool *,bool *)const " (?nativeSelect@QNativeSocketEnginePrivate@@QBEHH_N0PA_N1@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__setsockopt@20，该符号在函数 "bool __cdecl multicastMembershipHelper(class QNativeSocketEnginePrivate *,int,int,class QHostAddress const &,class QNetworkInterface const &)" (?multicastMembershipHelper@@YA_NPAVQNativeSocketEnginePrivate@@HHABVQHostAddress@@ABVQNetworkInterface@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSAAccept@20，该符号在函数 "public: int __thiscall QNativeSocketEnginePrivate::nativeAccept(void)" (?nativeAccept@QNativeSocketEnginePrivate@@QAEHXZ) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSAConnect@28，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::nativeConnect(class QHostAddress const &,unsigned short)" (?nativeConnect@QNativeSocketEnginePrivate@@QAE_NABVQHostAddress@@G@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSAHtonl@12，该符号在函数 "public: __int64 __thiscall QNativeSocketEnginePrivate::nativeSendDatagram(char const *,__int64,class QIpPacketHeader const &)" (?nativeSendDatagram@QNativeSocketEnginePrivate@@QAE_JPBD_JABVQIpPacketHeader@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSAIoctl@36，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::createNewSocket(enum QAbstractSocket::SocketType,enum QAbstractSocket::NetworkLayerProtocol &)" (?createNewSocket@QNativeSocketEnginePrivate@@QAE_NW4SocketType@QAbstractSocket@@AAW4NetworkLayerProtocol@3@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSANtohl@12，该符号在函数 "public: __int64 __thiscall QNativeSocketEnginePrivate::nativeReceiveDatagram(char *,__int64,class QIpPacketHeader *,class QFlags<enum QAbstractSocketEngine::PacketHeaderOption>)" (?nativeReceiveDatagram@QNativeSocketEnginePrivate@@QAE_JPAD_JPAVQIpPacketHeader@@V?$QFlags@W4PacketHeaderOption@QAbstractSocketEngine@@@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSANtohs@12，该符号在函数 "void __cdecl qt_socket_getPortAndAddress(unsigned int,union qt_sockaddr const *,unsigned short *,class QHostAddress *)" (?qt_socket_getPortAndAddress@@YAXIPBTqt_sockaddr@@PAGPAVQHostAddress@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSARecv@28，该符号在函数 "public: __int64 __thiscall QNativeSocketEnginePrivate::nativePendingDatagramSize(void)const " (?nativePendingDatagramSize@QNativeSocketEnginePrivate@@QBE_JXZ) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSARecvFrom@36，该符号在函数 "public: __int64 __thiscall QNativeSocketEnginePrivate::nativeBytesAvailable(void)const " (?nativeBytesAvailable@QNativeSocketEnginePrivate@@QBE_JXZ) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSASend@28，该符号在函数 "public: __int64 __thiscall QNativeSocketEnginePrivate::nativeWrite(char const *,__int64)" (?nativeWrite@QNativeSocketEnginePrivate@@QAE_JPBD_J@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSASendTo@36，该符号在函数 "public: __int64 __thiscall QNativeSocketEnginePrivate::nativeSendDatagram(char const *,__int64,class QIpPacketHeader const &)" (?nativeSendDatagram@QNativeSocketEnginePrivate@@QAE_JPBD_JABVQIpPacketHeader@@@Z) 中被引用
+Qt5Network.lib(qnativesocketengine_win.obj) : error LNK2019: 无法解析的外部符号 __imp__WSASocketW@24，该符号在函数 "public: bool __thiscall QNativeSocketEnginePrivate::createNewSocket(enum QAbstractSocket::SocketType,enum QAbstractSocket::NetworkLayerProtocol &)" (?createNewSocket@QNativeSocketEnginePrivate@@QAE_NW4SocketType@QAbstractSocket@@AAW4NetworkLayerProtocol@3@@Z) 中被引用
+F:\Projects\Git\QGettingStarted\Win32\Release\\QGettingStarted.exe : fatal error LNK1120: 272 个无法解析的外部命令

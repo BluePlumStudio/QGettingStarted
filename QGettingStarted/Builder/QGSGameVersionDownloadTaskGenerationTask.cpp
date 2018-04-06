@@ -5,9 +5,10 @@
 
 QGSGameVersionDownloadTaskGenerationTask::QGSGameVersionDownloadTaskGenerationTask(
 	QGSGameVersionBuilder * gameVersionBuilder,
+	bool fileOverride,
 	QObject * parent)
 
-	:QGSDownloadTaskGenerationTask(parent), mGameVersionBuilderPtr(gameVersionBuilder)
+	:QGSDownloadTaskGenerationTask(parent), mFileOverride(fileOverride), mGameVersionBuilderPtr(gameVersionBuilder)
 {
 	if (!gameVersionBuilder)
 	{
@@ -27,6 +28,18 @@ void QGSGameVersionDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	emit started(this);
 
 	QGSDownloadTask * downloadTask(nullptr);
+
+	if (!mFileOverride)
+	{
+		QSharedPointer<QFile> gameVersionJarFile(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJarFile(mGameVersionBuilderPtr->mVersionInfo));
+		
+		if (gameVersionJarFile->exists())
+		{
+			emit finished(this);
+
+			return;
+		}
+	}
 
 	QGSGameVersion gameVersion;
 	try

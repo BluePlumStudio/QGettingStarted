@@ -1,7 +1,7 @@
 #include <QDebug>
 
 #include "QGSBMCLAPIDownloadSource.h"
-#include "Launcher/QGSGameDirectory.h"
+#include "../Launcher/QGSGameDirectory.h"
 
 QGSBMCLAPIDownloadSource::QGSBMCLAPIDownloadSource(QObject *parent)
 	: QGSIDownloadSource(parent)

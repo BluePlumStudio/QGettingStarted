@@ -2,9 +2,9 @@
 #include <QSharedPointer>
 
 #include "QGSGeneralLauncherStrategy.h"
-#include "Util/QGSExceptionVersionNotFound.h"
-#include "Util/QGSExceptionIO.h"
-#include "Util/QGSFileTools.h"
+#include "../Util/QGSExceptionVersionNotFound.h"
+#include "../Util/QGSExceptionIO.h"
+#include "../Util/QGSFileTools.h"
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeperator();
 

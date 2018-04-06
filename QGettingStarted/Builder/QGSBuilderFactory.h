@@ -2,8 +2,8 @@
 
 #include <QObject>
 
-#include "QGSGameBuilder.h"
-#include "QGSForgeBuilder.h"
+//#include "QGSGameBuilder.h"
+//#include "QGSForgeBuilder.h"
 #include "QGSGameVersionBuilder.h"
 
 class QGSBuilderFactory : public QObject

@@ -1,3 +1,176 @@
-﻿  QGSGameVersionBuilder.cpp
-  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.exe
-  QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Debug\QGettingStarted.pdb (Full PDB)
+﻿  Moc'ing Download\QGSOfficialDownloadSource.h...
+  Moc'ing Download\QGSAssetIndexJsonDownloadTask.h...
+  Moc'ing Download\QGSAssetObjectDownloadTask.h...
+  Moc'ing Download\QGSDownloader.h...
+  Moc'ing Builder\QGSBuilderFactory.h...
+  Moc'ing Builder\QGSDownloadTaskGenerationTask.h...
+  Moc'ing Builder\QGSIBuilder.h...
+  Moc'ing Builder\QGSGameVersionBuilder.h...
+  Moc'ing Download\QGSDownloadTaskFactory.h...
+  Moc'ing Download\QGSDownloadTask.h...
+  Moc'ing Download\QGSForgeDownloadTask.h...
+  Moc'ing Download\QGSGameVersionDownloadTask.h...
+  Moc'ing Download\QGSGameVersionJsonDownloadTask.h...
+  Moc'ing Download\QGSLibraryDownloadTask.h...
+  Moc'ing Download\QGSLiteLoaderDownloadTask.h...
+  Moc'ing Download\QGSOptifineDownloadTask.h...
+  Moc'ing GameVersion\QGSAssetIndexInfoFactory.h...
+  Moc'ing GameVersion\QGSForgeVersionInfoListFactory.h...
+  Moc'ing GameVersion\QGSGameVersionInfoListFactory.h...
+  Moc'ing GameVersion\QGSLiteLoaderVersionInfoListFactory.h...
+  Moc'ing GameVersion\QGSOptifineVersionInfoListFactory.h...
+  Moc'ing Download\QGSIDownloadSource.h...
+  Moc'ing Download\QGSBMCLAPIDownloadSource.h...
+  Moc'ing Launcher\QGSGameDirectory.h...
+  Moc'ing Launcher\QGSLauncher.h...
+  Moc'ing Launcher\VersionPraser\QGSGameVersionPraser.h...
+  Moc'ing LaunchOptions\QGSIAccount.h...
+  Moc'ing LaunchOptions\QGSIAccountFactory.h...
+  Moc'ing LaunchOptions\QGSILaunchOptionsBuilder.h...
+  Moc'ing LaunchOptions\QGSLaunchOptionsBuilder.h...
+  Moc'ing LaunchOptions\QGSOfflineAccount.h...
+  Moc'ing LaunchOptions\QGSOfflineAccountFactory.h...
+  Moc'ing LaunchOptions\QGSYggdrasilAccount.h...
+  Moc'ing LaunchOptions\QGSYggdrasilAccountFactory.h...
+  Moc'ing Util\QGSNetworkAccessManager.h...
+  Moc'ing Util\QGSFileTools.h...
+  Moc'ing Util\QGSOperatingSystem.h...
+  Moc'ing Util\QGSThreadPool.h...
+  Moc'ing Util\QGSTask.h...
+  Moc'ing Util\QGSTaskThread.h...
+  Moc'ing Util\QGSUuidGenerator.h...
+  QGSBuilderFactory.cpp
+  QGSDownloadTaskGenerationTask.cpp
+  QGSGameVersionBuilder.cpp
+  QGSGameVersionDownloadTaskGenerationTask.cpp
+  QGSGameVersionJsonDownloadTaskGenerationTask.cpp
+  QGSIBuilder.cpp
+  QGSAssetIndexJsonDownloadTask.cpp
+  QGSAssetObjectDownloadTask.cpp
+  QGSDownloader.cpp
+  QGSDownloadInfo.cpp
+  QGSDownloadTaskFactory.cpp
+  QGSBMCLAPIDownloadSource.cpp
+  QGSOfficialDownloadSource.cpp
+  QGSDownloadTask.cpp
+  QGSForgeDownloadTask.cpp
+  QGSGameVersionDownloadTask.cpp
+  QGSGameVersionJsonDownloadTask.cpp
+  QGSIDownloadSource.cpp
+  QGSLibraryDownloadTask.cpp
+  QGSLiteLoaderDownloadTask.cpp
+  QGSOptifineDownloadTask.cpp
+  QGSArguments.cpp
+  QGSAssetIndexInfo.cpp
+  QGSAssetIndex.cpp
+  QGSAssetIndexInfoFactory.cpp
+  QGSAssetObject.cpp
+  QGSDownloads.cpp
+  QGSExtract.cpp
+  QGSForgeVersionInfo.cpp
+  QGSForgeVersionInfoList.cpp
+  QGSForgeVersionInfoListFactory.cpp
+  QGSGameVersion.cpp
+  QGSGameVersionInfo.cpp
+  QGSGameVersionInfoList.cpp
+  QGSGameVersionInfoListFactory.cpp
+  QGSLibrary.cpp
+  QGSLiteLoaderVersionInfo.cpp
+  QGSLiteLoaderVersionInfoList.cpp
+  QGSLiteLoaderVersionInfoListFactory.cpp
+  QGSLiteLoaderVersionMeta.cpp
+  QGSLiteLoaderVersionReposity.cpp
+  QGSLogging.cpp
+  QGSOptifineVersionInfo.cpp
+  QGSOptifineVersionInfoList.cpp
+  QGSOptifineVersionInfoListFactory.cpp
+  QGSRules.cpp
+  QGSGeneralLauncherStrategy.cpp
+  QGSGameDirectory.cpp
+  QGSILauncherStrategy.cpp
+  QGSLauncher.cpp
+  QGSGeneralGameVersionPraseStrategy.cpp
+  QGSIGameVersionPraseStrategy.cpp
+  QGSGameVersionPraser.cpp
+  QGSAuthInfo.cpp
+  QGSIAccount.cpp
+  QGSIAccountFactory.cpp
+  QGSLaunchOptions.cpp
+  QGSILaunchOptionsBuilder.cpp
+  QGSLaunchOptionsBuilder.cpp
+  QGSOfflineAccount.cpp
+  QGSOfflineAccountFactory.cpp
+  QGSYggdrasilAccount.cpp
+  QGSYggdrasilAccountFactory.cpp
+  main.cpp
+  QGSException.cpp
+  QGSExceptionAuthentication.cpp
+  QGSExceptionCompress.cpp
+  QGSExceptionIO.cpp
+  QGSExceptionInvalidValue.cpp
+  QGSExceptionJsonPraseError.cpp
+  QGSExceptionVersionNotFound.cpp
+  QGSFileTools.cpp
+  QGSNetworkAccessManager.cpp
+  QGSOperatingSystem.cpp
+  QGSTask.cpp
+  QGSTaskThread.cpp
+  QGSThreadPool.cpp
+  QGSUuidGenerator.cpp
+  inffas86.c
+  ioapi.c
+  iowin32.c
+  mztools.c
+  unzip.c
+  zip.c
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(807): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(898): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(899): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(929): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(952): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(958): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(979): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(1087): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+f:\projects\git\qgettingstarted\qgettingstarted\util\zlib\inffas86.c(1118): warning C4731: “inflate_fast”: 框架指针寄存器“ebp”被内联程序集代码修改
+  moc_QGSOfficialDownloadSource.cpp
+  moc_QGSAssetIndexJsonDownloadTask.cpp
+  moc_QGSAssetObjectDownloadTask.cpp
+  moc_QGSDownloader.cpp
+  moc_QGSBuilderFactory.cpp
+  moc_QGSDownloadTaskGenerationTask.cpp
+  moc_QGSIBuilder.cpp
+  moc_QGSGameVersionBuilder.cpp
+  moc_QGSDownloadTaskFactory.cpp
+  moc_QGSDownloadTask.cpp
+  moc_QGSForgeDownloadTask.cpp
+  moc_QGSGameVersionDownloadTask.cpp
+  moc_QGSGameVersionJsonDownloadTask.cpp
+  moc_QGSLibraryDownloadTask.cpp
+  moc_QGSLiteLoaderDownloadTask.cpp
+  moc_QGSOptifineDownloadTask.cpp
+  moc_QGSAssetIndexInfoFactory.cpp
+  moc_QGSForgeVersionInfoListFactory.cpp
+  moc_QGSGameVersionInfoListFactory.cpp
+  moc_QGSLiteLoaderVersionInfoListFactory.cpp
+  moc_QGSOptifineVersionInfoListFactory.cpp
+  moc_QGSIDownloadSource.cpp
+  moc_QGSBMCLAPIDownloadSource.cpp
+  moc_QGSGameDirectory.cpp
+  moc_QGSLauncher.cpp
+  moc_QGSGameVersionPraser.cpp
+  moc_QGSIAccount.cpp
+  moc_QGSIAccountFactory.cpp
+  moc_QGSILaunchOptionsBuilder.cpp
+  moc_QGSLaunchOptionsBuilder.cpp
+  moc_QGSOfflineAccount.cpp
+  moc_QGSOfflineAccountFactory.cpp
+  moc_QGSYggdrasilAccount.cpp
+  moc_QGSYggdrasilAccountFactory.cpp
+  moc_QGSNetworkAccessManager.cpp
+  moc_QGSFileTools.cpp
+  moc_QGSOperatingSystem.cpp
+  moc_QGSThreadPool.cpp
+  moc_QGSTask.cpp
+  moc_QGSTaskThread.cpp
+  moc_QGSUuidGenerator.cpp
+LINK : fatal error LNK1104: 无法打开文件“qtmaind.lib”

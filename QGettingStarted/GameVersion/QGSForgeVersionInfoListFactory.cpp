@@ -1,8 +1,8 @@
 #include "QGSForgeVersionInfoListFactory.h"
-#include "Util/QGSExceptionVersionNotFound.h"
-#include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionIO.h"
-#include "Util/QGSExceptionJsonPraseError.h"
+#include "../Util/QGSExceptionVersionNotFound.h"
+#include "../Util/QGSExceptionInvalidValue.h"
+#include "../Util/QGSExceptionIO.h"
+#include "../Util/QGSExceptionJsonPraseError.h"
 
 QGSForgeVersionInfoListFactory::QGSForgeVersionInfoListFactory(QObject * parent) :QObject(parent)
 {

@@ -1,5 +1,5 @@
 #include "QGSLiteLoaderVersionInfoList.h"
-#include "Util/QGSExceptionVersionNotFound.h"
+#include "../Util/QGSExceptionVersionNotFound.h"
 
 QGSLiteLoaderVersionInfoList::QGSLiteLoaderVersionInfoList()
 {

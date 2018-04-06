@@ -6,8 +6,8 @@
 #include <QTimer>
 
 #include "QGSYggdrasilAccount.h"
-#include "Util/QGSUuidGenerator.h"
-#include "Util/QGSExceptionAuthentication.h"
+#include "../Util/QGSUuidGenerator.h"
+#include "../Util/QGSExceptionAuthentication.h"
 
 static const QString AuthServerUrl("https://authserver.mojang.com/authenticate");
 

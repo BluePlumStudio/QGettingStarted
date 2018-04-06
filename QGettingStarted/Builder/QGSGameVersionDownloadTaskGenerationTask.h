@@ -5,7 +5,7 @@
 class QGSGameVersionDownloadTaskGenerationTask :public QGSDownloadTaskGenerationTask
 {
 public:
-	QGSGameVersionDownloadTaskGenerationTask(QGSGameVersionBuilder * gameVersionBuilder, QObject * parent = nullptr);
+	QGSGameVersionDownloadTaskGenerationTask(QGSGameVersionBuilder * gameVersionBuilder, bool fileOverride = false, QObject * parent = nullptr);
 
 	QGSGameVersionDownloadTaskGenerationTask(const QGSGameVersionDownloadTaskGenerationTask & right) = delete;
 
@@ -23,4 +23,5 @@ protected:
 	virtual void templateCancel(QGSTask * task);
 private:
 	QGSGameVersionBuilder * mGameVersionBuilderPtr;
+	bool mFileOverride;
 };

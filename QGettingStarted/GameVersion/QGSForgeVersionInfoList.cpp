@@ -5,10 +5,10 @@
 #include <QJsonObject>
 #include <algorithm>
 
-#include "Util/QGSExceptionVersionNotFound.h"
-#include "Util/QGSExceptionInvalidValue.h"
-#include "Util/QGSExceptionIO.h"
-#include "Util/QGSExceptionJsonPraseError.h"
+#include "../Util/QGSExceptionVersionNotFound.h"
+#include "../Util/QGSExceptionInvalidValue.h"
+#include "../Util/QGSExceptionIO.h"
+#include "../Util/QGSExceptionJsonPraseError.h"
 #include "QGSForgeVersionInfoList.h"
 
 QGSForgeVersionInfoList::QGSForgeVersionInfoList()

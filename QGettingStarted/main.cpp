@@ -486,48 +486,48 @@ void gameVersionBuilderTest()
 	static QGSGameDirectory gameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft"));
 	QGSBuilderFactory * builderFactory(new QGSBuilderFactory);
 	QGSGameVersionBuilder * gameVersionBuilder = new QGSGameVersionBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::started, [=]()
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::started, [=]()
 	{
 		qDebug() << "gameVersionBuilder started!";
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskStarted, [=](QGSDownloadTask * task)
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskStarted, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " started!";
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " finished!" << gameVersionBuilder->getTaskListSize() << "left!";
 		task->deleteLater();
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " stoped!";
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " canceled!";
 		task->deleteLater();
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadTask * task)
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " download error!" << gameVersionBuilder->getTaskListSize() << "left!" << "Error code:" << error.getCode();
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::downloadTaskError, [=](QGSDownloadTask * task)
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskError, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " error!" << gameVersionBuilder->getTaskListSize() << "left!";
 		task->deleteLater();
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::error, [=]()
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::error, [=]()
 	{
 		qDebug() << "gameVersionBuilder error!";
 		qDebug() << "gameVersionBuilder error!";
 		qDebug() << "gameVersionBuilder error!";
 	});
-	QObject::connect(gameVersionBuilder, &QGSGameBuilder::finished, [=]()
+	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::finished, [=]()
 	{
 		qDebug() << "gameVersionBuilder finished!";
 		qDebug() << "gameVersionBuilder finished!";

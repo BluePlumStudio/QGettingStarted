@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include "QGSAuthInfo.h"
-#include "Util/QGSNetworkAccessManager.h"
+#include "../Util/QGSNetworkAccessManager.h"
 
 class QGSIAccount :public QObject
 {
