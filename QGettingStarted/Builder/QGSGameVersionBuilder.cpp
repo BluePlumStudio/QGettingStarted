@@ -66,7 +66,7 @@ void QGSGameVersionBuilder::templateStart(QGSTask * task)
 	{
 		for (auto & task : mTaskList)
 		{
-			task->start();
+			QMetaObject::invokeMethod(task, "start", Qt::ConnectionType::QueuedConnection);
 		}
 	}
 	else
@@ -81,12 +81,9 @@ void QGSGameVersionBuilder::templateStop(QGSTask * task)
 
 	QMutexLocker mutexLocker(&mMutex);
 
-	if (mTaskList.size())
+	for (auto & task : mTaskList)
 	{
-		for (auto & task : mTaskList)
-		{
-			task->stop();
-		}
+		QMetaObject::invokeMethod(task, "stop", Qt::ConnectionType::DirectConnection);
 	}
 }
 
@@ -96,12 +93,9 @@ void QGSGameVersionBuilder::templateCancel(QGSTask * task)
 
 	QMutexLocker mutexLocker(&mMutex);
 
-	if (mTaskList.size())
+	for (auto & task : mTaskList)
 	{
-		for (auto & task : mTaskList)
-		{
-			task->cancel();
-		}
+		QMetaObject::invokeMethod(task, "cancel", Qt::ConnectionType::DirectConnection);
 	}
 }
 
@@ -126,7 +120,13 @@ void QGSGameVersionBuilder::slotDownloadTaskStoped(QGSTask * task)
 
 void QGSGameVersionBuilder::slotDownloadTaskCanceled(QGSTask * task)
 {
+	qDebug() << "QGSGameVersionBuilder:Task canceled!";
+
+	slotEraseTask(task);
+
 	emit downloadTaskCanceled(dynamic_cast<QGSDownloadTask *>(task));
+
+	slotFinished();
 }
 
 void QGSGameVersionBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)

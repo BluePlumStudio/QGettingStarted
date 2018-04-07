@@ -24,8 +24,6 @@ QGSAssetBuilder::QGSAssetBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirect
 
 QGSAssetBuilder::~QGSAssetBuilder()
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	for (auto & task : mTaskList)
 	{
 		task->cancel();
@@ -66,7 +64,7 @@ void QGSAssetBuilder::templateStart(QGSTask * task)
 	{
 		for (auto & task : mTaskList)
 		{
-			task->start();
+			QMetaObject::invokeMethod(task, "start", Qt::ConnectionType::QueuedConnection);
 		}
 	}
 	else
@@ -81,12 +79,9 @@ void QGSAssetBuilder::templateStop(QGSTask * task)
 
 	QMutexLocker mutexLocker(&mMutex);
 
-	if (mTaskList.size())
+	for (auto & task : mTaskList)
 	{
-		for (auto & task : mTaskList)
-		{
-			task->stop();
-		}
+		QMetaObject::invokeMethod(task, "stop", Qt::ConnectionType::DirectConnection);
 	}
 }
 
@@ -96,12 +91,9 @@ void QGSAssetBuilder::templateCancel(QGSTask * task)
 
 	QMutexLocker mutexLocker(&mMutex);
 
-	if (mTaskList.size())
+	for (auto & task : mTaskList)
 	{
-		for (auto & task : mTaskList)
-		{
-			task->cancel();
-		}
+		QMetaObject::invokeMethod(task, "cancel", Qt::ConnectionType::DirectConnection);
 	}
 }
 
@@ -126,7 +118,11 @@ void QGSAssetBuilder::slotDownloadTaskStoped(QGSTask * task)
 
 void QGSAssetBuilder::slotDownloadTaskCanceled(QGSTask * task)
 {
+	slotEraseTask(task);
+
 	emit downloadTaskCanceled(dynamic_cast<QGSDownloadTask *>(task));
+
+	slotFinished();
 }
 
 void QGSAssetBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)

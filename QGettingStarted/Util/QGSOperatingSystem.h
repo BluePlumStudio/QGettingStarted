@@ -11,6 +11,21 @@ namespace OS
 	const QString UNKNOWN("unknown");
 }
 
+namespace CpuArchitecture
+{
+	const QString ARM("arm");
+	const QString ARM64("arm64");
+	const QString I386("i386");
+	const QString IA64("ia64");
+	const QString MIPS("mips");
+	const QString MIPS64("mips64");
+	const QString POWER("power");
+	const QString POWER64("power64");
+	const QString SPARC("sparc");
+	const QString SPARCV9("sparcv9");
+	const QString X86_64("x86_64");
+}
+
 class QGSOperatingSystem :public QObject
 {
 	Q_OBJECT

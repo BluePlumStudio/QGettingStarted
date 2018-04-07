@@ -17,7 +17,7 @@
  * Natives解压
  * 网络代理
  * 启动报告（开发中）
- * Java信息查找（开发中）
+ * Java信息查找（Windows Only）
 
 # 编译
 Visual Studio 2015/Qt 5.10.0 下编译通过。

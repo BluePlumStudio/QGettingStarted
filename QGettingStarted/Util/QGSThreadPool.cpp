@@ -1,4 +1,5 @@
 #include <iostream>
+#include <QCoreApplication> 
 
 #include "QGSThreadPool.h"
 
@@ -28,10 +29,10 @@ QGSThreadPool::QGSThreadPool(const int minThreadCount, const int maxThreadCount,
 
 QGSThreadPool::~QGSThreadPool()
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	for (auto & thread : mThreadList)
 	{
+		thread->exit(0);
+		thread->wait();
 		thread->deleteLater();
 	}
 }
@@ -41,6 +42,7 @@ QGSThreadPool & QGSThreadPool::getGlobalInstance()
 	static QGSThreadPool instance(0, QGSTaskThread::idealThreadCount());
 	if (!instance.isRunning())
 	{
+		QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, &instance, &QGSThreadPool::quit);
 		instance.start();
 	}
 	return instance;

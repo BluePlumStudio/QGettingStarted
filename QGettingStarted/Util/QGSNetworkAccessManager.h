@@ -18,9 +18,9 @@ namespace Network
 class QGSNetworkError
 {
 public:
-	QGSNetworkError(const QNetworkReply::NetworkError code = QNetworkReply::NetworkError::NoError, const QString & message = "");
+	QGSNetworkError(const QNetworkReply::NetworkError code = QNetworkReply::NetworkError::NoError, const QString & errorString = "");
 
-	QGSNetworkError(const QGSNetworkError & right);
+	QGSNetworkError(const QGSNetworkError & right) = default;
 
 	QGSNetworkError(QGSNetworkError && right) = default;
 
@@ -32,11 +32,11 @@ public:
 
 	QNetworkReply::NetworkError getCode()const;
 
-	QString getMessage()const;
+	QString getErrorString()const;
 
 private:
 	QNetworkReply::NetworkError mCode;
-	QString mMessage;
+	QString mErrorString;
 };
 
 Q_DECLARE_METATYPE(QGSNetworkError)

@@ -3,10 +3,10 @@
 #include <QTextStream>
 
 #include "QGSGameDirectory.h"
+#include "QGSGameVersionPraser.h"
 #include "../Util/QGSExceptionVersionNotFound.h"
 #include "../Util/QGSExceptionIO.h"
 #include "../Util/QGSExceptionJsonPraseError.h"
-#include "VersionPraser/QGSGameVersionPraser.h"
 #include "../GameVersion/QGSLibrary.h"
 #include "../GameVersion/QGSAssetIndexInfoFactory.h"
 

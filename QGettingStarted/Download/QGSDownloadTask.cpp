@@ -122,99 +122,104 @@ void QGSDownloadTask::setSmallFileSize(const quint64 bytes)
 
 void QGSDownloadTask::templateStart(QGSTask * task)
 {
-	if (mState == DownloadState::Start)
+	if (mState != DownloadState::Start)
 	{
-		emit error(this);
-		return;
-	}
+		mState = DownloadState::Start;
 
-	auto && url(mDownloadInfo.getUrl());
-	if (!url.isValid()
-		|| url.isEmpty()
-		|| url.isLocalFile())
-	{
-		emit error(this);
-		return;
-	}
-
-	mDownloadInfo.setPath(mTargetFilePtr->fileName());
-	mDownloadInfo.setUrl(url);
-
-	mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".qtmp");
-	if (!mTargetFilePtr->isOpen())
-	{
-		QFileInfo(*mTargetFilePtr).absoluteDir().mkpath("." + SEPARATOR);
-		if (!mTargetFilePtr->open(QIODevice::WriteOnly | QIODevice::Truncate))
+		auto && url(mDownloadInfo.getUrl());
+		if (!url.isValid()
+			|| url.isEmpty()
+			|| url.isLocalFile())
 		{
 			emit error(this);
 			return;
 		}
-	}
 
-	if (!mNetworkAccessManagerPtr)
-	{
-		mNetworkAccessManagerPtr = new QGSNetworkAccessManager;
-	}
+		mDownloadInfo.setPath(mTargetFilePtr->fileName());
+		mDownloadInfo.setUrl(url);
 
-	if (mDownloaderList.size())
-	{
-		for (auto & downloader : mDownloaderList)
+		mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".qtmp");
+		if (!mTargetFilePtr->isOpen())
 		{
-			QObject::connect(downloader, &QGSDownloader::finished, this, &QGSDownloadTask::slotFinished);
-			QObject::connect(downloader, &QGSDownloader::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
-			QObject::connect(downloader, &QGSDownloader::downloadError, this, &QGSDownloadTask::slotDownloadError);
-			QObject::connect(downloader, &QGSDownloader::sslErrors, this, &QGSDownloadTask::slotSslErrors);
-			QObject::connect(downloader, &QGSDownloader::redirected, this, &QGSDownloadTask::slotRedirected);
-
-			QMetaObject::invokeMethod(downloader, "start", Qt::ConnectionType::DirectConnection);
-		}
-	}
-	else
-	{
-		mBytesTotal = getFileSize();
-		if (mConnectionCount > mBytesTotal)
-		{
-			mConnectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
+			QFileInfo(*mTargetFilePtr).absoluteDir().mkpath("." + SEPARATOR);
+			if (!mTargetFilePtr->open(QIODevice::WriteOnly | QIODevice::Truncate))
+			{
+				emit error(this);
+				return;
+			}
 		}
 
-		if (mBytesTotal <= mSmallFileSize)
+		if (!mNetworkAccessManagerPtr)
 		{
-			mConnectionCount = 1;
+			mNetworkAccessManagerPtr = new QGSNetworkAccessManager;
 		}
-		
-		//qDebug() << url << "Connection count:" << mConnectionCount;
-		for (int i = 0; i < mConnectionCount; i++)
+
+		if (mDownloaderList.size())
 		{
-			qint64 bytesBegin(mBytesTotal*i / mConnectionCount);
-			qint64 bytesEnd(mBytesTotal*(i + 1) / mConnectionCount);
+			for (auto & downloader : mDownloaderList)
+			{
+				QObject::connect(downloader, &QGSDownloader::finished, this, &QGSDownloadTask::slotFinished);
+				QObject::connect(downloader, &QGSDownloader::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
+				QObject::connect(downloader, &QGSDownloader::downloadError, this, &QGSDownloadTask::slotDownloadError);
+				QObject::connect(downloader, &QGSDownloader::sslErrors, this, &QGSDownloadTask::slotSslErrors);
+				QObject::connect(downloader, &QGSDownloader::redirected, this, &QGSDownloadTask::slotRedirected);
 
-			auto * newDownloader(new QGSDownloader(mTargetFilePtr,mDownloadInfo,mNetworkAccessManagerPtr,bytesBegin,bytesEnd,mProxy));
+				QMetaObject::invokeMethod(downloader, "start", Qt::ConnectionType::DirectConnection);
+			}
+		}
+		else
+		{
+			mBytesTotal = getFileSize();
+			if (mConnectionCount > mBytesTotal)
+			{
+				mConnectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
+			}
 
-			QObject::connect(newDownloader, &QGSDownloader::finished, this, &QGSDownloadTask::slotFinished);
-			QObject::connect(newDownloader, &QGSDownloader::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
-			QObject::connect(newDownloader, &QGSDownloader::downloadError, this, &QGSDownloadTask::slotDownloadError);
-			QObject::connect(newDownloader, &QGSDownloader::sslErrors, this, &QGSDownloadTask::slotSslErrors);
-			QObject::connect(newDownloader, &QGSDownloader::redirected, this, &QGSDownloadTask::slotRedirected);
+			if (mBytesTotal <= mSmallFileSize)
+			{
+				mConnectionCount = 1;
+			}
 
-			mDownloaderList.push_back(newDownloader);
+			//qDebug() << url << "Connection count:" << mConnectionCount;
+			for (int i = 0; i < mConnectionCount; i++)
+			{
+				qint64 bytesBegin(mBytesTotal*i / mConnectionCount);
+				qint64 bytesEnd(mBytesTotal*(i + 1) / mConnectionCount);
 
-			QMetaObject::invokeMethod(newDownloader, "start", Qt::ConnectionType::DirectConnection);
-			//newDownloader->start();
+				auto * newDownloader(new QGSDownloader(mTargetFilePtr, mDownloadInfo, mNetworkAccessManagerPtr, bytesBegin, bytesEnd, mProxy));
+
+				QObject::connect(newDownloader, &QGSDownloader::finished, this, &QGSDownloadTask::slotFinished);
+				QObject::connect(newDownloader, &QGSDownloader::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
+				QObject::connect(newDownloader, &QGSDownloader::downloadError, this, &QGSDownloadTask::slotDownloadError);
+				QObject::connect(newDownloader, &QGSDownloader::sslErrors, this, &QGSDownloadTask::slotSslErrors);
+				QObject::connect(newDownloader, &QGSDownloader::redirected, this, &QGSDownloadTask::slotRedirected);
+
+				mDownloaderList.push_back(newDownloader);
+
+				QMetaObject::invokeMethod(newDownloader, "start", Qt::ConnectionType::DirectConnection);
+			}
 		}
 	}
-	mState = DownloadState::Start;
 
 	emit started(this);
 }
 
 void QGSDownloadTask::templateStop(QGSTask * task)
 {
-	mState = DownloadState::Stop;
-
-	for (auto & downloader : mDownloaderList)
+	if (mState != DownloadState::Stop)
 	{
-		QMetaObject::invokeMethod(downloader, "stop", Qt::ConnectionType::DirectConnection);
-		downloader->disconnect();
+		mState = DownloadState::Stop;
+
+		for (auto & downloader : mDownloaderList)
+		{
+			QMetaObject::invokeMethod(downloader, "stop", Qt::ConnectionType::DirectConnection);
+			downloader->disconnect();
+		}
+
+		if (mTargetFilePtr->isOpen())
+		{
+			mTargetFilePtr->close();
+		}
 	}
 
 	emit stoped(this);
@@ -224,9 +229,9 @@ void QGSDownloadTask::templateCancel(QGSTask * task)
 {
 	mState = DownloadState::Stop;
 
-	cancelTask();
-
 	emit canceled(this);
+
+	cancelTask();
 }
 
 void QGSDownloadTask::downloadTemplateFinished()
@@ -270,7 +275,10 @@ void QGSDownloadTask::slotFinished(QGSDownloader * downloader)
 
 	downloadTemplateFinished();
 
-	mTargetFilePtr->close();
+	if (mTargetFilePtr->isOpen())
+	{
+		mTargetFilePtr->close();
+	}
 	mTargetFilePtr->remove(mDownloadInfo.getPath());
 	mTargetFilePtr->rename(mDownloadInfo.getPath());
 	if (!mDownloadInfo.getSHA1().isEmpty())
@@ -378,7 +386,10 @@ void QGSDownloadTask::cancelTask()
 		mDownloaderList.erase(it);
 	}
 
-	mTargetFilePtr->close();
+	if (mTargetFilePtr->isOpen())
+	{
+		mTargetFilePtr->close();
+	}
 	mBytesReceived = 0;
 	mTargetFilePtr->remove();
 

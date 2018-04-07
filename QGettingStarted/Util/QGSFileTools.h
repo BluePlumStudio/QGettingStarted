@@ -34,6 +34,8 @@ public:
 	static QStringList extractDirectory(const QString & file, const QString & directory, const QString & password = QString());
 
 	static bool removeDirectory(const QString & absolutPath);
+
+	static QMap<QString, QString> getJavaPathListFromSystemSettings();
 private:
 	QGSFileTools(QObject * parent = nullptr);
 };

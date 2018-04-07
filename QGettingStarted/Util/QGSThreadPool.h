@@ -45,14 +45,13 @@ public:
 
 	int getThreadListSize();
 
-	//void releaseThreads();
+signals:
+	void taskStarted(QGSTask * task);
+	void taskFinished(QGSTask* task);
 private:
 	virtual void run();
 	void init();
 	void adjust();
-signals:
-	void taskStarted(QGSTask * task);
-	void taskFinished(QGSTask* task);
 private:
 	//QWaitCondition mTaskQueueStartCondition;
 	QWaitCondition mTaskThreadsNotActiveCondition;

@@ -46,13 +46,26 @@ bool QGSAuthInfo::QGSProfile::isLegacy()const
 
 /**/
 
-QGSAuthInfo::QGSAuthInfo(const QString & accessToken, const QString & clientToken, const QString & userType, const QGSProfile & selectedProfile, const QString & twitchAccessToken)
-	:mAccessToken(accessToken), mClientToken(clientToken), mUserType(userType), mSelectedProfile(selectedProfile), mTwitchAccessToken(twitchAccessToken)
+QGSAuthInfo::QGSAuthInfo(const QString & accessToken, 
+	const QString & clientToken, 
+	const QString & userType, 
+	const QGSProfile & selectedProfile, 
+	const QList<QGSProfile> & availableProfiles,
+	const QString & twitchAccessToken)
+
+	:mAccessToken(accessToken), 
+	mClientToken(clientToken), 
+	mUserType(userType), 
+	mSelectedProfile(selectedProfile), 
+	mAvailableProfileList(availableProfiles),
+	mTwitchAccessToken(twitchAccessToken)
 {
+
 }
 
 QGSAuthInfo::~QGSAuthInfo()
 {
+
 }
 
 QGSAuthInfo & QGSAuthInfo::setAccessToken(const QString & accessToken)
@@ -76,6 +89,18 @@ QGSAuthInfo & QGSAuthInfo::setUserType(const QString & userType)
 QGSAuthInfo & QGSAuthInfo::setSelectedProfile(const QGSProfile & selectedProfile)
 {
 	mSelectedProfile = selectedProfile;
+	return *this;
+}
+
+QGSAuthInfo & QGSAuthInfo::setAvailableProfileList(const QList<QGSProfile> & availableProfiles)
+{
+	mAvailableProfileList = availableProfiles;
+	return *this;
+}
+
+QGSAuthInfo & QGSAuthInfo::addAvailableProfileList(const QGSProfile & profile)
+{
+	mAvailableProfileList.push_back(profile);
 	return *this;
 }
 
@@ -103,6 +128,21 @@ QString QGSAuthInfo::getUserType() const
 QGSAuthInfo::QGSProfile QGSAuthInfo::getSelectedProfile()const
 {
 	return mSelectedProfile;
+}
+
+QList<QGSAuthInfo::QGSProfile> QGSAuthInfo::getAvailableProfileList() const
+{
+	return mAvailableProfileList;
+}
+
+int QGSAuthInfo::getAvailableProfileListSize() const
+{
+	return mAvailableProfileList.size();
+}
+
+QGSAuthInfo::QGSProfile QGSAuthInfo::getAvailableProfile(const int index) const
+{
+	return mAvailableProfileList[index];
 }
 
 QString QGSAuthInfo::getTwitchAccessToken()const

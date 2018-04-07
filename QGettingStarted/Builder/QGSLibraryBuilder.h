@@ -27,7 +27,7 @@ public:
 	QGSLibraryBuilder & setFileOverride(const bool fileOverride);
 
 	int getTaskListSize();
-protected:
+protected slots:
 	virtual void templateStart(QGSTask * task);
 	virtual void templateStop(QGSTask * task);
 	virtual void templateCancel(QGSTask * task);

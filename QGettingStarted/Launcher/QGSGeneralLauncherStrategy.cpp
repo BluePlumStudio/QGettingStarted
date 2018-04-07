@@ -250,7 +250,7 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 		.replace("${user_type}", customMinecraftArguments.contains("${user_type}") ? customMinecraftArguments.value("${user_type}") : userType)
 		.replace("${version_type}", customMinecraftArguments.contains("${version_type}") ? customMinecraftArguments.value("${version_type}") : "\"QGettingStarted\"")
 		.replace("${user_properties}", customMinecraftArguments.contains("${user_properties}") ? customMinecraftArguments.value("${user_properties}") : authInfo.getTwitchAccessToken())
-		.replace("${auth_session}", customMinecraftArguments.contains("${auth_session}") ? customMinecraftArguments.value("${auth_session}") : authInfo.getAccessToken())
+		.replace("${auth_session}", customMinecraftArguments.contains("${auth_session}") ? customMinecraftArguments.value("${auth_session}") : authAccessToken)
 		.replace("${game_assets}", customMinecraftArguments.contains("${game_assets}") ? customMinecraftArguments.value("${game_assets}") : QString("\"%1\"").arg(assetsDirAbsolutePath))
 		.replace("${profile_name}", customMinecraftArguments.contains("${profile_name}") ? customMinecraftArguments.value("${profile_name}") : "QGettingStarted");
 	launchCommandList.append(minecraftArguments);

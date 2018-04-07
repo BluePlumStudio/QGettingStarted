@@ -3,15 +3,10 @@
 
 #include "QGSNetworkAccessManager.h"
 
-QGSNetworkError::QGSNetworkError(const QNetworkReply::NetworkError code, const QString & message)
-	:mCode(code), mMessage(message)
+QGSNetworkError::QGSNetworkError(const QNetworkReply::NetworkError code, const QString & errorString)
+	:mCode(code), mErrorString(errorString)
 {
 	qRegisterMetaType<QGSNetworkError>("QGSNetworkError");
-}
-
-QGSNetworkError::QGSNetworkError(const QGSNetworkError & right)
-{
-
 }
 
 QGSNetworkError::~QGSNetworkError()
@@ -24,9 +19,9 @@ QNetworkReply::NetworkError QGSNetworkError::getCode()const
 	return mCode;
 }
 
-QString QGSNetworkError::getMessage()const
+QString QGSNetworkError::getErrorString()const
 {
-	return mMessage;
+	return mErrorString;
 }
 
 /**/

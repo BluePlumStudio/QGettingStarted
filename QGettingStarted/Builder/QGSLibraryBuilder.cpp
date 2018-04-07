@@ -24,8 +24,6 @@ QGSLibraryBuilder::QGSLibraryBuilder(QGSGameVersionInfo & versionInfo, QGSGameDi
 
 QGSLibraryBuilder::~QGSLibraryBuilder()
 {
-	QMutexLocker mutexLocker(&mMutex);
-
 	for (auto & task : mTaskList)
 	{
 		task->cancel();
@@ -66,7 +64,7 @@ void QGSLibraryBuilder::templateStart(QGSTask * task)
 	{
 		for (auto & task : mTaskList)
 		{
-			task->start();
+			QMetaObject::invokeMethod(task, "start", Qt::ConnectionType::QueuedConnection);
 		}
 	}
 	else
@@ -81,12 +79,9 @@ void QGSLibraryBuilder::templateStop(QGSTask * task)
 
 	QMutexLocker mutexLocker(&mMutex);
 
-	if (mTaskList.size())
+	for (auto & task : mTaskList)
 	{
-		for (auto & task : mTaskList)
-		{
-			task->stop();
-		}
+		QMetaObject::invokeMethod(task, "stop", Qt::ConnectionType::DirectConnection);
 	}
 }
 
@@ -96,12 +91,9 @@ void QGSLibraryBuilder::templateCancel(QGSTask * task)
 
 	QMutexLocker mutexLocker(&mMutex);
 
-	if (mTaskList.size())
+	for (auto & task : mTaskList)
 	{
-		for (auto & task : mTaskList)
-		{
-			task->cancel();
-		}
+		QMetaObject::invokeMethod(task, "cancel", Qt::ConnectionType::DirectConnection);
 	}
 }
 
@@ -126,7 +118,11 @@ void QGSLibraryBuilder::slotDownloadTaskStoped(QGSTask * task)
 
 void QGSLibraryBuilder::slotDownloadTaskCanceled(QGSTask * task)
 {
+	slotEraseTask(task);
+
 	emit downloadTaskCanceled(dynamic_cast<QGSDownloadTask *>(task));
+
+	slotFinished();
 }
 
 void QGSLibraryBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)

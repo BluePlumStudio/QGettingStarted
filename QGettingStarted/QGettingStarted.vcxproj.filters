@@ -29,9 +29,6 @@
     <Filter Include="Download\DownloadSource">
       <UniqueIdentifier>{666451e4-6ca4-4954-91b0-ce1b3cf792e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Launcher\GameVersionPraser">
-      <UniqueIdentifier>{092b7a6a-2a38-4b9b-9766-6b9322faac03}</UniqueIdentifier>
-    </Filter>
     <Filter Include="LaunchOptions\Account">
       <UniqueIdentifier>{21519a5b-2253-4fbe-aeaa-7e174b4b0292}</UniqueIdentifier>
     </Filter>
@@ -102,12 +99,6 @@
     <ClCompile Include="Download\QGSIDownloadSource.cpp">
       <Filter>Download\DownloadSource</Filter>
     </ClCompile>
-    <ClCompile Include="Launcher\VersionPraser\QGSIGameVersionPraseStrategy.cpp">
-      <Filter>Launcher\GameVersionPraser</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\VersionPraser\QGSGeneralGameVersionPraseStrategy.cpp">
-      <Filter>Launcher\GameVersionPraser</Filter>
-    </ClCompile>
     <ClCompile Include="LaunchOptions\QGSIAccount.cpp">
       <Filter>LaunchOptions\Account</Filter>
     </ClCompile>
@@ -146,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp">
       <Filter>Util\Exception</Filter>
-    </ClCompile>
-    <ClCompile Include="Launcher\VersionPraser\QGSGameVersionPraser.cpp">
-      <Filter>Launcher</Filter>
     </ClCompile>
     <ClCompile Include="LaunchOptions\QGSYggdrasilAccountFactory.cpp">
       <Filter>LaunchOptions</Filter>
@@ -333,6 +321,15 @@
     <ClCompile Include="Builder\QGSAssetObjectDownloadTaskGenerationTask.cpp">
       <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </ClCompile>
+    <ClCompile Include="Launcher\QGSGameVersionPraser.cpp">
+      <Filter>Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\QGSGeneralGameVersionPraseStrategy.cpp">
+      <Filter>Launcher</Filter>
+    </ClCompile>
+    <ClCompile Include="Launcher\QGSIGameVersionPraseStrategy.cpp">
+      <Filter>Launcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h">
@@ -344,9 +341,6 @@
     </ClInclude>
     <ClInclude Include="Launcher\QGSGeneralLauncherStrategy.h">
       <Filter>Launcher</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\VersionPraser\QGSGeneralGameVersionPraseStrategy.h">
-      <Filter>Launcher\GameVersionPraser</Filter>
     </ClInclude>
     <ClInclude Include="Util\QGSException.h">
       <Filter>Util\Exception</Filter>
@@ -362,9 +356,6 @@
     </ClInclude>
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h">
       <Filter>Util\Exception</Filter>
-    </ClInclude>
-    <ClInclude Include="Launcher\VersionPraser\QGSIGameVersionPraseStrategy.h">
-      <Filter>Launcher\GameVersionPraser</Filter>
     </ClInclude>
     <ClInclude Include="Util\QGSExceptionCompress.h">
       <Filter>Util\Exception</Filter>
@@ -450,6 +441,12 @@
     <ClInclude Include="Builder\QGSAssetObjectDownloadTaskGenerationTask.h">
       <Filter>Builder\DownloadTaskGenerationTask</Filter>
     </ClInclude>
+    <ClInclude Include="Launcher\QGSGeneralGameVersionPraseStrategy.h">
+      <Filter>Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Launcher\QGSIGameVersionPraseStrategy.h">
+      <Filter>Launcher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Download\QGSIDownloadSource.h">
@@ -515,9 +512,6 @@
     <QtMoc Include="Launcher\QGSGameDirectory.h">
       <Filter>Launcher</Filter>
     </QtMoc>
-    <QtMoc Include="Launcher\VersionPraser\QGSGameVersionPraser.h">
-      <Filter>Launcher</Filter>
-    </QtMoc>
     <QtMoc Include="Launcher\QGSLauncher.h">
       <Filter>Launcher</Filter>
     </QtMoc>
@@ -580,6 +574,9 @@
     </QtMoc>
     <QtMoc Include="Builder\QGSAssetBuilder.h">
       <Filter>Builder</Filter>
+    </QtMoc>
+    <QtMoc Include="Launcher\QGSGameVersionPraser.h">
+      <Filter>Launcher</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

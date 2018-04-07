@@ -23,9 +23,10 @@ public:
 
 	QGSIAccount & operator=(QGSIAccount && right) = default;
 
-	virtual QGSAuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy) = 0;
+	virtual void authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy) = 0;
 	//authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy)
-private:
-
+signals:
+	void finished(QGSAuthInfo authInfo);
+	void error(QGSNetworkError networkError);
 };
 

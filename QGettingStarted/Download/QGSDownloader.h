@@ -5,12 +5,6 @@
 #include "QGSDownloadInfo.h"
 #include "../Util/QGSNetworkAccessManager.h"
 
-enum class DownloadState
-{
-	Start,
-	Stop
-};
-
 class QGSDownloader : public QObject
 {
 	Q_OBJECT
@@ -35,6 +29,14 @@ public:
 	virtual ~QGSDownloader();
 
 	QNetworkReply * getNetworkReply()const;
+signals:
+	void finished(QGSDownloader * downloader);
+	void stoped(QGSDownloader * downloader);
+	void canceled(QGSDownloader * downloader);
+	void downloadProgress(qint64 bytesNewlyReceived, qint64 bytesReceived, qint64 bytesTotal, QGSDownloader * downloader);
+	void downloadError(QGSNetworkError error, QGSDownloader * downloader);
+	void sslErrors(const QList<QSslError> &errors, QGSDownloader * downloader);
+	void redirected(const QUrl &url, QGSDownloader * downloader);
 public slots:
 	void start();
 	void stop();
@@ -45,15 +47,6 @@ private:
 	void slotDownloadError(QNetworkReply::NetworkError error);
 	void slotSslErrors(const QList<QSslError> &errors);
 	void slotRedirected(const QUrl &url);
-signals:
-	void finished(QGSDownloader * downloader);
-	void stoped(QGSDownloader * downloader);
-	void canceled(QGSDownloader * downloader);
-	void downloadProgress(qint64 bytesNewlyReceived, qint64 bytesReceived, qint64 bytesTotal, QGSDownloader * downloader);
-	void downloadError(QGSNetworkError error, QGSDownloader * downloader);
-	void sslErrors(const QList<QSslError> &errors, QGSDownloader * downloader);
-	void redirected(const QUrl &url, QGSDownloader * downloader);
-
 private:
 	bool get();
 private:

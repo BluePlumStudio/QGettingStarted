@@ -1,3 +1,5 @@
+#include <QCoreApplication> 
+
 #include "QGSIBuilder.h"
 #include "../Util/QGSExceptionInvalidValue.h"
 #include "../Util/QGSExceptionIO.h"
@@ -9,6 +11,7 @@ QGSIBuilder::QGSIBuilder(QObject * parent)
 {
 	if (!mThreadPool.isRunning())
 	{
+		QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, &mThreadPool, &QGSThreadPool::quit);
 		mThreadPool.start();
 	}
 }

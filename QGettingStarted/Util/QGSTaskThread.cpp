@@ -1,12 +1,17 @@
+#include <QCoreApplication> 
+
 #include "QGSTaskThread.h"
 #include "QGSThreadPool.h"
+#include "../Util/QGSExceptionInvalidValue.h"
 
 QGSTaskThread::QGSTaskThread(QGSThreadPool * threadPool) :mThreadPoolPtr(threadPool), mActive(false), mTask(nullptr), mExit(false)
 {
 	if (!threadPool)
 	{
-
+		throw QGSExceptionInvalidValue();
 	}
+
+	QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &QGSThreadPool::quit);
 }
 
 QGSTaskThread::~QGSTaskThread()

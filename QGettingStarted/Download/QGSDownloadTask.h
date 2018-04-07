@@ -9,6 +9,12 @@ namespace DownloadTask
 	const int DEFAULT_CONNECTION_COUNT(16);
 }
 
+enum class DownloadState
+{
+	Start,
+	Stop
+};
+
 class QGSDownloadTask : public QGSTask
 {
 	Q_OBJECT
@@ -43,7 +49,11 @@ public:
 	static void setLargeFileSize(const quint64 bytes);
 
 	static void setSmallFileSize(const quint64 bytes);
-protected:
+signals:
+	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task);
+	void downloadError(QGSNetworkError error, QGSTask * task);
+	void sslErrors(const QList<QSslError> &errors, QGSTask * task);
+protected slots:
 	virtual void templateStart(QGSTask * task);
 	virtual void templateStop(QGSTask * task);
 	virtual void templateCancel(QGSTask * task);
@@ -59,10 +69,6 @@ private slots:
 	void slotDownloadError(QGSNetworkError error, QGSDownloader * downloader);
 	void slotSslErrors(const QList<QSslError> &errors, QGSDownloader * downloader);
 	void slotRedirected(const QUrl &url, QGSDownloader * downloader);
-signals:
-	void downloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task);
-	void downloadError(QGSNetworkError error, QGSTask * task);
-	void sslErrors(const QList<QSslError> &errors, QGSTask * task);
 private:
 	quint64 getFileSize();
 	void cancelTask();

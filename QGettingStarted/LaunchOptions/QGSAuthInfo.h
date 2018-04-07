@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <QMetaType>
+#include <QList>
 
 namespace UserType
 {
@@ -49,6 +50,7 @@ public:
 		const QString & clientToken = "{}",
 		const QString & userType = UserType::Legacy,
 		const QGSProfile & selectedProfile = QGSProfile(),
+		const QList<QGSProfile> & availableProfiles = QList<QGSProfile>(),
 		const QString & twitchAccessToken = "{}");
 	
 	~QGSAuthInfo();
@@ -57,12 +59,17 @@ public:
 	QGSAuthInfo & setClientToken(const QString & clientToken);
 	QGSAuthInfo & setUserType(const QString & userType);
 	QGSAuthInfo & setSelectedProfile(const QGSProfile & selectedProfile);
+	QGSAuthInfo & setAvailableProfileList(const QList<QGSProfile> & availableProfiles);
+	QGSAuthInfo & addAvailableProfileList(const QGSProfile & profile);
 	QGSAuthInfo & setTwitchAccessToken(const QString & twitchAccessToken);
 
 	QString getAccessToken()const;
 	QString getClientToken()const;
 	QString getUserType()const;
 	QGSProfile getSelectedProfile()const;
+	QList<QGSProfile> getAvailableProfileList()const;
+	int getAvailableProfileListSize()const;
+	QGSProfile getAvailableProfile(const int index)const;
 	QString getTwitchAccessToken()const;
 
 private:
@@ -70,6 +77,7 @@ private:
 	QString mClientToken;
 	QString mUserType;
 	QGSProfile mSelectedProfile;
+	QList<QGSProfile> mAvailableProfileList;
 	QString mTwitchAccessToken;
 };
 

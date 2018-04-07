@@ -1,6 +1,7 @@
 #include <QDir>
 #include <QFileInfoList>
 #include <QCoreApplication>
+#include <QSettings>
 
 #include "QGSFileTools.h"
 #include "QGSOperatingSystem.h"
@@ -155,4 +156,60 @@ bool QGSFileTools::removeDirectory(const QString & absolutPath)
 	}
 	dir.rmdir(".");/*删除目标文件夹,如果只是清空文件夹absolutPath的内容而不删除absolutPath本身,则删掉本行即可*/
 	return !dir.exists();
+}
+
+QMap<QString, QString> QGSFileTools::getJavaPathListFromSystemSettings()
+{
+	QMap<QString, QString> ret;
+
+#ifdef Q_OS_WIN
+
+	const auto && cpuArchitecture(QGSOperatingSystem::getInstance().getCurrentCpuArchitecture());
+	QSettings * JavaEnvReg;
+
+	//获取其他Java版本
+	if (cpuArchitecture == CpuArchitecture::ARM64 ||
+		cpuArchitecture == CpuArchitecture::IA64 ||
+		cpuArchitecture == CpuArchitecture::MIPS64 ||
+		cpuArchitecture == CpuArchitecture::POWER64 ||
+		cpuArchitecture == CpuArchitecture::X86_64)
+	{
+		JavaEnvReg = new QSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\JavaSoft\\Java Runtime Environment", QSettings::Registry64Format);
+	}
+	else
+	{
+		JavaEnvReg = new QSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\JavaSoft\\Java Runtime Environment", QSettings::Registry32Format);
+	}
+
+	if (!JavaEnvReg)
+	{
+		return ret;
+	}
+
+	auto && childGroups(JavaEnvReg->childGroups());
+	for (auto & prefix : childGroups)
+	{
+		JavaEnvReg->beginGroup(prefix);
+		QString str(JavaEnvReg->value("JavaHome").toString());
+
+		if (!str.isEmpty())
+		{
+			if (!str[str.length() - 1].isLetterOrNumber())
+			{
+				str[str.length() - 1] = 0;
+			}
+			ret.insert(prefix, str + SEPERATOR + "bin");
+		}
+
+		JavaEnvReg->endGroup();
+	}
+
+	if (JavaEnvReg)
+	{
+		delete JavaEnvReg;
+	}
+
+#endif
+
+	return ret;
 }

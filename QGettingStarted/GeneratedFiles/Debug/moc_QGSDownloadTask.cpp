@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QGSDownloadTask_t {
-    QByteArrayData data[22];
-    char stringdata0[273];
+    QByteArrayData data[30];
+    char stringdata0[448];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,25 +45,38 @@ QT_MOC_LITERAL(9, 103, 5), // "error"
 QT_MOC_LITERAL(10, 109, 9), // "sslErrors"
 QT_MOC_LITERAL(11, 119, 16), // "QList<QSslError>"
 QT_MOC_LITERAL(12, 136, 6), // "errors"
-QT_MOC_LITERAL(13, 143, 12), // "slotFinished"
-QT_MOC_LITERAL(14, 156, 14), // "QGSDownloader*"
-QT_MOC_LITERAL(15, 171, 10), // "downloader"
-QT_MOC_LITERAL(16, 182, 20), // "slotDownloadProgress"
-QT_MOC_LITERAL(17, 203, 18), // "bytesNewlyReceived"
-QT_MOC_LITERAL(18, 222, 17), // "slotDownloadError"
-QT_MOC_LITERAL(19, 240, 13), // "slotSslErrors"
-QT_MOC_LITERAL(20, 254, 14), // "slotRedirected"
-QT_MOC_LITERAL(21, 269, 3) // "url"
+QT_MOC_LITERAL(13, 143, 13), // "templateStart"
+QT_MOC_LITERAL(14, 157, 12), // "templateStop"
+QT_MOC_LITERAL(15, 170, 14), // "templateCancel"
+QT_MOC_LITERAL(16, 185, 24), // "downloadTemplateFinished"
+QT_MOC_LITERAL(17, 210, 32), // "downloadTemplateDownloadProgress"
+QT_MOC_LITERAL(18, 243, 18), // "bytesNewlyReceived"
+QT_MOC_LITERAL(19, 262, 21), // "downloadTemplateError"
+QT_MOC_LITERAL(20, 284, 25), // "downloadTemplateSslErrors"
+QT_MOC_LITERAL(21, 310, 26), // "downloadTemplateRedirected"
+QT_MOC_LITERAL(22, 337, 3), // "url"
+QT_MOC_LITERAL(23, 341, 12), // "slotFinished"
+QT_MOC_LITERAL(24, 354, 14), // "QGSDownloader*"
+QT_MOC_LITERAL(25, 369, 10), // "downloader"
+QT_MOC_LITERAL(26, 380, 20), // "slotDownloadProgress"
+QT_MOC_LITERAL(27, 401, 17), // "slotDownloadError"
+QT_MOC_LITERAL(28, 419, 13), // "slotSslErrors"
+QT_MOC_LITERAL(29, 433, 14) // "slotRedirected"
 
     },
     "QGSDownloadTask\0downloadProgress\0\0"
     "bytesReceived\0bytesTotal\0QGSTask*\0"
     "task\0downloadError\0QGSNetworkError\0"
     "error\0sslErrors\0QList<QSslError>\0"
-    "errors\0slotFinished\0QGSDownloader*\0"
-    "downloader\0slotDownloadProgress\0"
-    "bytesNewlyReceived\0slotDownloadError\0"
-    "slotSslErrors\0slotRedirected\0url"
+    "errors\0templateStart\0templateStop\0"
+    "templateCancel\0downloadTemplateFinished\0"
+    "downloadTemplateDownloadProgress\0"
+    "bytesNewlyReceived\0downloadTemplateError\0"
+    "downloadTemplateSslErrors\0"
+    "downloadTemplateRedirected\0url\0"
+    "slotFinished\0QGSDownloader*\0downloader\0"
+    "slotDownloadProgress\0slotDownloadError\0"
+    "slotSslErrors\0slotRedirected"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +86,7 @@ static const uint qt_meta_data_QGSDownloadTask[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,16 +94,24 @@ static const uint qt_meta_data_QGSDownloadTask[] = {
        3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   54,    2, 0x06 /* Public */,
-       7,    2,   61,    2, 0x06 /* Public */,
-      10,    2,   66,    2, 0x06 /* Public */,
+       1,    3,   94,    2, 0x06 /* Public */,
+       7,    2,  101,    2, 0x06 /* Public */,
+      10,    2,  106,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      13,    1,   71,    2, 0x08 /* Private */,
-      16,    4,   74,    2, 0x08 /* Private */,
-      18,    2,   83,    2, 0x08 /* Private */,
-      19,    2,   88,    2, 0x08 /* Private */,
-      20,    2,   93,    2, 0x08 /* Private */,
+      13,    1,  111,    2, 0x09 /* Protected */,
+      14,    1,  114,    2, 0x09 /* Protected */,
+      15,    1,  117,    2, 0x09 /* Protected */,
+      16,    0,  120,    2, 0x09 /* Protected */,
+      17,    3,  121,    2, 0x09 /* Protected */,
+      19,    1,  128,    2, 0x09 /* Protected */,
+      20,    1,  131,    2, 0x09 /* Protected */,
+      21,    1,  134,    2, 0x09 /* Protected */,
+      23,    1,  137,    2, 0x08 /* Private */,
+      26,    4,  140,    2, 0x08 /* Private */,
+      27,    2,  149,    2, 0x08 /* Private */,
+      28,    2,  154,    2, 0x08 /* Private */,
+      29,    2,  159,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, 0x80000000 | 5,    3,    4,    6,
@@ -98,11 +119,19 @@ static const uint qt_meta_data_QGSDownloadTask[] = {
     QMetaType::Void, 0x80000000 | 11, 0x80000000 | 5,   12,    6,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 14,   15,
-    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, 0x80000000 | 14,   17,    3,    4,   15,
-    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 14,    9,   15,
-    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 14,   12,   15,
-    QMetaType::Void, QMetaType::QUrl, 0x80000000 | 14,   21,   15,
+    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void, 0x80000000 | 5,    6,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong,   18,    3,    4,
+    QMetaType::Void, 0x80000000 | 8,    9,
+    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, QMetaType::QUrl,   22,
+    QMetaType::Void, 0x80000000 | 24,   25,
+    QMetaType::Void, QMetaType::LongLong, QMetaType::LongLong, QMetaType::LongLong, 0x80000000 | 24,   18,    3,    4,   25,
+    QMetaType::Void, 0x80000000 | 8, 0x80000000 | 24,    9,   25,
+    QMetaType::Void, 0x80000000 | 11, 0x80000000 | 24,   12,   25,
+    QMetaType::Void, QMetaType::QUrl, 0x80000000 | 24,   22,   25,
 
        0        // eod
 };
@@ -116,11 +145,19 @@ void QGSDownloadTask::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 0: _t->downloadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< QGSTask*(*)>(_a[3]))); break;
         case 1: _t->downloadError((*reinterpret_cast< QGSNetworkError(*)>(_a[1])),(*reinterpret_cast< QGSTask*(*)>(_a[2]))); break;
         case 2: _t->sslErrors((*reinterpret_cast< const QList<QSslError>(*)>(_a[1])),(*reinterpret_cast< QGSTask*(*)>(_a[2]))); break;
-        case 3: _t->slotFinished((*reinterpret_cast< QGSDownloader*(*)>(_a[1]))); break;
-        case 4: _t->slotDownloadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< qint64(*)>(_a[3])),(*reinterpret_cast< QGSDownloader*(*)>(_a[4]))); break;
-        case 5: _t->slotDownloadError((*reinterpret_cast< QGSNetworkError(*)>(_a[1])),(*reinterpret_cast< QGSDownloader*(*)>(_a[2]))); break;
-        case 6: _t->slotSslErrors((*reinterpret_cast< const QList<QSslError>(*)>(_a[1])),(*reinterpret_cast< QGSDownloader*(*)>(_a[2]))); break;
-        case 7: _t->slotRedirected((*reinterpret_cast< const QUrl(*)>(_a[1])),(*reinterpret_cast< QGSDownloader*(*)>(_a[2]))); break;
+        case 3: _t->templateStart((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
+        case 4: _t->templateStop((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
+        case 5: _t->templateCancel((*reinterpret_cast< QGSTask*(*)>(_a[1]))); break;
+        case 6: _t->downloadTemplateFinished(); break;
+        case 7: _t->downloadTemplateDownloadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< qint64(*)>(_a[3]))); break;
+        case 8: _t->downloadTemplateError((*reinterpret_cast< QGSNetworkError(*)>(_a[1]))); break;
+        case 9: _t->downloadTemplateSslErrors((*reinterpret_cast< const QList<QSslError>(*)>(_a[1]))); break;
+        case 10: _t->downloadTemplateRedirected((*reinterpret_cast< const QUrl(*)>(_a[1]))); break;
+        case 11: _t->slotFinished((*reinterpret_cast< QGSDownloader*(*)>(_a[1]))); break;
+        case 12: _t->slotDownloadProgress((*reinterpret_cast< qint64(*)>(_a[1])),(*reinterpret_cast< qint64(*)>(_a[2])),(*reinterpret_cast< qint64(*)>(_a[3])),(*reinterpret_cast< QGSDownloader*(*)>(_a[4]))); break;
+        case 13: _t->slotDownloadError((*reinterpret_cast< QGSNetworkError(*)>(_a[1])),(*reinterpret_cast< QGSDownloader*(*)>(_a[2]))); break;
+        case 14: _t->slotSslErrors((*reinterpret_cast< const QList<QSslError>(*)>(_a[1])),(*reinterpret_cast< QGSDownloader*(*)>(_a[2]))); break;
+        case 15: _t->slotRedirected((*reinterpret_cast< const QUrl(*)>(_a[1])),(*reinterpret_cast< QGSDownloader*(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -155,17 +192,52 @@ void QGSDownloadTask::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSDownloader* >(); break;
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
             }
             break;
         case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
+            }
+            break;
+        case 5:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSTask* >(); break;
+            }
+            break;
+        case 8:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSNetworkError >(); break;
+            }
+            break;
+        case 9:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<QSslError> >(); break;
+            }
+            break;
+        case 11:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSDownloader* >(); break;
+            }
+            break;
+        case 12:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 3:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSDownloader* >(); break;
             }
             break;
-        case 5:
+        case 13:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
@@ -174,7 +246,7 @@ void QGSDownloadTask::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QGSNetworkError >(); break;
             }
             break;
-        case 6:
+        case 14:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
@@ -183,7 +255,7 @@ void QGSDownloadTask::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<QSslError> >(); break;
             }
             break;
-        case 7:
+        case 15:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 1:
@@ -242,13 +314,13 @@ int QGSDownloadTask::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 16;
     }
     return _id;
 }

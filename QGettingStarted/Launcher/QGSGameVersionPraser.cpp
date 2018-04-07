@@ -1,4 +1,5 @@
 #include <QJsonObject>
+#include <QSharedPointer>
 
 #include "QGSGameVersionPraser.h"
 #include "QGSGeneralGameVersionPraseStrategy.h"

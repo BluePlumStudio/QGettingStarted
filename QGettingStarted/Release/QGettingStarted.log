@@ -1,2 +1,6 @@
-﻿  QGSIBuilder.cpp
+﻿  Moc'ing Util\QGSFileTools.h...
+  QGSGeneralLauncherStrategy.cpp
+  QGSFileTools.cpp
+  main.cpp
+  moc_QGSFileTools.cpp
   QGettingStarted.vcxproj -> F:\Projects\Git\QGettingStarted\Win32\Release\QGettingStarted.exe

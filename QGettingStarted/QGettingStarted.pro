@@ -23,100 +23,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    Builder/QGSBuilderFactory.cpp \
-    Builder/QGSDownloadTaskGenerationTask.cpp \
-    Builder/QGSGameVersionBuilder.cpp \
-    Builder/QGSGameVersionDownloadTaskGenerationTask.cpp \
-    Builder/QGSGameVersionJsonDownloadTaskGenerationTask.cpp \
-    Builder/QGSIBuilder.cpp \
-    Download/QGSAssetIndexJsonDownloadTask.cpp \
-    Download/QGSAssetObjectDownloadTask.cpp \
-    Download/QGSBMCLAPIDownloadSource.cpp \
-    Download/QGSDownloader.cpp \
-    Download/QGSDownloadInfo.cpp \
-    Download/QGSDownloadTask.cpp \
-    Download/QGSDownloadTaskFactory.cpp \
-    Download/QGSForgeDownloadTask.cpp \
-    Download/QGSGameVersionDownloadTask.cpp \
-    Download/QGSGameVersionJsonDownloadTask.cpp \
-    Download/QGSIDownloadSource.cpp \
-    Download/QGSLibraryDownloadTask.cpp \
-    Download/QGSLiteLoaderDownloadTask.cpp \
-    Download/QGSOfficialDownloadSource.cpp \
-    Download/QGSOptifineDownloadTask.cpp \
-    GameVersion/QGSArguments.cpp \
-    GameVersion/QGSAssetIndex.cpp \
-    GameVersion/QGSAssetIndexInfo.cpp \
-    GameVersion/QGSAssetIndexInfoFactory.cpp \
-    GameVersion/QGSAssetObject.cpp \
-    GameVersion/QGSDownloads.cpp \
-    GameVersion/QGSExtract.cpp \
-    GameVersion/QGSForgeVersionInfo.cpp \
-    GameVersion/QGSForgeVersionInfoList.cpp \
-    GameVersion/QGSForgeVersionInfoListFactory.cpp \
-    GameVersion/QGSGameVersion.cpp \
-    GameVersion/QGSGameVersionInfo.cpp \
-    GameVersion/QGSGameVersionInfoList.cpp \
-    GameVersion/QGSGameVersionInfoListFactory.cpp \
-    GameVersion/QGSLibrary.cpp \
-    GameVersion/QGSLiteLoaderVersionInfo.cpp \
-    GameVersion/QGSLiteLoaderVersionInfoList.cpp \
-    GameVersion/QGSLiteLoaderVersionInfoListFactory.cpp \
-    GameVersion/QGSLiteLoaderVersionMeta.cpp \
-    GameVersion/QGSLiteLoaderVersionReposity.cpp \
-    GameVersion/QGSLogging.cpp \
-    GameVersion/QGSOptifineVersionInfo.cpp \
-    GameVersion/QGSOptifineVersionInfoList.cpp \
-    GameVersion/QGSOptifineVersionInfoListFactory.cpp \
-    GameVersion/QGSRules.cpp \
-    Launcher/VersionPraser/QGSGameVersionPraser.cpp \
-    Launcher/VersionPraser/QGSGeneralGameVersionPraseStrategy.cpp \
-    Launcher/VersionPraser/QGSIGameVersionPraseStrategy.cpp \
-    Launcher/QGSGameDirectory.cpp \
-    Launcher/QGSGeneralLauncherStrategy.cpp \
-    Launcher/QGSILauncherStrategy.cpp \
-    Launcher/QGSLauncher.cpp \
-    LaunchOptions/QGSAuthInfo.cpp \
-    LaunchOptions/QGSIAccount.cpp \
-    LaunchOptions/QGSIAccountFactory.cpp \
-    LaunchOptions/QGSILaunchOptionsBuilder.cpp \
-    LaunchOptions/QGSLaunchOptions.cpp \
-    LaunchOptions/QGSLaunchOptionsBuilder.cpp \
-    LaunchOptions/QGSOfflineAccount.cpp \
-    LaunchOptions/QGSOfflineAccountFactory.cpp \
-    LaunchOptions/QGSYggdrasilAccount.cpp \
-    LaunchOptions/QGSYggdrasilAccountFactory.cpp \
-    Util/QGSException.cpp \
-    Util/QGSExceptionAuthentication.cpp \
-    Util/QGSExceptionCompress.cpp \
-    Util/QGSExceptionInvalidValue.cpp \
-    Util/QGSExceptionIO.cpp \
-    Util/QGSExceptionJsonPraseError.cpp \
-    Util/QGSExceptionVersionNotFound.cpp \
-    Util/QGSFileTools.cpp \
-    Util/QGSNetworkAccessManager.cpp \
-    Util/QGSOperatingSystem.cpp \
-    Util/QGSTask.cpp \
-    Util/QGSTaskThread.cpp \
-    Util/QGSThreadPool.cpp \
-    Util/QGSUuidGenerator.cpp \
-    main.cpp \
-    Util/zlib/inffas86.c \
-    Util/zlib/ioapi.c \
-    Util/zlib/iowin32.c \
-    Util/zlib/mztools.c \
-    Util/zlib/unzip.c \
-    Util/zlib/zip.c
+
+
 
 HEADERS += \
-        QGettingStarted.h \
+    Builder/QGSAssetBuilder.h \
+    Builder/QGSAssetIndexJsonDownloadTaskGenerationTask.h \
+    Builder/QGSAssetObjectDownloadTaskGenerationTask.h \
     Builder/QGSBuilderFactory.h \
     Builder/QGSDownloadTaskGenerationTask.h \
     Builder/QGSGameVersionBuilder.h \
     Builder/QGSGameVersionDownloadTaskGenerationTask.h \
     Builder/QGSGameVersionJsonDownloadTaskGenerationTask.h \
     Builder/QGSIBuilder.h \
+    Builder/QGSLibraryBuilder.h \
     Download/QGSAssetIndexJsonDownloadTask.h \
     Download/QGSAssetObjectDownloadTask.h \
     Download/QGSBMCLAPIDownloadSource.h \
@@ -157,11 +77,11 @@ HEADERS += \
     GameVersion/QGSOptifineVersionInfoList.h \
     GameVersion/QGSOptifineVersionInfoListFactory.h \
     GameVersion/QGSRules.h \
-    Launcher/VersionPraser/QGSGameVersionPraser.h \
-    Launcher/VersionPraser/QGSGeneralGameVersionPraseStrategy.h \
-    Launcher/VersionPraser/QGSIGameVersionPraseStrategy.h \
     Launcher/QGSGameDirectory.h \
+    Launcher/QGSGameVersionPraser.h \
+    Launcher/QGSGeneralGameVersionPraseStrategy.h \
     Launcher/QGSGeneralLauncherStrategy.h \
+    Launcher/QGSIGameVersionPraseStrategy.h \
     Launcher/QGSILauncherStrategy.h \
     Launcher/QGSLauncher.h \
     LaunchOptions/QGSAuthInfo.h \
@@ -199,19 +119,104 @@ HEADERS += \
     Util/QGSTask.h \
     Util/QGSTaskThread.h \
     Util/QGSThreadPool.h \
-    Util/QGSUuidGenerator.h
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+    Util/QGSUuidGenerator.h \
+    QGettingStarted.h
+
+SOURCES += \
+    Builder/QGSAssetBuilder.cpp \
+    Builder/QGSAssetIndexJsonDownloadTaskGenerationTask.cpp \
+    Builder/QGSAssetObjectDownloadTaskGenerationTask.cpp \
+    Builder/QGSBuilderFactory.cpp \
+    Builder/QGSDownloadTaskGenerationTask.cpp \
+    Builder/QGSGameVersionBuilder.cpp \
+    Builder/QGSGameVersionDownloadTaskGenerationTask.cpp \
+    Builder/QGSGameVersionJsonDownloadTaskGenerationTask.cpp \
+    Builder/QGSIBuilder.cpp \
+    Builder/QGSLibraryBuilder.cpp \
+    Download/QGSAssetIndexJsonDownloadTask.cpp \
+    Download/QGSAssetObjectDownloadTask.cpp \
+    Download/QGSBMCLAPIDownloadSource.cpp \
+    Download/QGSDownloader.cpp \
+    Download/QGSDownloadInfo.cpp \
+    Download/QGSDownloadTask.cpp \
+    Download/QGSDownloadTaskFactory.cpp \
+    Download/QGSForgeDownloadTask.cpp \
+    Download/QGSGameVersionDownloadTask.cpp \
+    Download/QGSGameVersionJsonDownloadTask.cpp \
+    Download/QGSIDownloadSource.cpp \
+    Download/QGSLibraryDownloadTask.cpp \
+    Download/QGSLiteLoaderDownloadTask.cpp \
+    Download/QGSOfficialDownloadSource.cpp \
+    Download/QGSOptifineDownloadTask.cpp \
+    GameVersion/QGSArguments.cpp \
+    GameVersion/QGSAssetIndex.cpp \
+    GameVersion/QGSAssetIndexInfo.cpp \
+    GameVersion/QGSAssetIndexInfoFactory.cpp \
+    GameVersion/QGSAssetObject.cpp \
+    GameVersion/QGSDownloads.cpp \
+    GameVersion/QGSExtract.cpp \
+    GameVersion/QGSForgeVersionInfo.cpp \
+    GameVersion/QGSForgeVersionInfoList.cpp \
+    GameVersion/QGSForgeVersionInfoListFactory.cpp \
+    GameVersion/QGSGameVersion.cpp \
+    GameVersion/QGSGameVersionInfo.cpp \
+    GameVersion/QGSGameVersionInfoList.cpp \
+    GameVersion/QGSGameVersionInfoListFactory.cpp \
+    GameVersion/QGSLibrary.cpp \
+    GameVersion/QGSLiteLoaderVersionInfo.cpp \
+    GameVersion/QGSLiteLoaderVersionInfoList.cpp \
+    GameVersion/QGSLiteLoaderVersionInfoListFactory.cpp \
+    GameVersion/QGSLiteLoaderVersionMeta.cpp \
+    GameVersion/QGSLiteLoaderVersionReposity.cpp \
+    GameVersion/QGSLogging.cpp \
+    GameVersion/QGSOptifineVersionInfo.cpp \
+    GameVersion/QGSOptifineVersionInfoList.cpp \
+    GameVersion/QGSOptifineVersionInfoListFactory.cpp \
+    GameVersion/QGSRules.cpp \
+    Launcher/QGSGameDirectory.cpp \
+    Launcher/QGSGameVersionPraser.cpp \
+    Launcher/QGSGeneralGameVersionPraseStrategy.cpp \
+    Launcher/QGSGeneralLauncherStrategy.cpp \
+    Launcher/QGSIGameVersionPraseStrategy.cpp \
+    Launcher/QGSILauncherStrategy.cpp \
+    Launcher/QGSLauncher.cpp \
+    LaunchOptions/QGSAuthInfo.cpp \
+    LaunchOptions/QGSIAccount.cpp \
+    LaunchOptions/QGSIAccountFactory.cpp \
+    LaunchOptions/QGSILaunchOptionsBuilder.cpp \
+    LaunchOptions/QGSLaunchOptions.cpp \
+    LaunchOptions/QGSLaunchOptionsBuilder.cpp \
+    LaunchOptions/QGSOfflineAccount.cpp \
+    LaunchOptions/QGSOfflineAccountFactory.cpp \
+    LaunchOptions/QGSYggdrasilAccount.cpp \
+    LaunchOptions/QGSYggdrasilAccountFactory.cpp \
+    Util/QGSException.cpp \
+    Util/QGSExceptionAuthentication.cpp \
+    Util/QGSExceptionCompress.cpp \
+    Util/QGSExceptionInvalidValue.cpp \
+    Util/QGSExceptionIO.cpp \
+    Util/QGSExceptionJsonPraseError.cpp \
+    Util/QGSExceptionVersionNotFound.cpp \
+    Util/QGSFileTools.cpp \
+    Util/QGSNetworkAccessManager.cpp \
+    Util/QGSOperatingSystem.cpp \
+    Util/QGSTask.cpp \
+    Util/QGSTaskThread.cpp \
+    Util/QGSThreadPool.cpp \
+    Util/QGSUuidGenerator.cpp \
+    main.cpp \
+    Util/zlib/inffas86.c \
+    Util/zlib/ioapi.c \
+    Util/zlib/iowin32.c \
+    Util/zlib/mztools.c \
+    Util/zlib/unzip.c \
+    Util/zlib/zip.c
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/Util/zlib/lib/ -lzlib
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/Util/zlib/lib/ -lzlibd
-else:unix: LIBS += -L$$PWD/Util/zlib/lib/ -lzlib
+unix|win32: LIBS += -L$$PWD/Util/zlib/lib/ -lz
 
 INCLUDEPATH += $$PWD/Util/zlib
 DEPENDPATH += $$PWD/Util/zlib
 
-win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/Util/zlib/lib/zlib.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/Util/zlib/lib/zlibd.lib
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/Util/zlib/lib/z.lib
+else:unix|win32-g++: PRE_TARGETDEPS += $$PWD/Util/zlib/lib/libz.a

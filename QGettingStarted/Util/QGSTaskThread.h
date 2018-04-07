@@ -31,11 +31,11 @@ public:
 	//QGSTaskThread & setTask(QGSTask * task);
 
 	void exit(int returnCode = 0);
-private:
-	virtual void run();
 signals:
 	void taskStarted(QGSTask * task);
-	void taskFinished(QGSTask* task); 
+	void taskFinished(QGSTask* task);
+private:
+	virtual void run();
 private:
 	QGSThreadPool * mThreadPoolPtr;
 	QGSTask * mTask;

@@ -3,7 +3,7 @@
 #include "QGSTask.h"
 #include "../Util/QGSExceptionInvalidValue.h"
 
-static const unsigned long DEFAULT_WAIT_TIME(5000);
+static const unsigned long DEFAULT_WAIT_TIME(1000);
 
 QGSTask::QGSTask(QObject * parent) :QObject(parent)
 {
@@ -44,17 +44,17 @@ QGSTask & QGSTask::setNextTask(QGSTask * task)
 
 void QGSTask::start()
 {
-	templateStart(this);
+	QMetaObject::invokeMethod(this, "templateStart", Qt::ConnectionType::QueuedConnection, Q_ARG(QGSTask *, this));
 }
 
 void QGSTask::stop()
 {
-	templateStop(this);
+	QMetaObject::invokeMethod(this, "templateStop", Qt::ConnectionType::QueuedConnection, Q_ARG(QGSTask *, this));
 }
 
 void QGSTask::cancel()
 {
-	templateCancel(this);
+	QMetaObject::invokeMethod(this, "templateCancel", Qt::ConnectionType::QueuedConnection, Q_ARG(QGSTask *, this));
 }
 
 void QGSTask::templateStart(QGSTask * task)

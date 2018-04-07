@@ -19,7 +19,7 @@ public:
 
 	QGSOfflineAccount & operator=(QGSOfflineAccount && right) = default;
 
-	virtual QGSAuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy)noexcept override;
+	virtual void authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy)noexcept override;
 
 private:
 

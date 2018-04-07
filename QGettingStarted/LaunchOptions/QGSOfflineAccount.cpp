@@ -9,10 +9,14 @@ QGSOfflineAccount::~QGSOfflineAccount()
 {
 }
 
-QGSAuthInfo QGSOfflineAccount::authenticate(const QString & userName, const QString & password, QString clientToken, QNetworkProxy proxy)noexcept
+void QGSOfflineAccount::authenticate(const QString & userName, const QString & password, QString clientToken, QNetworkProxy proxy)noexcept
 {
-	return QGSAuthInfo(QGSUuidGenerator::getInstance().generateUuid(userName),
-	clientToken.isEmpty() ? QGSUuidGenerator::getInstance().generateUuid(userName) : clientToken,
-		UserType::Legacy,
-	QGSAuthInfo::QGSProfile(QGSUuidGenerator::getInstance().generateUuid(userName),userName,false));
+	QMetaObject::invokeMethod(this,
+		"finished", 
+		Qt::QueuedConnection,
+		Q_ARG(QGSAuthInfo,
+			QGSAuthInfo(QGSUuidGenerator::getInstance().generateUuid(userName),
+				clientToken.isEmpty() ? QGSUuidGenerator::getInstance().generateUuid(userName) : clientToken,
+				UserType::Legacy,
+				QGSAuthInfo::QGSProfile(QGSUuidGenerator::getInstance().generateUuid(userName), userName, false))));
 }

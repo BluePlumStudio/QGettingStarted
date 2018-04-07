@@ -22,6 +22,11 @@ public:
 
 	QGSYggdrasilAccount & operator=(QGSYggdrasilAccount && right) = delete;
 
-	virtual QGSAuthInfo authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy);
+	virtual void authenticate(const QString & userName, const QString & password = "", QString clientToken = "", QNetworkProxy proxy = QNetworkProxy::NoProxy);
+private slots:
+	void slotFinished();
+	void slotError(QNetworkReply::NetworkError code);
 private:
+	QNetworkReply * mReply;
+	QGSNetworkAccessManager * mNetworkAccessManager;
 };
