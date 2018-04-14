@@ -7,13 +7,60 @@
 #include "../GameVersion/QGSGameVersion.h"
 #include "../GameVersion/QGSGameVersionInfoList.h"
 
+/**
+
+* @brief 游戏目录
+
+*/
 class QGSGameDirectory :public QObject
 {
 	Q_OBJECT
 
 public:
+	/**
+
+	* @brief QGSGameDirectory构造函数
+
+	* @param baseDir 游戏目录
+
+	* @param parent 父对象
+
+	* @return
+
+	* @retval
+
+	* @note
+
+	* @attention
+
+	* @warning
+
+	* @exception QGSExceptionIO：相关文件或目录创建失败
+
+	*/
 	QGSGameDirectory(const QDir & baseDir, QObject * parent = nullptr);
 
+	/**
+
+	* @brief QGSGameDirectory构造函数
+
+	* @param baseDir 游戏目录
+
+	* @param parent 父对象
+
+	* @return
+
+	* @retval
+
+	* @note
+
+	* @attention
+
+	* @warning
+
+	* @exception QGSExceptionIO：相关文件或目录创建失败
+
+	*/
 	QGSGameDirectory(QDir && baseDir, QObject * parent = nullptr);
 
 	QGSGameDirectory(const QGSGameDirectory & right) = default;
@@ -26,17 +73,105 @@ public:
 
 	virtual ~QGSGameDirectory();
 
+	/**
+
+	* @brief 获取游戏版本
+
+	* @param version 游戏版本
+
+	* @return 游戏版本
+
+	* @retval const QGSGameVersion &
+
+	* @note
+
+	* @attention
+
+	* @warning
+
+	* @exception QGSExceptionVersionNotFound：version为空 
+				QGSExceptionVersionNotFound：找不到版本 
+				QGSExceptionIO：IO异常
+				QGSExceptionJsonPraseError：json解析错误
+
+	*/
 	const QGSGameVersion & getVersion(const QString & version);
 
+	/**
+
+	* @brief 获取游戏版本
+
+	* @param gameVersionInfo 游戏版本信息
+
+	* @return 游戏版本
+
+	* @retval const QGSGameVersion &
+
+	* @note
+
+	* @attention
+
+	* @warning
+
+	* @exception QGSExceptionVersionNotFound：version为空 
+				QGSExceptionVersionNotFound：找不到版本 
+				QGSExceptionIO：IO异常
+				QGSExceptionJsonPraseError：json解析错误
+
+	*/
 	const QGSGameVersion & getVersion(const QGSGameVersionInfo & gameVersionInfo);
 
-	const QGSGameVersion & addVersion(const QString version);
+	/**
 
-	const QGSGameVersion & addVersion(const QGSGameVersionInfo & gameVersionInfo);
+	* @brief 添加版本
 
-	bool containsVersion(const QString & version)const;
+	* @param version 游戏版本
 
-	bool containsVersion(const QGSGameVersionInfo & gameVersionInfo)const;
+	* @return 自身引用
+
+	* @retval const QGSGameVersion &
+
+	* @note
+
+	* @attention
+
+	* @warning
+
+	* @exception QGSExceptionVersionNotFound：version为空 
+				QGSExceptionVersionNotFound：找不到版本 
+				QGSExceptionIO：IO异常
+				QGSExceptionJsonPraseError：json解析错误
+
+	*/
+	const QGSGameVersion & addGameVersion(const QString version);
+
+	/**
+
+	* @brief 添加版本
+
+	* @param gameVersionInfo 游戏版本信息
+
+	* @return 自身引用
+
+	* @retval const QGSGameVersion &
+
+	* @note
+
+	* @attention
+
+	* @warning
+
+	* @exception QGSExceptionVersionNotFound：version为空
+	QGSExceptionVersionNotFound：找不到版本
+	QGSExceptionIO：IO异常
+	QGSExceptionJsonPraseError：json解析错误
+
+	*/
+	const QGSGameVersion & addGameVersion(const QGSGameVersionInfo & gameVersionInfo);
+
+	bool containsGameVersion(const QString & version)const;
+
+	bool containsGameVersion(const QGSGameVersionInfo & gameVersionInfo)const;
 
 	QFile * generateGameVersionJarFile(const QString & version, const bool withAbsolutePath = true)const;
 

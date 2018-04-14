@@ -2,6 +2,11 @@
 
 #include "QGSLaunchOptions.h"
 
+/**
+
+* @brief 启动选项建造者（抽象）
+
+*/
 class QGSILaunchOptionsBuilder :public QObject
 {
 	Q_OBJECT
@@ -19,6 +24,25 @@ public:
 
 	virtual ~QGSILaunchOptionsBuilder();
 	
+	/**
+
+	* @brief 获取启动选项
+
+	* @param
+
+	* @return 启动选项指针
+
+	* @retval QGSLaunchOptions *
+
+	* @note
+
+	* @attention
+
+	* @warning
+
+	* @exception
+
+	*/
 	virtual QGSLaunchOptions * getLaunchOptions() = 0;
 	
 	virtual QGSILaunchOptionsBuilder & setJavaPath(const QString & JavaPath) = 0;

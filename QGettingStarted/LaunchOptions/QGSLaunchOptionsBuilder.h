@@ -3,6 +3,11 @@
 #include "QGSILaunchOptionsBuilder.h"
 #include "QGSLaunchOptions.h"
 
+/**
+
+* @brief 启动选项建造者
+
+*/
 class QGSLaunchOptionsBuilder: public QGSILaunchOptionsBuilder 
 {
 	Q_OBJECT

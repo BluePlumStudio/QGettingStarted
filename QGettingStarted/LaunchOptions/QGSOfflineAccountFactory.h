@@ -3,6 +3,11 @@
 #include "QGSIAccountFactory.h"
 #include "QGSOfflineAccount.h"
 
+/**
+
+* @brief 离线账户工厂
+
+*/
 class QGSOfflineAccountFactory: public QGSIAccountFactory 
 {
 	Q_OBJECT

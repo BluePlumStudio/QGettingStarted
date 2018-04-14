@@ -20,6 +20,11 @@ namespace VersionType
 	const QString UNKNOWN("unknown");
 }
 
+/**
+
+* @brief ”Œœ∑∞Ê±æ
+
+*/
 class QGSGameVersion
 {
 public:

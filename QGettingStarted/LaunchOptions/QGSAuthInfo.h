@@ -10,6 +10,11 @@ namespace UserType
 	const QString Legacy("Legacy");
 }
 
+/**
+
+* @brief 验证信息
+
+*/
 class QGSAuthInfo
 {
 public:

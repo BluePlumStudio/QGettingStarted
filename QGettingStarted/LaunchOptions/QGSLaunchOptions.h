@@ -7,6 +7,11 @@
 #include "QGSIAccountFactory.h"
 #include "../Launcher/QGSGameDirectory.h"
 
+/**
+
+* @brief 服务器信息
+
+*/
 class QGSServerInfo
 {
 public:
@@ -26,6 +31,11 @@ private:
 	QString mPort;
 };
 
+/**
+
+* @brief 启动选项
+
+*/
 class QGSLaunchOptions 
 {
 public:

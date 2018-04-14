@@ -4,6 +4,11 @@
 
 #include "QGSIAccount.h"
 
+/**
+
+* @brief 账户工厂（抽象）
+
+*/
 class QGSIAccountFactory :public QObject
 {
 	Q_OBJECT

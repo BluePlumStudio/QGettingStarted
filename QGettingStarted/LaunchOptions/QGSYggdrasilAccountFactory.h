@@ -3,6 +3,11 @@
 #include "QGSIAccountFactory.h"
 #include "QGSYggdrasilAccount.h"
 
+/**
+
+* @brief Yggdrasil’Àªßπ§≥ß
+
+*/
 class QGSYggdrasilAccountFactory : public QGSIAccountFactory
 {
 	Q_OBJECT

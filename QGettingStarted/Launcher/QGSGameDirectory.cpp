@@ -87,9 +87,9 @@ const QGSGameVersion & QGSGameDirectory::getVersion(const QString & version)
 		throw QGSExceptionVersionNotFound();
 	}
 
-	if (!containsVersion(version))
+	if (!containsGameVersion(version))
 	{
-		addVersion(version);
+		addGameVersion(version);
 	}
 
 	return mVersionMap[version];
@@ -100,14 +100,64 @@ const QGSGameVersion & QGSGameDirectory::getVersion(const QGSGameVersionInfo & g
 	return getVersion(gameVersionInfo.getId());
 }
 
-bool QGSGameDirectory::containsVersion(const QString & version)const
+const QGSGameVersion & QGSGameDirectory::addGameVersion(const QString version)
+{
+	QGSGameVersion newVersion;
+	//检查versions目录是否存在
+	QDir versionDir(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version);
+	if (!versionDir.exists())
+	{
+		throw QGSExceptionVersionNotFound();
+	}
+	//检查version.json文件是否存在
+	QFile versionJsonFile(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".json");
+	if (!versionJsonFile.exists())
+	{
+		QStringList versionJsonList = versionDir.entryList(QStringList("*.json"), QDir::NoDotAndDotDot);
+		const QString versionJsonFileName = version + ".json";
+		if (!versionJsonList.size())
+		{
+			throw QGSExceptionVersionNotFound();
+		}
+		if (versionJsonList[0] != versionJsonFileName)
+		{
+			versionDir.rename(versionJsonList[0], versionJsonFileName);
+		}
+	}
+	//打开文件读取json
+	if (!versionJsonFile.open(QIODevice::ReadOnly))
+	{
+		throw QGSExceptionIO();
+	}
+	QJsonParseError jsonPraseError;
+	QJsonDocument jsonDocument(QJsonDocument::fromJson(versionJsonFile.readAll(), &jsonPraseError));
+	if (jsonPraseError.error != QJsonParseError::NoError)
+	{
+		versionJsonFile.flush();
+		versionJsonFile.close();
+		throw QGSExceptionJsonPraseError(jsonPraseError);
+	}
+	//解析json生成version
+	QSharedPointer<QGSGameVersionPraser> versionPraser(new QGSGameVersionPraser());
+	versionPraser->praseVersion(newVersion, jsonDocument);
+	auto ret(mVersionMap.insert(version, newVersion));
+
+	return !newVersion.getInheritsFrom().isEmpty() ? addGameVersion(newVersion.getInheritsFrom()) : *ret;
+}
+
+const QGSGameVersion & QGSGameDirectory::addGameVersion(const QGSGameVersionInfo & gameVersionInfo)
+{
+	return addGameVersion(gameVersionInfo.getId());
+}
+
+bool QGSGameDirectory::containsGameVersion(const QString & version)const
 {
 	return mVersionMap.contains(version);
 }
 
-bool QGSGameDirectory::containsVersion(const QGSGameVersionInfo & gameVersionInfo) const
+bool QGSGameDirectory::containsGameVersion(const QGSGameVersionInfo & gameVersionInfo) const
 {
-	return containsVersion(gameVersionInfo.getId());
+	return containsGameVersion(gameVersionInfo.getId());
 }
 
 QFile * QGSGameDirectory::generateGameVersionJarFile(const QString & version, const bool withAbsolutePath)const
@@ -315,54 +365,4 @@ QFile * QGSGameDirectory::generateAssetObjectFile(const QGSAssetObject & assetOb
 	auto && hash(assetObject.getHash());
 	return new QFile((withAbsolutePath ? mBaseDir.absolutePath() : "") +
 		SEPARATOR + "assets" + SEPARATOR + "objects" + SEPARATOR + hash.left(2) + SEPARATOR + hash);
-}
-
-const QGSGameVersion & QGSGameDirectory::addVersion(const QString version)
-{
-	QGSGameVersion newVersion;
-	//检查versions目录是否存在
-	QDir versionDir(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version);
-	if (!versionDir.exists())
-	{
-		throw QGSExceptionVersionNotFound();
-	}
-	//检查version.json文件是否存在
-	QFile versionJsonFile(mBaseDir.absolutePath() + SEPARATOR + "versions" + SEPARATOR + version + SEPARATOR + version + ".json");
-	if (!versionJsonFile.exists())
-	{
-		QStringList versionJsonList = versionDir.entryList(QStringList("*.json"), QDir::NoDotAndDotDot);
-		const QString versionJsonFileName = version + ".json";
-		if (!versionJsonList.size())
-		{
-			throw QGSExceptionVersionNotFound();
-		}
-		if (versionJsonList[0] != versionJsonFileName)
-		{
-			versionDir.rename(versionJsonList[0], versionJsonFileName);
-		}
-	}
-	//打开文件读取json
-	if (!versionJsonFile.open(QIODevice::ReadOnly))
-	{
-		throw QGSExceptionIO();
-	}
-	QJsonParseError jsonPraseError;
-	QJsonDocument jsonDocument(QJsonDocument::fromJson(versionJsonFile.readAll(),&jsonPraseError));
-	if (jsonPraseError.error != QJsonParseError::NoError)
-	{
-		versionJsonFile.flush();
-		versionJsonFile.close();
-		throw QGSExceptionJsonPraseError(jsonPraseError);
-	}
-	//解析json生成version
-	QSharedPointer<QGSGameVersionPraser> versionPraser(new QGSGameVersionPraser());
-	versionPraser->praseVersion(newVersion, jsonDocument);
-	auto ret(mVersionMap.insert(version, newVersion));
-
-	return !newVersion.getInheritsFrom().isEmpty() ? addVersion(newVersion.getInheritsFrom()) : *ret;
-}
-
-const QGSGameVersion & QGSGameDirectory::addVersion(const QGSGameVersionInfo & gameVersionInfo)
-{
-	return addVersion(gameVersionInfo.getId());
 }

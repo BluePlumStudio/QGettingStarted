@@ -28,6 +28,11 @@ namespace LauncherError
 	static const int AssetFirectoryGenerateFailure = 0x8000;
 }
 
+/**
+
+* @brief Æô¶¯Æ÷²ßÂÔ£¨³éÏó£©
+
+*/
 class QGSILauncherStrategy 
 {
 public: 
