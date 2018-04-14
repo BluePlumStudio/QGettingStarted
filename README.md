@@ -26,7 +26,7 @@ Visual Studio 2015/Qt 5.10.0 下编译通过。
 ## 正式版本已开始推送！
 
 # 开发文档
-![QGSDocument](https://qgsdocument.blueplum.studio/index.html)
+[QGSDocument](https://qgsdocument.blueplum.studio/index.html)
 
 # 开始
 ## 使用启动核心
