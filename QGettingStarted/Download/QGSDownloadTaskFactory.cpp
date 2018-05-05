@@ -2,7 +2,7 @@
 #include "../Util/QGSExceptionInvalidValue.h"
 
 QGSDownloadTaskFactory::QGSDownloadTaskFactory(QGSIDownloadSource * downloadSource, const QNetworkProxy & proxy, QObject * parent)
-	:QObject(parent), mDownloadSourcePtr(downloadSource), mConnectionCount(DownloadTask::DEFAULT_CONNECTION_COUNT), mProxy(proxy)
+	:QObject(parent), mDownloadSourcePtr(downloadSource), mConnectionCount(QGSDownloadTask::DefaultConnectionCount), mProxy(proxy)
 {
 	if (!downloadSource)
 	{

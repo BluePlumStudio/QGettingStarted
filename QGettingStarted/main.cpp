@@ -10,7 +10,6 @@
 #include "QGettingStarted.h"
 
 using namespace std;
-using namespace qgs;
 
 void generateLaunchCommandTest()
 {
@@ -44,7 +43,7 @@ void generateLaunchCommandTest()
 		*/
 		QGSAuthInfo authInfo;
 		QEventLoop eventLoop;
-		auto * account(QGSYggdrasilAccountFactory().createAccount());
+		auto * account(QGSOfflineAccountFactory().createAccount());
 		QObject::connect(account, &QGSIAccount::finished, &eventLoop, &QEventLoop::quit);
 		QObject::connect(account, &QGSIAccount::finished, [&authInfo](QGSAuthInfo _authInfo)
 		{
@@ -68,7 +67,7 @@ void generateLaunchCommandTest()
 		launchOptionsBuilder.setMetaspaceSize(8888);
 		launchOptionsBuilder.setProxy(QNetworkProxy("proxyaddress", "proxyport", "proxyuser", "proxypassword"));
 		*/
-		if (launcher.generateLaunchCommand(gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())), gameDirectory, launchOptionsBuilder.getLaunchOptions(), launchCommand) != LauncherError::Ok)
+		if (launcher.generateLaunchCommand(gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())), gameDirectory, launchOptionsBuilder.getLaunchOptions(), launchCommand) != QGSLauncherError::Ok)
 		{
 			qDebug() << "生成启动脚本失败";
 			return;
@@ -271,67 +270,6 @@ int downloadTest()
 }
 */
 
-/*
-void forgeBuilderTest()
-{
-	QFile manifestFile(QCoreApplication::applicationDirPath() + "/forge_manifest.json");
-	manifestFile.open(QIODevice::ReadOnly);
-	QGSForgeVersionInfoListFactory versionInfoFactory;
-	QGSForgeVersionInfoList versionInfoList(versionInfoFactory.createForgeVersionInfoList(manifestFile.readAll()));
-	int build;
-	qDebug() << "build:";
-	std::cin >> build;
-	cin.get();
-	static auto && versionInfo = versionInfoList.getVersionInfo(build);
-	QGSIDownloadSource * downloadSource(new QGSBMCLAPIDownloadSource);
-	static QGSDownloadTaskFactory downloadTaskFactory(downloadSource);
-	static QGSGameDirectory gameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft"));
-	QGSBuilderFactory * builderFactory(new QGSBuilderFactory);
-	QGSForgeBuilder * forgeBuilder = builderFactory->createForgeBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
-	QObject::connect(forgeBuilder, &QGSGameBuilder::started, [=]()
-	{
-		qDebug() << "forgeBuilder started!";
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::downloadTaskStarted, [=](QGSDownloadInfo downloadInfo)
-	{
-		qDebug() << "download:" << downloadInfo.getUrl() << " started!";
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::downloadTaskFinished, [=](QGSDownloadInfo downloadInfo)
-	{
-		qDebug() << "download:" << downloadInfo.getUrl() << " finished!";
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::downloadTaskStoped, [=](QGSDownloadInfo downloadInfo)
-	{
-		qDebug() << "download:" << downloadInfo.getUrl() << " stoped!";
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::downloadTaskCanceled, [=](QGSDownloadInfo downloadInfo)
-	{
-		qDebug() << "download:" << downloadInfo.getUrl() << " canceled!";
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadInfo downloadInfo)
-	{
-		qDebug() << "download:" << downloadInfo.getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadInfo downloadInfo)
-	{
-		qDebug() << "download:" << downloadInfo.getUrl() << " download error!" << "Error code:" << error.getCode();
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::downloadTaskError, [=](QGSDownloadInfo downloadInfo)
-	{
-		qDebug() << "download:" << downloadInfo.getUrl() << " error!";
-	});
-	QObject::connect(forgeBuilder, &QGSGameBuilder::finished, [=]()
-	{
-		qDebug() << "forgeBuilder finished!";
-		qDebug() << "forgeBuilder finished!";
-		qDebug() << "forgeBuilder finished!";
-	});
-
-	QGSThreadPool::getGlobalInstance().addTaskBack(forgeBuilder);
-
-}
-*/
-
 void gameVersionBuilderTest()
 {
 	QFile manifestFile(QCoreApplication::applicationDirPath() + "/version_manifest.json");
@@ -339,13 +277,26 @@ void gameVersionBuilderTest()
 	QGSGameVersionInfoListFactory versionInfoFactory;
 	QGSGameVersionInfoList versionInfoList(versionInfoFactory.createGameVersionInfoList(manifestFile.readAll()));
 	std::string versionId;
+	int downloadSourceId;
 	qDebug() << "Version:";
 	std::getline(cin, versionId);
+	qDebug() << "DownloadSource: 1.Official 2.BMCL";
+	std::cin >> downloadSourceId;
+	QGSIDownloadSource * downloadSource = nullptr;
+	if (downloadSourceId == 2)
+	{
+		downloadSource = new QGSBMCLAPIDownloadSource;
+	}
+	else
+	{
+		downloadSource = new QGSOfficialDownloadSource;
+	}
+
 	static auto && versionInfo = versionInfoList.getVersionInfo(QString::fromStdString(versionId));
-	QGSIDownloadSource * downloadSource(new QGSBMCLAPIDownloadSource);
 	static QGSDownloadTaskFactory downloadTaskFactory(downloadSource);
 	static QGSGameDirectory gameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft"));
-	QGSBuilderFactory * builderFactory(new QGSBuilderFactory);
+	auto * threadPoolManager(new QGSThreadPoolManager(8, 512));
+	QGSBuilderFactory * builderFactory(new QGSBuilderFactory(threadPoolManager));
 	QGSGameVersionBuilder * gameVersionBuilder = builderFactory->createGameVersionBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
 	QGSLibraryBuilder * libraryBuilder = builderFactory->createLibraryBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
 	QGSAssetBuilder * assetBuilder = builderFactory->createAssetBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
@@ -493,7 +444,8 @@ void gameVersionBuilderTest()
 		qDebug() << "assetBuilder finished!";
 		qDebug() << "assetBuilder finished!";
 	});
-	QGSThreadPool::getGlobalInstance().addTaskBack(gameVersionBuilder);
+
+	threadPoolManager->addTaskBack(gameVersionBuilder);
 }
 
 void getJavaPathListTest()
@@ -527,7 +479,6 @@ int main(int argc, char *argv[])
 		getJavaPathListTest();
 		return 0;
 	}
-	//QGSThreadPool::getGlobalInstance().setMinThreadCount(512);
 
 	return a.exec();
 }

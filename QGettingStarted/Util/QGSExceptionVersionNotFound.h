@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QException>
+#include "QGSException.h"
 
-class QGSExceptionVersionNotFound :public QException
+class QGSExceptionVersionNotFound :public QGSException
 {
 public:
 	QGSExceptionVersionNotFound();

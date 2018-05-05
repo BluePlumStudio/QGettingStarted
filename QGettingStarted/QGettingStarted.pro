@@ -120,7 +120,8 @@ HEADERS += \
     Util/QGSTaskThread.h \
     Util/QGSThreadPool.h \
     Util/QGSUuidGenerator.h \
-    QGettingStarted.h
+    QGettingStarted.h \
+    Util/QGSThreadPoolManager.h
 
 SOURCES += \
     Builder/QGSAssetBuilder.cpp \
@@ -210,7 +211,8 @@ SOURCES += \
     Util/zlib/iowin32.c \
     Util/zlib/mztools.c \
     Util/zlib/unzip.c \
-    Util/zlib/zip.c
+    Util/zlib/zip.c \
+    Util/QGSThreadPoolManager.cpp
 
 
 unix|win32: LIBS += -L$$PWD/Util/zlib/lib/ -lz

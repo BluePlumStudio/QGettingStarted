@@ -7,7 +7,8 @@ class QGSLibraryBuilder : public QGSIBuilder
 	Q_OBJECT
 
 public:
-	QGSLibraryBuilder(QGSGameVersionInfo & versionInfo, 
+	QGSLibraryBuilder(QGSThreadPoolManager * threadPoolManagerPtr, 
+		QGSGameVersionInfo & versionInfo,
 		QGSGameDirectory * gameDirectory, 
 		QGSDownloadTaskFactory * downloadTaskFactory, 
 		QObject * parent = nullptr);

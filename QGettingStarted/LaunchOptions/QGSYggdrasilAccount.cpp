@@ -115,7 +115,7 @@ void QGSYggdrasilAccount::slotFinished()
 		}
 	}
 
-	emit finished(QGSAuthInfo(accessToken, clientToken, UserType::Mojang, selectedProfile, availableProfiles, twitchAccessToken));
+	emit finished(QGSAuthInfo(accessToken, clientToken, QGSUserType::Mojang, selectedProfile, availableProfiles, twitchAccessToken));
 }
 
 void QGSYggdrasilAccount::slotError(QNetworkReply::NetworkError code)

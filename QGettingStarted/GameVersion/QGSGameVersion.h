@@ -10,7 +10,7 @@
 #include "QGSLibrary.h"
 #include "QGSAssetIndexInfo.h"
 
-namespace VersionType
+namespace QGSGameVersionType
 {
 	const QString RELEASE("release");
 	const QString SNAPSHOT("snapshot");

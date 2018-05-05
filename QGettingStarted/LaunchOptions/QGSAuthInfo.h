@@ -4,7 +4,7 @@
 #include <QMetaType>
 #include <QList>
 
-namespace UserType
+namespace QGSUserType
 {
 	const QString Mojang("Mojang");
 	const QString Legacy("Legacy");
@@ -53,7 +53,7 @@ public:
 public:
 	QGSAuthInfo(const QString & accessToken = "{}",
 		const QString & clientToken = "{}",
-		const QString & userType = UserType::Legacy,
+		const QString & userType = QGSUserType::Legacy,
 		const QGSProfile & selectedProfile = QGSProfile(),
 		const QList<QGSProfile> & availableProfiles = QList<QGSProfile>(),
 		const QString & twitchAccessToken = "{}");

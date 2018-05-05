@@ -3,15 +3,7 @@
 #include <QString>
 #include <QObject>
 
-namespace OS
-{
-	const QString WINDOWS("windows");
-	const QString LINUX("linux");
-	const QString MACOS("osx");
-	const QString UNKNOWN("unknown");
-}
-
-namespace CpuArchitecture
+namespace QGSCpuArchitecture
 {
 	const QString ARM("arm");
 	const QString ARM64("arm64");
@@ -66,6 +58,11 @@ public:
 	quint8 getCurrentCpuArchitectureNumber()const;
 
 	QChar getSeperator()const;
+public:
+	static const QString WINDOWS;
+	static const QString LINUX;
+	static const QString MACOS;
+	static const QString UNKNOWN;
 private:
 	QString mBuildAbi;
 	QString mBuildCpuArchitecture;

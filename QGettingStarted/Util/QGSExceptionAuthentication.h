@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QException>
+#include "QGSException.h"
 #include <QString>
 
-class QGSExceptionAuthentication :public QException
+class QGSExceptionAuthentication :public QGSException
 {
 public:
 	QGSExceptionAuthentication(const QString & error = "", const QString & errorMessage = "", const QString & cause = "");

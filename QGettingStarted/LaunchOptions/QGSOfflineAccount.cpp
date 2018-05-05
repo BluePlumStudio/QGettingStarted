@@ -17,6 +17,6 @@ void QGSOfflineAccount::authenticate(const QString & userName, const QString & p
 		Q_ARG(QGSAuthInfo,
 			QGSAuthInfo(QGSUuidGenerator::getInstance().generateUuid(userName),
 				clientToken.isEmpty() ? QGSUuidGenerator::getInstance().generateUuid(userName) : clientToken,
-				UserType::Legacy,
+				QGSUserType::Legacy,
 				QGSAuthInfo::QGSProfile(QGSUuidGenerator::getInstance().generateUuid(userName), userName, false))));
 }

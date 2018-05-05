@@ -3,6 +3,13 @@
 
 #include "QGSOperatingSystem.h"
 
+#include <QDir>
+
+const QString QGSOperatingSystem::WINDOWS("windows");
+const QString QGSOperatingSystem::LINUX("linux");
+const QString QGSOperatingSystem::MACOS("osx");
+const QString QGSOperatingSystem::UNKNOWN("unknown");
+
 QGSOperatingSystem::QGSOperatingSystem(QObject * parent) :QObject(parent)
 {
 	mBuildAbi = QSysInfo::buildAbi();
@@ -15,11 +22,8 @@ QGSOperatingSystem::QGSOperatingSystem(QObject * parent) :QObject(parent)
 	mProductType = QSysInfo::productType();
 	mProductVersion = QSysInfo::productVersion();
 
-#ifdef Q_OS_WIN
-	mSeparator = '\\';
-#elif
-	mSeparator = '/';
-#endif
+	mSeparator = QDir::separator();
+
 }
 
 QGSOperatingSystem::~QGSOperatingSystem()
@@ -80,11 +84,11 @@ QString QGSOperatingSystem::getProductVersion()const
 
 quint8 QGSOperatingSystem::getCurrentCpuArchitectureNumber() const
 {
-	if (mCurrentCpuArchitecture == CpuArchitecture::ARM64 ||
-		mCurrentCpuArchitecture == CpuArchitecture::IA64 ||
-		mCurrentCpuArchitecture == CpuArchitecture::MIPS64 ||
-		mCurrentCpuArchitecture == CpuArchitecture::POWER64 ||
-		mCurrentCpuArchitecture == CpuArchitecture::X86_64)
+	if (mCurrentCpuArchitecture == QGSCpuArchitecture::ARM64 ||
+		mCurrentCpuArchitecture == QGSCpuArchitecture::IA64 ||
+		mCurrentCpuArchitecture == QGSCpuArchitecture::MIPS64 ||
+		mCurrentCpuArchitecture == QGSCpuArchitecture::POWER64 ||
+		mCurrentCpuArchitecture == QGSCpuArchitecture::X86_64)
 	{
 		return 64;
 	}

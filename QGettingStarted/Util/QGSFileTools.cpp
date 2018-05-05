@@ -6,7 +6,7 @@
 #include "QGSFileTools.h"
 #include "QGSOperatingSystem.h"
 
-static const QString SEPERATOR(QGSOperatingSystem::getInstance().getSeperator());
+static const QString SEPARATOR(QGSOperatingSystem::getInstance().getSeperator());
 
 QGSFileTools::QGSFileTools(QObject * parent) :QObject(parent)
 {
@@ -40,45 +40,50 @@ bool QGSFileTools::compressDirectory(const QString & file, const QString & direc
 }
 */
 
-QStringList QGSFileTools::extractDirectory(const QString & file, const QString & directory, const QString & password)
+QStringList QGSFileTools::extractDirectory(const QString & filePath, const QString & directory, const QString & password)
 {
 	QStringList ret;
 
 	unz_global_info64 gi;
-	unz_file_info64 FileInfo;
-	unzFile zFile(unzOpen64(file.toLocal8Bit().toStdString().c_str()));
+	unz_file_info64 fileInfo;
+	unzFile zFile(unzOpen64(filePath.toLocal8Bit().toStdString().c_str()));
 
 	if (unzGetGlobalInfo64(zFile, &gi) == UNZ_OK)
 	{
 		for (int i = 0; i < gi.number_entry; i++)
 		{
-			char file[256]{ 0 };
+			QDir newDir;
+			char fileName[256]{ 0 };
 			char ext[256]{ 0 };
 			char com[1024]{ 0 };
-			if (unzGetCurrentFileInfo64(zFile, &FileInfo, file, sizeof(file), ext, 256, com, 1024) != UNZ_OK)
+			if (unzGetCurrentFileInfo64(zFile, &fileInfo, fileName, sizeof(fileName), ext, 256, com, 1024) != UNZ_OK)
 			{
 				unzClose(zFile);
 				ret.clear();
-				return ret;
+				break;
 			}
-			if (!(FileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY))
+
+			QString unzFileName(QString::fromLocal8Bit(fileName));
+			QString path(directory + SEPARATOR + unzFileName);
+			ret << path;
+
+			if (!(fileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY))
 			{
 				unzOpenCurrentFile(zFile);//无密码
 				unzOpenCurrentFilePassword(zFile, password.toLocal8Bit().toStdString().c_str());//有密码
-				QString path(directory + SEPERATOR + file);
-				ret << path;
+
 				QFile targetFile(path);
+				QFileInfo(targetFile).absoluteDir().mkpath("./");
 				if (!targetFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
 				{
 					unzClose(zFile);
 					ret.clear();
-					return ret;
+					break;
 				}
 				while (true)
 				{
 					char data[256]{ 0 };
 					int size(unzReadCurrentFile(zFile, data, 256));
-					//qDebug() << size;
 					if (size <= 0)
 					{
 						break;
@@ -90,12 +95,88 @@ QStringList QGSFileTools::extractDirectory(const QString & file, const QString &
 			}
 			else
 			{
-				QDir newDir;
-				newDir.mkpath(directory + SEPERATOR + file);
+				newDir.mkpath(path);
 				unzCloseCurrentFile(zFile);
 			}
+
 			unzGoToNextFile(zFile);
 		}
+
+		unzClose(zFile);
+	}
+
+	return ret;
+}
+
+QString QGSFileTools::extractFile(const QString & filePath, const QString & file, const QString & directory, const QString & password)
+{
+	QString ret;
+
+	unz_global_info64 gi;
+	unz_file_info64 fileInfo;
+	unzFile zFile(unzOpen64(filePath.toLocal8Bit().toStdString().c_str()));
+
+	if (unzGetGlobalInfo64(zFile, &gi) == UNZ_OK)
+	{
+		for (int i = 0; i < gi.number_entry; i++)
+		{
+			QDir newDir;
+			char fileName[256]{ 0 };
+			char ext[256]{ 0 };
+			char com[1024]{ 0 };
+			if (unzGetCurrentFileInfo64(zFile, &fileInfo, fileName, sizeof(fileName), ext, 256, com, 1024) != UNZ_OK)
+			{
+				unzClose(zFile);
+				ret.clear();
+				break;
+			}
+
+			QString unzFileName(QString::fromLocal8Bit(fileName));
+
+			if (QDir::toNativeSeparators(unzFileName) == QDir::toNativeSeparators(file))
+			{
+				QString path(directory + QDir::separator() + unzFileName);
+
+				if (!(fileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY))
+				{
+					unzOpenCurrentFile(zFile);//无密码
+					unzOpenCurrentFilePassword(zFile, password.toLocal8Bit().toStdString().c_str());//有密码
+
+					QFile targetFile(path);
+					QFileInfo(targetFile).absoluteDir().mkpath("./");
+					if (!targetFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+					{
+						unzClose(zFile);
+						ret.clear();
+						break;
+					}
+					while (true)
+					{
+						char data[256]{ 0 };
+						int size(unzReadCurrentFile(zFile, data, 256));
+						if (size <= 0)
+						{
+							break;
+						}
+						targetFile.write(data, size);
+					}
+					targetFile.close();
+					unzCloseCurrentFile(zFile);
+				}
+				else
+				{
+					newDir.mkpath(path);
+					unzCloseCurrentFile(zFile);
+				}
+
+				ret = path;
+
+				break;
+			}
+
+			unzGoToNextFile(zFile);
+		}
+
 		unzClose(zFile);
 	}
 
@@ -168,11 +249,11 @@ QMap<QString, QString> QGSFileTools::getJavaPathListFromSystemSettings()
 	QSettings * JavaEnvReg;
 
 	//获取其他Java版本
-	if (cpuArchitecture == CpuArchitecture::ARM64 ||
-		cpuArchitecture == CpuArchitecture::IA64 ||
-		cpuArchitecture == CpuArchitecture::MIPS64 ||
-		cpuArchitecture == CpuArchitecture::POWER64 ||
-		cpuArchitecture == CpuArchitecture::X86_64)
+	if (cpuArchitecture == QGSCpuArchitecture::ARM64 ||
+		cpuArchitecture == QGSCpuArchitecture::IA64 ||
+		cpuArchitecture == QGSCpuArchitecture::MIPS64 ||
+		cpuArchitecture == QGSCpuArchitecture::POWER64 ||
+		cpuArchitecture == QGSCpuArchitecture::X86_64)
 	{
 		JavaEnvReg = new QSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\JavaSoft\\Java Runtime Environment", QSettings::Registry64Format);
 	}
@@ -198,7 +279,7 @@ QMap<QString, QString> QGSFileTools::getJavaPathListFromSystemSettings()
 			{
 				str[str.length() - 1] = 0;
 			}
-			ret.insert(prefix, str + SEPERATOR + "bin");
+			ret.insert(prefix, str + QDir::separator() + "bin");
 		}
 
 		JavaEnvReg->endGroup();

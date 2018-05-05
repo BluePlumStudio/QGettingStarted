@@ -15,6 +15,11 @@ QGSLiteLoaderVersionInfoList::~QGSLiteLoaderVersionInfoList()
 
 }
 
+const QGSLiteLoaderVersionInfo & QGSLiteLoaderVersionInfoList::at(const int index)
+{
+	return *(mLiteLoaderVersionInfoMap.begin() + index);
+}
+
 bool QGSLiteLoaderVersionInfoList::addVersionInfo(const QString & version, const QGSLiteLoaderVersionInfo & versionInfo)
 {
 	if (mLiteLoaderVersionInfoMap.contains(version))

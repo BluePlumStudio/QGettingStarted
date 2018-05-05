@@ -21,6 +21,8 @@ public:
 
 	~QGSForgeVersionInfoList();
 
+	const QGSForgeVersionInfo & at(const int index);
+
 	QGSForgeVersionInfo & getVersionInfo(const int build);
 
 	bool addVersionInfo(const QGSForgeVersionInfo & versionInfo);

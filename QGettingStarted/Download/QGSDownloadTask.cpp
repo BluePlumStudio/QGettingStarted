@@ -1,5 +1,4 @@
 #include <QFileInfo>
-#include <QCoreApplication>
 #include <QDir>
 #include <QMutexLocker>
 #include <QMutex>
@@ -14,6 +13,7 @@
 static const QString SEPARATOR(QGSOperatingSystem::getInstance().getSeperator());
 quint64 QGSDownloadTask::mLargeFileSize(4194304);
 quint64 QGSDownloadTask::mSmallFileSize(262144);
+const int QGSDownloadTask::DefaultConnectionCount(4);
 /**/
 
 QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & proxy, QObject * parent)
@@ -27,7 +27,7 @@ QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & prox
 {
 	if (connectionCount < 1)
 	{
-		connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
+		connectionCount = QGSDownloadTask::DefaultConnectionCount;
 	}
 }
 
@@ -49,7 +49,7 @@ QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & dow
 
 	if (connectionCount < 1)
 	{
-		connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
+		connectionCount = QGSDownloadTask::DefaultConnectionCount;
 	}
 
 	mDownloadInfo.setPath(mTargetFilePtr->fileName());
@@ -122,6 +122,8 @@ void QGSDownloadTask::setSmallFileSize(const quint64 bytes)
 
 void QGSDownloadTask::templateStart(QGSTask * task)
 {
+	emit started(this);
+
 	if (mState != DownloadState::Start)
 	{
 		mState = DownloadState::Start;
@@ -172,7 +174,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 			mBytesTotal = getFileSize();
 			if (mConnectionCount > mBytesTotal)
 			{
-				mConnectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT;
+				mConnectionCount = QGSDownloadTask::DefaultConnectionCount;
 			}
 
 			if (mBytesTotal <= mSmallFileSize)
@@ -180,7 +182,6 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 				mConnectionCount = 1;
 			}
 
-			//qDebug() << url << "Connection count:" << mConnectionCount;
 			for (int i = 0; i < mConnectionCount; i++)
 			{
 				qint64 bytesBegin(mBytesTotal*i / mConnectionCount);
@@ -200,12 +201,12 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 			}
 		}
 	}
-
-	emit started(this);
 }
 
 void QGSDownloadTask::templateStop(QGSTask * task)
 {
+	emit stoped(this);
+
 	if (mState != DownloadState::Stop)
 	{
 		mState = DownloadState::Stop;
@@ -221,8 +222,6 @@ void QGSDownloadTask::templateStop(QGSTask * task)
 			mTargetFilePtr->close();
 		}
 	}
-
-	emit stoped(this);
 }
 
 void QGSDownloadTask::templateCancel(QGSTask * task)

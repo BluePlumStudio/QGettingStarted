@@ -12,7 +12,7 @@ class QGSBuilderFactory : public QObject
 	Q_OBJECT
 
 public:
-	QGSBuilderFactory(QObject *parent = nullptr);
+	QGSBuilderFactory(QGSThreadPoolManager * threadPoolManagerPtr, QObject *parent = nullptr);
 
 	QGSBuilderFactory(const QGSBuilderFactory & right) = delete;
 
@@ -31,4 +31,6 @@ public:
 	QGSAssetBuilder * createAssetBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
 
 	//QGSForgeBuilder * createForgeBuilder(QGSForgeVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory);
+private:
+	QGSThreadPoolManager * mThreadPoolManagerPtr;
 };

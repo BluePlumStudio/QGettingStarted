@@ -10,7 +10,8 @@ public:
 	friend class QGSGameVersionJsonDownloadTaskGenerationTask;
 	friend class QGSGameVersionDownloadTaskGenerationTask;
 
-	QGSGameVersionBuilder(QGSGameVersionInfo & versionInfo, 
+	QGSGameVersionBuilder(QGSThreadPoolManager * threadPoolManagerPtr, 
+		QGSGameVersionInfo & versionInfo,
 		QGSGameDirectory * gameDirectory, 
 		QGSDownloadTaskFactory * downloadTaskFactory, 
 		QObject * parent = nullptr);

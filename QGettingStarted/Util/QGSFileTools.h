@@ -31,7 +31,9 @@ public:
 
     //static bool compressDirectory(const QString & file, const QString & directory, bool recursive = true);
 
-	static QStringList extractDirectory(const QString & file, const QString & directory, const QString & password = QString());
+	static QStringList extractDirectory(const QString & filePath, const QString & directory, const QString & password = QString());
+
+	static QString extractFile(const QString & filePath, const QString & file, const QString & directory, const QString & password = QString());
 
 	static bool removeDirectory(const QString & absolutPath);
 

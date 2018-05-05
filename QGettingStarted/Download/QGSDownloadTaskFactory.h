@@ -36,7 +36,7 @@ public:
 
 	virtual ~QGSDownloadTaskFactory();
 
-	QGSDownloadTaskFactory & setConnectionCount(const int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT);
+	QGSDownloadTaskFactory & setConnectionCount(const int connectionCount = QGSDownloadTask::DefaultConnectionCount);
 
 	int getConnectionCount()const;
 

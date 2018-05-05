@@ -6,7 +6,6 @@
 
 namespace DownloadTask
 {
-	const int DEFAULT_CONNECTION_COUNT(16);
 }
 
 enum class DownloadState
@@ -20,9 +19,9 @@ class QGSDownloadTask : public QGSTask
 	Q_OBJECT
 
 public:
-	QGSDownloadTask(int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSDownloadTask(int connectionCount = QGSDownloadTask::DefaultConnectionCount, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
-	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int connectionCount = DownloadTask::DEFAULT_CONNECTION_COUNT, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
+	QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int connectionCount = QGSDownloadTask::DefaultConnectionCount, const QNetworkProxy & proxy = QNetworkProxy::NoProxy, QObject *parent = nullptr);
 
 	QGSDownloadTask(const QGSDownloadTask & right) = delete;
 
@@ -72,6 +71,8 @@ private slots:
 private:
 	quint64 getFileSize();
 	void cancelTask();
+public:
+	static const int DefaultConnectionCount;
 protected:
 	QMutex mMutex;
 	QFile * mTargetFilePtr;

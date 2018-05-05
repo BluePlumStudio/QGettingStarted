@@ -26,6 +26,8 @@ QString QGSNetworkError::getErrorString()const
 
 /**/
 
+const int QGSNetworkAccessManager::DefaultTimeout = 300000;
+
 QGSNetworkAccessManager::QGSNetworkAccessManager(QObject * parent) :QNetworkAccessManager(parent)//, mManager(new QNetworkAccessManager)
 {
 }
@@ -63,49 +65,6 @@ QNetworkRequest QGSNetworkAccessManager::generateHttpsNetworkRequest(QSsl::SslPr
 
 	return networkRequest;
 }
-
-/*
-QGSNetworkAccessManager & QGSNetworkAccessManager::setProxy(QNetworkProxy proxy)
-{
-	mManager->setProxy(proxy);
-	return *this;
-}
-
-QNetworkReply * QGSNetworkAccessManager::get(const QNetworkRequest & request)
-{
-	return mManager->get(request);
-}
-
-QNetworkReply * QGSNetworkAccessManager::post(const QNetworkRequest & request, QIODevice * data)
-{
-	return mManager->post(request, data);
-}
-
-QNetworkReply * QGSNetworkAccessManager::post(const QNetworkRequest & request, const QByteArray & data)
-{
-	return mManager->post(request, data);
-}
-
-QNetworkReply * QGSNetworkAccessManager::post(const QNetworkRequest & request, QHttpMultiPart * multiPart)
-{
-	return mManager->post(request, multiPart);
-}
-
-QNetworkProxy QGSNetworkAccessManager::proxy() const
-{
-	return mManager->proxy();
-}
-
-void QGSNetworkAccessManager::connectToHost(const QString & hostName, quint16 port)
-{
-	mManager->connectToHost(hostName, port);
-}
-
-void QGSNetworkAccessManager::connectToHostEncrypted(const QString & hostName, quint16 port, const QSslConfiguration & sslConfiguration)
-{
-	mManager->connectToHostEncrypted(hostName, port, sslConfiguration);
-}
-*/
 
 QGSNetworkAccessManager & QGSNetworkAccessManager::getGlobalInstance()
 {

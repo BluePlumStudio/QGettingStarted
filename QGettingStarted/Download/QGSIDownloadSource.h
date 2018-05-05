@@ -7,7 +7,7 @@
 #include "../GameVersion/QGSGameVersion.h"
 #include "../GameVersion/QGSGameVersionInfoList.h"
 
-namespace ApiName
+namespace QGSGameApiName
 {
 	static const QString Forge("forge");
 	static const QString LiteLoader("liteloader");

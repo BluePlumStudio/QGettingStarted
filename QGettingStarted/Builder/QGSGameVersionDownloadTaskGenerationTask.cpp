@@ -77,7 +77,7 @@ void QGSGameVersionDownloadTaskGenerationTask::templateStart(QGSTask * task)
 
 	QObject::connect(downloadTask, &QGSDownloadTask::error, mGameVersionBuilderPtr, &QGSGameVersionBuilder::slotDownloadTaskError);
 
-	mGameVersionBuilderPtr->mThreadPool.addTaskBack(downloadTask);
+	mGameVersionBuilderPtr->mThreadPoolManagerPtr->addTaskBack(downloadTask);
 
 	emit finished(this);
 }

@@ -31,6 +31,8 @@ public:
 	//QGSTaskThread & setTask(QGSTask * task);
 
 	void exit(int returnCode = 0);
+
+	void quit();
 signals:
 	void taskStarted(QGSTask * task);
 	void taskFinished(QGSTask* task);
@@ -39,7 +41,8 @@ private:
 private:
 	QGSThreadPool * mThreadPoolPtr;
 	QGSTask * mTask;
-	//QMutex mMutex;
+	QMutex mConditionMutex;
+
 	bool mActive;
 	bool mExit;
 };

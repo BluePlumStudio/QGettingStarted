@@ -70,7 +70,7 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSGameVersionJsonDownloadTaskGenerationTask::wakeGameVersionJsonDownloadTaskEnded, Qt::ConnectionType::DirectConnection);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, mGameVersionBuilderPtr, &QGSGameVersionBuilder::slotDownloadTaskError);
 
-	mGameVersionBuilderPtr->mThreadPool.addTaskBack(downloadTask);
+	mGameVersionBuilderPtr->mThreadPoolManagerPtr->addTaskBack(downloadTask);
 
 	emit finished(this);
 }

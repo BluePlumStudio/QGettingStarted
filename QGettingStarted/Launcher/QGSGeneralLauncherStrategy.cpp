@@ -16,15 +16,15 @@ QGSGeneralLauncherStrategy::~QGSGeneralLauncherStrategy()
 {
 }
 
-LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(const QGSGameVersion & version,
+QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(const QGSGameVersion & version,
 	QGSGameDirectory & gameDirectory,
 	const QGSLaunchOptions * launchOptions,
 	QString & command)
 {
-	LauncherError::ErrorFlags ret(LauncherError::Ok);
+	QGSLauncherError::ErrorFlags ret(QGSLauncherError::Ok);
 	if (!launchOptions)
 	{
-		return ret |= LauncherError::NullPointer;
+		return ret |= QGSLauncherError::ErrorNullPointer;
 	}
 
 	QStringList launchCommandList;//launchCommand
@@ -41,14 +41,14 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 	}
 	catch (const QGSExceptionVersionNotFound & exception)
 	{
-		return ret |= LauncherError::JarFileNotFound;
+		return ret |= QGSLauncherError::ErrorJarFileNotFound;
 	}
 
 	//根版本Jar文件
 	QSharedPointer<QFile> rootVersionJarFile(gameDirectory.generateGameVersionJarFile(rootVersionId));
 	if (!rootVersionJarFile->exists())
 	{
-		return ret |= LauncherError::JarFileNotFound;
+		return ret |= QGSLauncherError::ErrorJarFileNotFound;
 	}
 	//前置指令
 	const auto && wrapper(launchOptions->getWrapper());
@@ -60,7 +60,7 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 	const auto && JavaPath(launchOptions->getJavaPath());
 	if (JavaPath.isEmpty())
 	{
-		ret |= LauncherError::JavaPathNotIncluded;
+		ret |= QGSLauncherError::WarningJavaPathNotIncluded;
 	}
 	launchCommandList.append(QString("\"%1\"").arg(JavaPath));
 	//JVM虚拟机参数
@@ -165,7 +165,7 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 				if (extractList.isEmpty())
 				{
 					//throw QGSExceptionCompress(libraryPath, nativesDirectory.absolutePath());
-					ret |= LauncherError::NativesCompressError;
+					ret |= QGSLauncherError::WarningNativesCompressError;
 				}
 
 				auto && excludeList(libraryList[i].getExtract().getExclude());
@@ -173,7 +173,7 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 				{
 					if (!QGSFileTools::removeDirectory(nativesDirectory.absolutePath() + SEPARATOR + exclude))
 					{
-						ret |= LauncherError::NativesCompressError;
+						ret |= QGSLauncherError::WarningNativesCompressError;
 					}
 				}
 
@@ -212,32 +212,32 @@ LauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(cons
 	QDir assetsDirectory;
 	if (!gameDirectory.generateAssetsDirectory(rootVersionId, rootVersion.getAssetIndex(), assetsDirectory))
 	{
-		ret |= LauncherError::AssetFirectoryGenerateFailure;
+		ret |= QGSLauncherError::WarningAssetDirectoryGenerationFailure;
 	}
 	auto && assetsDirAbsolutePath(assetsDirectory.absolutePath());
 
 	auto && authPlayerName(authInfo.getSelectedProfile().getName());
 	if (authPlayerName.isEmpty())
 	{
-		return ret |= LauncherError::PlayerNameNotIncluded;
+		return ret |= QGSLauncherError::ErrorPlayerNameNotIncluded;
 	}
 
 	auto && authUuid(authInfo.getSelectedProfile().getId());
 	if (authUuid.isEmpty())
 	{
-		return ret |= LauncherError::AuthUuidNotIncluded;
+		return ret |= QGSLauncherError::ErrorAuthUuidNotIncluded;
 	}
 
 	auto && authAccessToken(authInfo.getAccessToken());
 	if (authAccessToken.isEmpty())
 	{
-		return ret |= LauncherError::AuthAccessTokenNotIncluded;
+		return ret |= QGSLauncherError::ErrorAuthAccessTokenNotIncluded;
 	}
 
 	auto && userType(authInfo.getUserType());
 	if (userType.isEmpty())
 	{
-		return ret |= LauncherError::UserTypeNotIncluded;
+		return ret |= QGSLauncherError::ErrorUserTypeNotIncluded;
 	}
 
 	minecraftArguments.replace("${auth_player_name}", customMinecraftArguments.contains("${auth_player_name}") ? customMinecraftArguments.value("${auth_player_name}") : authPlayerName)

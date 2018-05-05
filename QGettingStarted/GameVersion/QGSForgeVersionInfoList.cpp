@@ -25,6 +25,11 @@ QGSForgeVersionInfoList::~QGSForgeVersionInfoList()
 {
 }
 
+const QGSForgeVersionInfo & QGSForgeVersionInfoList::at(const int index)
+{
+	return mForgeVersionInfoVector.at(index);
+}
+
 QGSForgeVersionInfo & QGSForgeVersionInfoList::getVersionInfo(const int build)
 {
 	auto it(findForgeVersionInfo(build));

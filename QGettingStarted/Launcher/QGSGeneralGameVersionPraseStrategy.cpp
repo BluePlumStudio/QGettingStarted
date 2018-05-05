@@ -345,14 +345,14 @@ QGSRules QGSGeneralGameVersionPraseStrategy::praseRules(const QJsonArray & array
 	{
 		auto ruleObject = i.toObject();
 
-		auto action(ruleObject.contains("action") ? ruleObject.value("action").toString() : Action::ALLOW);
+		auto action(ruleObject.contains("action") ? ruleObject.value("action").toString() : QGSAction::ALLOW);
 		QMap<QString, bool> featureMap;
-		QString os(OS::UNKNOWN);
+		QString os(QGSOperatingSystem::UNKNOWN);
 		QString osVersion;
 		if (ruleObject.contains("os"))
 		{
 			auto objectOs = ruleObject.value("os").toObject();
-			os = objectOs.contains("name") ? objectOs.value("name").toString() : OS::UNKNOWN;
+			os = objectOs.contains("name") ? objectOs.value("name").toString() : QGSOperatingSystem::UNKNOWN;
 			osVersion = objectOs.contains("version") ? objectOs.value("version").toString() : "";
 		}
 		if (ruleObject.contains("features"))

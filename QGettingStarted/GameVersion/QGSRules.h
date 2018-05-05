@@ -7,7 +7,7 @@
 
 #include "../Util/QGSOperatingSystem.h"
 
-namespace Action
+namespace QGSAction
 {
 	const QString ALLOW("allow");
 	const QString DISALLOW("disallow");
@@ -19,7 +19,7 @@ public:
 	class QGSRule
 	{
 	public:
-		QGSRule(const QString & action = Action::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = OS::UNKNOWN, const QString & osVersion = "");
+		QGSRule(const QString & action = QGSAction::ALLOW, const QMap<QString, bool> & features = QMap<QString, bool>(), const QString & os = QGSOperatingSystem::UNKNOWN, const QString & osVersion = "");
 
 		QGSRule(const QGSRule & right) = default;
 

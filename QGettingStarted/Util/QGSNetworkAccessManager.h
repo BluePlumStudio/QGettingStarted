@@ -10,11 +10,6 @@
 #include <QSslSocket>
 #include <QMetaType>
 
-namespace Network
-{
-	static const int DefaultTimeout = 300000;
-}
-
 class QGSNetworkError
 {
 public:
@@ -63,24 +58,7 @@ public:
 	static QNetworkRequest generateNetworkRequest();
 
 	static QNetworkRequest generateHttpsNetworkRequest(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1SslV3);
-	/*
-	QGSNetworkAccessManager & setProxy(QNetworkProxy proxy = QNetworkProxy::NoProxy);
-
-	QNetworkReply * get(const QNetworkRequest &request);
-
-	QNetworkReply * post(const QNetworkRequest &request, QIODevice *data);
-
-	QNetworkReply * post(const QNetworkRequest &request, const QByteArray &data);
-
-	QNetworkReply * post(const QNetworkRequest &request, QHttpMultiPart *multiPart);
-
-	QNetworkProxy proxy()const;	
-
-	void connectToHost(const QString &hostName, quint16 port = 80);
-
-	void connectToHostEncrypted(const QString &hostName, quint16 port = 443, const QSslConfiguration &sslConfiguration = QSslConfiguration::defaultConfiguration());
-	*/
-private:
-	//QNetworkAccessManager * mManager;
+public:
+	static const int DefaultTimeout;
 };
 

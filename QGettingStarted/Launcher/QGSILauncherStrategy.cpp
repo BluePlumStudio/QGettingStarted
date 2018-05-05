@@ -27,7 +27,7 @@ bool QGSILauncherStrategy::isRulesAllowing(const QGSRules & rules)
 		ret = true;
 	}
 
-	if (osName.contains(OS::MACOS))
+	if (osName.contains(QGSOperatingSystem::MACOS))
 	{
 		//解决部分json中"osx"显示为"macos"的问题
 		osName = "os";
@@ -37,7 +37,7 @@ bool QGSILauncherStrategy::isRulesAllowing(const QGSRules & rules)
 	{
 		auto && version = praseOsVersion(i.getOsVersion());
 
-		if (i.getAction() == Action::ALLOW)
+		if (i.getAction() == QGSAction::ALLOW)
 		{
 			if (i.getOs().contains(osName))
 			{
@@ -52,12 +52,12 @@ bool QGSILauncherStrategy::isRulesAllowing(const QGSRules & rules)
 					break;
 				}
 			}
-			else if (i.getOs() == OS::UNKNOWN || i.getOs().isEmpty())
+			else if (i.getOs() == QGSOperatingSystem::UNKNOWN || i.getOs().isEmpty())
 			{
 				ret = true;
 			}
 		}
-		else if (i.getAction() == Action::DISALLOW)
+		else if (i.getAction() == QGSAction::DISALLOW)
 		{
 			if (i.getOs().contains(osName))
 			{
@@ -72,7 +72,7 @@ bool QGSILauncherStrategy::isRulesAllowing(const QGSRules & rules)
 					break;
 				}
 			}
-			else if (i.getOs() == OS::UNKNOWN || i.getOs().isEmpty())
+			else if (i.getOs() == QGSOperatingSystem::UNKNOWN || i.getOs().isEmpty())
 			{
 				ret = false;
 			}

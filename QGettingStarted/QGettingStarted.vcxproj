@@ -17,11 +17,11 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -186,6 +186,7 @@
     <ClCompile Include="Util\QGSTask.cpp" />
     <ClCompile Include="Util\QGSTaskThread.cpp" />
     <ClCompile Include="Util\QGSThreadPool.cpp" />
+    <ClCompile Include="Util\QGSThreadPoolManager.cpp" />
     <ClCompile Include="Util\QGSUuidGenerator.cpp" />
     <ClCompile Include="Util\zlib\inffas86.c" />
     <ClCompile Include="Util\zlib\ioapi.c" />
@@ -195,6 +196,7 @@
     <ClCompile Include="Util\zlib\zip.c" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="Util\QGSThreadPoolManager.h" />
     <QtMoc Include="Download\QGSOfficialDownloadSource.h" />
     <QtMoc Include="Download\QGSAssetIndexJsonDownloadTask.h" />
     <QtMoc Include="Download\QGSAssetObjectDownloadTask.h" />

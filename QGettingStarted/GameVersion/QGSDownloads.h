@@ -7,14 +7,6 @@
 #include <QObject>
 #include <QMetaType>
 
-namespace DownloadType
-{
-	const QString CLIENT("client");
-	const QString SERVER("server");
-	const QString WINDOWS_SERVER("windows_server");
-	const QString UNKNOWN("unknown");
-}
-
 class QGSDownloadBase
 {
 public:

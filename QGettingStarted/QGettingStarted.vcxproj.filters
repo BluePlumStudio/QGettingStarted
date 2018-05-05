@@ -45,9 +45,6 @@
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
       <ParseFiles>true</ParseFiles>
     </Filter>
-    <Filter Include="Util\Exception">
-      <UniqueIdentifier>{abd4a1be-2ffb-4d2d-82f2-4087570ee8e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Util\ThreadPool">
       <UniqueIdentifier>{772bd40e-a123-45c5-a7a3-f63190d58f27}</UniqueIdentifier>
     </Filter>
@@ -65,6 +62,9 @@
     </Filter>
     <Filter Include="Builder\DownloadTaskGenerationTask">
       <UniqueIdentifier>{772475a1-fdca-40ee-ab2e-a65c6ce16090}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util\Exception">
+      <UniqueIdentifier>{abd4a1be-2ffb-4d2d-82f2-4087570ee8e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -330,6 +330,9 @@
     <ClCompile Include="Launcher\QGSIGameVersionPraseStrategy.cpp">
       <Filter>Launcher</Filter>
     </ClCompile>
+    <ClCompile Include="Util\QGSThreadPoolManager.cpp">
+      <Filter>Util\ThreadPool</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h">
@@ -577,6 +580,9 @@
     </QtMoc>
     <QtMoc Include="Launcher\QGSGameVersionPraser.h">
       <Filter>Launcher</Filter>
+    </QtMoc>
+    <QtMoc Include="Util\QGSThreadPoolManager.h">
+      <Filter>Util\ThreadPool</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

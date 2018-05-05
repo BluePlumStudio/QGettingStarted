@@ -14,7 +14,7 @@
 #include "../GameVersion/QGSLiteLoaderVersionInfoListFactory.h"
 #include "../GameVersion/QGSOptifineVersionInfoListFactory.h"
 #include "../Launcher/QGSGameDirectory.h"
-#include "../Util/QGSThreadPool.h"
+#include "../Util/QGSThreadPoolManager.h"
 #include "QGSDownloadTaskGenerationTask.h"
 
 class QGSIBuilder :public QGSTask
@@ -22,7 +22,7 @@ class QGSIBuilder :public QGSTask
 	Q_OBJECT
 
 public:
-	QGSIBuilder(QObject * parent = nullptr);
+	QGSIBuilder(QGSThreadPoolManager * threadPoolManagerPtr, QObject * parent = nullptr);
 
 	QGSIBuilder(const QGSIBuilder & right) = delete;
 
@@ -33,8 +33,6 @@ public:
 	QGSIBuilder & operator=(QGSIBuilder && right) = delete;
 
 	virtual ~QGSIBuilder();
-
-	static QGSThreadPool & getThreadPool();
 
 	QString getLastErrorString();
 signals:
@@ -48,8 +46,7 @@ signals:
 protected slots:
 	void setLastErrorString(QString lastErrorString);
 protected:
-	static QGSThreadPool mThreadPool;
-
 	QMutex mMutex;
 	QString mLastErrorString;
+	QGSThreadPoolManager * mThreadPoolManagerPtr;
 };

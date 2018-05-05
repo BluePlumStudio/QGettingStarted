@@ -1,8 +1,13 @@
 #include "QGSBuilderFactory.h"
+#include "../Util/QGSExceptionInvalidValue.h"
 
-QGSBuilderFactory::QGSBuilderFactory(QObject *parent)
-	: QObject(parent)
+QGSBuilderFactory::QGSBuilderFactory(QGSThreadPoolManager * threadPoolManagerPtr, QObject *parent)
+	: QObject(parent), mThreadPoolManagerPtr(threadPoolManagerPtr)
 {
+	if (!mThreadPoolManagerPtr)
+	{
+		throw QGSExceptionInvalidValue();
+	}
 }
 
 QGSBuilderFactory::~QGSBuilderFactory()
@@ -11,17 +16,17 @@ QGSBuilderFactory::~QGSBuilderFactory()
 
 QGSGameVersionBuilder * QGSBuilderFactory::createGameVersionBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
 {
-	return new QGSGameVersionBuilder(versionInfo, gameDirectory, downloadTaskFactory);
+	return new QGSGameVersionBuilder(mThreadPoolManagerPtr, versionInfo, gameDirectory, downloadTaskFactory);
 }
 
 QGSLibraryBuilder * QGSBuilderFactory::createLibraryBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
 {
-	return new QGSLibraryBuilder(versionInfo, gameDirectory, downloadTaskFactory);
+	return new QGSLibraryBuilder(mThreadPoolManagerPtr, versionInfo, gameDirectory, downloadTaskFactory);
 }
 
 QGSAssetBuilder * QGSBuilderFactory::createAssetBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory)
 {
-	return new QGSAssetBuilder(versionInfo, gameDirectory, downloadTaskFactory);
+	return new QGSAssetBuilder(mThreadPoolManagerPtr, versionInfo, gameDirectory, downloadTaskFactory);
 }
 
 /*

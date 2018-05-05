@@ -10,7 +10,8 @@ public:
 	friend class QGSAssetIndexJsonDownloadTaskGenerationTask;
 	friend class QGSAssetObjectDownloadTaskGenerationTask;
 
-	QGSAssetBuilder(QGSGameVersionInfo & versionInfo, 
+	QGSAssetBuilder(QGSThreadPoolManager * threadPoolManagerPtr,
+		QGSGameVersionInfo & versionInfo,
 		QGSGameDirectory * gameDirectory, 
 		QGSDownloadTaskFactory * downloadTaskFactory, 
 		QObject * parent = nullptr);

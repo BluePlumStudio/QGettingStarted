@@ -27,6 +27,8 @@ public:
 
 	~QGSLiteLoaderVersionInfoList();
 
+	const QGSLiteLoaderVersionInfo & at(const int index);
+
 	bool addVersionInfo(const QString & version, const QGSLiteLoaderVersionInfo & versionInfo);
 
 	bool removeVersionInfo(const QString & version);

@@ -57,7 +57,7 @@ QString QGSRules::QGSRule::getOsVersion()const
 
 void QGSRules::QGSRule::clear()
 {
-	mAction = Action::ALLOW;
+	mAction = QGSAction::ALLOW;
 	mFeatures.clear();
 	mOs.clear();
 }

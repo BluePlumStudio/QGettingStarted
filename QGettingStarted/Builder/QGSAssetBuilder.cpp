@@ -7,8 +7,14 @@
 #include "QGSAssetObjectDownloadTaskGenerationTask.h"
 /**/
 
-QGSAssetBuilder::QGSAssetBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory, QObject * parent)
-	:QGSIBuilder(parent),
+QGSAssetBuilder::QGSAssetBuilder(
+	QGSThreadPoolManager * threadPoolManagerPtr,
+	QGSGameVersionInfo & versionInfo, 
+	QGSGameDirectory * gameDirectory, 
+	QGSDownloadTaskFactory * downloadTaskFactory,
+	QObject * parent)
+
+	:QGSIBuilder(threadPoolManagerPtr, parent),
 	mVersionInfo(versionInfo),
 	mGameDirectoryPtr(gameDirectory),
 	mDownloadTaskFactoryPtr(downloadTaskFactory),
@@ -64,7 +70,7 @@ void QGSAssetBuilder::templateStart(QGSTask * task)
 	{
 		for (auto & task : mTaskList)
 		{
-			QMetaObject::invokeMethod(task, "start", Qt::ConnectionType::QueuedConnection);
+			task->start();
 		}
 	}
 	else
@@ -81,7 +87,7 @@ void QGSAssetBuilder::templateStop(QGSTask * task)
 
 	for (auto & task : mTaskList)
 	{
-		QMetaObject::invokeMethod(task, "stop", Qt::ConnectionType::DirectConnection);
+		task->stop();
 	}
 }
 
@@ -93,7 +99,7 @@ void QGSAssetBuilder::templateCancel(QGSTask * task)
 
 	for (auto & task : mTaskList)
 	{
-		QMetaObject::invokeMethod(task, "cancel", Qt::ConnectionType::DirectConnection);
+		task->cancel();
 	}
 }
 
@@ -122,7 +128,7 @@ void QGSAssetBuilder::slotDownloadTaskCanceled(QGSTask * task)
 
 	emit downloadTaskCanceled(dynamic_cast<QGSDownloadTask *>(task));
 
-	slotFinished();
+	//slotFinished();
 }
 
 void QGSAssetBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
@@ -185,13 +191,13 @@ QGSDownloadTaskGenerationTask * QGSAssetBuilder::initAssetIndexJsonDownloadTaskG
 	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
+	//QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::slotEraseTask);
 	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
 
 	mTaskList.push_back(generationTask);
-	mThreadPool.addTaskBack(generationTask);
+	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;
 }
@@ -204,13 +210,13 @@ QGSDownloadTaskGenerationTask * QGSAssetBuilder::initAssetObjectDownloadTaskGene
 	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
+	//QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::slotEraseTask);
 	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
 
 	mTaskList.push_back(generationTask);
-	mThreadPool.addTaskBack(generationTask);
+	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;
 }

@@ -4,26 +4,18 @@
 #include "../Util/QGSExceptionInvalidValue.h"
 #include "../Util/QGSExceptionIO.h"
 
-QGSThreadPool QGSIBuilder::mThreadPool(0, 16);
-
-QGSIBuilder::QGSIBuilder(QObject * parent)
-	:QGSTask(parent), mLastErrorString("")
+QGSIBuilder::QGSIBuilder(QGSThreadPoolManager * threadPoolManagerPtr, QObject * parent)
+	:QGSTask(parent), mLastErrorString(""), mThreadPoolManagerPtr(threadPoolManagerPtr)
 {
-	if (!mThreadPool.isRunning())
+	if (!mThreadPoolManagerPtr)
 	{
-		QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, &mThreadPool, &QGSThreadPool::quit);
-		mThreadPool.start();
+		throw QGSExceptionInvalidValue();
 	}
 }
 
 QGSIBuilder::~QGSIBuilder()
 {
 
-}
-
-QGSThreadPool & QGSIBuilder::getThreadPool()
-{
-	return mThreadPool;
 }
 
 QString QGSIBuilder::getLastErrorString()

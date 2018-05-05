@@ -7,8 +7,14 @@
 #include "QGSGameVersionDownloadTaskGenerationTask.h"
 /**/
 
-QGSLibraryBuilder::QGSLibraryBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory, QObject * parent)
-	:QGSIBuilder(parent),
+QGSLibraryBuilder::QGSLibraryBuilder(
+	QGSThreadPoolManager * threadPoolManagerPtr,
+	QGSGameVersionInfo & versionInfo,
+	QGSGameDirectory * gameDirectory,
+	QGSDownloadTaskFactory * downloadTaskFactory,
+	QObject * parent)
+
+	:QGSIBuilder(threadPoolManagerPtr, parent),
 	mVersionInfo(versionInfo),
 	mGameDirectoryPtr(gameDirectory),
 	mDownloadTaskFactoryPtr(downloadTaskFactory),
@@ -64,7 +70,7 @@ void QGSLibraryBuilder::templateStart(QGSTask * task)
 	{
 		for (auto & task : mTaskList)
 		{
-			QMetaObject::invokeMethod(task, "start", Qt::ConnectionType::QueuedConnection);
+			task->start();
 		}
 	}
 	else
@@ -81,7 +87,7 @@ void QGSLibraryBuilder::templateStop(QGSTask * task)
 
 	for (auto & task : mTaskList)
 	{
-		QMetaObject::invokeMethod(task, "stop", Qt::ConnectionType::DirectConnection);
+		task->stop();
 	}
 }
 
@@ -93,7 +99,7 @@ void QGSLibraryBuilder::templateCancel(QGSTask * task)
 
 	for (auto & task : mTaskList)
 	{
-		QMetaObject::invokeMethod(task, "cancel", Qt::ConnectionType::DirectConnection);
+		task->cancel();
 	}
 }
 
@@ -122,7 +128,7 @@ void QGSLibraryBuilder::slotDownloadTaskCanceled(QGSTask * task)
 
 	emit downloadTaskCanceled(dynamic_cast<QGSDownloadTask *>(task));
 
-	slotFinished();
+	//slotFinished();
 }
 
 void QGSLibraryBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
@@ -235,7 +241,7 @@ bool QGSLibraryBuilder::initLibraryDownloadTasks()
 		ret = true;
 
 		mTaskList.push_back(downloadTask);
-		mThreadPool.addTaskBack(downloadTask);
+		mThreadPoolManagerPtr->addTaskBack(downloadTask);
 	}
 
 	return ret;

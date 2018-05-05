@@ -10,8 +10,6 @@ QGSTaskThread::QGSTaskThread(QGSThreadPool * threadPool) :mThreadPoolPtr(threadP
 	{
 		throw QGSExceptionInvalidValue();
 	}
-
-	QObject::connect(QCoreApplication::instance(), &QCoreApplication::aboutToQuit, this, &QGSThreadPool::quit);
 }
 
 QGSTaskThread::~QGSTaskThread()
@@ -33,11 +31,16 @@ void QGSTaskThread::exit(int returnCode)
 	QThread::exit(returnCode);
 }
 
+void QGSTaskThread::quit()
+{
+	exit(0);
+}
+
 void QGSTaskThread::run()
 {
 	if (!mThreadPoolPtr)
 	{
-		//exception
+		throw QGSExceptionInvalidValue();
 	}
 
 	QEventLoop eventLoop;
@@ -45,8 +48,6 @@ void QGSTaskThread::run()
 	do
 	{
 		mThreadPoolPtr->mMutex.lock();
-
-		//qDebug() << "Thread:" << this;
 
 		if (mExit)
 		{
@@ -58,7 +59,18 @@ void QGSTaskThread::run()
 		{
 			mActive = false;
 
-			mThreadPoolPtr->mMutex.unlock();
+			if (!mThreadPoolPtr->mTaskQueue.size())
+			{
+				mThreadPoolPtr->mMutex.unlock();
+
+				mConditionMutex.lock();
+				mThreadPoolPtr->mTaskThreadActive.wait(&mConditionMutex);
+				mConditionMutex.unlock();
+			}
+			else
+			{
+				mThreadPoolPtr->mMutex.unlock();
+			}
 
 			continue;
 		}
@@ -70,10 +82,10 @@ void QGSTaskThread::run()
 		QObject::connect(newTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(newTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
 		QObject::connect(newTask, &QGSTask::error, &eventLoop, &QEventLoop::quit, Qt::ConnectionType::QueuedConnection);
-		//emit taskStarted(mTask);
+
 		QMetaObject::invokeMethod(newTask, "start", Qt::ConnectionType::DirectConnection);
 		eventLoop.exec();
-		//mTask->moveToOriginalThread();
+
 		emit taskFinished(newTask);
 		QObject::disconnect(newTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
 		QObject::disconnect(newTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);

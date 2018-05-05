@@ -7,8 +7,14 @@
 #include "QGSGameVersionDownloadTaskGenerationTask.h"
 /**/
 
-QGSGameVersionBuilder::QGSGameVersionBuilder(QGSGameVersionInfo & versionInfo, QGSGameDirectory * gameDirectory, QGSDownloadTaskFactory * downloadTaskFactory, QObject * parent)
-	:QGSIBuilder(parent),
+QGSGameVersionBuilder::QGSGameVersionBuilder(
+	QGSThreadPoolManager * threadPoolManagerPtr,
+	QGSGameVersionInfo & versionInfo,
+	QGSGameDirectory * gameDirectory,
+	QGSDownloadTaskFactory * downloadTaskFactory,
+	QObject * parent)
+
+	:QGSIBuilder(threadPoolManagerPtr, parent), 
 	mVersionInfo(versionInfo),
 	mGameDirectoryPtr(gameDirectory),
 	mDownloadTaskFactoryPtr(downloadTaskFactory),
@@ -66,7 +72,7 @@ void QGSGameVersionBuilder::templateStart(QGSTask * task)
 	{
 		for (auto & task : mTaskList)
 		{
-			QMetaObject::invokeMethod(task, "start", Qt::ConnectionType::QueuedConnection);
+			task->start();
 		}
 	}
 	else
@@ -83,7 +89,7 @@ void QGSGameVersionBuilder::templateStop(QGSTask * task)
 
 	for (auto & task : mTaskList)
 	{
-		QMetaObject::invokeMethod(task, "stop", Qt::ConnectionType::DirectConnection);
+		task->stop();
 	}
 }
 
@@ -95,7 +101,7 @@ void QGSGameVersionBuilder::templateCancel(QGSTask * task)
 
 	for (auto & task : mTaskList)
 	{
-		QMetaObject::invokeMethod(task, "cancel", Qt::ConnectionType::DirectConnection);
+		task->cancel();
 	}
 }
 
@@ -120,13 +126,11 @@ void QGSGameVersionBuilder::slotDownloadTaskStoped(QGSTask * task)
 
 void QGSGameVersionBuilder::slotDownloadTaskCanceled(QGSTask * task)
 {
-	qDebug() << "QGSGameVersionBuilder:Task canceled!";
-
 	slotEraseTask(task);
 
 	emit downloadTaskCanceled(dynamic_cast<QGSDownloadTask *>(task));
 
-	slotFinished();
+	//slotFinished();
 }
 
 void QGSGameVersionBuilder::slotDownloadTaskDownloadProgress(qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
@@ -189,13 +193,13 @@ QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionJsonDownlo
 	QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::finished, this, &QGSGameVersionBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::canceled, this, &QGSGameVersionBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::canceled, this, &QGSGameVersionBuilder::slotFinished);
+	//QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::canceled, this, &QGSGameVersionBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::error, this, &QGSGameVersionBuilder::slotEraseTask);
 	QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::error, this, &QGSGameVersionBuilder::error);
 
 	mTaskList.push_back(generationTask);
-	mThreadPool.addTaskBack(generationTask);
+	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;
 }
@@ -208,13 +212,13 @@ QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionDownloadTa
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::finished, this, &QGSGameVersionBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::canceled, this, &QGSGameVersionBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::canceled, this, &QGSGameVersionBuilder::slotFinished);
+	//QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::canceled, this, &QGSGameVersionBuilder::slotFinished);
 
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::error, this, &QGSGameVersionBuilder::slotEraseTask);
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::error, this, &QGSGameVersionBuilder::error);
 
 	mTaskList.push_back(generationTask);
-	mThreadPool.addTaskBack(generationTask);
+	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;
 }

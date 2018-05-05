@@ -24,6 +24,8 @@ public:
 
 	~QGSGameVersionInfoList();
 
+	const QGSGameVersionInfo & at(const int index);
+
 	QString getLatestSnapshot()const;
 
 	QString getLatestRelease()const;

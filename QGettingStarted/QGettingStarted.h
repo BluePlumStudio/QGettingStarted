@@ -1,10 +1,5 @@
 #pragma once
 
-namespace qgs
-{
-	//名称空间整合工作
-}
-
 #include "Launcher/QGSGameDirectory.h"
 #include "Launcher/QGSILauncherStrategy.h"
 #include "Launcher/QGSLauncher.h"
@@ -19,6 +14,7 @@ namespace qgs
 #include "LaunchOptions/QGSYggdrasilAccountFactory.h"
 #include "Util/QGSNetworkAccessManager.h"
 #include "Util/QGSFileTools.h"
+#include "Util/QGSThreadPoolManager.h"
 #include "Download/QGSDownloadTaskFactory.h"
 #include "Download/QGSBMCLAPIDownloadSource.h"
 #include "Download/QGSOfficialDownloadSource.h"

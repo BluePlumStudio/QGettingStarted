@@ -23,6 +23,11 @@ QGSGameVersionInfoList::~QGSGameVersionInfoList()
 {
 }
 
+const QGSGameVersionInfo & QGSGameVersionInfoList::at(const int index)
+{
+	return mGameVersionInfoVector.at(index);
+}
+
 QString QGSGameVersionInfoList::getLatestSnapshot() const
 {
 	return mLatestSnapshot;

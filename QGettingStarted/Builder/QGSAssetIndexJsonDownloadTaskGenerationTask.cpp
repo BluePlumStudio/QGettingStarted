@@ -89,7 +89,7 @@ void QGSAssetIndexJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	QObject::connect(downloadTask, &QGSDownloadTask::error, this, &QGSAssetIndexJsonDownloadTaskGenerationTask::wakeAssetIndexJsonDownloadTaskEnded, Qt::ConnectionType::DirectConnection);
 	QObject::connect(downloadTask, &QGSDownloadTask::error, mAssetBuilderPtr, &QGSAssetBuilder::slotDownloadTaskError);
 
-	mAssetBuilderPtr->mThreadPool.addTaskBack(downloadTask);
+	mAssetBuilderPtr->mThreadPoolManagerPtr->addTaskBack(downloadTask);
 
 	emit finished(this);
 }
