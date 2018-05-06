@@ -30,12 +30,17 @@ QGSAssetBuilder::QGSAssetBuilder(
 
 QGSAssetBuilder::~QGSAssetBuilder()
 {
+	QMutexLocker mutexLocker(&mMutex);
+
 	for (auto & task : mTaskList)
 	{
 		task->cancel();
-		task->deleteLater();
 	}
 
+	for (auto & task : mTaskDeletedLaterList)
+	{
+		task->deleteLater();
+	}
 }
 
 bool QGSAssetBuilder::isFileOverride()
@@ -197,6 +202,7 @@ QGSDownloadTaskGenerationTask * QGSAssetBuilder::initAssetIndexJsonDownloadTaskG
 	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
 
 	mTaskList.push_back(generationTask);
+	mTaskDeletedLaterList.push_back(generationTask);
 	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;
@@ -216,6 +222,7 @@ QGSDownloadTaskGenerationTask * QGSAssetBuilder::initAssetObjectDownloadTaskGene
 	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
 
 	mTaskList.push_back(generationTask);
+	mTaskDeletedLaterList.push_back(generationTask);
 	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;

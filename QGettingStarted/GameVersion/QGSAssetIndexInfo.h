@@ -27,7 +27,7 @@ public:
 
 	QMap<QString, QGSAssetObject> getAssetObjectMap()const;
 
-	QGSAssetObject & getAssetObject(const QString & key);
+	QGSAssetObject getAssetObject(const QString & key);
 
 	bool addAssetObject(const QString & key, const QGSAssetObject & assetObject);
 

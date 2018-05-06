@@ -50,7 +50,7 @@ QGSGameVersionInfoList & QGSGameVersionInfoList::setLatestRelease(const QString 
 	return *this;
 }
 
-QGSGameVersionInfo & QGSGameVersionInfoList::getVersionInfo(const QString & version)
+QGSGameVersionInfo QGSGameVersionInfoList::getVersionInfo(const QString & version)
 {
 	auto it(findGameVersionInfo(version));
 	if (it == mGameVersionInfoVector.end())

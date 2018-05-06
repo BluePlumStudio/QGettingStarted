@@ -30,12 +30,17 @@ QGSLibraryBuilder::QGSLibraryBuilder(
 
 QGSLibraryBuilder::~QGSLibraryBuilder()
 {
+	QMutexLocker mutexLocker(&mMutex);
+
 	for (auto & task : mTaskList)
 	{
 		task->cancel();
-		task->deleteLater();
 	}
 
+	for (auto & task : mTaskDeletedLaterList)
+	{
+		task->deleteLater();
+	}
 }
 
 bool QGSLibraryBuilder::isFileOverride()
@@ -241,6 +246,7 @@ bool QGSLibraryBuilder::initLibraryDownloadTasks()
 		ret = true;
 
 		mTaskList.push_back(downloadTask);
+		mTaskDeletedLaterList.push_back(downloadTask);
 		mThreadPoolManagerPtr->addTaskBack(downloadTask);
 	}
 

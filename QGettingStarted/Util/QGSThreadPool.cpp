@@ -196,10 +196,7 @@ void QGSThreadPool::init()
 	for (quint32 i = 0; i < gendThreadCount; i++)
 	{
 		auto * newThread(new QGSTaskThread(this));
-		if (!newThread)
-		{
-			//exception
-		}
+
 		QObject::connect(newThread, &QGSTaskThread::taskStarted, this, &QGSThreadPool::taskStarted);
 		QObject::connect(newThread, &QGSTaskThread::taskFinished, this, &QGSThreadPool::taskFinished);
 		newThread->start();
@@ -238,7 +235,7 @@ void QGSThreadPool::adjustThreads()
 
 				mMutex.lock();
 
-				(*it)->deleteLater();
+				delete (*it);
 				mThreadList.erase(it);
 			}
 		}

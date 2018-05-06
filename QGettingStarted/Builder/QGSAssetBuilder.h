@@ -54,6 +54,7 @@ private:
 	QGSGameDirectory * mGameDirectoryPtr;
 	QGSDownloadTaskFactory * mDownloadTaskFactoryPtr;
 	QList<QGSTask *> mTaskList;
+	QList<QGSTask *> mTaskDeletedLaterList;
 	bool mFileOverride;
 
 };

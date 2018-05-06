@@ -27,6 +27,8 @@ public:
 
 	~QGSOptifineVersionInfoList();
 
+	QGSOptifineVersionInfo getOptifineVersionInfo(const int index);
+
 	const QGSOptifineVersionInfo & at(const int index);
 
 	QList<QGSOptifineVersionInfo> getVersionInfoList(const QString & mcversion);

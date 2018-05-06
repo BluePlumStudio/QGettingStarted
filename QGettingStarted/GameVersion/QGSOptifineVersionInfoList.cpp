@@ -15,6 +15,11 @@ QGSOptifineVersionInfoList::~QGSOptifineVersionInfoList()
 
 }
 
+QGSOptifineVersionInfo QGSOptifineVersionInfoList::getOptifineVersionInfo(const int index)
+{
+	return mOptifineVersionInfoVector[index];
+}
+
 const QGSOptifineVersionInfo & QGSOptifineVersionInfoList::at(const int index)
 {
 	return mOptifineVersionInfoVector.at(index);

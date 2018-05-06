@@ -35,9 +35,12 @@ QGSGameVersionBuilder::~QGSGameVersionBuilder()
 	for (auto & task : mTaskList)
 	{
 		task->cancel();
-		task->deleteLater();
 	}
 
+	for (auto & task : mTaskDeletedLaterList)
+	{
+		task->deleteLater();
+	}
 }
 
 bool QGSGameVersionBuilder::isFileOverride()
@@ -199,6 +202,7 @@ QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionJsonDownlo
 	QObject::connect(generationTask, &QGSGameVersionJsonDownloadTaskGenerationTask::error, this, &QGSGameVersionBuilder::error);
 
 	mTaskList.push_back(generationTask);
+	mTaskDeletedLaterList.push_back(generationTask);
 	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;
@@ -218,6 +222,7 @@ QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionDownloadTa
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::error, this, &QGSGameVersionBuilder::error);
 
 	mTaskList.push_back(generationTask);
+	mTaskDeletedLaterList.push_back(generationTask);
 	mThreadPoolManagerPtr->addTaskBack(generationTask);
 
 	return generationTask;

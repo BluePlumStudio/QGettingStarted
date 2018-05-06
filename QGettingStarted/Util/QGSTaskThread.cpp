@@ -43,10 +43,10 @@ void QGSTaskThread::run()
 		throw QGSExceptionInvalidValue();
 	}
 
-	QEventLoop eventLoop;
-
 	do
 	{
+		QEventLoop eventLoop;
+
 		mThreadPoolPtr->mMutex.lock();
 
 		if (mExit)
@@ -87,9 +87,6 @@ void QGSTaskThread::run()
 		eventLoop.exec();
 
 		emit taskFinished(newTask);
-		QObject::disconnect(newTask, &QGSTask::finished, &eventLoop, &QEventLoop::quit);
-		QObject::disconnect(newTask, &QGSTask::canceled, &eventLoop, &QEventLoop::quit);
-		QObject::disconnect(newTask, &QGSTask::error, &eventLoop, &QEventLoop::quit);
 
 		mThreadPoolPtr->mMutex.lock();
 
@@ -98,8 +95,6 @@ void QGSTaskThread::run()
 
 		mThreadPoolPtr->mMutex.unlock();
 	} while (true);
-
-	exit(0);
 }
 
 /*

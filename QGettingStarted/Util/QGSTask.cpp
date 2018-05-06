@@ -22,11 +22,14 @@ void QGSTask::moveToOriginalThread()
 
 void QGSTask::deleteLater()
 {
+	/*
 	QTimer * newTimer(new QTimer);
 	newTimer->setSingleShot(true);
 	newTimer->start(DEFAULT_WAIT_TIME);
 	QObject::connect(newTimer, &QTimer::timeout, this, &QGSTask::deleteLater);
 	QObject::connect(newTimer, &QTimer::timeout, newTimer, &QTimer::deleteLater);
+	*/
+	QObject::deleteLater();
 }
 
 QGSTask & QGSTask::setNextTask(QGSTask * task)

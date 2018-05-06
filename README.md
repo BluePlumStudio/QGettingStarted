@@ -148,7 +148,105 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	downloadTask->start();
 ```
 
-# 下载游戏（含库、资源补全）
+# 获取Forge列表
+
+```cpp
+	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(new QGSOfficialDownloadSource));
+	QGSDownloadTask * downloadTask = nullptr;
+
+	downloadTask = downloadTaskFactory->generateForgeVersionInfoJsonDownloadTask(new QFile(QString("./forge_manifest.json")), 100, 50);
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
+	{
+		qDebug() << "forge version info json:" << bytesReceived << ";" << bytesTotal;
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
+	{
+		qDebug() << "forge version info json finished!";
+		QGSForgeVersionInfoListFactory versionInfoFactory;
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		//因forge版本较多，为了照顾性能与资源，需要设置偏移量与上限。示例中：1为偏移量，1000为上限。
+		QGSForgeVersionInfoList versionInfoList(versionInfoFactory.createForgeVersionInfoList(downloadTask->getTargetFile()->readAll(), 1, 1000));
+		versionInfoList.merge(versionInfoList);
+		for (int i = 0; i < versionInfoList.size(); i++)
+		{
+			qDebug() << "branch" << versionInfoList[i].getBranch()
+				<< "build" << versionInfoList[i].getBuild()
+				<< "mcversion" << versionInfoList[i].getMcversion()
+				<< "modified" << versionInfoList[i].getModified()
+				<< "version" << versionInfoList[i].getVersion()
+				<< "_id" << versionInfoList[i].getId();
+
+		}
+		task->deleteLater();
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
+	{
+		qDebug() << "forge version info json:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
+	});
+	downloadTask->start();
+```
+
+# 获取LiteLoader列表
+
+```cpp
+	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(new QGSOfficialDownloadSource));
+	QGSDownloadTask * downloadTask = nullptr;
+
+	downloadTask = downloadTaskFactory->generateLiteLoaderVersionInfoJsonDownloadTask(new QFile(QString("./liteloader_manifest.json")));
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
+	{
+		qDebug() << "liteloader version info json:" << bytesReceived << ";" << bytesTotal;
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
+	{
+		qDebug() << "forge version info json finished!";
+		QGSLiteLoaderVersionInfoListFactory versionInfoFactory;
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		QGSLiteLoaderVersionInfoList versionInfoList(versionInfoFactory.createLiteLoaderVersionInfoList(downloadTask->getTargetFile()->readAll()));
+		for (int i = 0; i < versionInfoList.size(); i++)
+		{
+			/*相关操作*/
+		}
+		task->deleteLater();
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
+	{
+		qDebug() << "liteloader version info json:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
+	});
+	downloadTask->start();
+```cpp
+
+#获取Optifine列表
+
+```cpp
+	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(new QGSOfficialDownloadSource));
+	QGSDownloadTask * downloadTask = nullptr;
+
+	downloadTask = downloadTaskFactory->generateOptifineVersionInfoJsonDownloadTask(new QFile(QString("./optifine_manifest.json")));
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
+	{
+		qDebug() << "optifine version info json:" << bytesReceived << ";" << bytesTotal;
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
+	{
+		qDebug() << "optifine version info json finished!";
+		QGSOptifineVersionInfoListFactory versionInfoFactory;
+		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
+		QGSOptifineVersionInfoList versionInfoList(versionInfoFactory.createOptifineVersionInfoList(downloadTask->getTargetFile()->readAll()));
+		for (int i = 0; i < versionInfoList.size(); i++)
+		{
+			/*相关操作*/
+		}
+		task->deleteLater();
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
+	{
+		qDebug() << "optifine manifest:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
+	});
+	downloadTask->start();
+```
+
+# 下载游戏（库、资源补全）
 
 ```cpp
 	//"version_manifest.json"文件需要自行下载，详见"获取版本列表"
@@ -156,22 +254,22 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	manifestFile.open(QIODevice::ReadOnly);
 	QGSGameVersionInfoListFactory versionInfoFactory;
 	QGSGameVersionInfoList versionInfoList(versionInfoFactory.createGameVersionInfoList(manifestFile.readAll()));
-	QGSIDownloadSource * downloadSource = new QGSBMCLAPIDownloadSource;
+	QGSIDownloadSource * downloadSource = new QGSBMCLAPIDownloadSource;//BMCL
 
 	QGSGameVersionInfo versionInfo = versionInfoList.getVersionInfo("1.11.2");
-	QGSDownloadTaskFactory downloadTaskFactory(downloadSource);
+	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(downloadSource));
 	//游戏目录
-	QGSGameDirectory gameDirectory(QDir("/.minecraft"));
+	QGSGameDirectory * gameDirectory(new QGSGameDirectory(QDir("./.minecraft")));
 	//线程池。线程池数最小为8，最大为512。
 	QGSThreadPoolManager * threadPoolManager(new QGSThreadPoolManager(8, 512));
 	//建造者工厂，用于创建游戏各部分的建造者。
 	QGSBuilderFactory * builderFactory(new QGSBuilderFactory(threadPoolManager));
 	//游戏本体建造者。
-	QGSGameVersionBuilder * gameVersionBuilder = builderFactory->createGameVersionBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	QGSGameVersionBuilder * gameVersionBuilder = builderFactory->createGameVersionBuilder(versionInfo, gameDirectory, downloadTaskFactory);
 	//库建造者
-	QGSLibraryBuilder * libraryBuilder = builderFactory->createLibraryBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	QGSLibraryBuilder * libraryBuilder = builderFactory->createLibraryBuilder(versionInfo, gameDirectory, downloadTaskFactory);
 	//资源建造者
-	QGSAssetBuilder * assetBuilder = builderFactory->createAssetBuilder(versionInfo, &gameDirectory, &downloadTaskFactory);
+	QGSAssetBuilder * assetBuilder = builderFactory->createAssetBuilder(versionInfo, gameDirectory, downloadTaskFactory);
 	//前一个任务发出finished(）（完成）信号后即刻执行下一个任务。
 	gameVersionBuilder->setNextTask(libraryBuilder).setNextTask(assetBuilder);
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::started, [=]()//建造者开始
@@ -185,7 +283,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)//任务完成
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " finished!" << gameVersionBuilder->getTaskListSize() << "left!";
-		task->deleteLater();
 	});
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)//任务暂停
 	{
@@ -194,7 +291,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)//任务取消
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " canceled!";
-		task->deleteLater();
 	});
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)//任务进程
 	{
@@ -207,7 +303,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::downloadTaskError, [=](QGSDownloadTask * task)//任务错误
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " error!" << gameVersionBuilder->getTaskListSize() << "left!";
-		task->deleteLater();
 	});
 	QObject::connect(gameVersionBuilder, &QGSGameVersionBuilder::error, [=]()//建造者错误
 	{
@@ -229,7 +324,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " finished!" << libraryBuilder->getTaskListSize() << "left!";
-		task->deleteLater();
 	});
 	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)
 	{
@@ -238,7 +332,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " canceled!";
-		task->deleteLater();
 	});
 	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
 	{
@@ -251,7 +344,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskError, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " error!" << libraryBuilder->getTaskListSize() << "left!";
-		task->deleteLater();
 	});
 	QObject::connect(libraryBuilder, &QGSLibraryBuilder::error, [=]()
 	{
@@ -273,7 +365,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskFinished, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " finished!" << assetBuilder->getTaskListSize() << "left!";
-		task->deleteLater();
 	});
 	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskStoped, [=](QGSDownloadTask * task)
 	{
@@ -282,7 +373,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskCanceled, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " canceled!";
-		task->deleteLater();
 	});
 	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskDownloadProgress, [](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
 	{
@@ -295,7 +385,6 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskError, [=](QGSDownloadTask * task)
 	{
 		qDebug() << "download:" << task->getDownloadInfo().getUrl() << " error!" << assetBuilder->getTaskListSize() << "left!";
-		task->deleteLater();
 	});
 	QObject::connect(assetBuilder, &QGSLibraryBuilder::error, [=]()
 	{
@@ -308,3 +397,78 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	//将建造者加入线程池
 	threadPoolManager->addTaskBack(gameVersionBuilder);
 ```
+
+# 下载Forge（需要自行安装）
+
+```cpp
+	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(new QGSOfficialDownloadSource));
+	QGSDownloadTask * downloadTask = nullptr;
+
+	//forge download test
+	downloadTask = downloadTaskFactory->generateForgeDownloadTask(new QFile(QString("./forge-installer.jar")), "1.11.2", "13.20.0.2200", "installer", "jar");
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
+	{
+		qDebug() << "Forge:" << bytesReceived << ";" << bytesTotal;
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
+	{
+		qDebug() << "Forge:finished!";
+
+		task->deleteLater();
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
+	{
+		qDebug() << "Forge:" << "Code:" << error.getCode();
+	});
+	downloadTask->start();//也可以放入线程池中
+```
+
+# 下载LiteLoader（需要自行安装）
+
+```cpp
+	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(new QGSOfficialDownloadSource));
+	QGSDownloadTask * downloadTask = nullptr;
+
+	//liteloader download test
+	downloadTask = downloadTaskFactory->generateLiteLoaderDownloadTask(new QFile(QString("./liteloader.jar")), "1.11.2", "1.11.2-SNAPSHOT", "installer");
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
+	{
+		qDebug() << "LiteLoader:" << bytesReceived << ";" << bytesTotal;
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
+	{
+		qDebug() << "LiteLoader:finished!";
+
+		task->deleteLater();
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
+	{
+		qDebug() << "LiteLoader:" << "Code:" << error.getCode();
+	});
+	downloadTask->start();//也可以放入线程池中
+```
+
+# 下载Optifine（需要自行安装）
+
+```cpp
+	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(new QGSOfficialDownloadSource));
+	QGSDownloadTask * downloadTask = nullptr;
+
+	//optifine download test
+	downloadTask = downloadTaskFactory->generateOptifineDownloadTask(new QFile(QString("./optifine.zip")), "1.9.2", "HD_U", "D7");
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSTask * task)
+	{
+		qDebug() << "Optifine:" << bytesReceived << ";" << bytesTotal;
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
+	{
+		qDebug() << "Optifine:finished!";
+
+		task->deleteLater();
+	});
+	QObject::connect(downloadTask, &QGSDownloadTask::downloadError, [=](QGSNetworkError error, QGSTask * task)
+	{
+		qDebug() << "Optifine:" << "Code:" << error.getCode();
+	});
+	downloadTask->start();//也可以放入线程池中
+```cpp

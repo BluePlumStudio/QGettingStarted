@@ -33,7 +33,7 @@ QMap<QString, QGSAssetObject> QGSAssetIndexInfo::getAssetObjectMap()const
 	return mAssetObjectMap;
 }
 
-QGSAssetObject & QGSAssetIndexInfo::getAssetObject(const QString & key)
+QGSAssetObject QGSAssetIndexInfo::getAssetObject(const QString & key)
 {
 	return mAssetObjectMap[key];
 }

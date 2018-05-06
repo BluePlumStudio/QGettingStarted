@@ -34,7 +34,7 @@ public:
 
 	QGSGameVersionInfoList & setLatestRelease(const QString & release);
 
-	QGSGameVersionInfo & getVersionInfo(const QString & version);
+	QGSGameVersionInfo getVersionInfo(const QString & version);
 
 	bool addVersionInfo(const QGSGameVersionInfo & versionInfo);
 
