@@ -16,7 +16,6 @@
    * 支持断点下载
  * Natives解压
  * 网络代理
- * 启动报告（开发中）
  * Java信息查找（Windows Only）
 
 # 编译
@@ -34,8 +33,8 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 1.下载源码自行编译或下载已编译好的静态库：
  * 0.2.0：
 - Windows：
-[地址1](https://BluePlum.pipipan.com/fs/15016760-289581327)
-[地址2](https://BluePlum.ctfile.com/fs/15016760-289581327)
+[地址1](https://BluePlum.pipipan.com/fs/15016760-289630377)
+[地址2](https://BluePlum.ctfile.com/fs/15016760-289630377)
 
  * 0.1.1：
 - Windows：
@@ -145,7 +144,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	{
 		qDebug() << "version manifest:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
 	});
-	downloadTask->start();
+	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
 ```
 
 # 获取Forge列表
@@ -183,7 +182,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	{
 		qDebug() << "forge version info json:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
 	});
-	downloadTask->start();
+	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
 ```
 
 # 获取LiteLoader列表
@@ -213,7 +212,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	{
 		qDebug() << "liteloader version info json:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
 	});
-	downloadTask->start();
+	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
 ```cpp
 
 #获取Optifine列表
@@ -243,7 +242,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	{
 		qDebug() << "optifine manifest:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
 	});
-	downloadTask->start();
+	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
 ```
 
 # 下载游戏（库、资源补全）
@@ -420,7 +419,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	{
 		qDebug() << "Forge:" << "Code:" << error.getCode();
 	});
-	downloadTask->start();//也可以放入线程池中
+	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
 ```
 
 # 下载LiteLoader（需要自行安装）
@@ -445,7 +444,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	{
 		qDebug() << "LiteLoader:" << "Code:" << error.getCode();
 	});
-	downloadTask->start();//也可以放入线程池中
+	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
 ```
 
 # 下载Optifine（需要自行安装）
@@ -470,5 +469,5 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	{
 		qDebug() << "Optifine:" << "Code:" << error.getCode();
 	});
-	downloadTask->start();//也可以放入线程池中
-```cpp
+	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
+```
