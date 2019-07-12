@@ -198,7 +198,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 	});
 	QObject::connect(downloadTask, &QGSDownloadTask::finished, [=](QGSTask * task)
 	{
-		qDebug() << "forge version info json finished!";
+		qDebug() << "liteloader version info json finished!";
 		QGSLiteLoaderVersionInfoListFactory versionInfoFactory;
 		downloadTask->getTargetFile()->open(QIODevice::ReadOnly);
 		QGSLiteLoaderVersionInfoList versionInfoList(versionInfoFactory.createLiteLoaderVersionInfoList(downloadTask->getTargetFile()->readAll()));
@@ -213,7 +213,7 @@ Visual Studio 2015/Qt Creator 4.5.0|Qt 5.10.0 下编译通过。
 		qDebug() << "liteloader version info json:" << "Code:" << error.getCode() << "Message:" << error.getErrorString();
 	});
 	downloadTask->start();//也可以加入线程池中，threadPoolManager->addTaskBack(downloadTask);
-```cpp
+```
 
 #获取Optifine列表
 
