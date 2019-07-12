@@ -44,4 +44,4 @@
 /QGettingStarted/Debug lib/*
 /QGettingStarted/Release/*
 /QGettingStarted/Release lib/*
-/QGettingStarted/Release/GeneratedFiles/*
+/QGettingStarted/GeneratedFiles/*
