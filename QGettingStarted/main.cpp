@@ -69,7 +69,7 @@ void generateLaunchCommandTest()
 		*/
 		if (launcher.generateLaunchCommand(gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())), gameDirectory, launchOptionsBuilder.getLaunchOptions(), launchCommand) != QGSLauncherError::Ok)
 		{
-			qDebug() << "生成启动脚本失败";
+			cout << "生成启动脚本失败";
 			return;
 		}
 
@@ -457,12 +457,40 @@ void getJavaPathListTest()
 	qDebug() << QGSFileTools::getJavaPathListFromSystemSettings();
 }
 
+void YggdrasilTest()
+{
+	QEventLoop eventLoop;
+	auto * account(QGSYggdrasilAccountFactory().createAccount());
+	QObject::connect(account, &QGSIAccount::finished, [](QGSAuthInfo authInfo)
+	{
+		qDebug() << "Name:" << authInfo.getSelectedProfile().getName();
+		qDebug() << "Id:" << authInfo.getSelectedProfile().getId();
+		qDebug() << "AccessToken:" << authInfo.getAccessToken();
+		qDebug() << "UserType:" << authInfo.getUserType();
+	});
+	QObject::connect(account, &QGSIAccount::finished, &eventLoop, &QEventLoop::quit);
+	QObject::connect(account, &QGSIAccount::error, [](QGSNetworkError networkError)
+	{
+		qDebug() << "QGSNetworkError:" << networkError.getCode() << networkError.getErrorString();
+	});
+
+	cout << "账户名：";
+	string userName;
+	getline(cin, userName);
+	cout << "密码：";
+	string passwords;
+	getline(cin, passwords);
+
+	account->authenticate(QString::fromStdString(userName), QString::fromStdString(passwords));
+	eventLoop.exec();
+}
+
 int main(int argc, char *argv[])
 {
 	QCoreApplication a(argc, argv);
 
 	qDebug() << "=QGettingStart Test=";
-    qDebug()<<"1.Generate launch command | 2.Download game | 3 Get Java paths";
+	qDebug() << QString::fromLocal8Bit("1.生成启动命令 | 2.下载游戏 | 3.获取Java路径 | 4.Yggdrasil账号（正版）登录测试");
     int ans=0;
     std::cin>>ans;
 	cin.get();
@@ -481,6 +509,11 @@ int main(int argc, char *argv[])
 	else if (ans == 3)
 	{
 		getJavaPathListTest();
+		return 0;
+	}
+	else if (ans == 4)
+	{
+		YggdrasilTest();
 		return 0;
 	}
 

@@ -2,6 +2,7 @@
 #include <QFileInfoList>
 #include <QCoreApplication>
 #include <QSettings>
+#include <QDebug>
 
 #include "QGSFileTools.h"
 #include "QGSOperatingSystem.h"
@@ -65,16 +66,18 @@ QStringList QGSFileTools::extractDirectory(const QString & filePath, const QStri
 
 			QString unzFileName(QString::fromLocal8Bit(fileName));
 			QString path(directory + SEPARATOR + unzFileName);
+			QFileInfo targetInfo(path);
+
 			ret << path;
 
-			if (!(fileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY))
+			if (!(fileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY) && path.back() != "/"&& path.back() != "\\")
 			{
 				unzOpenCurrentFile(zFile);//ÎÞÃÜÂë
 				unzOpenCurrentFilePassword(zFile, password.toLocal8Bit().toStdString().c_str());//ÓÐÃÜÂë
 
-				QFile targetFile(path);
-				QFileInfo(targetFile).absoluteDir().mkpath("./");
-				if (!targetFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+				QFile target(path);
+				targetInfo.absoluteDir().mkpath("./");
+				if (!target.open(QIODevice::WriteOnly | QIODevice::Truncate))
 				{
 					unzClose(zFile);
 					ret.clear();
@@ -88,9 +91,9 @@ QStringList QGSFileTools::extractDirectory(const QString & filePath, const QStri
 					{
 						break;
 					}
-					targetFile.write(data, size);
+					target.write(data, size);
 				}
-				targetFile.close();
+				target.close();
 				unzCloseCurrentFile(zFile);
 			}
 			else
@@ -142,9 +145,9 @@ QString QGSFileTools::extractFile(const QString & filePath, const QString & file
 					unzOpenCurrentFile(zFile);//ÎÞÃÜÂë
 					unzOpenCurrentFilePassword(zFile, password.toLocal8Bit().toStdString().c_str());//ÓÐÃÜÂë
 
-					QFile targetFile(path);
-					QFileInfo(targetFile).absoluteDir().mkpath("./");
-					if (!targetFile.open(QIODevice::WriteOnly | QIODevice::Truncate))
+					QFile target(path);
+					QFileInfo(target).absoluteDir().mkpath("./");
+					if (!target.open(QIODevice::WriteOnly | QIODevice::Truncate))
 					{
 						unzClose(zFile);
 						ret.clear();
@@ -158,9 +161,9 @@ QString QGSFileTools::extractFile(const QString & filePath, const QString & file
 						{
 							break;
 						}
-						targetFile.write(data, size);
+						target.write(data, size);
 					}
-					targetFile.close();
+					target.close();
 					unzCloseCurrentFile(zFile);
 				}
 				else
