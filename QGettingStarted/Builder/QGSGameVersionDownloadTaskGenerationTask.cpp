@@ -5,12 +5,18 @@
 
 QGSGameVersionDownloadTaskGenerationTask::QGSGameVersionDownloadTaskGenerationTask(
 	QGSGameVersionBuilder * gameVersionBuilder,
+	QSharedPointer<QMutex> sharedMutex, 
+	QSharedPointer<QWaitCondition> jsonDownloadTaskEnded,
 	bool fileOverride,
 	QObject * parent)
 
-	:QGSDownloadTaskGenerationTask(parent), mFileOverride(fileOverride), mGameVersionBuilderPtr(gameVersionBuilder)
+	:QGSDownloadTaskGenerationTask(parent), 
+	mFileOverride(fileOverride), 
+	mSharedMutex(sharedMutex),
+	mGameVersionJsonDownloadTaskEnded(jsonDownloadTaskEnded), 
+	mGameVersionBuilderPtr(gameVersionBuilder)
 {
-	if (!gameVersionBuilder)
+	if (!gameVersionBuilder || sharedMutex.isNull() || mGameVersionJsonDownloadTaskEnded.isNull())
 	{
 		throw QGSExceptionInvalidValue();
 	}
@@ -22,9 +28,9 @@ QGSGameVersionDownloadTaskGenerationTask::~QGSGameVersionDownloadTaskGenerationT
 
 void QGSGameVersionDownloadTaskGenerationTask::templateStart(QGSTask * task)
 {
-	QGSGameVersionJsonDownloadTaskGenerationTask::mMutex.lock();
-	QGSGameVersionJsonDownloadTaskGenerationTask::mGameVersionJsonDownloadTaskEnded.wait(&QGSGameVersionJsonDownloadTaskGenerationTask::mMutex);
-	QGSGameVersionJsonDownloadTaskGenerationTask::mMutex.unlock();
+	mSharedMutex->lock();
+	mGameVersionJsonDownloadTaskEnded->wait(mSharedMutex.data());
+	mSharedMutex->unlock();
 	emit started(this);
 
 	QGSDownloadTask * downloadTask(nullptr);

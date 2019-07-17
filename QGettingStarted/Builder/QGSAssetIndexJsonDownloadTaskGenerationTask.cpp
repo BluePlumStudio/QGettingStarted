@@ -3,8 +3,8 @@
 #include "../Util/QGSExceptionInvalidValue.h"
 #include "../Util/QGSExceptionVersionNotFound.h"
 
-QMutex QGSAssetIndexJsonDownloadTaskGenerationTask::mMutex;
-QWaitCondition QGSAssetIndexJsonDownloadTaskGenerationTask::mAssetIndexJsonDownloadTaskEnded;
+//QMutex QGSAssetIndexJsonDownloadTaskGenerationTask::mMutex;
+//QWaitCondition QGSAssetIndexJsonDownloadTaskGenerationTask::mAssetIndexJsonDownloadTaskEnded;
 
 QGSAssetIndexJsonDownloadTaskGenerationTask::QGSAssetIndexJsonDownloadTaskGenerationTask(
 	QGSAssetBuilder * assetBuilder,
@@ -17,6 +17,9 @@ QGSAssetIndexJsonDownloadTaskGenerationTask::QGSAssetIndexJsonDownloadTaskGenera
 	{
 		throw QGSExceptionInvalidValue();
 	}
+
+	mSharedMutex = QSharedPointer<QMutex>(new QMutex());
+	mAssetIndexJsonDownloadTaskEnded= QSharedPointer<QWaitCondition>(new QWaitCondition());
 }
 
 QGSAssetIndexJsonDownloadTaskGenerationTask::~QGSAssetIndexJsonDownloadTaskGenerationTask()
@@ -106,6 +109,6 @@ void QGSAssetIndexJsonDownloadTaskGenerationTask::templateCancel(QGSTask * task)
 
 void QGSAssetIndexJsonDownloadTaskGenerationTask::wakeAssetIndexJsonDownloadTaskEnded()
 {
-	mAssetIndexJsonDownloadTaskEnded.wakeAll();
+	mAssetIndexJsonDownloadTaskEnded->wakeAll();
 }
 

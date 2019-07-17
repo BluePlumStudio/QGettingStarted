@@ -47,14 +47,15 @@ private slots:
 	void slotFinished();
 private:
 	void initDownloadTasks();
-	QGSDownloadTaskGenerationTask * initAssetIndexJsonDownloadTaskGenerationTask();
-	QGSDownloadTaskGenerationTask * initAssetObjectDownloadTaskGenerationTask();
+	QGSAssetIndexJsonDownloadTaskGenerationTask * initAssetIndexJsonDownloadTaskGenerationTask();
+	QGSAssetObjectDownloadTaskGenerationTask * initAssetObjectDownloadTaskGenerationTask(QGSAssetIndexJsonDownloadTaskGenerationTask * jsonDownloadTaskGenerationTask);
 private:
 	QGSGameVersionInfo mVersionInfo;
 	QGSGameDirectory * mGameDirectoryPtr;
 	QGSDownloadTaskFactory * mDownloadTaskFactoryPtr;
 	QList<QGSTask *> mTaskList;
 	QList<QGSTask *> mTaskDeletedLaterList;
+	QGSAssetIndexInfo mAssetIndexInfo;
 	bool mFileOverride;
 
 };

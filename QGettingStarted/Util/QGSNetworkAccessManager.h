@@ -57,7 +57,7 @@ public:
 
 	static QNetworkRequest generateNetworkRequest();
 
-	static QNetworkRequest generateHttpsNetworkRequest(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1SslV3);
+	static QNetworkRequest generateHttpsNetworkRequest(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_0OrLater);
 public:
 	static const int DefaultTimeout;
 };

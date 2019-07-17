@@ -5,7 +5,8 @@
 class QGSGameVersionJsonDownloadTaskGenerationTask :public QGSDownloadTaskGenerationTask
 {
 public:
-    friend class QGSGameVersionDownloadTaskGenerationTask;
+	friend class QGSGameVersionDownloadTaskGenerationTask;
+	friend class QGSGameVersionBuilder;
 
 	QGSGameVersionJsonDownloadTaskGenerationTask(QGSGameVersionBuilder * gameVersionBuilder, bool fileOverride = false, QObject * parent = nullptr);
 
@@ -27,7 +28,7 @@ private :
 	void wakeGameVersionJsonDownloadTaskEnded();
 private:
 	QGSGameVersionBuilder * mGameVersionBuilderPtr;
-	static QMutex mMutex;
-	static QWaitCondition mGameVersionJsonDownloadTaskEnded;
+	QSharedPointer<QMutex> mSharedMutex;
+	QSharedPointer<QWaitCondition> mGameVersionJsonDownloadTaskEnded;
 	bool mFileOverride;
 };

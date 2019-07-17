@@ -184,11 +184,11 @@ void QGSGameVersionBuilder::slotFinished()
 
 void QGSGameVersionBuilder::initDownloadTasks()
 {
-	initGameVersionDownloadTaskGenerationTask();
-	initGameVersionJsonDownloadTaskGenerationTask();
+	initGameVersionDownloadTaskGenerationTask(initGameVersionJsonDownloadTaskGenerationTask());
+	
 }
 
-QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionJsonDownloadTaskGenerationTask()
+QGSGameVersionJsonDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionJsonDownloadTaskGenerationTask()
 {
 	auto * generationTask(new QGSGameVersionJsonDownloadTaskGenerationTask(this, mFileOverride));
 
@@ -208,9 +208,12 @@ QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionJsonDownlo
 	return generationTask;
 }
 
-QGSDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionDownloadTaskGenerationTask()
+QGSGameVersionDownloadTaskGenerationTask * QGSGameVersionBuilder::initGameVersionDownloadTaskGenerationTask(QGSGameVersionJsonDownloadTaskGenerationTask * jsonDownloadTaskGenerationTask)
 {
-	auto * generationTask(new QGSGameVersionDownloadTaskGenerationTask(this, mFileOverride));
+	auto * generationTask(new QGSGameVersionDownloadTaskGenerationTask(this,
+		jsonDownloadTaskGenerationTask->mSharedMutex,
+		jsonDownloadTaskGenerationTask->mGameVersionJsonDownloadTaskEnded,
+		mFileOverride));
 
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::finished, this, &QGSGameVersionBuilder::slotEraseTask);
 	QObject::connect(generationTask, &QGSGameVersionDownloadTaskGenerationTask::finished, this, &QGSGameVersionBuilder::slotFinished);

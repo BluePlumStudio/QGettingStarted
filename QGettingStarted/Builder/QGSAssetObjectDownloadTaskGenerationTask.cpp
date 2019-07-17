@@ -7,12 +7,18 @@
 
 QGSAssetObjectDownloadTaskGenerationTask::QGSAssetObjectDownloadTaskGenerationTask(
 	QGSAssetBuilder * assetBuilder,
+	QSharedPointer<QMutex> sharedMutex,
+	QSharedPointer<QWaitCondition> jsonDownloadTaskEnded,
 	bool fileOverride,
 	QObject * parent)
 
-	:QGSDownloadTaskGenerationTask(parent), mFileOverride(fileOverride), mAssetBuilderPtr(assetBuilder)
+	:QGSDownloadTaskGenerationTask(parent), 
+	mSharedMutex(sharedMutex),
+	mAssetIndexJsonDownloadTaskEnded(jsonDownloadTaskEnded),
+	mFileOverride(fileOverride), 
+	mAssetBuilderPtr(assetBuilder)
 {
-	if (!assetBuilder)
+	if (!assetBuilder || mSharedMutex.isNull() || mAssetIndexJsonDownloadTaskEnded.isNull())
 	{
 		throw QGSExceptionInvalidValue();
 	}
@@ -24,13 +30,11 @@ QGSAssetObjectDownloadTaskGenerationTask::~QGSAssetObjectDownloadTaskGenerationT
 
 void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 {
-	QGSAssetIndexJsonDownloadTaskGenerationTask::mMutex.lock();
-	QGSAssetIndexJsonDownloadTaskGenerationTask::mAssetIndexJsonDownloadTaskEnded.wait(&QGSAssetIndexJsonDownloadTaskGenerationTask::mMutex);
-	QGSAssetIndexJsonDownloadTaskGenerationTask::mMutex.unlock();
+	mSharedMutex->lock();
+	mAssetIndexJsonDownloadTaskEnded->wait(mSharedMutex.data());
+	mSharedMutex->unlock();
 
 	emit started(this);
-
-	QGSAssetIndexInfo assetIndexInfo;
 
 	try
 	{
@@ -39,7 +43,7 @@ void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 		{
 			throw QGSExceptionIO(assetIndexJsonFile->fileName());
 		}
-		assetIndexInfo = QGSAssetIndexInfoFactory().createAssetIndexInfo(assetIndexJsonFile->readAll());
+		mAssetBuilderPtr->mAssetIndexInfo = QGSAssetIndexInfoFactory().createAssetIndexInfo(assetIndexJsonFile->readAll());
 	}
 	catch (const QGSExceptionJsonPraseError & exception)
 	{
@@ -54,7 +58,7 @@ void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 		return;
 	}
 
-	auto && assetObjectMap(assetIndexInfo.getAssetObjectMap());
+	auto && assetObjectMap(mAssetBuilderPtr->mAssetIndexInfo.getAssetObjectMap());
 	QGSDownloadTask * downloadTask(nullptr);
 
 	for (auto & i : assetObjectMap)

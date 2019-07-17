@@ -47,8 +47,9 @@ private slots:
 	void slotFinished();
 private:
 	void initDownloadTasks();
-	QGSDownloadTaskGenerationTask * initGameVersionJsonDownloadTaskGenerationTask();
-	QGSDownloadTaskGenerationTask * initGameVersionDownloadTaskGenerationTask();
+	QGSGameVersionJsonDownloadTaskGenerationTask * initGameVersionJsonDownloadTaskGenerationTask();
+	QGSGameVersionDownloadTaskGenerationTask * initGameVersionDownloadTaskGenerationTask(
+		QGSGameVersionJsonDownloadTaskGenerationTask * jsonDownloadTaskGenerationTask);
 private:
 	QGSGameVersionInfo mVersionInfo;
 	QGSGameDirectory * mGameDirectoryPtr;

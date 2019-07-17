@@ -34,7 +34,7 @@ QGSAssetIndexInfo QGSAssetIndexInfoFactory::createAssetIndexInfo(const QByteArra
 	for (auto & key : keys)
 	{
 		auto && assetInfoObject(assetInfoListObject.value(key).toObject());
-		ret.addAssetObject(key, QGSAssetObject(assetInfoObject.value("hash").toString(),assetInfoObject.value("size").toInt()));
+		ret.addAssetObject(key, QGSAssetObject(key, assetInfoObject.value("hash").toString(), assetInfoObject.value("size").toInt()));
 	}
 
 	ret.setVirtual(jsonObject.value("virtual").toBool());

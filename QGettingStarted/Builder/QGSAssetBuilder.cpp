@@ -7,6 +7,8 @@
 #include "QGSAssetObjectDownloadTaskGenerationTask.h"
 /**/
 
+static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeperator();
+
 QGSAssetBuilder::QGSAssetBuilder(
 	QGSThreadPoolManager * threadPoolManagerPtr,
 	QGSGameVersionInfo & versionInfo, 
@@ -116,7 +118,7 @@ void QGSAssetBuilder::slotDownloadTaskStarted(QGSTask * task)
 void QGSAssetBuilder::slotDownloadTaskFinished(QGSTask * task)
 {
 	slotEraseTask(task);
-
+	
 	emit downloadTaskFinished(dynamic_cast<QGSDownloadTask *>(task));
 
 	slotFinished();
@@ -178,17 +180,51 @@ void QGSAssetBuilder::slotFinished()
 {
 	if (!mTaskList.size())
 	{
+		if (mAssetIndexInfo.getVirtual())
+		{
+			auto && assetObjectMap(mAssetIndexInfo.getAssetObjectMap());
+			QDir baseDir(mGameDirectoryPtr->getBaseDir().absolutePath() + SEPARATOR + "assets" + SEPARATOR + "virtual" + SEPARATOR + "legacy");
+
+			for (auto & i : assetObjectMap)
+			{
+				QFile * originalFile = mGameDirectoryPtr->generateAssetObjectFile(i);
+				QFile targetFile(baseDir.absolutePath() + SEPARATOR + i.getPath());
+
+				if (targetFile.exists())
+				{
+					if (!mFileOverride)
+					{
+						continue;
+					}
+					if (!targetFile.remove())
+					{
+						throw QGSExceptionIO(targetFile.fileName());
+					}
+				}
+				else
+				{
+					if (!baseDir.mkpath(QFileInfo(targetFile).dir().absolutePath()))
+					{
+						throw QGSExceptionIO(targetFile.fileName());
+					}
+				}
+
+				if (!QFile::copy(originalFile->fileName(), targetFile.fileName()))
+				{
+					throw QGSExceptionIO(originalFile->fileName());
+				}
+			}
+		}
 		emit finished(this);
 	}
 }
 
 void QGSAssetBuilder::initDownloadTasks()
 {
-	initAssetObjectDownloadTaskGenerationTask();
-	initAssetIndexJsonDownloadTaskGenerationTask();
+	initAssetObjectDownloadTaskGenerationTask(initAssetIndexJsonDownloadTaskGenerationTask());
 }
 
-QGSDownloadTaskGenerationTask * QGSAssetBuilder::initAssetIndexJsonDownloadTaskGenerationTask()
+QGSAssetIndexJsonDownloadTaskGenerationTask * QGSAssetBuilder::initAssetIndexJsonDownloadTaskGenerationTask()
 {
 	auto * generationTask(new QGSAssetIndexJsonDownloadTaskGenerationTask(this, mFileOverride));
 
@@ -208,9 +244,13 @@ QGSDownloadTaskGenerationTask * QGSAssetBuilder::initAssetIndexJsonDownloadTaskG
 	return generationTask;
 }
 
-QGSDownloadTaskGenerationTask * QGSAssetBuilder::initAssetObjectDownloadTaskGenerationTask()
+QGSAssetObjectDownloadTaskGenerationTask * QGSAssetBuilder::initAssetObjectDownloadTaskGenerationTask(QGSAssetIndexJsonDownloadTaskGenerationTask * jsonDownloadTaskGenerationTask)
 {
-	auto * generationTask(new QGSAssetObjectDownloadTaskGenerationTask(this, mFileOverride));
+	auto * generationTask(new QGSAssetObjectDownloadTaskGenerationTask(
+		this,
+		jsonDownloadTaskGenerationTask->mSharedMutex,
+		jsonDownloadTaskGenerationTask->mAssetIndexJsonDownloadTaskEnded,
+		mFileOverride));
 
 	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotEraseTask);
 	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotFinished);

@@ -1,8 +1,8 @@
 #include "QGSGameVersionJsonDownloadTaskGenerationTask.h"
 #include "../Util/QGSExceptionInvalidValue.h"
 
-QMutex QGSGameVersionJsonDownloadTaskGenerationTask::mMutex;
-QWaitCondition QGSGameVersionJsonDownloadTaskGenerationTask::mGameVersionJsonDownloadTaskEnded;
+//QMutex QGSGameVersionJsonDownloadTaskGenerationTask::mMutex;
+//QWaitCondition QGSGameVersionJsonDownloadTaskGenerationTask::mGameVersionJsonDownloadTaskEnded;
 
 QGSGameVersionJsonDownloadTaskGenerationTask::QGSGameVersionJsonDownloadTaskGenerationTask(
 	QGSGameVersionBuilder * gameVersionBuilder,
@@ -15,6 +15,9 @@ QGSGameVersionJsonDownloadTaskGenerationTask::QGSGameVersionJsonDownloadTaskGene
 	{
 		throw QGSExceptionInvalidValue();
 	}
+
+	mSharedMutex = QSharedPointer<QMutex>(new QMutex());
+	mGameVersionJsonDownloadTaskEnded = QSharedPointer<QWaitCondition>(new QWaitCondition());
 }
 
 QGSGameVersionJsonDownloadTaskGenerationTask::~QGSGameVersionJsonDownloadTaskGenerationTask()
@@ -87,5 +90,5 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateCancel(QGSTask * task
 
 void QGSGameVersionJsonDownloadTaskGenerationTask::wakeGameVersionJsonDownloadTaskEnded()
 {
-	mGameVersionJsonDownloadTaskEnded.wakeAll();
+	mGameVersionJsonDownloadTaskEnded->wakeAll();
 }

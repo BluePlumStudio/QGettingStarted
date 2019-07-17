@@ -5,7 +5,12 @@
 class QGSAssetObjectDownloadTaskGenerationTask :public QGSDownloadTaskGenerationTask
 {
 public:
-	QGSAssetObjectDownloadTaskGenerationTask(QGSAssetBuilder * assetBuilder, bool fileOverride = false, QObject * parent = nullptr);
+	QGSAssetObjectDownloadTaskGenerationTask(
+		QGSAssetBuilder * assetBuilder, 
+		QSharedPointer<QMutex> sharedMutex,
+		QSharedPointer<QWaitCondition> jsonDownloadTaskEnded, 
+		bool fileOverride = false, 
+		QObject * parent = nullptr);
 
 	QGSAssetObjectDownloadTaskGenerationTask(const QGSAssetObjectDownloadTaskGenerationTask & right) = delete;
 
@@ -23,5 +28,7 @@ protected slots:
 	virtual void templateCancel(QGSTask * task);
 private:
 	QGSAssetBuilder * mAssetBuilderPtr;
+	QSharedPointer<QMutex> mSharedMutex;
+	QSharedPointer<QWaitCondition> mAssetIndexJsonDownloadTaskEnded;
 	bool mFileOverride;
 };

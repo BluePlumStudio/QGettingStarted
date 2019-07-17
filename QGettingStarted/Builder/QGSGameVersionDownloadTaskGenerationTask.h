@@ -5,7 +5,12 @@
 class QGSGameVersionDownloadTaskGenerationTask :public QGSDownloadTaskGenerationTask
 {
 public:
-	QGSGameVersionDownloadTaskGenerationTask(QGSGameVersionBuilder * gameVersionBuilder, bool fileOverride = false, QObject * parent = nullptr);
+	QGSGameVersionDownloadTaskGenerationTask(
+		QGSGameVersionBuilder * gameVersionBuilder, 
+		QSharedPointer<QMutex> sharedMutex, 
+		QSharedPointer<QWaitCondition> jsonDownloadTaskEnded,
+		bool fileOverride = false, 
+		QObject * parent = nullptr);
 
 	QGSGameVersionDownloadTaskGenerationTask(const QGSGameVersionDownloadTaskGenerationTask & right) = delete;
 
@@ -23,5 +28,7 @@ protected slots:
 	virtual void templateCancel(QGSTask * task);
 private:
 	QGSGameVersionBuilder * mGameVersionBuilderPtr;
+	QSharedPointer<QMutex> mSharedMutex;
+	QSharedPointer<QWaitCondition> mGameVersionJsonDownloadTaskEnded;
 	bool mFileOverride;
 };

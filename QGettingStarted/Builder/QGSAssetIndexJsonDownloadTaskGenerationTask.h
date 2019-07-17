@@ -6,6 +6,7 @@ class QGSAssetIndexJsonDownloadTaskGenerationTask :public QGSDownloadTaskGenerat
 {
 public:
 	friend class QGSAssetObjectDownloadTaskGenerationTask;
+	friend class QGSAssetBuilder;
 
 	QGSAssetIndexJsonDownloadTaskGenerationTask(QGSAssetBuilder * assetBuilder, bool fileOverride = false, QObject * parent = nullptr);
 
@@ -27,7 +28,7 @@ private:
 	void wakeAssetIndexJsonDownloadTaskEnded();
 private:
 	QGSAssetBuilder * mAssetBuilderPtr;
-	static QMutex mMutex;
-	static QWaitCondition mAssetIndexJsonDownloadTaskEnded;
+	QSharedPointer<QMutex> mSharedMutex;
+	QSharedPointer<QWaitCondition> mAssetIndexJsonDownloadTaskEnded;
 	bool mFileOverride;
 };
