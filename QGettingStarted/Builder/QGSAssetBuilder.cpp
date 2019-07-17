@@ -187,7 +187,7 @@ void QGSAssetBuilder::slotFinished()
 
 			for (auto & i : assetObjectMap)
 			{
-				QFile * originalFile = mGameDirectoryPtr->generateAssetObjectFile(i);
+				QSharedPointer<QFile> originalFile (mGameDirectoryPtr->generateAssetObjectFile(i));
 				QFile targetFile(baseDir.absolutePath() + SEPARATOR + i.getPath());
 
 				if (targetFile.exists())
@@ -213,6 +213,7 @@ void QGSAssetBuilder::slotFinished()
 				{
 					throw QGSExceptionIO(originalFile->fileName());
 				}
+
 			}
 		}
 		emit finished(this);
