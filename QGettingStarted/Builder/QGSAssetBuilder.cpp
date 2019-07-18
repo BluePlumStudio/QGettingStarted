@@ -209,7 +209,7 @@ void QGSAssetBuilder::slotFinished()
 					}
 				}
 
-				if (!QFile::copy(originalFile->fileName(), targetFile.fileName()))
+				if (originalFile->exists() && !QFile::copy(originalFile->fileName(), targetFile.fileName()))
 				{
 					throw QGSExceptionIO(originalFile->fileName());
 				}
