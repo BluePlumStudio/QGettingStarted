@@ -3,7 +3,7 @@
 #include <QFile>
 
 #include "QGSDownloadInfo.h"
-#include "../Util/QGSNetworkAccessManager.h"
+#include "../Util/QGSNetworkHelper.h"
 
 class QGSDownloader : public QObject
 {
@@ -12,7 +12,7 @@ class QGSDownloader : public QObject
 public:
 	QGSDownloader(QFile * targetFile, 
 		const QGSDownloadInfo & downloadInfo,
-		QGSNetworkAccessManager * networkAccessManagerPtr, 
+		QGSNetworkHelper * networkAccessManagerPtr, 
 		qint64 bytesBegin, 
 		qint64 bytesEnd, 
 		const QNetworkProxy & proxy = QNetworkProxy::NoProxy, 
@@ -57,5 +57,5 @@ private:
 	qint64 mBytesReceived;
 	qint64 mBytesBegin;
 	qint64 mBytesEnd;
-	QGSNetworkAccessManager * mNetworkAccessManagerPtr;
+	QGSNetworkHelper * mNetworkHelperPtr;
 };

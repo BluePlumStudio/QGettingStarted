@@ -7,7 +7,7 @@
 QGSDownloader::QGSDownloader(
 	QFile * targetFile, 
 	const QGSDownloadInfo & downloadInfo,
-	QGSNetworkAccessManager * networkAccessManagerPtr, 
+	QGSNetworkHelper * networkAccessManagerPtr, 
 	qint64 bytesBegin, 
 	qint64 bytesEnd, 
 	const QNetworkProxy & proxy,
@@ -16,7 +16,7 @@ QGSDownloader::QGSDownloader(
 	: QObject(parent), 
 	mTargetFilePtr(targetFile), 
 	mDownloadInfo(downloadInfo),
-	mNetworkAccessManagerPtr(networkAccessManagerPtr), 
+	mNetworkHelperPtr(networkAccessManagerPtr), 
 	mBytesBegin(bytesBegin), 
 	mBytesEnd(bytesEnd), 
 	mReply(nullptr),
@@ -24,7 +24,7 @@ QGSDownloader::QGSDownloader(
 	mBytesReceived(0)
 {
 	if (!mTargetFilePtr ||
-		!mNetworkAccessManagerPtr)
+		!mNetworkHelperPtr)
 	{
 		QGSExceptionInvalidValue();
 	}
@@ -51,7 +51,7 @@ QNetworkReply * QGSDownloader::getNetworkReply() const
 
 void QGSDownloader::start()
 {
-	auto && request(QGSNetworkAccessManager::generateHttpsNetworkRequest());
+	auto && request(QGSNetworkHelper::generateHttpsNetworkRequest());
 
 	request.setUrl(mDownloadInfo.getUrl());
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
@@ -65,8 +65,8 @@ void QGSDownloader::start()
 		request.setRawHeader("Range", strRange.toLatin1());
 	}
 
-	mNetworkAccessManagerPtr->setProxy(mProxy);
-	mReply = mNetworkAccessManagerPtr->get(request);
+	mNetworkHelperPtr->getNetworkAccessManager()->setProxy(mProxy);
+	mReply = mNetworkHelperPtr->getNetworkAccessManager()->get(request);
 	if (!mReply)
 	{
 		emit downloadError(QGSNetworkError(QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!"), this);
@@ -182,7 +182,7 @@ bool QGSDownloader::get()
 		timer->setSingleShot(true);
 	}
 
-	connect(mNetworkAccessManagerPtr, &QGSNetworkAccessManager::finished, &eventLoop, &QEventLoop::quit);
+	connect(mNetworkHelperPtr->getNetworkAccessManager(), &QNetworkAccessManager::finished, &eventLoop, &QEventLoop::quit);
 
 	if (!mReply)
 	{

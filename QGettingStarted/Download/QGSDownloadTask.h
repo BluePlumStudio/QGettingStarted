@@ -85,7 +85,7 @@ protected:
 
 	QList<QGSDownloader *> mDownloaderList;
 
-	QGSNetworkAccessManager * mNetworkAccessManagerPtr;
+	QGSNetworkHelper * mNetworkHelperPtr;
 
 	static quint64 mLargeFileSize;
 	static quint64 mSmallFileSize;

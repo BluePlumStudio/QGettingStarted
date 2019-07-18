@@ -6,10 +6,33 @@
 #include <QTemporaryFile>
 #include <iostream>
 #include <string>
+#include <QUuid>
 
 #include "QGettingStarted.h"
 
 using namespace std;
+
+void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
+{
+	QByteArray localMsg = msg.toLocal8Bit();
+	switch (type) {
+	case QtDebugMsg:
+		fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		break;
+	case QtInfoMsg:
+		fprintf(stderr, "Info: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		break;
+	case QtWarningMsg:
+		fprintf(stderr, "Warning: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		break;
+	case QtCriticalMsg:
+		fprintf(stderr, "Critical: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		break;
+	case QtFatalMsg:
+		fprintf(stderr, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
+		abort();
+	}
+}
 
 void generateLaunchCommandTest()
 {
@@ -107,8 +130,8 @@ void gameVersionBuilderTest()
 	}
 
 	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(downloadSource));
-	QGSGameDirectory * gameDirectory(new QGSGameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft")));
-	auto * threadPoolManager(new QGSThreadPoolManager(8, 64));
+	QGSGameDirectory * gameDirectory(new QGSGameDirectory(QDir(QCoreApplication::applicationDirPath() + "/.minecraft"+ QUuid::createUuid().toString())));
+	auto * threadPoolManager(new QGSThreadPoolManager(8, 128));
 	QGSBuilderFactory * builderFactory(new QGSBuilderFactory(threadPoolManager));
 
 	for (int i = 0; i < count; i++)
@@ -323,6 +346,7 @@ void YggdrasilTest()
 
 int main(int argc, char *argv[])
 {
+	//qInstallMessageHandler(myMessageOutput);
 	QCoreApplication a(argc, argv);
 	//threadPoolTest();
 	//downloadTest();

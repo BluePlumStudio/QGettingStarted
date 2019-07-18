@@ -36,29 +36,33 @@ private:
 
 Q_DECLARE_METATYPE(QGSNetworkError)
 
-class QGSNetworkAccessManager :public QNetworkAccessManager
+class QGSNetworkHelper :public QObject
 {
 	Q_OBJECT
 
 public:
-	static QGSNetworkAccessManager & getGlobalInstance();
+	static QGSNetworkHelper & getGlobalInstance();
 
-	QGSNetworkAccessManager(QObject * parent = nullptr);
+	QGSNetworkHelper(QObject * parent = nullptr);
 
-	QGSNetworkAccessManager(const QGSNetworkAccessManager & right) = delete;
+	QGSNetworkHelper(const QGSNetworkHelper & right) = delete;
 
-	QGSNetworkAccessManager(QGSNetworkAccessManager && right) = delete;
+	QGSNetworkHelper(QGSNetworkHelper && right) = delete;
 
-	QGSNetworkAccessManager & operator=(const QGSNetworkAccessManager & right) = delete;
+	QGSNetworkHelper & operator=(const QGSNetworkHelper & right) = delete;
 
-	QGSNetworkAccessManager & operator=(QGSNetworkAccessManager && right) = delete;
+	QGSNetworkHelper & operator=(QGSNetworkHelper && right) = delete;
 
-	~QGSNetworkAccessManager();
+	~QGSNetworkHelper();
+
+	QNetworkAccessManager * getNetworkAccessManager();
 
 	static QNetworkRequest generateNetworkRequest();
 
 	static QNetworkRequest generateHttpsNetworkRequest(QSsl::SslProtocol protocol = QSsl::SslProtocol::TlsV1_0OrLater);
 public:
 	static const int DefaultTimeout;
+private:
+	QNetworkAccessManager * mNetworkHelperPtr;
 };
 

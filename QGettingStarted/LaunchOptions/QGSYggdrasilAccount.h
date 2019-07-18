@@ -3,7 +3,7 @@
 #include <QString>
 
 #include "QGSIAccount.h"
-#include "../Util/QGSNetworkAccessManager.h"
+#include "../Util/QGSNetworkHelper.h"
 
 class QGSYggdrasilAccount :public QGSIAccount
 {
@@ -28,5 +28,5 @@ private slots:
 	void slotError(QNetworkReply::NetworkError code);
 private:
 	QNetworkReply * mReply;
-	QGSNetworkAccessManager * mNetworkAccessManager;
+	QGSNetworkHelper * mNetworkAccessManager;
 };

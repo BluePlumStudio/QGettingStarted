@@ -40,17 +40,17 @@ void QGSYggdrasilAccount::authenticate(const QString & userName, const QString &
 
 	jsonDocument.setObject(jsonObject);
 	auto && byteArrayRequestData(jsonDocument.toJson());
-	auto && request(QGSNetworkAccessManager::generateHttpsNetworkRequest());
+	auto && request(QGSNetworkHelper::generateHttpsNetworkRequest());
 	request.setUrl(AuthServerUrl);
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 	request.setHeader(QNetworkRequest::ContentLengthHeader, byteArrayRequestData.length());
 
 	if (!mNetworkAccessManager)
 	{
-		mNetworkAccessManager = new QGSNetworkAccessManager;
+		mNetworkAccessManager = new QGSNetworkHelper;
 	}
-	mNetworkAccessManager->setProxy(proxy);
-	mReply = mNetworkAccessManager->post(request, byteArrayRequestData);
+	mNetworkAccessManager->getNetworkAccessManager()->setProxy(proxy);
+	mReply = mNetworkAccessManager->getNetworkAccessManager()->post(request, byteArrayRequestData);
 
 	if (mReply)
 	{

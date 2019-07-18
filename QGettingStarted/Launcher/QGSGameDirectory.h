@@ -218,4 +218,3 @@ private:
 	QMap<QString, QGSGameVersion> mVersionMap;
 	QDir mBaseDir;
 };
-

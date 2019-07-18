@@ -109,6 +109,6 @@ void QGSAssetIndexJsonDownloadTaskGenerationTask::templateCancel(QGSTask * task)
 
 void QGSAssetIndexJsonDownloadTaskGenerationTask::wakeAssetIndexJsonDownloadTaskEnded()
 {
-	mAssetIndexJsonDownloadTaskEnded->wakeAll();
+	mAssetIndexJsonDownloadTaskEnded->wakeOne();
 }
 

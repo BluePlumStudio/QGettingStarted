@@ -23,7 +23,7 @@ QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & prox
 	mBytesReceived(0),
 	mBytesTotal(0),
 	mState(DownloadState::Stop),
-	mNetworkAccessManagerPtr(nullptr)
+	mNetworkHelperPtr(nullptr)
 {
 	if (connectionCount < 1)
 	{
@@ -40,7 +40,7 @@ QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & dow
 	mBytesReceived(0),
 	mBytesTotal(0),
 	mState(DownloadState::Stop),
-	mNetworkAccessManagerPtr(nullptr)
+	mNetworkHelperPtr(nullptr)
 {
 	if (!mTargetFilePtr)
 	{
@@ -65,10 +65,10 @@ QGSDownloadTask::~QGSDownloadTask()
 	}
 	*/
 
-	if (mNetworkAccessManagerPtr)
+	if (mNetworkHelperPtr)
 	{
-		mNetworkAccessManagerPtr->deleteLater();
-		mNetworkAccessManagerPtr = nullptr;
+		mNetworkHelperPtr->deleteLater();
+		mNetworkHelperPtr = nullptr;
 	}
 }
 
@@ -151,9 +151,9 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 			}
 		}
 
-		if (!mNetworkAccessManagerPtr)
+		if (!mNetworkHelperPtr)
 		{
-			mNetworkAccessManagerPtr = new QGSNetworkAccessManager;
+			mNetworkHelperPtr = new QGSNetworkHelper();
 		}
 
 		if (mDownloaderList.size())
@@ -187,7 +187,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 				qint64 bytesBegin(mBytesTotal*i / mConnectionCount);
 				qint64 bytesEnd(mBytesTotal*(i + 1) / mConnectionCount);
 
-				auto * newDownloader(new QGSDownloader(mTargetFilePtr, mDownloadInfo, mNetworkAccessManagerPtr, bytesBegin, bytesEnd, mProxy));
+				auto * newDownloader(new QGSDownloader(mTargetFilePtr, mDownloadInfo, mNetworkHelperPtr, bytesBegin, bytesEnd, mProxy));
 
 				QObject::connect(newDownloader, &QGSDownloader::finished, this, &QGSDownloadTask::slotFinished);
 				QObject::connect(newDownloader, &QGSDownloader::downloadProgress, this, &QGSDownloadTask::slotDownloadProgress);
@@ -285,11 +285,11 @@ void QGSDownloadTask::slotFinished(QGSDownloader * downloader)
 
 	}
 
-	if (mNetworkAccessManagerPtr)
+	if (mNetworkHelperPtr)
 	{
-		mNetworkAccessManagerPtr->disconnect();
-		mNetworkAccessManagerPtr->deleteLater();
-		mNetworkAccessManagerPtr = nullptr;
+		mNetworkHelperPtr->getNetworkAccessManager()->disconnect();
+		mNetworkHelperPtr->deleteLater();
+		mNetworkHelperPtr = nullptr;
 	}
 
 	mBytesReceived = 0;
@@ -349,11 +349,11 @@ quint64 QGSDownloadTask::getFileSize()
 		timer->setSingleShot(true);
 	}
 
-	auto && request(QGSNetworkAccessManager::generateHttpsNetworkRequest());
+	auto && request(QGSNetworkHelper::generateHttpsNetworkRequest());
 	request.setUrl(mDownloadInfo.getUrl());
 	request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
 
-	auto * headReply(mNetworkAccessManagerPtr->head(request));
+	auto * headReply(mNetworkHelperPtr->getNetworkAccessManager()->head(request));
 	QObject::connect(headReply, &QNetworkReply::finished, &eventLoop, &QEventLoop::quit, Qt::DirectConnection);
 	timer->start(timeOutms);
 
@@ -392,10 +392,10 @@ void QGSDownloadTask::cancelTask()
 	mBytesReceived = 0;
 	mTargetFilePtr->remove();
 
-	if (mNetworkAccessManagerPtr)
+	if (mNetworkHelperPtr)
 	{
-		mNetworkAccessManagerPtr->disconnect();
-		mNetworkAccessManagerPtr->deleteLater();
-		mNetworkAccessManagerPtr = nullptr;
+		mNetworkHelperPtr->getNetworkAccessManager()->disconnect();
+		mNetworkHelperPtr->deleteLater();
+		mNetworkHelperPtr = nullptr;
 	}
 }

@@ -1,11 +1,12 @@
 #include <QTimer>
 
 #include "QGSTask.h"
+#include "QGSThreadPool.h"
 #include "../Util/QGSExceptionInvalidValue.h"
 
 static const unsigned long DEFAULT_WAIT_TIME(1000);
 
-QGSTask::QGSTask(QObject * parent) :QObject(parent)
+QGSTask::QGSTask(QObject * parent) :QObject(parent), mNextTask(nullptr), mThreadPool(nullptr)
 {
 	mOriginalThread = thread();
 }
@@ -40,9 +41,32 @@ QGSTask & QGSTask::setNextTask(QGSTask * task)
 	}
 
 	mNextTask = task;
-	QObject::connect(this, &QGSTask::finished, mNextTask, &QGSTask::start, Qt::ConnectionType::UniqueConnection);
+	//QObject::connect(this, &QGSTask::finished, mNextTask, &QGSTask::start, Qt::ConnectionType::UniqueConnection);
+	QObject::connect(this, &QGSTask::finished, this, &QGSTask::startNextTask);
 
 	return *task;
+}
+
+QGSTask & QGSTask::setThreadPool(QGSThreadPool * threadPool)
+{
+	if (!threadPool)
+	{
+		throw QGSExceptionInvalidValue();
+	}
+
+	mThreadPool = threadPool;
+
+	return *this;
+}
+
+QGSTask * QGSTask::getNextTask()
+{
+	return mNextTask;
+}
+
+QGSThreadPool * QGSTask::getThreadPool()
+{
+	return mThreadPool;
 }
 
 void QGSTask::start()
@@ -73,4 +97,9 @@ void QGSTask::templateStop(QGSTask * task)
 void QGSTask::templateCancel(QGSTask * task)
 {
 
+}
+
+void QGSTask::startNextTask()
+{
+	mThreadPool->addTaskBack(mNextTask);
 }

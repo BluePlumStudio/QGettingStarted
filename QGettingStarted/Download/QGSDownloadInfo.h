@@ -2,7 +2,7 @@
 
 #include <QMetaType>
 
-#include "../Util/QGSNetworkAccessManager.h"
+#include "../Util/QGSNetworkHelper.h"
 #include "../GameVersion/QGSDownloads.h"
 #include "../Util/QGSTask.h"
 

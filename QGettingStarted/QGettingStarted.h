@@ -12,7 +12,7 @@
 #include "LaunchOptions/QGSOfflineAccountFactory.h"
 #include "LaunchOptions/QGSYggdrasilAccount.h"
 #include "LaunchOptions/QGSYggdrasilAccountFactory.h"
-#include "Util/QGSNetworkAccessManager.h"
+#include "Util/QGSNetworkHelper.h"
 #include "Util/QGSFileTools.h"
 #include "Util/QGSThreadPoolManager.h"
 #include "Download/QGSDownloadTaskFactory.h"

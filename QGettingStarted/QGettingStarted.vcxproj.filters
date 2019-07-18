@@ -228,9 +228,6 @@
     <ClCompile Include="GameVersion\QGSOptifineVersionInfoList.cpp">
       <Filter>GameVersion\InfoList</Filter>
     </ClCompile>
-    <ClCompile Include="Util\QGSNetworkAccessManager.cpp">
-      <Filter>Util</Filter>
-    </ClCompile>
     <ClCompile Include="Download\QGSDownloadInfo.cpp">
       <Filter>Download</Filter>
     </ClCompile>
@@ -332,6 +329,9 @@
     </ClCompile>
     <ClCompile Include="Util\QGSThreadPoolManager.cpp">
       <Filter>Util\ThreadPool</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\QGSNetworkHelper.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -488,9 +488,6 @@
     <QtMoc Include="Download\QGSDownloadTask.h">
       <Filter>Download\DownloadTask</Filter>
     </QtMoc>
-    <QtMoc Include="Util\QGSNetworkAccessManager.h">
-      <Filter>Util</Filter>
-    </QtMoc>
     <QtMoc Include="Download\QGSDownloader.h">
       <Filter>Download\DownloadTask</Filter>
     </QtMoc>
@@ -583,6 +580,9 @@
     </QtMoc>
     <QtMoc Include="Util\QGSThreadPoolManager.h">
       <Filter>Util\ThreadPool</Filter>
+    </QtMoc>
+    <QtMoc Include="Util\QGSNetworkHelper.h">
+      <Filter>Util</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

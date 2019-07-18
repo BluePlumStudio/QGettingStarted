@@ -90,5 +90,5 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateCancel(QGSTask * task
 
 void QGSGameVersionJsonDownloadTaskGenerationTask::wakeGameVersionJsonDownloadTaskEnded()
 {
-	mGameVersionJsonDownloadTaskEnded->wakeAll();
+	mGameVersionJsonDownloadTaskEnded->wakeOne();
 }

@@ -5,7 +5,7 @@
 #include <QWaitCondition>
 
 #include "../Util/QGSTask.h"
-#include "../Util/QGSNetworkAccessManager.h"
+#include "../Util/QGSNetworkHelper.h"
 
 class QGSDownloadTaskGenerationTask : public QGSTask
 {

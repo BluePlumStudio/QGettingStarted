@@ -11,6 +11,7 @@ class QGSThreadPool : public QThread
 public:
 	friend class QGSTaskThread;
 	friend class QGSThreadPoolManager;
+	friend class QGSTask;
 
 	QGSThreadPool(const int minThreadCount, const int maxThreadCount, QObject *parent = nullptr);
 

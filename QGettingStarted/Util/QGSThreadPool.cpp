@@ -42,9 +42,13 @@ bool QGSThreadPool::addTaskBack(QGSTask * task)
 	{
 		return false;
 	}
-	task->moveToThread(this);
 	mTaskQueue.push_back(task);
-
+	do
+	{
+		task->setThreadPool(this);
+		task->moveToThread(this);
+		task = task->getNextTask();
+	} while (task);
 	mTaskQueueNotEmpty.notify_all();
 
 	return true;
@@ -63,6 +67,7 @@ bool QGSThreadPool::addTaskFront(QGSTask * task)
 	{
 		return false;
 	}
+	task->setThreadPool(this);
 	task->moveToThread(this);
 	mTaskQueue.push_front(task);
 

@@ -258,7 +258,7 @@
     <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp" />
     <ClCompile Include="Util\QGSExceptionVersionNotFound.cpp" />
     <ClCompile Include="Util\QGSFileTools.cpp" />
-    <ClCompile Include="Util\QGSNetworkAccessManager.cpp" />
+    <ClCompile Include="Util\QGSNetworkHelper.cpp" />
     <ClCompile Include="Util\QGSOperatingSystem.cpp" />
     <ClCompile Include="Util\QGSTask.cpp" />
     <ClCompile Include="Util\QGSTaskThread.cpp" />
@@ -349,7 +349,16 @@
     <ClInclude Include="Util\QGSExceptionIO.h" />
     <ClInclude Include="Util\QGSExceptionJsonPraseError.h" />
     <ClInclude Include="Util\QGSExceptionVersionNotFound.h" />
-    <QtMoc Include="Util\QGSNetworkAccessManager.h" />
+    <QtMoc Include="Util\QGSNetworkHelper.h">
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release lib|Win32'">.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPlatformCompositorSupport;$(QTDIR)\include\QtPlatformHeaders;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release lib|Win32'">UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug lib|Win32'">.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug lib|Win32'">UNICODE;_UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UNICODE;_UNICODE;WIN32;WIN64;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</Define>
+      <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;$(QTDIR)\include;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtPlatformCompositorSupport;$(QTDIR)\include\QtPlatformHeaders;.\Util;.\Download;.\Version;.\GameVersion;.\GameBuilder;.\Builder</IncludePath>
+      <Define Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UNICODE;_UNICODE;WIN32;WIN64;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;QT_NETWORK_LIB;%(PreprocessorDefinitions)</Define>
+    </QtMoc>
     <QtMoc Include="Util\QGSFileTools.h" />
     <QtMoc Include="Util\QGSOperatingSystem.h" />
     <QtMoc Include="Util\QGSThreadPool.h" />
