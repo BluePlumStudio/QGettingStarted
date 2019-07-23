@@ -191,9 +191,13 @@ public:
 
 	QVector<QFile *> generateLibraryFiles(const QList<QGSLibrary> & libraryList, const bool withAbsolutePath = true)const;
 
+	QFile * generateAssetObjectFile(const QGSAssetObject & assetObject, const bool withAbsolutePath = true);
+
 	QDir generateVersionsDirectory(const bool withAbsolutePath = true)const;
 
 	QDir generateLibrariesDirectory(const bool withAbsolutePath = true)const;
+
+	QDir generateAssetsDirectory(const bool withAbsolutePath = true);
 
 	QDir generateNativesDirectory(const QString & version, const bool withAbsolutePath = true)const;
 
@@ -201,16 +205,31 @@ public:
 
 	QDir getBaseDir()const;
 
+	QString generateGameVersionJarFileName(const QString & version, const bool withAbsolutePath = true)const;
+
+	QString generateGameVersionJarFileName(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath = true)const;
+
+	QString generateGameVersionJsonFileName(const QString & version, const bool withAbsolutePath = true)const;
+
+	QString generateGameVersionJsonFileName(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath = true)const;
+
+	QString generateLibraryFileName(const QGSLibrary & library, const bool withAbsolutePath = true)const;
+
+	QString generateAssetIndexJsonFileName(const QGSAssetIndex & assetIndex, const bool withAbsolutePath = true)const;
+
+	QString generateAssetIndexJsonFileName(const QString & version, const bool withAbsolutePath = true);
+
+	QString generateAssetIndexJsonFileName(const QGSGameVersionInfo & gameVersionInfo, const bool withAbsolutePath = true);
+
+	QString generateAssetObjectFileName(const QGSAssetObject & assetObject, const bool withAbsolutePath = true);
+
+	bool generateAssetsDirectory(QString version, const QGSAssetIndex & assetIndex, QDir & dir);
+
 	static QString praseLibraryName(const QGSLibrary & library);
 
 	static QString praseName(const QString & name);
 
 	/*need to be updated*/
-	bool generateAssetsDirectory(QString version, const QGSAssetIndex & assetIndex, QDir & dir);
-
-	QDir generateAssetsDirectory(const bool withAbsolutePath = true);
-
-	QFile * generateAssetObjectFile(const QGSAssetObject & assetObject, const bool withAbsolutePath = true);
 private:
 	void init();
 

@@ -37,9 +37,9 @@ void QGSGameVersionDownloadTaskGenerationTask::templateStart(QGSTask * task)
 
 	if (!mFileOverride)
 	{
-		QSharedPointer<QFile> gameVersionJarFile(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJarFile(mGameVersionBuilderPtr->mVersionInfo));
+		QString gameVersionJarFileName(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJarFileName(mGameVersionBuilderPtr->mVersionInfo));
 		
-		if (gameVersionJarFile->exists())
+		if (QFileInfo::exists(gameVersionJarFileName) || QFileInfo::exists(gameVersionJarFileName + ".qtmp"))
 		{
 			emit finished(this);
 

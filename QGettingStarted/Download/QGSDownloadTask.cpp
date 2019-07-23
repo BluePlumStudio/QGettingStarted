@@ -368,7 +368,7 @@ quint64 QGSDownloadTask::getFileSize()
 	if (timer)
 	{
 		timer->stop();
-		delete timer;
+		timer->deleteLater();
 		timer = nullptr;
 	}
 

@@ -65,8 +65,9 @@ void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	{
 		if (!mFileOverride)
 		{
-			QSharedPointer<QFile> assetObjectFile(mAssetBuilderPtr->mGameDirectoryPtr->generateAssetObjectFile(i));
-			if (assetObjectFile->exists())
+			QString assetObjectFileName(mAssetBuilderPtr->mGameDirectoryPtr->generateAssetObjectFileName(i));
+
+			if (QFileInfo::exists(assetObjectFileName) || QFileInfo::exists(assetObjectFileName + ".qtmp"))
 			{
 				continue;
 			}

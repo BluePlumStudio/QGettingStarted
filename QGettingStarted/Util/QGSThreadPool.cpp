@@ -240,7 +240,8 @@ void QGSThreadPool::adjustThreads()
 
 				mMutex.lock();
 
-				delete (*it);
+				//delete (*it);
+				(*it)->deleteLater();
 				mThreadList.erase(it);
 			}
 		}

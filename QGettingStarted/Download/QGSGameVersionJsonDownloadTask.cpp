@@ -25,5 +25,6 @@ QGSGameVersionJsonDownloadTask::~QGSGameVersionJsonDownloadTask()
 	if (mTargetFilePtr)
 	{
 		mTargetFilePtr->deleteLater();
+		mTargetFilePtr = nullptr;
 	}
 }

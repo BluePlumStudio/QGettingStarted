@@ -290,7 +290,7 @@ QMap<QString, QString> QGSFileTools::getJavaPathListFromSystemSettings()
 
 	if (JavaEnvReg)
 	{
-		delete JavaEnvReg;
+		JavaEnvReg->deleteLater();
 	}
 
 #endif

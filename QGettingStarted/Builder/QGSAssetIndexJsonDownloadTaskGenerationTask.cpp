@@ -49,9 +49,9 @@ void QGSAssetIndexJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 
 	if (!mAssetBuilderPtr->mFileOverride)
 	{
-		QSharedPointer<QFile> mAssetIndexJsonFile(mAssetBuilderPtr->mGameDirectoryPtr->generateAssetIndexJsonFile(gameVersion.getAssetIndex()));
+		QString assetIndexJsonFileName(mAssetBuilderPtr->mGameDirectoryPtr->generateAssetIndexJsonFileName(gameVersion.getAssetIndex()));
 
-		if (mAssetIndexJsonFile->exists())
+		if (QFileInfo::exists(assetIndexJsonFileName) || QFileInfo::exists(assetIndexJsonFileName + ".qtmp"))
 		{
 			emit finished(this);
 

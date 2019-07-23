@@ -213,8 +213,8 @@ bool QGSLibraryBuilder::initLibraryDownloadTasks()
 	{
 		if (!mFileOverride)
 		{
-			QSharedPointer<QFile> libraryFile(mGameDirectoryPtr->generateLibraryFile(i));
-			if (libraryFile->exists())
+			QString libraryFileName(mGameDirectoryPtr->generateLibraryFileName(i));
+			if (QFileInfo::exists(libraryFileName) || QFileInfo::exists(libraryFileName + ".qtmp"))
 			{
 				continue;
 			}

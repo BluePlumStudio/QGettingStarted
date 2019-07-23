@@ -24,6 +24,7 @@ QGSAssetObjectDownloadTask::~QGSAssetObjectDownloadTask()
 	if (mTargetFilePtr)
 	{
 		mTargetFilePtr->deleteLater();
+		mTargetFilePtr = nullptr;
 	}
 	
 }

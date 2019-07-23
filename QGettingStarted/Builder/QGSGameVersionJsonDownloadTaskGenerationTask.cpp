@@ -32,9 +32,9 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 
 	if (!mFileOverride)
 	{
-		QSharedPointer<QFile> gameVersionJsonFile(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJsonFile(mGameVersionBuilderPtr->mVersionInfo));
+		QString gameVersionJsonFileName(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJsonFileName(mGameVersionBuilderPtr->mVersionInfo));
 		
-		if (gameVersionJsonFile->exists())
+		if (QFileInfo::exists(gameVersionJsonFileName) || QFileInfo::exists(gameVersionJsonFileName + ".qtmp"))
 		{
 			emit finished(this);
 

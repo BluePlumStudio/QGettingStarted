@@ -18,5 +18,6 @@ QGSLibraryDownloadTask::~QGSLibraryDownloadTask()
 	if (mTargetFilePtr)
 	{
 		mTargetFilePtr->deleteLater();
+		mTargetFilePtr = nullptr;
 	}
 }

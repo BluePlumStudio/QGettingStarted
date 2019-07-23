@@ -32,5 +32,6 @@ QGSGameVersionDownloadTask::~QGSGameVersionDownloadTask()
 	if (mTargetFilePtr)
 	{
 		mTargetFilePtr->deleteLater();
+		mTargetFilePtr = nullptr;
 	}
 }

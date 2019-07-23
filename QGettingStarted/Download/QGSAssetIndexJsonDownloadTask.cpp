@@ -18,5 +18,6 @@ QGSAssetIndexJsonDownloadTask::~QGSAssetIndexJsonDownloadTask()
 	if (mTargetFilePtr)
 	{
 		mTargetFilePtr->deleteLater();
+		mTargetFilePtr = nullptr;
 	}
 }

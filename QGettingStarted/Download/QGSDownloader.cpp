@@ -199,7 +199,7 @@ bool QGSDownloader::get()
 	if (timer)
 	{
 		timer->stop();
-		delete timer;
+		timer->deleteLater();
 		timer = nullptr;
 	}
 
