@@ -319,7 +319,7 @@ bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIn
 	{
 		if (assetIndex.getId().contains("legacy"))
 		{
-			dir = QDir(assetsBaseDirStr + SEPARATOR + "virtual");
+			dir = QDir(assetsBaseDirStr + SEPARATOR + "virtual" + SEPARATOR + "legacy");
 			ret = true;
 		}
 		else
@@ -356,7 +356,7 @@ bool QGSGameDirectory::generateAssetsDirectory(QString version, const QGSAssetIn
 				auto && assetInfoList(infoListFactory.createAssetIndexInfo(assetJsonFile.readAll()));
 				if (assetInfoList.getVirtual())
 				{
-					dir = QDir(assetsBaseDirStr + SEPARATOR + "virtual");
+					dir = QDir(assetsBaseDirStr + SEPARATOR + "virtual" + SEPARATOR + "legacy");
 					ret = true;
 				}
 				else

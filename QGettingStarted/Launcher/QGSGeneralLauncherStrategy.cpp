@@ -21,7 +21,7 @@ QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(c
 	const QGSLaunchOptions * launchOptions,
 	QString & command)
 {
-	QGSLauncherError::ErrorFlags ret(QGSLauncherError::Ok);
+	QGSLauncherError::ErrorFlags ret;
 	if (!launchOptions)
 	{
 		return ret |= QGSLauncherError::ErrorNullPointer;
@@ -292,5 +292,8 @@ QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(c
 		.replace("${launcher_name}", launcherName)
 		.replace("${launcher_version}", launcherVersion)
 		.replace("${classpath}", QString("\"%1\"").arg(libraryPathList.join(";")));
+
+	ret |= QGSLauncherError::Ok;
+
 	return ret;
 }

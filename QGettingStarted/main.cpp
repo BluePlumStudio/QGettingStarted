@@ -90,10 +90,9 @@ void generateLaunchCommandTest()
 		launchOptionsBuilder.setMetaspaceSize(8888);
 		launchOptionsBuilder.setProxy(QNetworkProxy("proxyaddress", "proxyport", "proxyuser", "proxypassword"));
 		*/
-		if (launcher.generateLaunchCommand(gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())), gameDirectory, launchOptionsBuilder.getLaunchOptions(), launchCommand) != QGSLauncherError::Ok)
+		if (launcher.generateLaunchCommand(gameDirectory.getVersion(QString::fromLocal8Bit(version.c_str())), gameDirectory, launchOptionsBuilder.getLaunchOptions(), launchCommand) & QGSLauncherError::Ok)
 		{
-			cout << "生成启动脚本失败";
-			return;
+
 		}
 
 		QFile launchCommandFile;
