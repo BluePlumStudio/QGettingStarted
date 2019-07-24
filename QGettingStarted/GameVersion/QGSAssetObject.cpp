@@ -3,7 +3,10 @@
 QGSAssetObject::QGSAssetObject(const QString & path, const QString & hash, const qint64 & size)
 	:mPath(path), mHash(hash), mSize(size)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSAssetObject")))
+	{
+		qRegisterMetaType<QGSAssetObject>("QGSAssetObject");
+	}
 }
 
 QGSAssetObject::~QGSAssetObject()

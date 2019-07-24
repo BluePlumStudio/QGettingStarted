@@ -3,6 +3,10 @@
 
 QGSLiteLoaderVersionInfoList::QGSLiteLoaderVersionInfoList()
 {
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLiteLoaderVersionInfoList")))
+	{
+		qRegisterMetaType<QGSLiteLoaderVersionInfoList>("QGSLiteLoaderVersionInfoList");
+	}
 }
 
 QGSLiteLoaderVersionInfo & QGSLiteLoaderVersionInfoList::operator[](const int index)

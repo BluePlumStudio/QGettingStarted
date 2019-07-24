@@ -3,7 +3,10 @@
 QGSArguments::QGSArgument::QGSArgument(const QStringList & value, const QGSRules & rules)
 	:mRules(rules), mValue(value)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSArguments::QGSArgument")))
+	{
+		qRegisterMetaType<QGSArguments::QGSArgument>("QGSArguments::QGSArgument");
+	}
 }
 
 QGSArguments::QGSArgument::~QGSArgument()
@@ -54,9 +57,12 @@ void QGSArguments::QGSArgument::clear()
 /**/
 
 QGSArguments::QGSArguments(const QList<QGSArgument> & jvm, const QList<QGSArgument> & game)
+	:mJvm(jvm), mGame(game)
 {
-	mJvm = jvm;
-	mGame = game;
+	if (!QMetaType::isRegistered(QMetaType::type("QGSArguments")))
+	{
+		qRegisterMetaType<QGSArguments>("QGSArguments");
+	}
 }
 
 QGSArguments::~QGSArguments()

@@ -6,7 +6,10 @@
 QGSNetworkError::QGSNetworkError(const QNetworkReply::NetworkError code, const QString & errorString)
 	:mCode(code), mErrorString(errorString)
 {
-	//qRegisterMetaType<QGSNetworkError>("QGSNetworkError");
+	if (!QMetaType::isRegistered(QMetaType::type("QGSNetworkError")))
+	{
+		qRegisterMetaType<QGSNetworkError>("QGSNetworkError");
+	}
 }
 
 QGSNetworkError::~QGSNetworkError()

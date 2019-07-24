@@ -4,7 +4,10 @@
 QGSOptifineVersionInfo::QGSOptifineVersionInfo(const QString & id, const QString & mcversion, const QString & type, const QString & patch, const QString & fileName)
 	:mId(id), mMcversion(mcversion), mType(type), mPatch(patch), mFileName(fileName)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSOptifineVersionInfo")))
+	{
+		qRegisterMetaType<QGSOptifineVersionInfo>("QGSOptifineVersionInfo");
+	}
 }
 
 bool QGSOptifineVersionInfo::operator<(const QGSOptifineVersionInfo & right) const

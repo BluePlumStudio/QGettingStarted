@@ -13,7 +13,10 @@
 
 QGSForgeVersionInfoList::QGSForgeVersionInfoList()
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSForgeVersionInfoList")))
+	{
+		qRegisterMetaType<QGSForgeVersionInfoList>("QGSForgeVersionInfoList");
+	}
 }
 
 QGSForgeVersionInfo & QGSForgeVersionInfoList::operator[](const int index)

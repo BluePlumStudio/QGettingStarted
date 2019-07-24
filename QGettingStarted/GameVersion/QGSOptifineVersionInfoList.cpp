@@ -2,7 +2,10 @@
 
 QGSOptifineVersionInfoList::QGSOptifineVersionInfoList()
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSOptifineVersionInfoList")))
+	{
+		qRegisterMetaType<QGSOptifineVersionInfoList>("QGSOptifineVersionInfoList");
+	}
 }
 
 QGSOptifineVersionInfo & QGSOptifineVersionInfoList::operator[](const int index)

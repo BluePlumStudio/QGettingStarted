@@ -1,8 +1,11 @@
 #include "QGSExtract.h"
 
-QGSExtract::QGSExtract(const QStringList & exclude)
+QGSExtract::QGSExtract(const QStringList & exclude) :mExclude(exclude)
 {
-	mExclude = exclude;
+	if (!QMetaType::isRegistered(QMetaType::type("QGSExtract")))
+	{
+		qRegisterMetaType<QGSExtract>("QGSExtract");
+	}
 }
 
 QGSExtract::~QGSExtract()

@@ -12,10 +12,7 @@ public:
 	class QGSLoggingDownload :public QGSDownloadBase
 	{
 	public:
-		QGSLoggingDownload(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "") :QGSDownloadBase(size, SHA1, path, url), mId(id)
-		{
-
-		}
+		QGSLoggingDownload(const int size = 0, const QString & SHA1 = "", const QString & path = "", const QUrl & url = QUrl(), const QString & id = "");
 
 		QGSLoggingDownload(const QGSLoggingDownload & right) = default;
 
@@ -25,10 +22,7 @@ public:
 
 		QGSLoggingDownload & operator=(QGSLoggingDownload && right) = default;
 
-		~QGSLoggingDownload()
-		{
-
-		}
+		~QGSLoggingDownload();
 	private:
 		QString mId;
 	};

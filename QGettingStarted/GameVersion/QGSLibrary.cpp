@@ -12,7 +12,10 @@ QGSLibrary::QGSLibrary(const QString & package,
 	const QUrl & url)
 	:mPackage(package), mName(name), mVersion(version), mDownloads(downloads), mExtract(extract), mLateload(lateload), mNative(native), mNatives(natives), mRules(rules), mUrl(url)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLibrary")))
+	{
+		qRegisterMetaType<QGSLibrary>("QGSLibrary");
+	}
 }
 
 QGSLibrary::~QGSLibrary()

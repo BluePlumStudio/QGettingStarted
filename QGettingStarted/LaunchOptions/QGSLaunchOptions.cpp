@@ -3,7 +3,10 @@
 QGSServerInfo::QGSServerInfo(const QString & address, const QString & port)
 	:mAddress(address), mPort(port)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSServerInfo")))
+	{
+		qRegisterMetaType<QGSServerInfo>("QGSServerInfo");
+	}
 }
 
 QGSServerInfo::~QGSServerInfo()
@@ -65,7 +68,10 @@ QGSLaunchOptions::QGSLaunchOptions(
 	mProxy(proxy),
 	mGeneratedJVMArguments(generatedJVMArguments)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLaunchOptions")))
+	{
+		qRegisterMetaType<QGSLaunchOptions>("QGSLaunchOptions");
+	}
 }
 
 QGSLaunchOptions::~QGSLaunchOptions()

@@ -4,7 +4,10 @@
 QGSForgeVersionInfo::QGSForgeFileInfo::QGSForgeFileInfo(const QString & format, const QString & category, const QString & hash, const QString & id)
 	:mFormat(format), mCategory(category), mHash(hash), mId(id)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSForgeVersionInfo::QGSForgeFileInfo")))
+	{
+		qRegisterMetaType<QGSForgeVersionInfo::QGSForgeFileInfo>("QGSForgeVersionInfo::QGSForgeFileInfo");
+	}
 }
 
 QGSForgeVersionInfo::QGSForgeFileInfo::~QGSForgeFileInfo()
@@ -61,7 +64,10 @@ QString QGSForgeVersionInfo::QGSForgeFileInfo::getId()const
 QGSForgeVersionInfo::QGSForgeVersionInfo(const QString & branch, const int build, const QString & mcversion, const QString & modified, const QString & version, const QString & id, const QList<QGSForgeFileInfo> & files)
 	:mBranch(branch), mBuild(build), mMcversion(mcversion), mModified(modified), mVersion(version), mId(id), mFileList(files)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSForgeVersionInfo")))
+	{
+		qRegisterMetaType<QGSForgeVersionInfo>("QGSForgeVersionInfo");
+	}
 }
 
 bool QGSForgeVersionInfo::operator<(const QGSForgeVersionInfo & right) const

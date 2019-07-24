@@ -3,7 +3,10 @@
 QGSRules::QGSRule::QGSRule(const QString & action, const QMap<QString, bool> & features, const QString & os, const QString & osVersion)
 	:mAction(action), mFeatures(features), mOs(os), mOsVersion(osVersion), mOperatingSystemPtr(&QGSOperatingSystem::getInstance())
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSRules::QGSRule")))
+	{
+		qRegisterMetaType<QGSRules::QGSRule>("QGSRules::QGSRule");
+	}
 }
 
 QGSRules::QGSRule::~QGSRule()
@@ -66,7 +69,10 @@ void QGSRules::QGSRule::clear()
 
 QGSRules::QGSRules()
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSRules")))
+	{
+		qRegisterMetaType<QGSRules>("QGSRules");
+	}
 }
 
 QGSRules::QGSRules(const QList<QGSRule> & rules)

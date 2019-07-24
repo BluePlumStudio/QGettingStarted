@@ -3,7 +3,10 @@
 QGSAssetIndexInfo::QGSAssetIndexInfo(const bool _virtual, const QMap<QString, QGSAssetObject> & assetInfoMap)
 	:mVirtual(_virtual), mAssetObjectMap(assetInfoMap)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSAssetIndexInfo")))
+	{
+		qRegisterMetaType<QGSAssetIndexInfo>("QGSAssetIndexInfo");
+	}
 }
 
 QGSAssetIndexInfo::~QGSAssetIndexInfo()

@@ -2,7 +2,10 @@
 
 QGSGameVersion::QGSGameVersion()
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSGameVersion")))
+	{
+		qRegisterMetaType<QGSGameVersion>("QGSGameVersion");
+	}
 }
 
 QGSGameVersion::~QGSGameVersion()

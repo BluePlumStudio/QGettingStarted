@@ -4,7 +4,10 @@
 QGSGameVersionInfo::QGSGameVersionInfo(const QString & id, const QString & type, const QString & time, const QString & releaseTime, const QUrl & url)
 	:mId(id), mType(type), mTime(time), mReleaseTime(releaseTime), mUrl(url)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSGameVersionInfo")))
+	{
+		qRegisterMetaType<QGSGameVersionInfo>("QGSGameVersionInfo");
+	}
 }
 
 bool QGSGameVersionInfo::operator<(const QGSGameVersionInfo & right) const

@@ -3,6 +3,10 @@
 QGSDownloadBase::QGSDownloadBase(const int size, const QString & SHA1, const QString & path, const QUrl & url)
 	:mSize(size), mSHA1(SHA1), mPath(path), mUrl(url)
 {
+	if (!QMetaType::isRegistered(QMetaType::type("QGSDownloadBase")))
+	{
+		qRegisterMetaType<QGSDownloadBase>("QGSDownloadBase");
+	}
 }
 
 QGSDownloadBase::~QGSDownloadBase()
@@ -67,7 +71,10 @@ void QGSDownloadBase::clear()
 QGSDownloads::QGSDownloads(const QGSDownloadBase & artifact, const QMap<QString, QGSDownloadBase> & classifiers)
 	:mArtifact(artifact), mClassifiers(classifiers)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSDownloads")))
+	{
+		qRegisterMetaType<QGSDownloads>("QGSDownloads");
+	}
 }
 
 QGSDownloads::~QGSDownloads()

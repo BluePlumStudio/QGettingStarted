@@ -2,7 +2,10 @@
 
 QGSLiteLoaderVersionInfo::QGSLiteLoaderVersionInfo()
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLiteLoaderVersionInfo")))
+	{
+		qRegisterMetaType<QGSLiteLoaderVersionInfo>("QGSLiteLoaderVersionInfo");
+	}
 }
 
 QGSLiteLoaderVersionInfo::~QGSLiteLoaderVersionInfo()

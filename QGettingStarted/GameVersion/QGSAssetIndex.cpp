@@ -3,7 +3,10 @@
 QGSAssetIndex::QGSAssetIndex(const int size, const QString & SHA1, const QString & path, const QUrl & url, const qint64 totalSize, const QString & id)
 	:QGSDownloadBase(size, SHA1, path, url), mTotalSize(totalSize), mId(id)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSDownloadBase")))
+	{
+		qRegisterMetaType<QGSDownloadBase>("QGSDownloadBase");
+	}
 }
 
 QGSAssetIndex::~QGSAssetIndex()

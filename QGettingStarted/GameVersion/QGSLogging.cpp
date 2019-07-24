@@ -1,7 +1,25 @@
 #include "QGSLogging.h"
 
+QGSLogging::QGSLoggingDownload::QGSLoggingDownload(const int size, const QString & SHA1, const QString & path, const QUrl & url, const QString & id)
+	:QGSDownloadBase(size, SHA1, path, url), mId(id)
+{
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLogging::QGSLoggingDownload")))
+	{
+		qRegisterMetaType<QGSLogging::QGSLoggingDownload>("QGSLogging::QGSLoggingDownload");
+	}
+}
+
+QGSLogging::QGSLoggingDownload::~QGSLoggingDownload()
+{
+
+}
+
 QGSLogging::QGSLogging(const QGSLoggingDownload & fileDownload, const QString & argument, const QString & type) :mLoggingDownload(fileDownload), mArgument(argument), mType(type)
 {
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLogging")))
+	{
+		qRegisterMetaType<QGSLogging>("QGSLogging");
+	}
 }
 
 QGSLogging::~QGSLogging()
@@ -40,6 +58,3 @@ QString QGSLogging::getType()const
 {
 	return mType;
 }
-
-
-

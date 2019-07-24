@@ -3,7 +3,10 @@
 QGSLiteLoaderVersionMeta::QGSLiteLoaderVersionMeta()
 	:mTweakClass(""), mSrcJar(""), mMcpJar(""), mStream(""), mFile(""), mVersion(""), mBuild(""), mMd5(""), mTimestamp(""), mLastSuccessfulBuild(0)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLiteLoaderVersionMeta")))
+	{
+		qRegisterMetaType<QGSLiteLoaderVersionMeta>("QGSLiteLoaderVersionMeta");
+	}
 }
 
 QGSLiteLoaderVersionMeta::~QGSLiteLoaderVersionMeta()

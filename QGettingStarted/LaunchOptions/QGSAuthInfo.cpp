@@ -3,7 +3,10 @@
 QGSAuthInfo::QGSProfile::QGSProfile(const QString & id, const QString name, const bool legacy) 
 	:mId(id), mName(name), mLegacy(legacy)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSAuthInfo::QGSProfile")))
+	{
+		qRegisterMetaType<QGSAuthInfo::QGSProfile>("QGSAuthInfo::QGSProfile");
+	}
 }
 
 QGSAuthInfo::QGSProfile::~QGSProfile()
@@ -60,7 +63,10 @@ QGSAuthInfo::QGSAuthInfo(const QString & accessToken,
 	mAvailableProfileList(availableProfiles),
 	mTwitchAccessToken(twitchAccessToken)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSAuthInfo")))
+	{
+		qRegisterMetaType<QGSAuthInfo>("QGSAuthInfo");
+	}
 }
 
 QGSAuthInfo::~QGSAuthInfo()

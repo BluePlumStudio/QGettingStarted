@@ -3,7 +3,10 @@
 QGSLiteLoaderVersionReposity::QGSLiteLoaderVersionReposity(const QString & stream, const QString & type, const QUrl & url, const QString & classifier)
 	:mStream(stream), mType(type), mUrl(url), mClassifier(classifier)
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSLiteLoaderVersionReposity")))
+	{
+		qRegisterMetaType<QGSLiteLoaderVersionReposity>("QGSLiteLoaderVersionReposity");
+	}
 }
 
 QGSLiteLoaderVersionReposity::~QGSLiteLoaderVersionReposity()

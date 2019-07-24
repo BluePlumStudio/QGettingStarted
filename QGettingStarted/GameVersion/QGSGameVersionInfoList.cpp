@@ -11,7 +11,10 @@
 
 QGSGameVersionInfoList::QGSGameVersionInfoList()
 {
-
+	if (!QMetaType::isRegistered(QMetaType::type("QGSGameVersionInfoList")))
+	{
+		qRegisterMetaType<QGSGameVersionInfoList>("QGSGameVersionInfoList");
+	}
 }
 
 QGSGameVersionInfo & QGSGameVersionInfoList::operator[](const int index)
