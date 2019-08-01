@@ -317,7 +317,7 @@ void gameVersionBuilderTest()
 	}
 
 	QGSDownloadTaskFactory * downloadTaskFactory(new QGSDownloadTaskFactory(downloadSource));
-	auto * threadPoolManager(new QGSThreadPoolManager(8, 512));
+	auto * threadPoolManager(new QGSThreadPoolManager(8, 256));
 	QGSBuilderFactory * builderFactory(new QGSBuilderFactory(threadPoolManager));
 
 	for (int i = 0; i < count; i++)

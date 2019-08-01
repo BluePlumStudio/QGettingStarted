@@ -13,7 +13,7 @@
 static const QString SEPARATOR(QGSOperatingSystem::getInstance().getSeperator());
 quint64 QGSDownloadTask::mLargeFileSize(4194304);
 quint64 QGSDownloadTask::mSmallFileSize(262144);
-const int QGSDownloadTask::DefaultConnectionCount(4);
+const int QGSDownloadTask::DefaultConnectionCount(16);
 /**/
 
 QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & proxy, QObject * parent)
