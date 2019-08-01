@@ -31,9 +31,9 @@ QString QGSNetworkError::getErrorString()const
 
 const int QGSNetworkHelper::DefaultTimeout = 300000;
 
-QGSNetworkHelper::QGSNetworkHelper(QObject * parent) :QObject(parent), mNetworkHelperPtr(new QNetworkAccessManager)
+QGSNetworkHelper::QGSNetworkHelper(QObject * parent) :QObject(parent), mNetworkAccessManager(new QNetworkAccessManager)
 {
-	if (!mNetworkHelperPtr)
+	if (!mNetworkAccessManager)
 	{
 		
 	}
@@ -41,16 +41,16 @@ QGSNetworkHelper::QGSNetworkHelper(QObject * parent) :QObject(parent), mNetworkH
 
 QGSNetworkHelper::~QGSNetworkHelper()
 {
-	if (mNetworkHelperPtr)
+	if (mNetworkAccessManager)
 	{
-		mNetworkHelperPtr->deleteLater();
-		mNetworkHelperPtr = nullptr;
+		mNetworkAccessManager->deleteLater();
+		mNetworkAccessManager = nullptr;
 	}
 }
 
 QNetworkAccessManager * QGSNetworkHelper::getNetworkAccessManager()
 {
-	return mNetworkHelperPtr;
+	return mNetworkAccessManager;
 }
 
 QNetworkRequest QGSNetworkHelper::generateNetworkRequest()

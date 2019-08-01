@@ -4,13 +4,14 @@
 #include "../Util/QGSExceptionInvalidValue.h"
 #include "../Util/QGSExceptionIO.h"
 
-QGSIBuilder::QGSIBuilder(QGSThreadPoolManager * threadPoolManagerPtr, QObject * parent)
-	:QGSTask(parent), mLastErrorString(""), mThreadPoolManagerPtr(threadPoolManagerPtr)
+QGSIBuilder::QGSIBuilder(QGSThreadPoolManager * threadPoolManagerPtr, QGSGameDirectory * gameDirectory, QObject * parent)
+	:QGSTask(parent), mLastErrorString(""), mGameDirectoryPtr(gameDirectory), mThreadPoolManagerPtr(threadPoolManagerPtr)
 {
-	if (!mThreadPoolManagerPtr)
+	if (!mThreadPoolManagerPtr || !gameDirectory)
 	{
 		throw QGSExceptionInvalidValue();
 	}
+
 }
 
 QGSIBuilder::~QGSIBuilder()

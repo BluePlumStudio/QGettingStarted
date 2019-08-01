@@ -3,9 +3,12 @@
 #include "../Util/QGSExceptionVersionNotFound.h"
 #include "../Util/QGSExceptionIO.h"
 #include "../Util/QGSExceptionInvalidValue.h"
+#include "../Util/QGSExceptionGameDirectoryIsBuildingGame.h"
 #include "QGSGameVersionJsonDownloadTaskGenerationTask.h"
 #include "QGSGameVersionDownloadTaskGenerationTask.h"
 /**/
+
+QList<QGSGameDirectory *> QGSLibraryBuilder::mDirectoriesBuilding;
 
 QGSLibraryBuilder::QGSLibraryBuilder(
 	QGSThreadPoolManager * threadPoolManagerPtr,
@@ -14,9 +17,8 @@ QGSLibraryBuilder::QGSLibraryBuilder(
 	QGSDownloadTaskFactory * downloadTaskFactory,
 	QObject * parent)
 
-	:QGSIBuilder(threadPoolManagerPtr, parent),
+	:QGSIBuilder(threadPoolManagerPtr, gameDirectory, parent),
 	mVersionInfo(versionInfo),
-	mGameDirectoryPtr(gameDirectory),
 	mDownloadTaskFactoryPtr(downloadTaskFactory),
 	mFileOverride(false)
 
@@ -25,7 +27,6 @@ QGSLibraryBuilder::QGSLibraryBuilder(
 	{
 		throw QGSExceptionInvalidValue();
 	}
-
 }
 
 QGSLibraryBuilder::~QGSLibraryBuilder()
@@ -68,6 +69,16 @@ int QGSLibraryBuilder::getTaskListSize()
 void QGSLibraryBuilder::templateStart(QGSTask * task)
 {
 	emit started(this);
+
+	for (auto & directory : mDirectoriesBuilding)
+	{
+		if (mGameDirectoryPtr == directory)
+		{
+			throw QGSExceptionGameDirectoryIsBuildingGame(mGameDirectoryPtr);
+		}
+	}
+
+	mDirectoriesBuilding.push_back(mGameDirectoryPtr);
 
 	QMutexLocker mutexLocker(&mMutex);
 
@@ -214,7 +225,7 @@ bool QGSLibraryBuilder::initLibraryDownloadTasks()
 		if (!mFileOverride)
 		{
 			QString libraryFileName(mGameDirectoryPtr->generateLibraryFileName(i));
-			if (QFileInfo::exists(libraryFileName) || QFileInfo::exists(libraryFileName + ".qtmp"))
+			if (QFileInfo::exists(libraryFileName))
 			{
 				continue;
 			}

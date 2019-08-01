@@ -48,15 +48,16 @@ private slots:
 private:
 	void initDownloadTasks();
 	QGSGameVersionJsonDownloadTaskGenerationTask * initGameVersionJsonDownloadTaskGenerationTask();
-	QGSGameVersionDownloadTaskGenerationTask * initGameVersionDownloadTaskGenerationTask(
-		QGSGameVersionJsonDownloadTaskGenerationTask * jsonDownloadTaskGenerationTask);
+	QGSGameVersionDownloadTaskGenerationTask * initGameVersionDownloadTaskGenerationTask();
 private:
+	QGSGameVersionJsonDownloadTaskGenerationTask * mJsonDownloadTaskGenerationTask;
+	QGSGameVersionDownloadTaskGenerationTask * mDownloadTaskGenerationTask;
 	QGSGameVersionInfo mVersionInfo;
-	QGSGameDirectory * mGameDirectoryPtr;
 	QGSDownloadTaskFactory * mDownloadTaskFactoryPtr;
 	QList<QGSTask *> mTaskList;
 	QList<QGSTask *> mTaskDeletedLaterList;
 	bool mFileOverride;
+	static QList<QGSGameDirectory *> mDirectoriesBuilding;
 
 };
 

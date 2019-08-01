@@ -217,10 +217,10 @@ void QGSThreadPool::adjustThreads()
 	//获取成员变量
 	mMutex.lock();
 
-	const bool releaseThreads(mReleaseThreads);
-	const int taskQueueSize(mTaskQueue.size());
+	//const bool releaseThreads(mReleaseThreads);
+	//const int taskQueueSize(mTaskQueue.size());
 	const quint32 minThreadCount(mMinThreadCount);
-	const quint32 maxThreadCount(mMaxThreadCount);
+	//const quint32 maxThreadCount(mMaxThreadCount);
 	const int threadListSize(mThreadList.size());
 
 	if (mTaskQueue.size() < threadListSize&&threadListSize > minThreadCount)

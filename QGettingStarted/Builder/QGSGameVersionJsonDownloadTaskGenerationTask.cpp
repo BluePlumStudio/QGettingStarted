@@ -34,7 +34,7 @@ void QGSGameVersionJsonDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	{
 		QString gameVersionJsonFileName(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJsonFileName(mGameVersionBuilderPtr->mVersionInfo));
 		
-		if (QFileInfo::exists(gameVersionJsonFileName) || QFileInfo::exists(gameVersionJsonFileName + ".qtmp"))
+		if (QFileInfo::exists(gameVersionJsonFileName))
 		{
 			emit finished(this);
 

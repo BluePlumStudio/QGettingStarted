@@ -154,6 +154,7 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 		if (!mNetworkHelperPtr)
 		{
 			mNetworkHelperPtr = new QGSNetworkHelper();
+			//mNetworkHelperPtr = &QGSNetworkHelper::getGlobalInstance();
 		}
 
 		if (mDownloaderList.size())

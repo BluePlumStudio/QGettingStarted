@@ -31,4 +31,5 @@ private:
 	QSharedPointer<QMutex> mSharedMutex;
 	QSharedPointer<QWaitCondition> mAssetIndexJsonDownloadTaskEnded;
 	bool mFileOverride;
+
 };

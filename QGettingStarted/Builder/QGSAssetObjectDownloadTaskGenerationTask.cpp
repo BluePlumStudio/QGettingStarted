@@ -67,7 +67,7 @@ void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 		{
 			QString assetObjectFileName(mAssetBuilderPtr->mGameDirectoryPtr->generateAssetObjectFileName(i));
 
-			if (QFileInfo::exists(assetObjectFileName) || QFileInfo::exists(assetObjectFileName + ".qtmp"))
+			if (QFileInfo::exists(assetObjectFileName))
 			{
 				continue;
 			}
@@ -80,8 +80,6 @@ void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 
 			return;
 		}
-		mAssetBuilderPtr->mTaskList.push_back(downloadTask);
-
 		QObject::connect(downloadTask, &QGSDownloadTask::started, mAssetBuilderPtr, &QGSAssetBuilder::slotDownloadTaskStarted);
 
 		QObject::connect(downloadTask, &QGSDownloadTask::finished, mAssetBuilderPtr, &QGSAssetBuilder::slotDownloadTaskFinished);
@@ -96,6 +94,7 @@ void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 
 		QObject::connect(downloadTask, &QGSDownloadTask::error, mAssetBuilderPtr, &QGSAssetBuilder::slotDownloadTaskError);
 
+		mAssetBuilderPtr->mTaskList.push_back(downloadTask);
 		mAssetBuilderPtr->mThreadPoolManagerPtr->addTaskBack(downloadTask);
 	}
 

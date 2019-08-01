@@ -47,11 +47,11 @@ private:
 	bool initLibraryDownloadTasks();
 private:
 	QGSGameVersionInfo mVersionInfo;
-	QGSGameDirectory * mGameDirectoryPtr;
 	QGSDownloadTaskFactory * mDownloadTaskFactoryPtr;
 	QList<QGSTask *> mTaskList;
 	QList<QGSTask *> mTaskDeletedLaterList;
 	bool mFileOverride;
+	static QList<QGSGameDirectory *> mDirectoriesBuilding;
 
 };
 

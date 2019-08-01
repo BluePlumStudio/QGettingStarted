@@ -22,7 +22,7 @@ class QGSIBuilder :public QGSTask
 	Q_OBJECT
 
 public:
-	QGSIBuilder(QGSThreadPoolManager * threadPoolManagerPtr, QObject * parent = nullptr);
+	QGSIBuilder(QGSThreadPoolManager * threadPoolManagerPtr, QGSGameDirectory * gameDirectory, QObject * parent = nullptr);
 
 	QGSIBuilder(const QGSIBuilder & right) = delete;
 
@@ -49,4 +49,5 @@ protected:
 	QMutex mMutex;
 	QString mLastErrorString;
 	QGSThreadPoolManager * mThreadPoolManagerPtr;
+	QGSGameDirectory * mGameDirectoryPtr;
 };

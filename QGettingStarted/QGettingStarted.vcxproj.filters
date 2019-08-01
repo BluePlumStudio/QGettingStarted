@@ -35,16 +35,6 @@
     <Filter Include="GameVersion\InfoList">
       <UniqueIdentifier>{8bfd62f3-35ea-4858-84ec-ae25adb6341c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-      <ParseFiles>true</ParseFiles>
-    </Filter>
     <Filter Include="Util\ThreadPool">
       <UniqueIdentifier>{772bd40e-a123-45c5-a7a3-f63190d58f27}</UniqueIdentifier>
     </Filter>
@@ -333,6 +323,9 @@
     <ClCompile Include="Util\QGSNetworkHelper.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="Util\QGSExceptionGameDirectoryIsBuildingGame.cpp">
+      <Filter>Util\Exception</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LaunchOptions\QGSLaunchOptions.h">
@@ -449,6 +442,9 @@
     </ClInclude>
     <ClInclude Include="Launcher\QGSIGameVersionPraseStrategy.h">
       <Filter>Launcher</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\QGSExceptionGameDirectoryIsBuildingGame.h">
+      <Filter>Util\Exception</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

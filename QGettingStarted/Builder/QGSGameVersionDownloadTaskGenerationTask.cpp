@@ -39,7 +39,7 @@ void QGSGameVersionDownloadTaskGenerationTask::templateStart(QGSTask * task)
 	{
 		QString gameVersionJarFileName(mGameVersionBuilderPtr->mGameDirectoryPtr->generateGameVersionJarFileName(mGameVersionBuilderPtr->mVersionInfo));
 		
-		if (QFileInfo::exists(gameVersionJarFileName) || QFileInfo::exists(gameVersionJarFileName + ".qtmp"))
+		if (QFileInfo::exists(gameVersionJarFileName))
 		{
 			emit finished(this);
 

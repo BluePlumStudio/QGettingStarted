@@ -63,6 +63,6 @@ public:
 public:
 	static const int DefaultTimeout;
 private:
-	QNetworkAccessManager * mNetworkHelperPtr;
+	QNetworkAccessManager * mNetworkAccessManager;
 };
 

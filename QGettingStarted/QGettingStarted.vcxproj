@@ -253,6 +253,7 @@
     <ClCompile Include="Util\QGSException.cpp" />
     <ClCompile Include="Util\QGSExceptionAuthentication.cpp" />
     <ClCompile Include="Util\QGSExceptionCompress.cpp" />
+    <ClCompile Include="Util\QGSExceptionGameDirectoryIsBuildingGame.cpp" />
     <ClCompile Include="Util\QGSExceptionIO.cpp" />
     <ClCompile Include="Util\QGSExceptionInvalidValue.cpp" />
     <ClCompile Include="Util\QGSExceptionJsonPraseError.cpp" />
@@ -325,6 +326,7 @@
     <QtMoc Include="Launcher\QGSGameVersionPraser.h" />
     <ClInclude Include="Launcher\QGSGeneralGameVersionPraseStrategy.h" />
     <ClInclude Include="Launcher\QGSIGameVersionPraseStrategy.h" />
+    <ClInclude Include="Util\QGSExceptionGameDirectoryIsBuildingGame.h" />
     <ClInclude Include="Util\QGSExceptionInvalidValue.h" />
     <QtMoc Include="Download\QGSIDownloadSource.h" />
     <QtMoc Include="Download\QGSBMCLAPIDownloadSource.h" />

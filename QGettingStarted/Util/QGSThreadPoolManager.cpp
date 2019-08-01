@@ -1,7 +1,7 @@
 #include "QGSThreadPoolManager.h"
 
 //msecs
-static const unsigned long DEFAULT_SLEEP_TIME(3000);
+static const unsigned long DEFAULT_SLEEP_TIME(5000);
 
 QGSThreadPoolManager::QGSThreadPoolManager(const int minThreadCount, const int maxThreadCount, QObject *parent)
 	: QObject(parent), mThreadPoolPtr(new QGSThreadPool(minThreadCount, maxThreadCount)), mExpiryTimeout(DEFAULT_SLEEP_TIME)

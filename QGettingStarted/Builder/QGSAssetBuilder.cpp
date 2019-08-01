@@ -3,9 +3,12 @@
 #include "../Util/QGSExceptionVersionNotFound.h"
 #include "../Util/QGSExceptionIO.h"
 #include "../Util/QGSExceptionInvalidValue.h"
+#include "../Util/QGSExceptionGameDirectoryIsBuildingGame.h"
 #include "QGSAssetIndexJsonDownloadTaskGenerationTask.h"
 #include "QGSAssetObjectDownloadTaskGenerationTask.h"
 /**/
+
+QList<QGSGameDirectory *> QGSAssetBuilder::mDirectoriesBuilding;
 
 static const QString SEPARATOR = QGSOperatingSystem::getInstance().getSeperator();
 
@@ -16,9 +19,10 @@ QGSAssetBuilder::QGSAssetBuilder(
 	QGSDownloadTaskFactory * downloadTaskFactory,
 	QObject * parent)
 
-	:QGSIBuilder(threadPoolManagerPtr, parent),
+	:QGSIBuilder(threadPoolManagerPtr, gameDirectory, parent),
+	mJsonDownloadTaskGenerationTask(nullptr),
+	mObjectDownloadTaskGenerationTask(nullptr),
 	mVersionInfo(versionInfo),
-	mGameDirectoryPtr(gameDirectory),
 	mDownloadTaskFactoryPtr(downloadTaskFactory),
 	mFileOverride(false)
 
@@ -27,7 +31,6 @@ QGSAssetBuilder::QGSAssetBuilder(
 	{
 		throw QGSExceptionInvalidValue();
 	}
-
 }
 
 QGSAssetBuilder::~QGSAssetBuilder()
@@ -71,6 +74,16 @@ void QGSAssetBuilder::templateStart(QGSTask * task)
 {
 	emit started(this);
 
+	for (auto & directory : mDirectoriesBuilding)
+	{
+		if (mGameDirectoryPtr == directory)
+		{
+			throw QGSExceptionGameDirectoryIsBuildingGame(mGameDirectoryPtr);
+		}
+	}
+
+	mDirectoriesBuilding.push_back(mGameDirectoryPtr);
+
 	QMutexLocker mutexLocker(&mMutex);
 
 	if (mTaskList.size())
@@ -112,7 +125,7 @@ void QGSAssetBuilder::templateCancel(QGSTask * task)
 
 void QGSAssetBuilder::slotDownloadTaskStarted(QGSTask * task)
 {
-	emit downloadTaskStarted(dynamic_cast<QGSDownloadTask *>(task));
+	emit downloadTaskStarted((QGSDownloadTask *)(task));
 }
 
 void QGSAssetBuilder::slotDownloadTaskFinished(QGSTask * task)
@@ -222,49 +235,71 @@ void QGSAssetBuilder::slotFinished()
 
 void QGSAssetBuilder::initDownloadTasks()
 {
-	initAssetObjectDownloadTaskGenerationTask(initAssetIndexJsonDownloadTaskGenerationTask());
+	initAssetIndexJsonDownloadTaskGenerationTask();
+	initAssetObjectDownloadTaskGenerationTask();
+
+	//±ØÐëË³Ðò¶Ôµ÷
+	mTaskList.push_back(mObjectDownloadTaskGenerationTask);
+	mTaskDeletedLaterList.push_back(mObjectDownloadTaskGenerationTask);
+	mThreadPoolManagerPtr->addTaskBack(mObjectDownloadTaskGenerationTask);
+
+	mTaskList.push_back(mJsonDownloadTaskGenerationTask);
+	mTaskDeletedLaterList.push_back(mJsonDownloadTaskGenerationTask);
+	mThreadPoolManagerPtr->addTaskBack(mJsonDownloadTaskGenerationTask);
 }
 
 QGSAssetIndexJsonDownloadTaskGenerationTask * QGSAssetBuilder::initAssetIndexJsonDownloadTaskGenerationTask()
 {
-	auto * generationTask(new QGSAssetIndexJsonDownloadTaskGenerationTask(this, mFileOverride));
+	//auto * generationTask(new QGSAssetIndexJsonDownloadTaskGenerationTask(this, mFileOverride));
+	mJsonDownloadTaskGenerationTask = new QGSAssetIndexJsonDownloadTaskGenerationTask(this, mFileOverride);
 
-	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotFinished);
+	QObject::connect(mJsonDownloadTaskGenerationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotEraseTask);
+	QObject::connect(mJsonDownloadTaskGenerationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotFinished);
 
-	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotEraseTask);
-	//QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
+	QObject::connect(mJsonDownloadTaskGenerationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotEraseTask);
+	//QObject::connect(mJsonDownloadTaskGenerationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
 
-	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
+	QObject::connect(mJsonDownloadTaskGenerationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::slotEraseTask);
+	QObject::connect(mJsonDownloadTaskGenerationTask, &QGSAssetIndexJsonDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
 
+	/*
 	mTaskList.push_back(generationTask);
 	mTaskDeletedLaterList.push_back(generationTask);
 	mThreadPoolManagerPtr->addTaskBack(generationTask);
+	*/
 
-	return generationTask;
+	return mJsonDownloadTaskGenerationTask;
 }
 
-QGSAssetObjectDownloadTaskGenerationTask * QGSAssetBuilder::initAssetObjectDownloadTaskGenerationTask(QGSAssetIndexJsonDownloadTaskGenerationTask * jsonDownloadTaskGenerationTask)
+QGSAssetObjectDownloadTaskGenerationTask * QGSAssetBuilder::initAssetObjectDownloadTaskGenerationTask()
 {
+	/*
 	auto * generationTask(new QGSAssetObjectDownloadTaskGenerationTask(
 		this,
 		jsonDownloadTaskGenerationTask->mSharedMutex,
 		jsonDownloadTaskGenerationTask->mAssetIndexJsonDownloadTaskEnded,
 		mFileOverride));
+	*/
+	mObjectDownloadTaskGenerationTask = new QGSAssetObjectDownloadTaskGenerationTask(
+		this,
+		mJsonDownloadTaskGenerationTask->mSharedMutex,
+		mJsonDownloadTaskGenerationTask->mAssetIndexJsonDownloadTaskEnded,
+		mFileOverride);
 
-	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotFinished);
+	QObject::connect(mObjectDownloadTaskGenerationTask, &QGSAssetObjectDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotEraseTask);
+	QObject::connect(mObjectDownloadTaskGenerationTask, &QGSAssetObjectDownloadTaskGenerationTask::finished, this, &QGSAssetBuilder::slotFinished);
 
-	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotEraseTask);
-	//QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
+	QObject::connect(mObjectDownloadTaskGenerationTask, &QGSAssetObjectDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotEraseTask);
+	//QObject::connect(mObjectDownloadTaskGenerationTask, &QGSAssetObjectDownloadTaskGenerationTask::canceled, this, &QGSAssetBuilder::slotFinished);
 
-	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::slotEraseTask);
-	QObject::connect(generationTask, &QGSAssetObjectDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
+	QObject::connect(mObjectDownloadTaskGenerationTask, &QGSAssetObjectDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::slotEraseTask);
+	QObject::connect(mObjectDownloadTaskGenerationTask, &QGSAssetObjectDownloadTaskGenerationTask::error, this, &QGSAssetBuilder::error);
 
+	/*
 	mTaskList.push_back(generationTask);
 	mTaskDeletedLaterList.push_back(generationTask);
 	mThreadPoolManagerPtr->addTaskBack(generationTask);
+	*/
 
-	return generationTask;
+	return mObjectDownloadTaskGenerationTask;
 }
