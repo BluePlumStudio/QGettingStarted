@@ -82,9 +82,9 @@ void QGSAssetBuilder::templateStart(QGSTask * task)
 		}
 	}
 
-	mDirectoriesBuilding.push_back(mGameDirectoryPtr);
-
 	QMutexLocker mutexLocker(&mMutex);
+
+	mDirectoriesBuilding.push_back(mGameDirectoryPtr);
 
 	if (mTaskList.size())
 	{
