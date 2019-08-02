@@ -403,7 +403,7 @@ void gameVersionBuilderTest()
 		});
 		QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskDownloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
 		{
-			//qDebug() << "Version:" << (*versionInfo).getId() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
+			qDebug() << "Version:" << (*versionInfo).getId() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
 		});
 		QObject::connect(libraryBuilder, &QGSLibraryBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadTask * task)
 		{
@@ -452,7 +452,7 @@ void gameVersionBuilderTest()
 		});
 		QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskDownloadProgress, [=](qint64 bytesReceived, qint64 bytesTotal, QGSDownloadTask * task)
 		{
-			//qDebug() << "Version:" << (*versionInfo).getId() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
+			qDebug() << "Version:" << (*versionInfo).getId() << "download:" << task->getDownloadInfo().getUrl() << " download progress:" << "bytes received:" << bytesReceived << "bytes total:" << bytesTotal;
 		});
 		QObject::connect(assetBuilder, &QGSLibraryBuilder::downloadTaskDownloadError, [=](QGSNetworkError error, QGSDownloadTask * task)
 		{

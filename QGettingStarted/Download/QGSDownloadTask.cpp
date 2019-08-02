@@ -13,7 +13,7 @@
 static const QString SEPARATOR(QGSOperatingSystem::getInstance().getSeperator());
 quint64 QGSDownloadTask::mLargeFileSize(4194304);
 quint64 QGSDownloadTask::mSmallFileSize(262144);
-const int QGSDownloadTask::DefaultConnectionCount(16);
+const int QGSDownloadTask::DefaultConnectionCount(8);
 /**/
 
 QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & proxy, QObject * parent)
@@ -31,7 +31,7 @@ QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & prox
 	}
 }
 
-QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo & downloadInfo, int connectionCount, const QNetworkProxy & proxy, QObject * parent)
+QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo downloadInfo, int connectionCount, const QNetworkProxy & proxy, QObject * parent)
 	:QGSTask(parent),
 	mTargetFilePtr(targetFile),
 	mDownloadInfo(downloadInfo),
@@ -167,7 +167,8 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 				QObject::connect(downloader, &QGSDownloader::sslErrors, this, &QGSDownloadTask::slotSslErrors);
 				QObject::connect(downloader, &QGSDownloader::redirected, this, &QGSDownloadTask::slotRedirected);
 
-				QMetaObject::invokeMethod(downloader, "start", Qt::ConnectionType::DirectConnection);
+				//QMetaObject::invokeMethod(downloader, "start", Qt::ConnectionType::DirectConnection);
+				downloader->start();
 			}
 		}
 		else
@@ -198,7 +199,11 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 
 				mDownloaderList.push_back(newDownloader);
 
-				QMetaObject::invokeMethod(newDownloader, "start", Qt::ConnectionType::DirectConnection);
+				//QEventLoop eventLoop;
+				//QObject::connect(newDownloader, &QGSDownloader::started, &eventLoop, &QEventLoop::quit);
+				//QMetaObject::invokeMethod(newDownloader, "start", Qt::ConnectionType::AutoConnection);
+				//eventLoop.exec();
+				newDownloader->start();
 			}
 		}
 	}

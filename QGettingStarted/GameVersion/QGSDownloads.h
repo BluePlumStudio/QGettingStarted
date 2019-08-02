@@ -26,7 +26,7 @@ public:
 
 	QGSDownloadBase & setSHA1(const QString & SHA1);
 
-	QGSDownloadBase & setPath(const QString & path);
+	QGSDownloadBase & setPath(const QString path);
 
 	QGSDownloadBase & setUrl(const QUrl & url);
 

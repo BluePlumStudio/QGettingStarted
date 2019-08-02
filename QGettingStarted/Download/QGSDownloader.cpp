@@ -73,9 +73,9 @@ void QGSDownloader::start()
 		return;
 	}
 
-	connect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloader::slotDownloadError);
-	connect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloader::slotSslErrors);
-	connect(mReply, &QNetworkReply::redirected, this, &QGSDownloader::slotRedirected);
+	connect(mReply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &QGSDownloader::slotDownloadError, Qt::ConnectionType::DirectConnection);
+	connect(mReply, &QNetworkReply::sslErrors, this, &QGSDownloader::slotSslErrors, Qt::ConnectionType::DirectConnection);
+	connect(mReply, &QNetworkReply::redirected, this, &QGSDownloader::slotRedirected, Qt::ConnectionType::DirectConnection);
 
 	if (!get())
 	{
@@ -88,6 +88,8 @@ void QGSDownloader::start()
 
 		emit downloadError(QGSNetworkError(QNetworkReply::NetworkError::UnknownNetworkError,"Unknown download task error!"), this);
 	}
+
+	emit started(this);
 }
 
 void QGSDownloader::stop()
@@ -192,8 +194,8 @@ bool QGSDownloader::get()
 
 	if (mReply)
 	{
-		connect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloader::slotDownloadProgress);
-		connect(mReply, &QNetworkReply::finished, this, &QGSDownloader::slotFinished);
+		connect(mReply, &QNetworkReply::downloadProgress, this, &QGSDownloader::slotDownloadProgress, Qt::ConnectionType::DirectConnection);
+		connect(mReply, &QNetworkReply::finished, this, &QGSDownloader::slotFinished, Qt::ConnectionType::DirectConnection);
 	}
 
 	if (timer)

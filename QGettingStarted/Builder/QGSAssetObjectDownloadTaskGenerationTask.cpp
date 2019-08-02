@@ -95,6 +95,7 @@ void QGSAssetObjectDownloadTaskGenerationTask::templateStart(QGSTask * task)
 		QObject::connect(downloadTask, &QGSDownloadTask::error, mAssetBuilderPtr, &QGSAssetBuilder::slotDownloadTaskError);
 
 		mAssetBuilderPtr->mTaskList.push_back(downloadTask);
+		mAssetBuilderPtr->mTaskDeletedLaterList.push_back(downloadTask);
 		mAssetBuilderPtr->mThreadPoolManagerPtr->addTaskBack(downloadTask);
 	}
 

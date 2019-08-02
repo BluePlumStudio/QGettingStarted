@@ -30,6 +30,7 @@ public:
 
 	QNetworkReply * getNetworkReply()const;
 signals:
+	void started(QGSDownloader * downloader);
 	void finished(QGSDownloader * downloader);
 	void stoped(QGSDownloader * downloader);
 	void canceled(QGSDownloader * downloader);

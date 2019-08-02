@@ -26,7 +26,7 @@ QGSDownloadBase & QGSDownloadBase::setSHA1(const QString & SHA1)
 	return *this;
 }
 
-QGSDownloadBase & QGSDownloadBase::setPath(const QString & path)
+QGSDownloadBase & QGSDownloadBase::setPath(const QString path)
 {
 	mPath = path;
 	return *this;
