@@ -22,7 +22,7 @@ QGSDownloadTask::QGSDownloadTask(int connectionCount, const QNetworkProxy & prox
 	mProxy(proxy),
 	mBytesReceived(0),
 	mBytesTotal(0),
-	mState(DownloadState::Stop),
+	mState(DownloadState::Null),
 	mNetworkHelperPtr(nullptr)
 {
 	if (connectionCount < 1)
@@ -39,7 +39,7 @@ QGSDownloadTask::QGSDownloadTask(QFile * targetFile, const QGSDownloadInfo downl
 	mProxy(proxy),
 	mBytesReceived(0),
 	mBytesTotal(0),
-	mState(DownloadState::Stop),
+	mState(DownloadState::Null),
 	mNetworkHelperPtr(nullptr)
 {
 	if (!mTargetFilePtr)
@@ -126,30 +126,33 @@ void QGSDownloadTask::templateStart(QGSTask * task)
 
 	if (mState != DownloadState::Start)
 	{
-		mState = DownloadState::Start;
-
-		auto && url(mDownloadInfo.getUrl());
-		if (!url.isValid()
-			|| url.isEmpty()
-			|| url.isLocalFile())
+		if (mState == DownloadState::Null)
 		{
-			emit error(this);
-			return;
-		}
-
-		mDownloadInfo.setPath(mTargetFilePtr->fileName());
-		mDownloadInfo.setUrl(url);
-
-		mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".qtmp");
-		if (!mTargetFilePtr->isOpen())
-		{
-			QFileInfo(*mTargetFilePtr).absoluteDir().mkpath("." + SEPARATOR);
-			if (!mTargetFilePtr->open(QIODevice::WriteOnly | QIODevice::Truncate))
+			QUrl url(mDownloadInfo.getUrl());
+			if (!url.isValid()
+				|| url.isEmpty()
+				|| url.isLocalFile())
 			{
 				emit error(this);
 				return;
 			}
+
+			mDownloadInfo.setPath(mTargetFilePtr->fileName());
+			mDownloadInfo.setUrl(url);
+
+			mTargetFilePtr->setFileName(mTargetFilePtr->fileName() + ".qtmp");
+			if (!mTargetFilePtr->isOpen())
+			{
+				QFileInfo(*mTargetFilePtr).absoluteDir().mkpath("." + SEPARATOR);
+				if (!mTargetFilePtr->open(QIODevice::WriteOnly | QIODevice::Truncate))
+				{
+					emit error(this);
+					return;
+				}
+			}
 		}
+
+		mState = DownloadState::Start;
 
 		if (!mNetworkHelperPtr)
 		{

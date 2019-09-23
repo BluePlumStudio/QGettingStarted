@@ -10,6 +10,7 @@ namespace DownloadTask
 
 enum class DownloadState
 {
+	Null,
 	Start,
 	Stop
 };

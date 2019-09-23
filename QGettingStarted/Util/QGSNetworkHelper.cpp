@@ -65,6 +65,7 @@ QNetworkRequest QGSNetworkHelper::generateHttpsNetworkRequest(QSsl::SslProtocol 
 	QSslConfiguration config = QSslConfiguration::defaultConfiguration();
 	config.setPeerVerifyMode(QSslSocket::VerifyNone);
 	config.setProtocol(protocol);
+	config.setProtocol(QSsl::SslProtocol::TlsV1SslV3);
 	networkRequest.setSslConfiguration(config);
 
 	return networkRequest;
