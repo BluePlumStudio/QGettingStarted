@@ -63,75 +63,81 @@ bool QGSGeneralGameVersionPraseStrategy::praseArguments(QGSGameVersion & version
 	else if (object.contains("arguments"))
 	{
         const auto & argumentObject = object.value("arguments").toObject();
-		if (!argumentObject.contains("game") || !argumentObject.contains("jvm"))
-		{
-			return false;
-		}
-
 		QList<QGSArguments::QGSArgument> jvmList;
 		QList<QGSArguments::QGSArgument> gameList;
-		auto gameArray = argumentObject.value("game").toArray();
-		auto JvmArray = argumentObject.value("jvm").toArray();
-		if (gameArray.size() <= 0 || JvmArray.size() <= 0)
-		{
-			return false;
-		}
-        for (const auto & i : gameArray)
-		{
-			if (i.isString())
-			{
-				QGSArguments::QGSArgument newArgument;
-				newArgument.addValue(i.toString());
 
-				gameList.push_back(newArgument);
-			}
-			else if (i.isObject())
-			{
-				auto gameObject = i.toObject();
-				//rules
-				QGSRules rules;
-				if (gameObject.contains("rules"))
-				{
-					rules = praseRules(gameObject.value("rules").toArray());
-				}
-				//value
-				QStringList value;
-				if (gameObject.contains("value"))
-				{
-					value = praseValue(gameObject.value("value"));
-				}
-				gameList.push_back(QGSArguments::QGSArgument(value,rules));
-			}
-		}
-        for (const auto & i : JvmArray)
+		if (argumentObject.contains("game"))
 		{
-			if (i.isString())
+			auto gameArray = argumentObject.value("game").toArray();
+			if (gameArray.size() > 0)
 			{
-				QGSArguments::QGSArgument newArgument;
-				newArgument.addValue(i.toString());
+				for (const auto & i : gameArray)
+				{
+					if (i.isString())
+					{
+						QGSArguments::QGSArgument newArgument;
+						newArgument.addValue(i.toString());
 
-				jvmList.push_back(newArgument);
-			}
-			else if (i.isObject())
-			{
-				auto gameObject = i.toObject();
-				//rules
-				QGSRules rules;
-				if (gameObject.contains("rules"))
-				{
-					rules = praseRules(gameObject.value("rules").toArray());
+						gameList.push_back(newArgument);
+					}
+					else if (i.isObject())
+					{
+						auto gameObject = i.toObject();
+						//rules
+						QGSRules rules;
+						if (gameObject.contains("rules"))
+						{
+							rules = praseRules(gameObject.value("rules").toArray());
+						}
+						//value
+						QStringList value;
+						if (gameObject.contains("value"))
+						{
+							value = praseValue(gameObject.value("value"));
+						}
+						gameList.push_back(QGSArguments::QGSArgument(value, rules));
+					}
 				}
-				//value
-				QStringList value;
-				if (gameObject.contains("value"))
-				{
-					value = praseValue(gameObject.value("value"));
-				}
-				jvmList.push_back(QGSArguments::QGSArgument(value,rules));
 			}
 		}
 
-		version.setArguments(QGSArguments(jvmList,gameList));
+		if (argumentObject.contains("jvm"))
+		{
+			QList<QGSArguments::QGSArgument> jvmList;
+			auto JvmArray = argumentObject.value("jvm").toArray();
+			if (JvmArray.size() > 0)
+			{
+				for (const auto & i : JvmArray)
+				{
+					if (i.isString())
+					{
+						QGSArguments::QGSArgument newArgument;
+						newArgument.addValue(i.toString());
+
+						jvmList.push_back(newArgument);
+					}
+					else if (i.isObject())
+					{
+						auto gameObject = i.toObject();
+						//rules
+						QGSRules rules;
+						if (gameObject.contains("rules"))
+						{
+							rules = praseRules(gameObject.value("rules").toArray());
+						}
+						//value
+						QStringList value;
+						if (gameObject.contains("value"))
+						{
+							value = praseValue(gameObject.value("value"));
+						}
+						jvmList.push_back(QGSArguments::QGSArgument(value, rules));
+					}
+				}
+			}
+		}
+
+		version.setArguments(QGSArguments(jvmList, gameList));
 	}
 
 	return true;

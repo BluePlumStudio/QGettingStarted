@@ -189,24 +189,51 @@ QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(c
 	//mainClass
 	launchCommandList.append(version.getMainClass());
 	/*minecraftArguments*/
-	auto && game(arguments.getGame());
 	QString minecraftArguments;
-	if (!game.isEmpty())
+	try
 	{
-		QStringList argumentList;
-		for (auto & i : game)
+		QString currentVersionId = version.getId();
+		QString inheritsFrom = currentVersionId;
+		do
 		{
-			if (i.getRules().getRules().isEmpty())
+			currentVersionId = gameDirectory.getVersion(inheritsFrom).getId();
+			auto game(gameDirectory.getVersion(currentVersionId).getArguments().getGame());
+
+			if (!game.isEmpty())
 			{
-				argumentList.append(i.getValue());
+				QStringList argumentList;
+				for (auto & i : game)
+				{
+					if (i.getRules().getRules().isEmpty())
+					{
+						argumentList.append(i.getValue());
+					}
+				}
+
+				if (!minecraftArguments.isEmpty())
+				{
+					minecraftArguments += " ";
+				}
+				minecraftArguments += argumentList.join(" ");
 			}
-		}
-		minecraftArguments = argumentList.join(" ");
+			else
+			{
+				if (!minecraftArguments.isEmpty())
+				{
+					minecraftArguments += " ";
+				}
+				minecraftArguments += version.getMinecraftArguments();
+			}
+
+			//currentVersionId = gameDirectory.getVersion(currentVersionId).getInheritsFrom();
+			inheritsFrom = gameDirectory.getVersion(currentVersionId).getInheritsFrom();
+		} while (!inheritsFrom.isEmpty());
 	}
-	else
+	catch (const QGSExceptionVersionNotFound & exception)
 	{
-		minecraftArguments = version.getMinecraftArguments();
+		return ret |= QGSLauncherError::ErrorJarFileNotFound;
 	}
+
 	auto && authInfo(launchOptions->getAuthInfo());
 
 	QDir assetsDirectory;
