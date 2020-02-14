@@ -70,7 +70,7 @@ QStringList QGSFileTools::extractDirectory(const QString & filePath, const QStri
 
 			ret << path;
 
-			if (!(fileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY) && path.back() != "/"&& path.back() != "\\")
+			if (!(fileInfo.external_fa & FILE_ATTRIBUTE_DIRECTORY) && *path.end() != "/"&& *path.end() != "\\")
 			{
 				unzOpenCurrentFile(zFile);//ÎÞÃÜÂë
 				unzOpenCurrentFilePassword(zFile, password.toLocal8Bit().toStdString().c_str());//ÓÐÃÜÂë

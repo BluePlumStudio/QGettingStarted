@@ -1,5 +1,6 @@
 #include <QStringList>
 #include <QSharedPointer>
+#include <QMap>
 
 #include "QGSGeneralLauncherStrategy.h"
 #include "../Util/QGSExceptionVersionNotFound.h"
@@ -190,6 +191,7 @@ QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(c
 	launchCommandList.append(version.getMainClass());
 	/*minecraftArguments*/
 	QString minecraftArguments;
+	QStringList mcArgumentList;
 	try
 	{
 		QString currentVersionId = version.getId();
@@ -201,6 +203,14 @@ QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(c
 
 			if (!game.isEmpty())
 			{
+				for (auto & i : game)
+				{
+					if (i.getRules().getRules().isEmpty())
+					{
+						mcArgumentList.append(i.getValue());
+					}
+				}
+				/*
 				QStringList argumentList;
 				for (auto & i : game)
 				{
@@ -209,20 +219,23 @@ QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(c
 						argumentList.append(i.getValue());
 					}
 				}
-
 				if (!minecraftArguments.isEmpty())
 				{
 					minecraftArguments += " ";
 				}
 				minecraftArguments += argumentList.join(" ");
+				*/
 			}
 			else
 			{
+				mcArgumentList.append(version.getMinecraftArguments().split(" "));
+				/*
 				if (!minecraftArguments.isEmpty())
 				{
 					minecraftArguments += " ";
 				}
 				minecraftArguments += version.getMinecraftArguments();
+				*/
 			}
 
 			//currentVersionId = gameDirectory.getVersion(currentVersionId).getInheritsFrom();
@@ -233,6 +246,17 @@ QGSLauncherError::ErrorFlags QGSGeneralLauncherStrategy::generateLaunchCommand(c
 	{
 		return ret |= QGSLauncherError::ErrorJarFileNotFound;
 	}
+	    //ШЅжи
+	for (int i = 0; i < mcArgumentList.size(); i += 2)
+	{
+		int pos = mcArgumentList.indexOf(mcArgumentList.at(i), i + 1);
+		if (pos != -1)
+		{
+			mcArgumentList.removeAt(pos);
+			mcArgumentList.removeAt(pos);
+		}
+	}
+	minecraftArguments = mcArgumentList.join(" ");
 
 	auto && authInfo(launchOptions->getAuthInfo());
 

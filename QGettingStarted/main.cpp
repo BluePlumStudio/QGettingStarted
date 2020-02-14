@@ -243,7 +243,7 @@ void generateLaunchCommandTest()
 		string JavaPath;
 		getline(cin, JavaPath);
 		*/
-		launchOptionsBuilder.setJavaPath("C:/Program Files/Java/jre1.8.0_162/bin/javaw.exe");
+		launchOptionsBuilder.setJavaPath("C:/Program Files/Java/jre1.8.0_241/bin/javaw.exe");
 		launchOptionsBuilder.setMaxMemory(1024);
 		launchOptionsBuilder.setMinMemory(128);
 		/*
